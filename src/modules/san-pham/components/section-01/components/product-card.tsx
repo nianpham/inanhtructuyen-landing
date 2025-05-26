@@ -1,3 +1,5 @@
+import { BarChart3, Eye, Heart, ShoppingCart } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 interface Product {
@@ -6,6 +8,7 @@ interface Product {
   price: number;
   originalPrice?: number;
   image: string;
+  hoverImage?: string;
   category: string;
   colors?: string[];
   onSale?: boolean;
@@ -18,45 +21,77 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
-      <div className="relative">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-64 object-cover"
-        />
-        {product.onSale && (
-          <span className="absolute top-2 left-2 bg-yellow-600 text-white px-2 py-1 text-xs font-medium rounded">
+    <div className="group relative bg-white overflow-hidden transition-all duration-300">
+      {product.onSale && (
+        <div className="absolute top-4 left-4 z-10">
+          <span className="bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded">
             Sale!
           </span>
-        )}
+        </div>
+      )}
+
+      {/* Product Image Container */}
+      <div className="relative aspect-square rounded-lg overflow-hidden">
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+          <Image
+            src={product.image}
+            alt={product.name}
+            layout="fill"
+            objectFit="cover"
+            className={`transition-opacity duration-300  ${
+              product.hoverImage
+                ? "group-hover:opacity-0"
+                : "group-hover:opacity-100"
+            } rounded-lg`}
+          />
+          {product.hoverImage && (
+            <Image
+              src={product.hoverImage}
+              alt={`${product.name} hover`}
+              layout="fill"
+              objectFit="cover"
+              className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"
+            />
+          )}
+        </div>
+        <>
+          <div className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <button className="p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow">
+              <Heart className="w-4 h-4 text-gray-600" />
+            </button>
+            <button className="p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow">
+              <BarChart3 className="w-4 h-4 text-gray-600" />
+            </button>
+            <button className="p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow">
+              <Eye className="w-4 h-4 text-gray-600" />
+            </button>
+          </div>
+          <div className="absolute -bottom-16 group-hover:bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-500 ease-in-out">
+            <button className="w-full bg-gray-900 text-white py-3 px-4 rounded font-medium hover:bg-gray-800 transition-colors flex items-center justify-center space-x-2">
+              <ShoppingCart className="w-4 h-4" />
+              <span>Add To Cart</span>
+            </button>
+          </div>
+        </>
       </div>
 
-      <div className="p-4">
-        <h3 className="text-gray-800 font-medium mb-2">{product.name}</h3>
-
-        <div className="flex items-center gap-2 mb-2">
-          {product.originalPrice && (
-            <span className="text-gray-400 line-through text-sm">
-              ${product.originalPrice.toFixed(2)}
+      {/* Product Info */}
+      <div className="p-4 flex flex-row justify-between items-end">
+        <div>
+          <h3 className="font-medium text-gray-900 mb-2 text-sm">
+            {product.name}
+          </h3>
+          <div className="flex items-center space-x-2">
+            {product.originalPrice && (
+              <span className="text-sm text-gray-500 line-through">
+                ${product.originalPrice.toFixed(2)}
+              </span>
+            )}
+            <span className="text-sm font-semibold text-gray-900">
+              ${product.price.toFixed(2)}
             </span>
-          )}
-          <span className="text-gray-800 font-semibold">
-            ${product.price.toFixed(2)}
-          </span>
-        </div>
-
-        {product.colors && product.colors.length > 0 && (
-          <div className="flex gap-1">
-            {product.colors.map((color, index) => (
-              <div
-                key={index}
-                className="w-4 h-4 rounded-full border border-gray-300"
-                style={{ backgroundColor: color }}
-              />
-            ))}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

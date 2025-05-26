@@ -12,7 +12,7 @@ import {
 
 const TopBanner: React.FC = () => {
   return (
-    <div className="w-full bg-gray-900 text-white py-3 px-4">
+    <div className="hidden lg:flex w-full bg-gray-900 text-white py-3 px-4">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
         {/* Left Section - Contact Info */}
         <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-sm">

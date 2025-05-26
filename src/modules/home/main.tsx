@@ -14,12 +14,12 @@ export default function HomeContent() {
       <div className="w-full flex flex-col justify-center items-center">
         <div className="w-full py-12">
           <Section1 />
-          {/* <Section2 /> */}
-          {/* <Section3 /> */}
-          {/* <Section4 /> */}
-          {/* <Section5 /> */}
-          {/* <Section6 /> */}
-          {/* <Section7 /> */}
+          <Section2 />
+          <Section3 />
+          <Section4 />
+          <Section5 />
+          <Section6 />
+          <Section7 />
         </div>
       </div>
     </main>

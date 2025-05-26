@@ -11,6 +11,8 @@ import {
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { IMAGES } from "@/utils/image";
+import TopBanner from "./top-header";
+import "@/styles/contact.css";
 
 interface HeaderProps {
   cartCount?: number;
@@ -41,10 +43,29 @@ const Header: React.FC<HeaderProps> = ({
     return item.href === pathname;
   };
 
+  const [open, setOpen] = React.useState(false);
+
   return (
-    <header className="w-full bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-0">
-        <div className="flex items-center justify-between h-16">
+    <>
+      <TopBanner />
+      <header className="w-full bg-white border-b border-gray-200 py-1.5">
+        <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-2">
+          <label
+            className="hamburger lg:hidden"
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            <input type="checkbox" checked={open} />
+            <svg viewBox="0 0 32 32">
+              <path
+                className="line line-top-bottom"
+                d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
+              ></path>
+              <path className="line" d="M7 16 27 16"></path>
+            </svg>
+          </label>
+
           {/* Logo */}
           <div className="flex flex-row items-center gap-2 font-medium">
             <Link href="/" className="flex items-center">
@@ -77,9 +98,9 @@ const Header: React.FC<HeaderProps> = ({
           </nav>
 
           {/* Right side navigation */}
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center lg:space-x-6">
             {/* Login/Register */}
-            <div className="flex items-center space-x-1 text-gray-700 hover:text-gray-900 transition-colors">
+            <div className="hidden lg:flex items-center space-x-1 text-gray-700 hover:text-gray-900 transition-colors">
               <User className="w-5 h-5" />
               <span className="text-sm font-medium">
                 {isLoggedIn ? "Account" : "Login / Register"}
@@ -87,43 +108,69 @@ const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Divider */}
-            <div className="h-5 w-px bg-gray-300"></div>
-
-            {/* Wishlist */}
-            <Link
-              href="/wishlist"
-              className="relative flex items-center text-gray-700 hover:text-gray-900 transition-colors"
-            >
-              <Heart className="w-5 h-5" />
-              {wishlistCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                  {wishlistCount}
-                </span>
-              )}
-            </Link>
+            <div className="hidden lg:flex h-5 w-px bg-gray-300"></div>
 
             {/* Cart */}
             <Link
               href="/cart"
-              className="relative flex items-center text-gray-700 hover:text-gray-900 transition-colors"
+              className="relative flex justify-center items-center text-gray-700 hover:text-gray-900 transition-colors"
             >
               <ShoppingBag className="w-5 h-5" />
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                  {cartCount}
-                </span>
-              )}
-              <span className="ml-1 text-sm font-medium">{cartCount}</span>
             </Link>
-
-            {/* Search */}
-            <button className="flex items-center text-gray-700 hover:text-gray-900 transition-colors">
-              <Search className="w-5 h-5" />
-            </button>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {open && (
+        <div className="fixed top-0 left-0 right-[16%] bottom-0 bg-white z-50 flex flex-col items-center justify-between space-y-4 shadow-lg lg:hidden px-4 pt-5 pb-10">
+          <div className="w-full flex flex-col items-center space-y-4">
+            <div className="flex flex-row items-center justify-between w-full">
+              <div className="w-full text-center">Sản phẩm</div>
+              <div onClick={() => setOpen(false)} className="cursor-pointer">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-black"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div className="flex flex-col items-start space-y-4 w-full">
+              {navigationItems.map((item) => (
+                <div key={item.label} className="relative group">
+                  <Link
+                    href={item.href}
+                    className={`text-[16px] font-normal transition-colors duration-200 ${
+                      isActive(item)
+                        ? "text-[rgb(var(--secondary-rgb))] font-semibold"
+                        : "text-gray-500"
+                    } group-hover:text-[rgb(var(--secondary-rgb))] group-hover:font-semibold`}
+                  >
+                    {item.label}
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="w-full">
+            <div className="w-full flex items-center justify-between space-x-1 text-gray-700 hover:text-gray-900 transition-colors">
+              <span className="text-sm font-medium">
+                {isLoggedIn ? "Account" : "Login / Register"}
+              </span>
+              <User className="w-5 h-5" />
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
