@@ -32,7 +32,7 @@ const Section01: React.FC = () => {
   const sampleProducts: Product[] = [
     {
       id: 1,
-      name: "Amp pendant lamp, Small",
+      name: "Amp pendant lamp, Smal",
       price: 39.0,
       image: preIMG,
       category: "furniture",
