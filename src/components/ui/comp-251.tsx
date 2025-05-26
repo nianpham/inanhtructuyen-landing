@@ -11,7 +11,7 @@ export default function SliderRange() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">
-        <Label className="leading-6">Dual range slider with output</Label>
+        <Label className="leading-6">Chọn giá</Label>
         <output className="text-sm font-medium tabular-nums">
           {value[0]} - {value[1]}
         </output>

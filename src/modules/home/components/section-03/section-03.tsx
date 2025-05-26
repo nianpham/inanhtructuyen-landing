@@ -75,7 +75,7 @@ const PromoBanner: React.FC<PromoBannerProps> = ({
 // Alternative version with background images
 const Banner1WithImages: React.FC = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 py-0 pb-20">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
         {/* Left Banner - Interior Home Decor */}
         <div className="relative h-96 overflow-hidden bg-gray-50">

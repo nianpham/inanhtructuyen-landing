@@ -97,7 +97,7 @@ const trendingProducts: Product[] = [
 const Section4: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-0">
-      <section>
+      <section className="pb-20">
         <div className="">
           <div className="mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <TopBanner />
-      <header className="w-full bg-white border-b border-gray-200 py-1.5">
+      <header className="w-full bg-white py-1.5">
         <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-2">
           <label
             className="hamburger lg:hidden"
@@ -113,7 +113,7 @@ const Header: React.FC<HeaderProps> = ({
             {/* Cart */}
             <Link
               href="/cart"
-              className="relative flex justify-center items-center text-gray-700 hover:text-gray-900 transition-colors"
+              className="relative flex justify-center items-center text-gray-700 hover:text-gray-900 transition-colors pr-2 lg:pr-0"
             >
               <ShoppingBag className="w-5 h-5" />
             </Link>

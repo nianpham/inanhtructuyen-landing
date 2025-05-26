@@ -7,8 +7,7 @@ export default function ProductDetailContent() {
   return (
     <main className="w-full flex flex-col justify-center items-center overflow-hidden">
       <div className="w-full flex flex-col justify-center items-center">
-        <SectionHeader />
-        <div className="w-full py-12">
+        <div className="w-full">
           <Section1 />
         </div>
       </div>

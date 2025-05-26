@@ -6,6 +6,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Sidebar from "./components/side-bar";
 import ProductGrid from "./components/product-layout";
+import { SlidersVertical } from "lucide-react";
 
 interface Product {
   id: number;
@@ -20,7 +21,11 @@ interface Product {
   rating?: number;
 }
 
-const Section01: React.FC = () => {
+interface Section01Props {
+  viewFilter?: boolean;
+}
+
+const Section01: React.FC<Section01Props> = ({ viewFilter }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [filters, setFilters] = useState({});
@@ -148,8 +153,11 @@ const Section01: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="flex">
-        <Sidebar onFilterChange={handleFilterChange} />
+        <div className="hidden lg:flex">
+          <Sidebar onFilterChange={handleFilterChange} />
+        </div>
         <ProductGrid
+          viewFilter={viewFilter}
           products={products}
           viewMode={viewMode}
           onViewModeChange={setViewMode}

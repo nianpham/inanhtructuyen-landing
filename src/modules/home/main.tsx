@@ -12,7 +12,7 @@ export default function HomeContent() {
   return (
     <main className="w-full flex flex-col justify-center items-center overflow-hidden">
       <div className="w-full flex flex-col justify-center items-center">
-        <div className="w-full py-12">
+        <div className="w-full py-0">
           <Section1 />
           <Section2 />
           <Section3 />

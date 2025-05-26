@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import SliderRange from "@/components/ui/comp-251";
+import Image from "next/image";
+import { IMAGES } from "@/utils/image";
 
 interface SidebarProps {
   onFilterChange: (filters: any) => void;
@@ -30,23 +32,24 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
   };
 
   const categories = [
-    { id: "fashion", name: "Fashion", hasSubcategories: true },
-    {
-      id: "furniture",
-      name: "Furniture",
-      hasSubcategories: true,
-      subcategories: [
-        "Chairs",
-        "Construction",
-        "Decoration",
-        "Education",
-        "Lighting Lamp",
-        "Sofas",
-      ],
-    },
-    { id: "jewelry", name: "Jewelry", hasSubcategories: true },
-    { id: "organic", name: "Organic", hasSubcategories: true },
+    // {
+    //   id: "furniture",
+    //   name: "Furniture",
+    //   hasSubcategories: true,
+    //   subcategories: [
+    //     "Chairs",
+    //     "Construction",
+    //     "Decoration",
+    //     "Education",
+    //     "Lighting Lamp",
+    //     "Sofas",
+    //   ],
+    // },
+    { id: "jewelry", name: "Jewelry", hasSubcategories: false },
+    { id: "organic", name: "Organic", hasSubcategories: false },
     { id: "plant", name: "Plant", hasSubcategories: false },
+    { id: "plant", name: "Plant", hasSubcategories: false },
+    { id: "plant", name: "All", hasSubcategories: false },
   ];
 
   const colors = [
@@ -59,26 +62,28 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
   ];
   const sizes = ["L", "M", "S", "XL", "Xs"];
 
+  const preIMG = IMAGES.MAIN_1;
+
   const featuredProducts = [
     {
       name: "Promise Alyada 18K Yellow Gold",
       price: 10.0,
-      image: "/api/placeholder/60/60",
+      image: preIMG,
     },
     {
       name: "18K Yellow Gold Diamond Ring",
       price: 10.0,
-      image: "/api/placeholder/60/60",
+      image: preIMG,
     },
     {
       name: "Sparkle 18K Yellow Gold Emerald",
       price: 10.0,
-      image: "/api/placeholder/60/60",
+      image: preIMG,
     },
   ];
 
   return (
-    <div className="w-64 bg-white pr-6 h-full overflow-y-auto">
+    <div className="w-full lg:w-64 bg-white h-full overflow-y-auto py-10 px-5">
       {/* Product Categories */}
       <div className="mb-8">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">
@@ -111,7 +116,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
                   ))}
               </div>
 
-              {category.hasSubcategories &&
+              {/* {category.hasSubcategories &&
                 expandedSections[category.id] &&
                 category.subcategories && (
                   <div className="ml-5 mt-2 space-y-1">
@@ -124,7 +129,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
                       </div>
                     ))}
                   </div>
-                )}
+                )} */}
             </div>
           ))}
         </div>
@@ -136,7 +141,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
         <div className="space-y-4">
           <SliderRange />
           <button className="bg-black text-white px-4 py-2 rounded text-sm font-medium hover:bg-gray-800 transition-colors">
-            Filter →
+            Filter
           </button>
         </div>
       </div>
@@ -198,10 +203,12 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
         <div className="space-y-4">
           {featuredProducts.map((product, index) => (
             <div key={index} className="flex items-center space-x-3">
-              <img
+              <Image
+                width={1000}
+                height={1000}
                 src={product.image}
                 alt={product.name}
-                className="w-12 h-12 object-cover rounded"
+                className="w-12 h-full object-cover"
               />
               <div>
                 <h4 className="text-sm font-medium text-gray-800 line-clamp-2">
@@ -210,7 +217,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
                 <p className="text-sm text-gray-600">
                   ${product.price.toFixed(2)}
                 </p>
-                <div className="flex text-yellow-400 text-xs">★★★★★</div>
               </div>
             </div>
           ))}

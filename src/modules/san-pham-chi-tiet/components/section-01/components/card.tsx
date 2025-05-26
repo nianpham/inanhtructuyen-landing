@@ -1,6 +1,5 @@
-import { BarChart3, Eye, Heart, ShoppingCart } from "lucide-react";
+import { Heart, Eye, BarChart3, ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 interface Product {
@@ -10,17 +9,11 @@ interface Product {
   originalPrice?: number;
   image: string;
   hoverImage?: string;
-  category: string;
-  colors?: string[];
   onSale?: boolean;
-  rating?: number;
+  color?: string;
 }
 
-interface ProductCardProps {
-  product: Product;
-}
-
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   return (
     <div className="group relative bg-white overflow-hidden transition-all duration-300">
       {product.onSale && (
@@ -33,30 +26,28 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
       {/* Product Image Container */}
       <div className="relative aspect-square rounded-lg overflow-hidden">
-        <Link href={`/detail-product`}>
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+          <Image
+            src={product.image}
+            alt={product.name}
+            layout="fill"
+            objectFit="cover"
+            className={`transition-opacity duration-300  ${
+              product.hoverImage
+                ? "group-hover:opacity-0"
+                : "group-hover:opacity-100"
+            } rounded-lg`}
+          />
+          {product.hoverImage && (
             <Image
-              src={product.image}
-              alt={product.name}
+              src={product.hoverImage}
+              alt={`${product.name} hover`}
               layout="fill"
               objectFit="cover"
-              className={`transition-opacity duration-300  ${
-                product.hoverImage
-                  ? "group-hover:opacity-0"
-                  : "group-hover:opacity-100"
-              } rounded-lg`}
+              className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"
             />
-            {product.hoverImage && (
-              <Image
-                src={product.hoverImage}
-                alt={`${product.name} hover`}
-                layout="fill"
-                objectFit="cover"
-                className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"
-              />
-            )}
-          </div>
-        </Link>
+          )}
+        </div>
         <>
           <div className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button className="p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow">
@@ -79,7 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       {/* Product Info */}
-      <div className="py-4 flex flex-row justify-between items-end">
+      <div className="p-4 flex flex-row justify-between items-end">
         <div>
           <h3 className="font-medium text-gray-900 mb-2 text-sm">
             {product.name}
@@ -94,6 +85,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               ${product.price.toFixed(2)}
             </span>
           </div>
+        </div>
+
+        {/* Color Options for Arctander Chair */}
+        <div className="flex space-x-2 mt-3">
+          <div className="w-4 h-4 bg-yellow-400 rounded-full border-2 border-gray-300"></div>
+          <div className="w-4 h-4 bg-gray-400 rounded-full border border-gray-300"></div>
         </div>
       </div>
     </div>

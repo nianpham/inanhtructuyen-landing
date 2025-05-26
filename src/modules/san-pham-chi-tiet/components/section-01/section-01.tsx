@@ -4,7 +4,16 @@
 import { IMAGES } from "@/utils/image";
 import { BarChart3, Heart, Minus, Plus, Search, Star } from "lucide-react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Swiper as SwiperCore } from "swiper/types";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-coverflow";
+import "@/styles/contact.css";
+import ProductCard from "./components/card";
 
 interface Product {
   id: string;
@@ -25,13 +34,14 @@ interface Product {
 }
 
 interface RelatedProduct {
-  id: string;
+  id: number;
   name: string;
   price: number;
   originalPrice?: number;
   image: string;
-  isOnSale?: boolean;
-  colors?: string[];
+  hoverImage?: string;
+  onSale?: boolean;
+  color?: string;
 }
 
 const Section1: React.FC = () => {
@@ -63,38 +73,81 @@ const Section1: React.FC = () => {
     ],
   };
 
-  const relatedProducts: RelatedProduct[] = [
+  const relatedProduct: RelatedProduct[] = [
     {
-      id: "1",
-      name: "Iconic Rocking Horse",
-      price: 49.0,
-      image: "/rocking-horse.jpg",
-      isOnSale: true,
+      id: 1,
+      name: "Arctander Chair",
+      price: 100.0,
+      image:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
+      hoverImage:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163524/ielts-test/image2_we8e1q.avif",
+      color: "bg-yellow-400",
     },
     {
-      id: "2",
-      name: "Dining Chair",
-      price: 37.0,
-      originalPrice: 39.0,
-      image: "/dining-chair.jpg",
-      isOnSale: true,
+      id: 2,
+      name: "Turning Table",
+      price: 52.0,
+      originalPrice: 57.0,
+      image:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
+      onSale: true,
     },
     {
-      id: "3",
-      name: "Storm Small Jug",
+      id: 3,
+      name: "Mogens koch Bookcase",
       price: 39.0,
-      originalPrice: 52.0,
-      image: "/storm-jug.jpg",
-      isOnSale: true,
-      colors: ["#000000", "#8B4513"],
+      image:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
+      hoverImage:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163524/ielts-test/image2_we8e1q.avif",
     },
     {
-      id: "4",
-      name: "Laundry Baskets",
-      price: 30.0,
-      originalPrice: 39.0,
-      image: "/laundry-basket.jpg",
-      isOnSale: true,
+      id: 4,
+      name: "Pilke 60 pendant lamp",
+      price: 39.0,
+      image:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
+      hoverImage:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163524/ielts-test/image2_we8e1q.avif",
+    },
+    {
+      id: 5,
+      name: "Beoplay A1",
+      price: 139.0,
+      originalPrice: 149.0,
+      image:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
+      hoverImage:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163524/ielts-test/image2_we8e1q.avif",
+      onSale: true,
+    },
+    {
+      id: 6,
+      name: "Amp pendant lamp, Small",
+      price: 39.0,
+      image:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
+      hoverImage:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163524/ielts-test/image2_we8e1q.avif",
+    },
+    {
+      id: 7,
+      name: "Elegant Lounge Chair",
+      price: 49.0,
+      image:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
+      hoverImage:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163524/ielts-test/image2_we8e1q.avif",
+    },
+    {
+      id: 8,
+      name: "Hanging egg chair",
+      price: 39.0,
+      image:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
+      hoverImage:
+        "https://res.cloudinary.com/farmcode/image/upload/v1748163524/ielts-test/image2_we8e1q.avif",
     },
   ];
 
@@ -111,14 +164,39 @@ Indoor chair: natural fiber (rattan)
 Outdoor chair: synthetic fiber
 Stand: powder coated iron (only for indoor use)`;
 
+  const swiperRef = useRef<SwiperCore | null>(null);
+
+  const handlePrev = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slidePrev(500);
+    }
+  };
+
+  const handleNext = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slideNext(500);
+    }
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-5">
       {/* Main Product Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
         {/* Product Images */}
-        <div className="space-y-4">
+        <div className="flex flex-col lg:flex-row">
+          {/* Main Image */}
+          <div className="lg:hidden flex-1 mb-5">
+            <Image
+              src={IMAGES.MAIN_1}
+              alt=""
+              width={1000}
+              height={1000}
+              className="w-full h-[600px] object-cover"
+            />
+          </div>
+
           {/* Thumbnail Images */}
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-row lg:flex-col space-x-2 lg:space-x-0 lg:space-y-2">
             {[0, 1, 2, 3].map((index) => (
               <button
                 key={index}
@@ -145,27 +223,19 @@ Stand: powder coated iron (only for indoor use)`;
           </div>
 
           {/* Main Image */}
-          <div className="flex-1 ml-20">
-            <div className="relative bg-gray-50 rounded-lg overflow-hidden aspect-square">
-              <div className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md">
-                <Search className="w-5 h-5 text-gray-600" />
-              </div>
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="w-80 h-80 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center">
-                  <div className="w-64 h-48 bg-white rounded-t-full relative">
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-32">
-                      <div className="w-full h-full bg-gradient-to-b from-yellow-600 to-yellow-700 rounded-full opacity-80"></div>
-                      <div className="absolute top-2 left-2 right-2 bottom-8 bg-gradient-to-b from-yellow-500 to-yellow-600 rounded-full"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="hidden lg:flex ml-5 space-y-2">
+            <Image
+              src={IMAGES.MAIN_1}
+              alt=""
+              width={1000}
+              height={1000}
+              className="w-[600px] h-[600px] object-cover"
+            />
           </div>
         </div>
 
         {/* Product Info */}
-        <div className="space-y-6">
+        <div className="space-y-5">
           <div>
             <h1 className="text-3xl font-light text-gray-900 mb-2">
               {product.name}
@@ -225,30 +295,32 @@ Stand: powder coated iron (only for indoor use)`;
           </div>
 
           {/* Quantity and Add to Cart */}
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center border border-gray-300 rounded-md">
-              <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="p-2 hover:bg-gray-50"
-              >
-                <Minus className="w-4 h-4" />
+          <div className="flex flex-col items-start">
+            <div className="flex flex-row gap-3">
+              <div className="flex items-center border border-gray-300 rounded-md">
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="p-2 hover:bg-gray-50"
+                >
+                  <Minus className="w-4 h-4" />
+                </button>
+                <span className="px-4 py-2 border-x">{quantity}</span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="p-2 hover:bg-gray-50"
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
+              </div>
+              <button className="p-3 border border-gray-300 rounded-md hover:bg-gray-50">
+                <Heart className="w-5 h-5" />
               </button>
-              <span className="px-4 py-2 border-x">{quantity}</span>
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="p-2 hover:bg-gray-50"
-              >
-                <Plus className="w-4 h-4" />
+              <button className="p-3 border border-gray-300 rounded-md hover:bg-gray-50">
+                <BarChart3 className="w-5 h-5" />
               </button>
             </div>
-            <button className="flex-1 bg-gray-800 text-white py-3 px-6 rounded-md hover:bg-gray-900 transition-colors">
+            <button className="mt-3 w-full lg:w-1/3 flex-1 bg-gray-800 text-white py-3 px-6 rounded-md hover:bg-gray-900 transition-colors">
               Add To Cart
-            </button>
-            <button className="p-3 border border-gray-300 rounded-md hover:bg-gray-50">
-              <Heart className="w-5 h-5" />
-            </button>
-            <button className="p-3 border border-gray-300 rounded-md hover:bg-gray-50">
-              <BarChart3 className="w-5 h-5" />
             </button>
           </div>
 
@@ -284,24 +356,16 @@ Stand: powder coated iron (only for indoor use)`;
 
       {/* Product Details Tabs */}
       <div className="mb-16">
-        <div className="flex border-b">
-          {["Description", "Additional Information", "Reviews (1)"].map(
-            (tab) => (
-              <button
-                key={tab}
-                onClick={() =>
-                  setActiveTab(tab.toLowerCase().replace(/[^a-z]/g, ""))
-                }
-                className={`py-4 px-6 text-sm font-medium ${
-                  activeTab === tab.toLowerCase().replace(/[^a-z]/g, "")
-                    ? "border-b-2 border-gray-800 text-gray-900"
-                    : "text-gray-600 hover:text-gray-900"
-                }`}
-              >
-                {tab}
-              </button>
-            )
-          )}
+        <div className="flex flex-row justify-center items-center space-x-4">
+          <div className="h-[1px] w-full bg-gray-200"></div>
+          <div className="flex mt-2">
+            <button
+              className={`pb-2 mx-0 w-40 text-lg font-semibold text-gray-900 border-b-2 border-yellow-600`}
+            >
+              Mô tả sản phẩm
+            </button>
+          </div>
+          <div className="h-[1px] w-full bg-gray-200"></div>
         </div>
         <div className="py-8">
           <div className="prose max-w-none text-gray-700 whitespace-pre-line">
@@ -311,11 +375,11 @@ Stand: powder coated iron (only for indoor use)`;
       </div>
 
       {/* Related Products */}
-      <div>
+      <div className="pb-12">
         <h2 className="text-2xl font-light text-gray-900 mb-8 text-center">
           Related Products
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {relatedProducts.map((product) => (
             <div key={product.id} className="group">
               <div className="relative bg-gray-50 rounded-lg overflow-hidden aspect-square mb-4">
@@ -362,6 +426,83 @@ Stand: powder coated iron (only for indoor use)`;
               )}
             </div>
           ))}
+        </div> */}
+
+        {/* Carousel Container */}
+        <div className="relative">
+          <Swiper
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
+            effect={"coverflow"}
+            grabCursor={true}
+            centeredSlides={true}
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
+            breakpoints={{
+              300: {
+                slidesPerView: 1,
+              },
+              1024: {
+                slidesPerView: 4,
+              },
+            }}
+            loop={true}
+            spaceBetween={10}
+            pagination={{
+              clickable: true,
+              bulletClass: "swiper-pagination-bullet",
+              bulletActiveClass: "swiper-pagination-bullet-active bg-white",
+            }}
+            modules={[Pagination, Navigation, Autoplay]}
+            className="w-80 sm:w-96 lg:w-full h-full"
+          >
+            {relatedProduct?.map((item, index: number) => (
+              <SwiperSlide key={index} className="">
+                <ProductCard key={item.id} product={item} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <button
+            onClick={handlePrev}
+            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white shadow-lg rounded-full w-12 h-12 items-center justify-center z-10 disabled:opacity-50"
+            aria-label="Previous"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <button
+            onClick={handleNext}
+            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 bg-white shadow-lg rounded-full w-12 h-12 items-center justify-center z-10 disabled:opacity-50"
+            aria-label="Next"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </div>

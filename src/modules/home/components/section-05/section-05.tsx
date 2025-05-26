@@ -42,7 +42,7 @@ const Section5: React.FC = () => {
 
   return (
     <div className="w-full mx-auto px-5 lg:px-0">
-      <section>
+      <section className="pb-20">
         <div className="bg-gray-50">
           {/* Newsletter Section */}
           <div className="relative bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
@@ -87,7 +87,7 @@ const Section5: React.FC = () => {
           </div>
 
           {/* Features Section */}
-          <div className="bg-[#F8F8F8] py-20">
+          <div className="bg-[#F8F8F8] py-10">
             <div className="max-w-7xl mx-auto px-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-gray-200">
                 {features.map((feature, index) => (

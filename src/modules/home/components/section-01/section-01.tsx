@@ -101,9 +101,9 @@ const Section1: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-0">
-      <section>
+      <section className="pt-5">
         <div className="">
-          <div className="max-w-7xl mx-auto p-6">
+          <div className="max-w-7xl mx-auto p-0">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-full">
               {/* Hero Section - Takes 2/3 width */}
               <div className="lg:col-span-2">
