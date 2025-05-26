@@ -5,6 +5,11 @@ const PRODUCT = {
   GET_ALL: `${BASE_URL}/inanhtructuyen/product`,
 };
 
+const SLIDER = {
+  GET_ALL_SLIDER: `${BASE_URL}/ielts-viet/slider`,
+};
+
 export const API = {
   PRODUCT,
+  SLIDER,
 };
