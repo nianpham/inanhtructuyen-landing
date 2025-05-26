@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <TopBanner />
-      <header className="w-full bg-white py-1.5">
+      <header className="w-full bg-white py-1.5 border-b border-gray-100">
         <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-2">
           <label
             className="hamburger lg:hidden"
@@ -120,6 +120,10 @@ const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
       </header>
+
+      {open && (
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-25 z-20"></div>
+      )}
 
       {open && (
         <div className="fixed top-0 left-0 right-[16%] bottom-0 bg-white z-50 flex flex-col items-center justify-between space-y-4 shadow-lg lg:hidden px-4 pt-5 pb-10">

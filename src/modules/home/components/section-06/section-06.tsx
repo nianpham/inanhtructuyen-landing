@@ -145,7 +145,7 @@ const Section6: React.FC<BlogCarouselProps> = (props) => {
               bulletActiveClass: "swiper-pagination-bullet-active bg-white",
             }}
             modules={[Pagination, Navigation, Autoplay]}
-            className="w-80 sm:w-96 lg:w-full h-full"
+            className="w-full sm:w-96 lg:w-full h-full"
           >
             {posts?.map((post, index: number) => (
               <SwiperSlide key={index} className="">
