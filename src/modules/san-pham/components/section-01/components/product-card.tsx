@@ -13,7 +13,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <div className="group relative bg-white overflow-hidden transition-all duration-300">
+    <div className="cursor-pointer group relative bg-white overflow-hidden transition-all duration-300">
       {Number(product._id.charAt(7)) % 2 !== 0 && (
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded">
