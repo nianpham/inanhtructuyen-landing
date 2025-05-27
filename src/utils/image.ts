@@ -1,5 +1,8 @@
 export const IMAGES = {
   LOGO: "/logo.png",
+  FACEBOOK:
+    "https://res.cloudinary.com/farmcode/image/upload/v1748364865/ielts-test/facebook_ekthgh.png",
+  ZALO: "https://res.cloudinary.com/farmcode/image/upload/v1748364890/ielts-test/zalo_q3w1pc.png",
   BANNER_1:
     "https://res.cloudinary.com/farmcode/image/upload/v1748167081/ielts-test/IMG_7515-Edit-2-1_cpdbxp.jpg",
   BANNER_2:

@@ -34,57 +34,59 @@ interface ProductGridProps {
 
 const ProductGrid: React.FC<ProductGridProps> = ({
   viewFilter,
-  products,
+  products: initialProducts,
   viewMode,
   onViewModeChange,
 }) => {
   const COUNT = 9;
   const [currenPage, setCurrenPage] = useState<number>(1);
+  const [sortedProducts, setSortedProducts] =
+    useState<Product[]>(initialProducts); // State for sorted products
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // Update sortedProducts when initialProducts change
+  useEffect(() => {
+    setSortedProducts(initialProducts);
+  }, [initialProducts]);
+
   // Calculate total pages and current data using useMemo to avoid recomputation
   const totalPage = useMemo(
-    () => Math.ceil(products.length / COUNT),
-    [products]
+    () => Math.ceil(sortedProducts.length / COUNT),
+    [sortedProducts]
   );
 
   const currenData = useMemo(() => {
     const start = (currenPage - 1) * COUNT;
     const end = currenPage * COUNT;
-    return products.slice(start, end);
-  }, [products, currenPage]);
+    return sortedProducts.slice(start, end);
+  }, [sortedProducts, currenPage]);
 
   // Adjust current page if it exceeds total pages
   useEffect(() => {
     if (currenPage > totalPage && totalPage > 0) {
       setCurrenPage(totalPage);
-    } else if (products.length === 0) {
+    } else if (sortedProducts.length === 0) {
       setCurrenPage(1);
     }
-  }, [totalPage, currenPage, products.length]);
+  }, [totalPage, currenPage, sortedProducts.length]);
 
   // Handle URL parameter persistence and hiding
   useEffect(() => {
     const PARAMS_KEY = "__params";
 
-    // Function to get parameters (from URL or sessionStorage)
     const getParams = () => {
       const urlParams = searchParams.toString();
       if (urlParams) {
-        // Store URL parameters in sessionStorage if present
         sessionStorage.setItem(PARAMS_KEY, urlParams);
         return urlParams;
       }
-      // Fallback to sessionStorage if no URL parameters
       return sessionStorage.getItem(PARAMS_KEY) || "";
     };
 
-    // Hide parameters from address bar
     const hideParams = () => {
       const params = getParams();
       if (params && window.location.search) {
-        // Replace URL with clean pathname, preserving parameters in sessionStorage
         window.history.replaceState(
           null,
           document.title,
@@ -93,10 +95,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       }
     };
 
-    // Run on initial load
     hideParams();
 
-    // Restore parameters on beforeunload to ensure they persist in shared URLs
     const handleBeforeUnload = () => {
       const params = sessionStorage.getItem(PARAMS_KEY) || "";
       if (params) {
@@ -110,7 +110,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 
     window.addEventListener("beforeunload", handleBeforeUnload);
 
-    // Cleanup event listener
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
@@ -137,8 +136,13 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   const handleClick = (id: string, title: string) => {
     setSelectedProductId(id);
     localStorage.setItem("selectedProductId", id);
-    // Append product ID as a query parameter
     router.push(`/products/${HELPER.convertSpacesToDash(title)}?id=${id}`);
+  };
+
+  // Handler for sorting products
+  const handleSortChange = (sortedProducts: Product[]) => {
+    setSortedProducts(sortedProducts);
+    setCurrenPage(1); // Reset to first page after sorting
   };
 
   return (
@@ -146,11 +150,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       {/* Header */}
       <div className="flex justify-center lg:justify-between items-center my-6">
         <div className="hidden lg:flex text-gray-600">
-          {products.length > 0 ? (
+          {sortedProducts.length > 0 ? (
             <>
               Showing {(currenPage - 1) * COUNT + 1}-
-              {Math.min(currenPage * COUNT, products.length)} of{" "}
-              {products.length}
+              {Math.min(currenPage * COUNT, sortedProducts.length)} of{" "}
+              {sortedProducts.length}
             </>
           ) : (
             "No products found"
@@ -176,7 +180,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           </button>
         </div>
         <div className={`flex items-center gap-4 ${viewFilter ? "" : "z-30"}`}>
-          <Selection />
+          <Selection
+            products={sortedProducts}
+            onSortChange={handleSortChange}
+          />
         </div>
       </div>
 
@@ -207,7 +214,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       </div>
 
       {/* Pagination */}
-      {products.length > 0 && (
+      {sortedProducts.length > 0 && (
         <nav
           className="flex flex-col items-start justify-center mt-4 p-4 space-y-3 md:flex-row md:items-center md:space-y-0"
           aria-label="Table navigation"

@@ -65,6 +65,70 @@
   }
 }
 
+@keyframes zoomFade {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+.animate-zoomFade {
+  animation: zoomFade 1.2s ease-in-out infinite;
+}
+
+@keyframes zoomIO {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.7);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-zoomIO {
+  animation: zoomIO 2s ease-in-out infinite;
+}
+
+@keyframes bellRing {
+  0% {
+    transform: rotate(-15deg);
+  }
+  12.5% {
+    transform: rotate(15deg);
+  }
+  25% {
+    transform: rotate(-15deg);
+  }
+  37.5% {
+    transform: rotate(15deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-bellRing {
+  animation: bellRing 1.1s ease-in-out infinite;
+}
+
 @layer base {
   * {
     @apply border-border;

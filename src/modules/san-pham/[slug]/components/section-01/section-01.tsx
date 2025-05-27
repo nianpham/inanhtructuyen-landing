@@ -320,7 +320,8 @@ const Section1: React.FC = () => {
               ))}
             </div>
 
-            <div className="flex justify-start items-center gap-4 my-7">
+            <div className="mb-2 mt-5">Giá sản phẩm:</div>
+            <div className="flex justify-start items-center gap-4 mb-5">
               <div className="text-2xl lg:text-3xl font-medium text-brown-700">
                 {HELPER.formatVND(getCurrentPrice())}
               </div>
@@ -330,6 +331,7 @@ const Section1: React.FC = () => {
             </div>
 
             {/* Color Selection */}
+            <div className="mb-3">Màu sắc:</div>
             <div className="space-y-3">
               <div className="flex space-x-3">
                 {product?.color.map((color, index) => (
@@ -337,7 +339,7 @@ const Section1: React.FC = () => {
                     key={index}
                     className={`w-8 h-8 ${HELPER.renderColor(
                       color
-                    )} rounded-full border border-gray-200`}
+                    )} rounded-full border border-gray-300`}
                   ></div>
                 ))}
               </div>
@@ -514,7 +516,7 @@ const Section1: React.FC = () => {
               bulletActiveClass: "swiper-pagination-bullet-active bg-white",
             }}
             modules={[Pagination, Navigation, Autoplay]}
-            className="w-80 sm:w-96 lg:w-full h-full"
+            className="w-80 sm:w-96 lg:w-full h-[450px] lg:h-[450px]"
           >
             {relatedProduct?.map((item, index: number) => (
               <SwiperSlide key={index} className="">

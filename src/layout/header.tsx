@@ -13,6 +13,7 @@ import Image from "next/image";
 import { IMAGES } from "@/utils/image";
 import TopBanner from "./top-header";
 import "@/styles/contact.css";
+import Contact from "@/components/ui/contact";
 
 interface HeaderProps {
   cartCount?: number;

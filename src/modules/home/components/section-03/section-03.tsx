@@ -1,6 +1,7 @@
 // components/ReadingTestCollection.tsx
 "use client";
 
+import { IMAGES } from "@/utils/image";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -81,7 +82,7 @@ const Banner1WithImages: React.FC = () => {
         <div className="relative h-96 overflow-hidden bg-gray-50">
           <div className="absolute right-0 top-0 bottom-0 w-full">
             <Image
-              src={`https://res.cloudinary.com/farmcode/image/upload/v1748165187/ielts-test/banner-static1_lh6bsj.jpg`}
+              src={IMAGES.BANNER_2}
               alt="Interior Home Decor"
               fill
               priority
@@ -116,7 +117,7 @@ const Banner1WithImages: React.FC = () => {
         <div className="relative h-96 overflow-hidden bg-gray-800">
           <div className="absolute right-0 top-0 bottom-0 w-full">
             <Image
-              src={`https://res.cloudinary.com/farmcode/image/upload/v1748165402/ielts-test/banner-static2_fchhrv.jpg`}
+              src={IMAGES.BANNER_1}
               alt="Interior Home Decor"
               fill
               priority
@@ -129,7 +130,7 @@ const Banner1WithImages: React.FC = () => {
                 Quick parcel delivery,{" "}
                 <span className="text-amber-500">from $25</span>
               </p>
-              <h2 className="text-4xl lg:text-5xl font-bold leading-tight mb-4 text-white">
+              <h2 className="text-4xl lg:text-5xl font-bold leading-tight mb-4 text-black">
                 Up to 70% Sale Off
                 <br />
                 Pendant Lamp

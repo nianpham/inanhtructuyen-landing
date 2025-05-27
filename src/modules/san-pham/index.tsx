@@ -113,7 +113,10 @@ export default function ProductClient() {
     [products]
   );
   return (
-    <div className="relative w-full flex flex-col justify-center items-center">
+    <div
+      className="relative w-full flex flex-col justify-center items-center"
+      id="home"
+    >
       <div className={`${viewFilter ? "z-0" : "z-50"} w-full`}>
         <Header />
       </div>

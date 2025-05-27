@@ -72,18 +72,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Product Info */}
       <div className="py-4 flex flex-row justify-between items-end">
         <div>
-          <h3 className="font-medium text-gray-900 mb-2 text-sm">
+          <h3 className="font-medium text-gray-900 mb-2 text-sm lg:text-md">
             {product.name}
           </h3>
           <div className="flex items-center space-x-2">
             {Number(product._id.charAt(7)) % 2 !== 0 && (
-              <span className="text-sm text-gray-500 line-through">
+              <span className="text-sm lg:text-base text-gray-500 line-through">
                 {HELPER.formatVND(
                   HELPER.upPrice(product.product_option[0].price)
                 )}
               </span>
             )}
-            <span className="text-sm font-semibold text-gray-900">
+            <span className="text-sm lg:text-base font-semibold text-gray-900">
               {HELPER.formatVND(product.product_option[0].price)}
             </span>
           </div>

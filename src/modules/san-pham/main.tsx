@@ -1,5 +1,6 @@
 "use client";
 
+import Contact from "@/components/ui/contact";
 import { ProductProvider } from "./components/product-context";
 import Section01 from "./components/section-01/section-01";
 import SectionHeader from "./components/section-header";
@@ -31,18 +32,23 @@ export default function ProductContent({
   viewFilter: boolean;
 }) {
   return (
-    <main className="w-full flex flex-col justify-center items-center overflow-hidden">
-      <div className="w-full flex flex-col justify-center items-center">
-        <SectionHeader />
-        <div className="w-full pb-10">
-          <ProductProvider>
-            <Section01
-              filteredProductMobile={filteredProduct}
-              viewFilter={viewFilter}
-            />
-          </ProductProvider>
-        </div>
+    <>
+      <div className="hidden lg:flex fixed top-1/3 right-5 z-50">
+        <Contact />
       </div>
-    </main>
+      <main className="w-full flex flex-col justify-center items-center overflow-hidden">
+        <div className="w-full flex flex-col justify-center items-center">
+          <SectionHeader />
+          <div className="w-full pb-10">
+            <ProductProvider>
+              <Section01
+                filteredProductMobile={filteredProduct}
+                viewFilter={viewFilter}
+              />
+            </ProductProvider>
+          </div>
+        </div>
+      </main>
+    </>
   );
 }
