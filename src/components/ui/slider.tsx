@@ -16,7 +16,7 @@ function Slider({
   defaultValue,
   value,
   min = 0,
-  max = 100,
+  max = 2000000,
   showTooltip = false,
   tooltipContent,
   ...props
@@ -101,7 +101,7 @@ function Slider({
       min={min}
       max={max}
       className={cn(
-        "relative flex w-full touch-none items-center select-none data-[disabled]:opacity-50 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col",
+        "ml-1 relative flex w-full touch-none items-center select-none data-[disabled]:opacity-50 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col",
         className
       )}
       onValueChange={handleValueChange}

@@ -3,162 +3,153 @@
 
 import { IMAGES } from "@/utils/image";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Sidebar from "./components/side-bar";
 import ProductGrid from "./components/product-layout";
 import { SlidersVertical } from "lucide-react";
+import { ProductService } from "@/services/product";
 
 interface Product {
-  id: number;
+  _id: string;
   name: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  hoverImage?: string;
+  description: string;
+  introduction: string;
+  product_option: [
+    {
+      size: string;
+      price: string;
+    }
+  ];
   category: string;
-  colors?: string[];
-  onSale?: boolean;
-  rating?: number;
+  color: string[];
+  thumbnail: string;
+  images: string[];
+  sold: number;
+  created_at: string;
 }
 
 interface Section01Props {
   viewFilter?: boolean;
+  filteredProductMobile?: Product[];
 }
 
-const Section01: React.FC<Section01Props> = ({ viewFilter }) => {
+const Section01: React.FC<Section01Props> = ({
+  viewFilter,
+  filteredProductMobile,
+}) => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [randomProducts, setRandomProducts] = useState<Product[]>([]);
+  const [size, setSize] = useState<string[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [filters, setFilters] = useState({});
+  const [isDesktop, setIsDesktop] = useState<boolean>(true);
 
-  const preIMG = IMAGES.MAIN_1;
-  const hoverIMG = IMAGES.MAIN_3;
+  const init = async () => {
+    try {
+      const res = await ProductService.getAll();
+      if (res && res.data && res.data.length > 0) {
+        setProducts(res.data);
+        setFilteredProducts(res.data);
+        const shuffled = [...res.data].sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 3);
+        setRandomProducts(selected);
 
-  // Sample product data
-  const sampleProducts: Product[] = [
-    {
-      id: 1,
-      name: "Amp pendant lamp, Smal",
-      price: 39.0,
-      image: preIMG,
-      category: "furniture",
-    },
-    {
-      id: 2,
-      name: "Arclander Chair",
-      price: 190.0,
-      image: preIMG,
-      category: "furniture",
-      colors: ["#D4A574", "#8B4513"],
-    },
-    {
-      id: 3,
-      name: "Bank pendant lamp",
-      price: 38.0,
-      image: preIMG,
-      hoverImage: hoverIMG,
-      category: "furniture",
-    },
-    {
-      id: 4,
-      name: "Beoplay A1",
-      price: 32.0,
-      originalPrice: 40.0,
-      image: preIMG,
-      hoverImage: hoverIMG,
-      category: "furniture",
-      onSale: true,
-    },
-    {
-      id: 5,
-      name: "Butler step",
-      price: 39.0,
-      image: preIMG,
-      hoverImage: hoverIMG,
-      category: "furniture",
-    },
-    {
-      id: 6,
-      name: "Dining Chair",
-      price: 37.0,
-      originalPrice: 39.0,
-      image: preIMG,
-      hoverImage: hoverIMG,
-      category: "furniture",
-      onSale: true,
-    },
-    {
-      id: 7,
-      name: "Easy Chair",
-      price: 40.0,
-      originalPrice: 48.0,
-      image: preIMG,
-      hoverImage: hoverIMG,
-      category: "furniture",
-      onSale: true,
-    },
-    {
-      id: 8,
-      name: "Elegant Lounge Chair",
-      price: 49.0,
-      image: preIMG,
-      hoverImage: hoverIMG,
-      category: "furniture",
-      colors: ["#000000", "#FFFFFF"],
-    },
-    {
-      id: 9,
-      name: "Hanging egg chair",
-      price: 39.0,
-      image: preIMG,
-      hoverImage: hoverIMG,
-      category: "furniture",
-    },
-    {
-      id: 10,
-      name: "Herit Armchair",
-      price: 45.0,
-      originalPrice: 52.0,
-      image: preIMG,
-      hoverImage: hoverIMG,
-      category: "furniture",
-      onSale: true,
-    },
-    {
-      id: 11,
-      name: "Hubert pendant lamp",
-      price: 39.0,
-      image: preIMG,
-      hoverImage: hoverIMG,
-      category: "furniture",
-    },
-    {
-      id: 12,
-      name: "Iconic Rocking Horse",
-      price: 49.0,
-      image: preIMG,
-      hoverImage: hoverIMG,
-      category: "furniture",
-    },
-  ];
+        const uniqueSizes = Array.from(
+          new Set(
+            res.data.flatMap((product: Product) =>
+              product.product_option.map((option) => option.size)
+            )
+          )
+        ) as string[];
+        setSize(uniqueSizes);
+      } else {
+        console.log("No products found in response");
+        setProducts([]);
+        setFilteredProducts([]);
+        setRandomProducts([]);
+      }
+    } catch (error) {
+      console.error("Error initializing products:", error);
+      setProducts([]);
+      setFilteredProducts([]);
+      setRandomProducts([]);
+    }
+  };
 
   useEffect(() => {
-    setProducts(sampleProducts);
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024); // Matches Tailwind's 'lg' breakpoint
+    };
+
+    // Initial check
+    handleResize();
+
+    // Add resize event listener
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleFilterChange = (newFilters: any) => {
-    setFilters(newFilters);
-    // Apply filtering logic here
-  };
+  useEffect(() => {
+    init();
+  }, []);
+
+  const handleFilterChange = useCallback(
+    (filters: any) => {
+      let filtered = [...products];
+
+      // Category filter
+      if (filters.category) {
+        filtered = filtered.filter(
+          (product) => product.category === filters.category
+        );
+      }
+
+      // Price filter
+      if (filters.priceRange) {
+        filtered = filtered.filter((product) => {
+          const price = parseFloat(product.product_option[0].price);
+          return (
+            price >= filters.priceRange[0] && price <= filters.priceRange[1]
+          );
+        });
+      }
+
+      // Color filter
+      if (filters.colors && filters.colors.length > 0) {
+        filtered = filtered.filter((product) =>
+          product.color.some((color) => filters.colors.includes(color))
+        );
+      }
+
+      // Size filter
+      if (filters.sizes && filters.sizes.length > 0) {
+        filtered = filtered.filter((product) =>
+          product.product_option.some((option) =>
+            filters.sizes.includes(option.size)
+          )
+        );
+      }
+
+      setFilteredProducts(filtered);
+    },
+    [products]
+  );
 
   return (
     <div className="max-w-7xl mx-auto">
       <div className="flex">
         <div className="hidden lg:flex">
-          <Sidebar onFilterChange={handleFilterChange} />
+          <Sidebar
+            products={randomProducts}
+            sizes={size}
+            onFilterChange={handleFilterChange}
+          />
         </div>
         <ProductGrid
           viewFilter={viewFilter}
-          products={products}
+          products={isDesktop ? filteredProducts : filteredProductMobile || []}
           viewMode={viewMode}
           onViewModeChange={setViewMode}
         />

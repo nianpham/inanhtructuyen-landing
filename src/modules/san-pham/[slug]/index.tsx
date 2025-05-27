@@ -7,6 +7,7 @@ import TopBanner from "@/layout/top-header";
 import ProductContent from "./main";
 import ProductDetailContent from "./main";
 import SectionHeader from "./components/section-header";
+import { ProductProvider } from "../components/product-context";
 
 export default function ProductDetailClient() {
   return (
@@ -14,7 +15,9 @@ export default function ProductDetailClient() {
       <Header />
       <SectionHeader />
       <div className="w-full mb-0">
-        <ProductDetailContent />
+        <ProductProvider>
+          <ProductDetailContent />
+        </ProductProvider>
       </div>
       <Footer />
     </div>

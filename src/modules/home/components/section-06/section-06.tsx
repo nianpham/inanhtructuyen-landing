@@ -3,7 +3,7 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BlogCard from "./components/card";
 import { Swiper as SwiperCore } from "swiper/types";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -13,16 +13,17 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import "@/styles/contact.css";
+import { BlogService } from "@/services/blog";
 
 interface BlogPost {
-  id: number;
+  _id: string;
   title: string;
-  excerpt: string;
+  content: string;
+  tag: string;
   author: string;
-  date: string;
-  image: string;
-  category: string;
-  slug: string;
+  thumbnail: string;
+  created_at: string;
+  excerpt: string;
 }
 
 interface BlogCarouselProps {
@@ -31,65 +32,24 @@ interface BlogCarouselProps {
   subtitle?: string;
 }
 
-const defaultPosts: BlogPost[] = [
-  {
-    id: 1,
-    title: "Outdoor Work: a Designer's Checklist for Every UX Project.",
-    excerpt:
-      "In her new article, journalist Lizzie Rivera looks into the issue of greenwashing in organic and synthetic textiles. With input ...",
-    author: "Admin",
-    date: "April 5, 2022",
-    image: "/api/placeholder/400/300",
-    category: "ORGANIC",
-    slug: "outdoor-work-designers-checklist",
-  },
-  {
-    id: 2,
-    title: "The Ultimate Guide to Make Your WordPress Journal.",
-    excerpt:
-      "In her new article, journalist Lizzie Rivera looks into the issue of greenwashing in organic and synthetic textiles. With input ...",
-    author: "Admin",
-    date: "April 5, 2022",
-    image: "/api/placeholder/400/300",
-    category: "ORGANIC",
-    slug: "ultimate-guide-wordpress-journal",
-  },
-  {
-    id: 3,
-    title: "3 Ways of Lying to Yourself About Your New Relationship.",
-    excerpt:
-      "In her new article, journalist Lizzie Rivera looks into the issue of greenwashing in organic and synthetic textiles. With input ...",
-    author: "Admin",
-    date: "April 5, 2022",
-    image: "/api/placeholder/400/300",
-    category: "ORGANIC",
-    slug: "3-ways-lying-new-relationship",
-  },
-  {
-    id: 4,
-    title: "How to Create Stunning Visual Content for Social Media",
-    excerpt:
-      "In her new article, journalist Lizzie Rivera looks into the issue of greenwashing in organic and synthetic textiles. With input ...",
-    author: "Admin",
-    date: "April 4, 2022",
-    image: "/api/placeholder/400/300",
-    category: "ORGANIC",
-    slug: "create-stunning-visual-content",
-  },
-  {
-    id: 5,
-    title: "The Future of Sustainable Design in 2024",
-    excerpt:
-      "In her new article, journalist Lizzie Rivera looks into the issue of greenwashing in organic and synthetic textiles. With input ...",
-    author: "Admin",
-    date: "April 3, 2022",
-    image: "/api/placeholder/400/300",
-    category: "ORGANIC",
-    slug: "future-sustainable-design-2024",
-  },
-];
-
 const Section6: React.FC<BlogCarouselProps> = (props) => {
+  const [blogs, setBlogs] = useState([] as BlogPost[]);
+
+  const renderBlog = async () => {
+    const res = await BlogService.getAll();
+    if (res && res.data.length > 0) {
+      setBlogs(res.data);
+    }
+  };
+
+  const init = async () => {
+    renderBlog();
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
   const swiperRef = useRef<SwiperCore | null>(null);
 
   const handlePrev = () => {
@@ -104,18 +64,17 @@ const Section6: React.FC<BlogCarouselProps> = (props) => {
     }
   };
 
-  const posts = props.posts || defaultPosts;
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-0">
       <section>
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            {props.title || "Latest From Blog"}
+            Bản Tin Mới Nhất
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            {props.subtitle ||
-              "Class Aptent Taciti Sociosqu Ad Litora Torquent Per"}
+            Cập nhật những tin tức mới nhất từ chúng tôi. Đừng bỏ lỡ bất kỳ
+            thông tin quan trọng nào!
           </p>
         </div>
         {/* Carousel Container */}
@@ -147,9 +106,9 @@ const Section6: React.FC<BlogCarouselProps> = (props) => {
             modules={[Pagination, Navigation, Autoplay]}
             className="w-full sm:w-96 lg:w-full h-full"
           >
-            {posts?.map((post, index: number) => (
+            {blogs?.map((post, index: number) => (
               <SwiperSlide key={index} className="">
-                <BlogCard key={post.id} post={post} />
+                <BlogCard key={post._id} post={post} />
               </SwiperSlide>
             ))}
           </Swiper>

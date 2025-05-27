@@ -5,17 +5,113 @@ import Footer from "@/layout/footer";
 import ProductContent from "./main";
 import Sidebar from "./components/section-01/components/side-bar";
 import { CircleX, SlidersVertical } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { ProductService } from "@/services/product";
+
+interface Product {
+  _id: string;
+  name: string;
+  description: string;
+  introduction: string;
+  product_option: [
+    {
+      size: string;
+      price: string;
+    }
+  ];
+  category: string;
+  color: string[];
+  thumbnail: string;
+  images: string[];
+  sold: number;
+  created_at: string;
+}
 
 export default function ProductClient() {
-  const [filters, setFilters] = useState({});
   const [viewFilter, setViewFilter] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [randomProducts, setRandomProducts] = useState<Product[]>([]);
+  const [size, setSize] = useState<string[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-  const handleFilterChange = (newFilters: any) => {
-    setFilters(newFilters);
-    // Apply filtering logic here
+  const init = async () => {
+    try {
+      const res = await ProductService.getAll();
+      if (res && res.data && res.data.length > 0) {
+        setProducts(res.data);
+        setFilteredProducts(res.data);
+        const shuffled = [...res.data].sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 3);
+        setRandomProducts(selected);
+
+        const uniqueSizes = Array.from(
+          new Set(
+            res.data.flatMap((product: Product) =>
+              product.product_option.map((option) => option.size)
+            )
+          )
+        ) as string[];
+        setSize(uniqueSizes);
+      } else {
+        console.log("No products found in response");
+        setProducts([]);
+        setFilteredProducts([]);
+        setRandomProducts([]);
+      }
+    } catch (error) {
+      console.error("Error initializing products:", error);
+      setProducts([]);
+      setFilteredProducts([]);
+      setRandomProducts([]);
+    }
   };
 
+  useEffect(() => {
+    init();
+  }, []);
+
+  const handleFilterChange = useCallback(
+    (filters: any) => {
+      let filtered = [...products];
+
+      // Category filter
+      if (filters.category) {
+        filtered = filtered.filter(
+          (product) => product.category === filters.category
+        );
+      }
+
+      // Price filter
+      if (filters.priceRange) {
+        filtered = filtered.filter((product) => {
+          const price = parseFloat(product.product_option[0].price);
+          return (
+            price >= filters.priceRange[0] && price <= filters.priceRange[1]
+          );
+        });
+      }
+
+      // Color filter
+      if (filters.colors && filters.colors.length > 0) {
+        filtered = filtered.filter((product) =>
+          product.color.some((color) => filters.colors.includes(color))
+        );
+      }
+
+      // Size filter
+      if (filters.sizes && filters.sizes.length > 0) {
+        filtered = filtered.filter((product) =>
+          product.product_option.some((option) =>
+            filters.sizes.includes(option.size)
+          )
+        );
+      }
+
+      setFilteredProducts(filtered);
+    },
+    [products]
+  );
   return (
     <div className="relative w-full flex flex-col justify-center items-center">
       <div className={`${viewFilter ? "z-0" : "z-50"} w-full`}>
@@ -31,11 +127,15 @@ export default function ProductClient() {
       >
         {viewFilter && (
           <div
-            className={`h-screen overflow-y-auto bg-white w-80 transition-transform duration-500 ease-in-out ${
+            className={`h-screen overflow-y-auto bg-white w-80 transition-transform duration-500 ease-in-out pl-5 ${
               viewFilter ? "translate-x-0" : "-translate-x-full"
             }`}
           >
-            <Sidebar onFilterChange={handleFilterChange} />
+            <Sidebar
+              products={randomProducts}
+              sizes={size}
+              onFilterChange={handleFilterChange}
+            />
           </div>
         )}
 
@@ -57,7 +157,10 @@ export default function ProductClient() {
         </div>
       </div>
       <div className="w-full mb-0">
-        <ProductContent viewFilter={viewFilter} />
+        <ProductContent
+          filteredProduct={filteredProducts}
+          viewFilter={viewFilter}
+        />
       </div>
       <Footer />
     </div>

@@ -61,6 +61,30 @@ const calculateTotalNumber = (money: string, ship: any, voucher: any) => {
   return number;
 };
 
+const renderColor = (color: string) => {
+  let result = "";
+  switch (color) {
+    case "black":
+      result = "bg-black";
+      break;
+    case "white":
+      result = "bg-white";
+      break;
+    case "gold":
+      result = "bg-yellow-500";
+      break;
+    case "silver":
+      result = "bg-gray-200";
+      break;
+    case "wood":
+      result = "bg-yellow-900";
+      break;
+    default:
+      break;
+  }
+  return result;
+};
+
 export const HELPER = {
   formatVND,
   formatDate,
@@ -69,4 +93,5 @@ export const HELPER = {
   upPrice,
   calculateTotal,
   calculateTotalNumber,
+  renderColor,
 };

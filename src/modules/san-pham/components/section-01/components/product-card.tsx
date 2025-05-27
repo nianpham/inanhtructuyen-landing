@@ -1,20 +1,11 @@
+import { HELPER } from "@/utils/helper";
 import { BarChart3, Eye, Heart, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  hoverImage?: string;
-  category: string;
-  colors?: string[];
-  onSale?: boolean;
-  rating?: number;
-}
+import { Product } from "@/types/product";
+import { useProduct } from "../../product-context";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: Product;
@@ -23,7 +14,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="group relative bg-white overflow-hidden transition-all duration-300">
-      {product.onSale && (
+      {Number(product._id.charAt(7)) % 2 !== 0 && (
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded">
             Sale!
@@ -33,30 +24,30 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
       {/* Product Image Container */}
       <div className="relative aspect-square rounded-lg overflow-hidden">
-        <Link href={`/detail-product`}>
+        <div>
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
             <Image
-              src={product.image}
+              src={product.thumbnail}
               alt={product.name}
               layout="fill"
               objectFit="cover"
-              className={`transition-opacity duration-300  ${
-                product.hoverImage
+              className={`transition-opacity duration-300 border border-gray-200  ${
+                product.images[1]
                   ? "group-hover:opacity-0"
                   : "group-hover:opacity-100"
               } rounded-lg`}
             />
-            {product.hoverImage && (
+            {product.images[1] && (
               <Image
-                src={product.hoverImage}
+                src={product.images[1]}
                 alt={`${product.name} hover`}
                 layout="fill"
                 objectFit="cover"
-                className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"
+                className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg border border-gray-200"
               />
             )}
           </div>
-        </Link>
+        </div>
         <>
           <div className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button className="p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow">
@@ -85,15 +76,27 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {product.name}
           </h3>
           <div className="flex items-center space-x-2">
-            {product.originalPrice && (
+            {Number(product._id.charAt(7)) % 2 !== 0 && (
               <span className="text-sm text-gray-500 line-through">
-                ${product.originalPrice.toFixed(2)}
+                {HELPER.formatVND(
+                  HELPER.upPrice(product.product_option[0].price)
+                )}
               </span>
             )}
             <span className="text-sm font-semibold text-gray-900">
-              ${product.price.toFixed(2)}
+              {HELPER.formatVND(product.product_option[0].price)}
             </span>
           </div>
+        </div>
+        <div className="flex space-x-2 mt-3">
+          {product.color.slice(0, 3).map((color, index) => (
+            <div
+              key={index}
+              className={`w-4 h-4 ${HELPER.renderColor(
+                color
+              )} rounded-full border border-gray-200`}
+            ></div>
+          ))}
         </div>
       </div>
     </div>

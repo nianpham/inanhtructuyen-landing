@@ -11,9 +11,9 @@ export default function Selection() {
         <option value="" disabled>
           Default Sorting
         </option>
-        <option value="1">1 to 5</option>
-        <option value="2">5 to 10</option>
-        <option value="3">More than 10</option>
+        <option value="1">Sort by latest</option>
+        <option value="2">Sort by Price: Low to High</option>
+        <option value="3">Sort by Price: High to Low</option>
       </SelectNative>
     </div>
   );

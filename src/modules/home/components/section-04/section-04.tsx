@@ -1,100 +1,47 @@
 // components/ReadingTestCollection.tsx
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "./components/card";
+import { ProductService } from "@/services/product";
 
 interface Product {
-  id: number;
+  _id: string;
   name: string;
-  price: number;
-  originalPrice?: number;
-  rating?: number;
-  image: string;
+  description: string;
+  introduction: string;
+  product_option: [
+    {
+      size: string;
+      price: string;
+    }
+  ];
+  category: string;
+  color: string[];
+  thumbnail: string;
+  images: string[];
+  sold: number;
+  created_at: string;
 }
 
-const featuredProducts: Product[] = [
-  {
-    id: 1,
-    name: "Turning Table",
-    price: 52.0,
-    originalPrice: 57.0,
-    image:
-      "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
-  },
-  {
-    id: 2,
-    name: "Beoplay A1",
-    price: 32.0,
-    originalPrice: 49.0,
-    image:
-      "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
-  },
-  {
-    id: 3,
-    name: "Stainless Steel Teapot",
-    price: 39.0,
-    originalPrice: 18.0,
-    image:
-      "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
-  },
-];
-
-const topRatedProducts: Product[] = [
-  {
-    id: 4,
-    name: "Mogens Koch Bookcase",
-    price: 39.0,
-    rating: 5,
-    image:
-      "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
-  },
-  {
-    id: 5,
-    name: "Laundry Baskets",
-    price: 30.0,
-    originalPrice: 39.0,
-    rating: 5,
-    image:
-      "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
-  },
-  {
-    id: 6,
-    name: "Mini Table Lamp",
-    price: 39.0,
-    rating: 5,
-    image:
-      "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
-  },
-];
-
-const trendingProducts: Product[] = [
-  {
-    id: 7,
-    name: "Arctander Chair",
-    price: 100.0,
-    image:
-      "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
-  },
-  {
-    id: 8,
-    name: "Beoplay A1",
-    price: 32.0,
-    originalPrice: 49.0,
-    image:
-      "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
-  },
-  {
-    id: 9,
-    name: "Turning Table",
-    price: 52.0,
-    originalPrice: 57.0,
-    image:
-      "https://res.cloudinary.com/farmcode/image/upload/v1748163483/ielts-test/image1_cs2cl2.avif",
-  },
-];
-
 const Section4: React.FC = () => {
+  const [products, setProducts] = useState([] as Product[]);
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [topRatedProducts, setTopRatedProducts] = useState<Product[]>([]);
+  const [trendingProducts, setTrendingProducts] = useState<Product[]>([]);
+  const init = async () => {
+    const res = await ProductService.getAll();
+    if (res && res.data.length > 0) {
+      setProducts(res.data);
+      setFeaturedProducts(res.data.slice(0, 3));
+      setTopRatedProducts(res.data.slice(3, 6));
+      setTrendingProducts(res.data.slice(6, 9));
+    }
+  };
+  useEffect(() => {
+    init();
+  }, []);
+
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-0">
       <section className="pb-20">
@@ -103,22 +50,22 @@ const Section4: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-                  Featured Products
+                  Sản Phẩm Nổi Bật
                 </h2>
                 <div className="space-y-4">
                   {featuredProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                    <ProductCard key={product._id} product={product} />
                   ))}
                 </div>
               </div>
               <div className="">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-                  Top Rated Products
+                  Sản Phẩm Đánh Giá Cao
                 </h2>
                 <div className="space-y-4">
                   {topRatedProducts.map((product) => (
                     <ProductCard
-                      key={product.id}
+                      key={product._id}
                       product={product}
                       showRating={true}
                     />
@@ -127,11 +74,11 @@ const Section4: React.FC = () => {
               </div>
               <div className="">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-                  Trending Products
+                  Sản Phẩm Xu Hướng
                 </h2>
                 <div className="space-y-4">
                   {trendingProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                    <ProductCard key={product._id} product={product} />
                   ))}
                 </div>
               </div>

@@ -1,14 +1,25 @@
 import React from "react";
 import { Star } from "lucide-react";
 import Image from "next/image";
+import { HELPER } from "@/utils/helper";
 
 interface Product {
-  id: number;
+  _id: string;
   name: string;
-  price: number;
-  originalPrice?: number;
-  rating?: number;
-  image: string;
+  description: string;
+  introduction: string;
+  product_option: [
+    {
+      size: string;
+      price: string;
+    }
+  ];
+  category: string;
+  color: string[];
+  thumbnail: string;
+  images: string[];
+  sold: number;
+  created_at: string;
 }
 
 interface ProductCardProps {
@@ -35,28 +46,30 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <div className="flex items-start space-x-4 py-4">
       <div className="w-20 h-20 bg-gray-100 rounded-md flex items-center justify-center overflow-hidden">
         <Image
-          src={product.image}
+          src={product.thumbnail}
           alt={product.name}
-          width={64}
-          height={64}
-          className="object-cover w-full h-full"
+          width={1000}
+          height={1000}
+          className="object-cover w-full h-full rounded-md border border-gray-200"
         />
       </div>
       <div className="flex-1">
         <h3 className="font-medium text-gray-900 mb-1">{product.name}</h3>
         <div className="flex items-center space-x-2">
-          {product.originalPrice && (
-            <span className="text-gray-400 line-through text-sm">
-              ${product.originalPrice.toFixed(2)}
+          {Number(product._id.charAt(7)) % 2 !== 0 && (
+            <span className="text-sm text-gray-500 line-through">
+              {HELPER.formatVND(
+                HELPER.upPrice(product.product_option[0].price)
+              )}
             </span>
           )}
           <span className="text-lg font-semibold text-orange-600">
-            ${product.price.toFixed(2)}
+            {HELPER.formatVND(product.product_option[0].price)}
           </span>
         </div>
-        {showRating && product.rating && (
+        {showRating && (
           <div className="flex items-center mt-1">
-            {renderStars(product.rating)}
+            {renderStars(Math.floor(Math.random() * 2) + 4)}
           </div>
         )}
       </div>
