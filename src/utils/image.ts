@@ -1,3 +1,5 @@
+import { slider } from "@heroui/react";
+
 export const IMAGES = {
   LOGO: "/logo.png",
   FACEBOOK:
@@ -31,4 +33,27 @@ export const IMAGES = {
     "https://res.cloudinary.com/farmcode/image/upload/v1748171791/ielts-test/main4_z9xqmw.jpg",
   MAIN_5:
     "https://res.cloudinary.com/farmcode/image/upload/v1748171804/ielts-test/main5_hc4r5x.jpg",
+
+  slider_1: [
+    "https://res.cloudinary.com/farmcode/image/upload/v1748450520/ielts-test/FATT6375_rszrxr.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748451439/ielts-test/IMG_1110_big0rh.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748451462/ielts-test/IMG_1113_s2w4ju.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748451480/ielts-test/IMG_1117_y4noqt.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748451525/ielts-test/IMG_1119_zhdml6.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748451537/ielts-test/IMG_1123_wwndct.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748451551/ielts-test/IMG_1125_sj6vb7.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748451562/ielts-test/IMG_1143_wfle0f.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748451574/ielts-test/IMG_1164_wbtvbi.jpg",
+  ],
+  slider_2: [
+    "https://res.cloudinary.com/farmcode/image/upload/v1748451586/ielts-test/IMG_1167_vw1isr.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748451600/ielts-test/IMG_1172_m0kz1h.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748451620/ielts-test/IMG_7585-1_ioihn6.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748451634/ielts-test/IMG_7585_arlcpw.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748452439/ielts-test/IMG_7611_ptezfd.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748452563/ielts-test/IMG_7614_gkfqhe.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748452600/ielts-test/IMG_7629_xgvpxj.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748452613/ielts-test/IMG_7630_gfoqfx.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1748452643/ielts-test/IMG_7661-1_aqmltf.jpg",
+  ],
 };

@@ -3,6 +3,7 @@
 
 import { IMAGES } from "@/utils/image";
 import Image from "next/image";
+import FastMarquee from "react-fast-marquee";
 import React, { useState } from "react";
 
 interface ProductCardProps {
@@ -76,26 +77,34 @@ const Section1: React.FC = () => {
               <div className="lg:col-span-2">
                 <div className="min-h-[700px] relative overflow-hidden">
                   <div className="absolute top-8 left-8 z-10 max-w-md">
-                    <p className="text-gray-600 mb-4">
-                      <span className="text-amber-600 font-medium">
-                        <span className="text-black">
-                          Quick parcel delivery,
+                    {/* <p className="text-gray-600 mb-4">
+                      <span className="font-medium">
+                        <span className="text-white">
+                          Giao hàng nhanh và tiết kiệm,
                         </span>{" "}
-                        from $25
+                        <span className="text-yellow-300  font-medium">
+                          chỉ từ 30.000đ
+                        </span>
                       </span>
-                    </p>
-                    <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8 leading-tight">
+                    </p> */}
+                    <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8 leading-tight mt-1">
                       Dấu ấn thời gian
                     </h1>
-                    <button className="bg-gray-900 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
-                      Start Shopping
+                    <p className="text-white mb-8 line-clamp-4">
+                      Chúng tôi thấu hiểu rằng những khoảnh khắc quan trọng
+                      trong cuộc đời không chỉ là dấu ấn của thời gian, mà còn
+                      là những cột mốc ý nghĩa trong hành trình sống của mỗi
+                      người.
+                    </p>
+                    <button className="bg-[rgb(var(--primary-rgb))] text-gray-800 font-medium hover:bg-[rgb(var(--fifteenth-rgb))] hover:text-[rgb(var(--primary-rgb))] px-8 py-4 rounded-lg transition-colors">
+                      Đặt hàng ngay
                     </button>
                   </div>
 
                   {/* Hero Image */}
                   <div className="absolute bottom-0 right-0 left-0 top-0 w-full h-full flex items-center justify-center z-0">
                     <Image
-                      src={IMAGES.BANNER_6}
+                      src={IMAGES.BANNER_4}
                       alt="Main Image 1"
                       width={1200}
                       height={1000}
@@ -122,7 +131,7 @@ const Section1: React.FC = () => {
 
               {/* Product Cards Sidebar - Takes 1/3 width */}
               <div className="grid h-full lg:col-span-1 lg:grid-row-2 gap-6">
-                {products.map((product, index) => (
+                {/* {products.map((product, index) => (
                   <ProductCard
                     key={index}
                     title={product.title}
@@ -132,7 +141,33 @@ const Section1: React.FC = () => {
                     image={product.image}
                     bgColor={product.bgColor}
                   />
-                ))}
+                ))} */}
+
+                <FastMarquee loop={0} speed={70}>
+                  {IMAGES.slider_1?.map((item: any, index: number) => (
+                    <Image
+                      key={`marquee-image-${index}`}
+                      src={item}
+                      alt="alt"
+                      className="w-full h-[338px] object-cover object-center pr-6"
+                      width={1000}
+                      height={1000}
+                    />
+                  ))}
+                </FastMarquee>
+
+                <FastMarquee loop={0} speed={70} direction="right">
+                  {IMAGES.slider_2?.map((item: any, index: number) => (
+                    <Image
+                      key={`marquee-image-${index}`}
+                      src={item}
+                      alt="alt"
+                      className="w-full h-[338px] object-cover object-center pr-6"
+                      width={1000}
+                      height={1000}
+                    />
+                  ))}
+                </FastMarquee>
               </div>
             </div>
           </div>
