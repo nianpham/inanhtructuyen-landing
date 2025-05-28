@@ -71,6 +71,22 @@ const ProductGrid: React.FC<ProductGridProps> = ({
     }
   }, [totalPage, currenPage, sortedProducts.length]);
 
+  const selectPage = (pageSelected: number) => {
+    setCurrenPage(pageSelected);
+  };
+
+  const prevPage = () => {
+    if (currenPage > 1) {
+      selectPage(currenPage - 1);
+    }
+  };
+
+  const nextPage = () => {
+    if (currenPage < totalPage) {
+      selectPage(currenPage + 1);
+    }
+  };
+
   // Handle URL parameter persistence and hiding
   useEffect(() => {
     const PARAMS_KEY = "__params";
@@ -115,22 +131,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({
     };
   }, [searchParams]);
 
-  const selectPage = (pageSelected: number) => {
-    setCurrenPage(pageSelected);
-  };
-
-  const prevPage = () => {
-    if (currenPage > 1) {
-      selectPage(currenPage - 1);
-    }
-  };
-
-  const nextPage = () => {
-    if (currenPage < totalPage) {
-      selectPage(currenPage + 1);
-    }
-  };
-
   const { setSelectedProductId } = useProduct();
 
   const handleClick = (id: string, title: string) => {
@@ -164,15 +164,17 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           <span className="text-gray-600">Xem dạng:</span>
           <button
             onClick={() => onViewModeChange("grid")}
-            className={`p-1 ${viewMode === "grid" ? "text-black" : "text-gray-400"
-              }`}
+            className={`p-1 ${
+              viewMode === "grid" ? "text-black" : "text-gray-400"
+            }`}
           >
             <Grip size={20} />
           </button>
           <button
             onClick={() => onViewModeChange("list")}
-            className={`p-1 ${viewMode === "list" ? "text-black" : "text-gray-400"
-              }`}
+            className={`p-1 ${
+              viewMode === "list" ? "text-black" : "text-gray-400"
+            }`}
           >
             <AlignJustify size={20} />
           </button>
@@ -189,8 +191,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       <div
         className={
           viewMode === "grid"
-            ? `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${viewFilter ? "z-0" : "z-30"
-            }`
+            ? `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${
+                viewFilter ? "z-0" : "z-30"
+              }`
             : "space-y-4"
         }
       >
@@ -245,10 +248,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                   <li key={index} onClick={() => selectPage(item)}>
                     <a
                       href="#"
-                      className={`${item === currenPage
-                        ? "bg-indigo-50 hover:bg-indigo-100 text-gray-700"
-                        : "bg-white"
-                        } flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700`}
+                      className={`${
+                        item === currenPage
+                          ? "bg-indigo-50 hover:bg-indigo-100 text-gray-700"
+                          : "bg-white"
+                      } flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700`}
                     >
                       {item}
                     </a>

@@ -1,7 +1,9 @@
+import { useProduct } from "@/modules/san-pham/components/product-context";
 import { HELPER } from "@/utils/helper";
 import { Heart, Eye, BarChart3, ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect } from "react";
 
 interface Product {
   _id: string;
@@ -23,8 +25,65 @@ interface Product {
 }
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Handle URL parameter persistence and hiding
+  useEffect(() => {
+    const PARAMS_KEY = "__params";
+
+    const getParams = () => {
+      const urlParams = searchParams.toString();
+      if (urlParams) {
+        sessionStorage.setItem(PARAMS_KEY, urlParams);
+        return urlParams;
+      }
+      return sessionStorage.getItem(PARAMS_KEY) || "";
+    };
+
+    const hideParams = () => {
+      const params = getParams();
+      if (params && window.location.search) {
+        window.history.replaceState(
+          null,
+          document.title,
+          window.location.pathname
+        );
+      }
+    };
+
+    hideParams();
+
+    const handleBeforeUnload = () => {
+      const params = sessionStorage.getItem(PARAMS_KEY) || "";
+      if (params) {
+        window.history.replaceState(
+          null,
+          document.title,
+          `${window.location.pathname}?${params}`
+        );
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [searchParams]);
+
+  const { setSelectedProductId } = useProduct();
+
+  const handleClick = (id: string, title: string) => {
+    setSelectedProductId(id);
+    localStorage.setItem("selectedProductId", id);
+    router.push(`/products/${HELPER.convertSpacesToDash(title)}?id=${id}`);
+  };
   return (
-    <div className="group relative bg-white overflow-hidden transition-all duration-300">
+    <div
+      className="cursor-pointer group relative bg-white overflow-hidden transition-all duration-300"
+      onClick={() => handleClick(product._id, product.name)}
+    >
       {Number(product._id.charAt(7)) % 2 !== 0 && (
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded">
@@ -41,10 +100,11 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             alt={product.name}
             layout="fill"
             objectFit="cover"
-            className={`transition-opacity duration-300  ${product?.images[1]
-              ? "group-hover:opacity-0"
-              : "group-hover:opacity-100"
-              } rounded-lg`}
+            className={`transition-opacity duration-300  ${
+              product?.images[1]
+                ? "group-hover:opacity-0"
+                : "group-hover:opacity-100"
+            } rounded-lg`}
           />
           {product?.images[1] && (
             <Image

@@ -10,6 +10,8 @@ import SliderRange from "@/components/ui/comp-251";
 import Image from "next/image";
 import { HELPER } from "@/utils/helper";
 import "@/styles/hide-scroll.css";
+import { useProduct } from "../../product-context";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface Product {
   _id: string;
@@ -55,6 +57,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const filterProducts = useCallback(() => {
     let filtered = [...products];
@@ -154,6 +158,58 @@ const Sidebar: React.FC<SidebarProps> = ({
     };
   }, []);
 
+  // Handle URL parameter persistence and hiding
+  useEffect(() => {
+    const PARAMS_KEY = "__params";
+
+    const getParams = () => {
+      const urlParams = searchParams.toString();
+      if (urlParams) {
+        sessionStorage.setItem(PARAMS_KEY, urlParams);
+        return urlParams;
+      }
+      return sessionStorage.getItem(PARAMS_KEY) || "";
+    };
+
+    const hideParams = () => {
+      const params = getParams();
+      if (params && window.location.search) {
+        window.history.replaceState(
+          null,
+          document.title,
+          window.location.pathname
+        );
+      }
+    };
+
+    hideParams();
+
+    const handleBeforeUnload = () => {
+      const params = sessionStorage.getItem(PARAMS_KEY) || "";
+      if (params) {
+        window.history.replaceState(
+          null,
+          document.title,
+          `${window.location.pathname}?${params}`
+        );
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [searchParams]);
+
+  const { setSelectedProductId } = useProduct();
+
+  const handleClick = (id: string, title: string) => {
+    setSelectedProductId(id);
+    localStorage.setItem("selectedProductId", id);
+    router.push(`/products/${HELPER.convertSpacesToDash(title)}?id=${id}`);
+  };
+
   return (
     <div className="w-full lg:w-64 bg-white h-full overflow-y-auto py-10 pr-5">
       {/* Product Categories */}
@@ -175,10 +231,11 @@ const Sidebar: React.FC<SidebarProps> = ({
               >
                 <div className="flex items-center">
                   <div
-                    className={`w-2 h-2 rounded-full mr-3 ${selectedCategory === category.id
-                      ? "bg-black"
-                      : "border border-gray-300"
-                      }`}
+                    className={`w-2 h-2 rounded-full mr-3 ${
+                      selectedCategory === category.id
+                        ? "bg-black"
+                        : "border border-gray-300"
+                    }`}
                   />
                   <span className="text-gray-700">{category.name}</span>
                 </div>
@@ -215,10 +272,11 @@ const Sidebar: React.FC<SidebarProps> = ({
           {colors.map((color, index) => (
             <button
               key={index}
-              className={`w-6 h-6 rounded-full border-2 ${selectedColors.includes(color)
-                ? "border-gray-800"
-                : "border-gray-300"
-                } ${HELPER.renderColor(color)}`}
+              className={`w-6 h-6 rounded-full border-2 ${
+                selectedColors.includes(color)
+                  ? "border-gray-800"
+                  : "border-gray-300"
+              } ${HELPER.renderColor(color)}`}
               onClick={() => {
                 setSelectedColors((prev) =>
                   prev.includes(color)
@@ -236,8 +294,9 @@ const Sidebar: React.FC<SidebarProps> = ({
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Kích thước</h3>
         <div className="relative">
           <div
-            className={`absolute top-0 inset-x-0 bg-gradient-to-b from-white z-20 to-transparent pointer-events-none transition-opacity duration-300 ${showTopGradient ? "opacity-100" : "opacity-0"
-              }`}
+            className={`absolute top-0 inset-x-0 bg-gradient-to-b from-white z-20 to-transparent pointer-events-none transition-opacity duration-300 ${
+              showTopGradient ? "opacity-100" : "opacity-0"
+            }`}
             style={{ height: "60px" }}
           />
           <div
@@ -263,8 +322,9 @@ const Sidebar: React.FC<SidebarProps> = ({
             ))}
           </div>
           <div
-            className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300 ${showBottomGradient ? "opacity-100" : "opacity-0"
-              }`}
+            className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300 ${
+              showBottomGradient ? "opacity-100" : "opacity-0"
+            }`}
             style={{ height: "60px" }}
           />
         </div>
@@ -277,7 +337,11 @@ const Sidebar: React.FC<SidebarProps> = ({
         </h3>
         <div className="space-y-4">
           {products?.map((product, index) => (
-            <div key={index} className="grid grid-cols-12 items-center gap-4">
+            <div
+              key={index}
+              onClick={() => handleClick(product._id, product.name)}
+              className="cursor-pointer grid grid-cols-12 items-center gap-4"
+            >
               <div className="col-span-4">
                 <Image
                   width={1000}

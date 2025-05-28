@@ -26,7 +26,7 @@ import "swiper/css/effect-coverflow";
 import "@/styles/contact.css";
 import ProductCard from "./components/card";
 import { ProductService } from "@/services/product";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { HELPER } from "@/utils/helper";
 import SectionHeader from "../section-header";
 
@@ -52,10 +52,10 @@ interface Product {
 const Section1: React.FC = () => {
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState<Product | null>(null);
-  const searchParams = useSearchParams();
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [relatedProduct, setRelatedProduct] = useState<Product[]>([]);
   const [expanded, setExpanded] = useState(false);
+  const searchParams = useSearchParams();
 
   const getPartialContent = (content: string) => {
     const words = content.split(" ");
@@ -194,6 +194,8 @@ const Section1: React.FC = () => {
     swiperInstance?.slideTo(firstVisibleIndex);
   };
 
+  const social = [IMAGES.FACEBOOK, IMAGES.ZALO];
+
   return (
     <>
       <SectionHeader title={product?.name ?? ""} />
@@ -217,10 +219,11 @@ const Section1: React.FC = () => {
                 {product?.images?.map((proImg: any, index: any) => (
                   <SwiperSlide key={index}>
                     <div
-                      className={`w-full h-full rounded-sm overflow-hidden cursor-pointer relative transition-all duration-300 ${activeSlide === index
-                        ? "border-[#6B3410] border-2"
-                        : "border-transparent"
-                        }`}
+                      className={`w-full h-full rounded-sm overflow-hidden cursor-pointer relative transition-all duration-300 ${
+                        activeSlide === index
+                          ? "border-[#6B3410] border-2"
+                          : "border-transparent"
+                      }`}
                       onClick={() => handleThumbnailClick(index)}
                     >
                       <Image
@@ -236,7 +239,7 @@ const Section1: React.FC = () => {
               </Swiper>
             </div>
 
-            <div className="lg:w-[500px]">
+            <div className="lg:w-[500px] h-full">
               <Swiper
                 onSwiper={handleSwiper}
                 onSlideChange={handleSlideChange}
@@ -246,7 +249,7 @@ const Section1: React.FC = () => {
               >
                 {product?.images?.map((proImg: any, index: any) => (
                   <SwiperSlide key={index}>
-                    <div className="aspect-square w-full relative bg-gray-50">
+                    <div className="aspect-square w-full h-full relative bg-gray-50">
                       <Image
                         src={proImg}
                         alt="Product Image"
@@ -275,10 +278,11 @@ const Section1: React.FC = () => {
                 {product?.images?.map((proImg: any, index: any) => (
                   <SwiperSlide key={index}>
                     <div
-                      className={`w-full h-full rounded-sm overflow-hidden cursor-pointer relative transition-all duration-300 ${activeSlide === index
-                        ? "border-[#6B3410] border-2"
-                        : "border-transparent"
-                        }`}
+                      className={`w-full h-full rounded-sm overflow-hidden cursor-pointer relative transition-all duration-300 ${
+                        activeSlide === index
+                          ? "border-[#6B3410] border-2"
+                          : "border-transparent"
+                      }`}
                       onClick={() => handleThumbnailClick(index)}
                     >
                       <Image
@@ -317,10 +321,11 @@ const Section1: React.FC = () => {
                 {product?.product_option?.map((option: any, index: number) => (
                   <button
                     key={index}
-                    className={`h-10 text-sm lg:text-base font-base border rounded-md flex items-center justify-center py-2 cursor-pointer transition-all duration-300 ${selectedSize === option.size
-                      ? "border-[#6B3410] border-2 bg-orange-50"
-                      : "border-gray-300"
-                      }`}
+                    className={`h-10 text-sm lg:text-base font-base border rounded-md flex items-center justify-center py-2 cursor-pointer transition-all duration-300 ${
+                      selectedSize === option.size
+                        ? "border-[#6B3410] border-2 bg-orange-50"
+                        : "border-gray-300"
+                    }`}
                     onClick={() => handleSizeSelect(option.size)}
                   >
                     <div className="flex">{option.size}</div>
@@ -342,19 +347,20 @@ const Section1: React.FC = () => {
               <div className="mb-3 font-medium">Màu sắc:</div>
               {product?.color.length === 0 ? (
                 <div className="text-black">Không có</div>
-              ) : (<div className="space-y-3">
-                <div className="flex space-x-3">
-                  {product?.color.map((color, index) => (
-                    <div
-                      key={index}
-                      className={`w-8 h-8 ${HELPER.renderColor(
-                        color
-                      )} rounded-full border border-gray-300`}
-                    ></div>
-                  ))}
+              ) : (
+                <div className="space-y-3">
+                  <div className="flex space-x-3">
+                    {product?.color.map((color, index) => (
+                      <div
+                        key={index}
+                        className={`w-8 h-8 ${HELPER.renderColor(
+                          color
+                        )} rounded-full border border-gray-300`}
+                      ></div>
+                    ))}
+                  </div>
                 </div>
-              </div>)}
-
+              )}
             </div>
 
             <div>
@@ -431,18 +437,21 @@ const Section1: React.FC = () => {
               <div>
                 <span className="font-medium">Phân loại:</span>
                 {"  "}
-                {product?.category}
+                {HELPER.renderCategory(product?.category || "")}
               </div>
               <div className="flex items-center space-x-2">
                 <span className="font-medium">Chia sẻ:</span>
                 <div className="flex space-x-2">
-                  {["f", "t", "in", "@", "link"].map((icon, index) => (
-                    <button
-                      key={index}
-                      className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200"
-                    >
-                      <span className="text-xs font-medium">{icon}</span>
-                    </button>
+                  {social.map((icon, index) => (
+                    <div key={index}>
+                      <Image
+                        src={icon}
+                        alt={`Share on ${icon}`}
+                        width={24}
+                        height={24}
+                        className="w-8 h-8 rounded-full cursor-pointer hover:opacity-80"
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -476,57 +485,9 @@ const Section1: React.FC = () => {
 
         {/* Related Products */}
         <div className="pb-12">
-          <h2 className="text-3xl font-medium font-light text-gray-900 mb-8 text-center">
+          <h2 className="text-3xl font-medium text-gray-900 mb-8 text-center">
             Sản phẩm liên quan
           </h2>
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {relatedProducts.map((product) => (
-            <div key={product.id} className="group">
-              <div className="relative bg-gray-50 rounded-lg overflow-hidden aspect-square mb-4">
-                {product.isOnSale && (
-                  <div className="absolute top-3 left-3 bg-yellow-600 text-white text-xs px-2 py-1 rounded">
-                    Sale!
-                  </div>
-                )}
-                <div className="w-full h-full flex items-center justify-center">
-                  <div
-                    className={`w-24 h-24 rounded ${
-                      product.id === "1"
-                        ? "bg-gray-800"
-                        : product.id === "2"
-                        ? "bg-yellow-600"
-                        : product.id === "3"
-                        ? "bg-gray-900"
-                        : "bg-gray-200"
-                    }`}
-                  ></div>
-                </div>
-              </div>
-              <h3 className="font-medium text-gray-900 mb-1">{product.name}</h3>
-              <div className="flex items-center space-x-2">
-                {product.originalPrice && (
-                  <span className="text-sm text-gray-500 line-through">
-                    ${product.originalPrice.toFixed(2)}
-                  </span>
-                )}
-                <span className="font-medium text-gray-900">
-                  ${product.price.toFixed(2)}
-                </span>
-              </div>
-              {product.colors && (
-                <div className="flex space-x-1 mt-2">
-                  {product.colors.map((color, index) => (
-                    <div
-                      key={index}
-                      className="w-3 h-3 rounded-full border border-gray-300"
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div> */}
 
           {/* Carousel Container */}
           <div className="relative">
