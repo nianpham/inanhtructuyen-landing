@@ -4,10 +4,11 @@
 
 @layer base {
   :root {
-    --primary-rgb: 0, 0, 0;
-    --secondary-rgb: 0, 0, 0;
-    --tertiary-rgb: 0, 0, 0;
-    --quaternary-rgb: 0, 0, 0;
+    --primary-rgb: 255, 253, 240;
+    --secondary-rgb: 217, 223, 198;
+    --tertiary-rgb: 239, 243, 234;
+    --quaternary-rgb: 255, 242, 194;
+    --fifteenth-rgb: 168, 101, 35;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;

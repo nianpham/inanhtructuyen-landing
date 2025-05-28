@@ -79,71 +79,39 @@ const Banner1WithImages: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 py-0">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
         {/* Left Banner - Interior Home Decor */}
-        <div className="relative h-96 overflow-hidden bg-gray-50">
-          <div className="absolute right-0 top-0 bottom-0 w-full">
+        <div className="bg-white border-gray-200 border overflow-hidden">
+          <div className="relative h-80">
             <Image
-              src={IMAGES.BANNER_2}
-              alt="Interior Home Decor"
-              fill
-              priority
-              className="object-cover object-center"
+              src={IMAGES.BANNER_9}
+              alt={``}
+              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 "
+              width={397}
+              height={465}
             />
-          </div>
-          <div className="relative h-full flex items-center">
-            <div className="max-w-lg px-8 lg:px-12">
-              <p className="text-sm font-medium mb-2 text-gray-600">
-                Quick parcel delivery,{" "}
-                <span className="text-amber-500">from $25</span>
-              </p>
-              <h2 className="text-4xl lg:text-5xl font-bold leading-tight mb-4 text-gray-900">
-                Up to 70% Off
-                <br />
-                Interior Home Decor
-              </h2>
-              <p className="text-base mb-8 text-gray-600">
-                Class aptent taciti sociosqu ad litora
-              </p>
-              <Link href="/home-decor">
-                <button className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-none font-medium transition-colors duration-200 flex items-center space-x-2 group">
-                  <span>Shop Collection</span>
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-                </button>
-              </Link>
+            <div className="bg-black opacity-30 absolute top-0 left-0 right-0 bottom-0"></div>
+            <div className="absolute top-[45%] left-0 right-0">
+              <h3 className="text-2xl font-bold mb-2 text-white text-center uppercase">
+                Album cưới, tiệc
+              </h3>
             </div>
           </div>
         </div>
 
         {/* Right Banner - Pendant Lamp */}
-        <div className="relative h-96 overflow-hidden bg-gray-800">
-          <div className="absolute right-0 top-0 bottom-0 w-full">
+        <div className="bg-white border-gray-200 border overflow-hidden">
+          <div className="relative h-80">
             <Image
-              src={IMAGES.BANNER_1}
-              alt="Interior Home Decor"
-              fill
-              priority
-              className="object-cover object-center"
+              src={IMAGES.BANNER_3}
+              alt={``}
+              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 "
+              width={397}
+              height={465}
             />
-          </div>
-          <div className="relative h-full flex items-center">
-            <div className="max-w-lg px-8 lg:px-12">
-              <p className="text-sm font-medium mb-2 text-gray-300">
-                Quick parcel delivery,{" "}
-                <span className="text-amber-500">from $25</span>
-              </p>
-              <h2 className="text-4xl lg:text-5xl font-bold leading-tight mb-4 text-black">
-                Up to 70% Sale Off
-                <br />
-                Pendant Lamp
-              </h2>
-              <p className="text-base mb-8 text-gray-300">
-                Class aptent taciti sociosqu ad litora
-              </p>
-              <Link href="/pendant-lamps">
-                <button className="bg-gray-900 hover:bg-gray-700 text-white px-8 py-4 rounded-none font-medium transition-colors duration-200 flex items-center space-x-2 group border border-gray-600">
-                  <span>Shop Collection</span>
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-                </button>
-              </Link>
+            <div className="bg-black opacity-30 absolute top-0 left-0 right-0 bottom-0"></div>
+            <div className="absolute top-[45%] left-0 right-0 ">
+              <h3 className="text-2xl font-bold mb-2 text-white text-center uppercase">
+                ẢNH ÉP GỖ KHUNG VIỀN
+              </h3>
             </div>
           </div>
         </div>

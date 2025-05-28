@@ -110,7 +110,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             alt={product.name}
             layout="fill"
             objectFit="cover"
-            className={`transition-opacity duration-300  ${
+            className={`transition-opacity duration-300 border border-gray-200  ${
               product.images[1]
                 ? "group-hover:opacity-0"
                 : "group-hover:opacity-100"
@@ -122,7 +122,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
               alt={`${product.name} hover`}
               layout="fill"
               objectFit="cover"
-              className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"
+              className="opacity-0 group-hover:opacity-100 border border-gray-200 transition-opacity duration-300 rounded-lg"
             />
           )}
         </div>

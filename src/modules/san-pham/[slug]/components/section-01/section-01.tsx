@@ -4,8 +4,10 @@
 import { IMAGES } from "@/utils/image";
 import {
   BarChart3,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   Heart,
   Minus,
   Plus,
@@ -52,6 +54,12 @@ const Section1: React.FC = () => {
   const searchParams = useSearchParams();
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [relatedProduct, setRelatedProduct] = useState<Product[]>([]);
+  const [expanded, setExpanded] = useState(false);
+
+  const getPartialContent = (content: string) => {
+    const words = content.split(" ");
+    return words.slice(0, Math.ceil(words.length / 6)).join(" ") + "...";
+  };
 
   const init = async () => {
     try {
@@ -346,13 +354,46 @@ const Section1: React.FC = () => {
             </div>
           </div>
 
-          <p className="text-gray-700 leading-relaxed mb-6">
+          {/* <p className="text-gray-700 leading-relaxed mb-6">
             <div
               dangerouslySetInnerHTML={{
                 __html: product?.introduction || "",
               }}
             />
-          </p>
+          </p> */}
+
+          <div className="space-y-4">
+            <div className="text-gray-500 leading-relaxed overflow-hidden">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: expanded
+                    ? product?.introduction || ""
+                    : getPartialContent(product?.introduction || ""),
+                }}
+              />
+            </div>
+            <div className="flex justify-center relative">
+              {!expanded && (
+                <div className="absolute bottom-[135%] left-0 right-0 h-20 bg-gradient-to-t from-gray-50 to-transparent pointer-events-none" />
+              )}
+              <button
+                className="text-black cursor-pointer font-semibold px-4 py-2 lg:py-4 lg:px-8 border border-gray-300 flex items-center gap-4 rounded-md"
+                onClick={() => setExpanded(!expanded)}
+              >
+                {expanded ? (
+                  <>
+                    <p className="text-[12px] lg:text-base">Thu gọn</p>{" "}
+                    <ChevronUp size={16} />
+                  </>
+                ) : (
+                  <>
+                    <p className="text-[12px] lg:text-base">Xem thêm</p>{" "}
+                    <ChevronDown size={16} />
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
 
           {/* Quantity and Add to Cart */}
           <div className="flex flex-col items-start">

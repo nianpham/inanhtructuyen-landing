@@ -88,9 +88,9 @@ const Header: React.FC<HeaderProps> = ({
                   href={item.href}
                   className={`text-[16px] font-normal transition-colors duration-200 ${
                     isActive(item)
-                      ? "text-[rgb(var(--secondary-rgb))] font-semibold"
+                      ? "text-[rgb(var(--fifteenth-rgb))] font-semibold"
                       : "text-gray-500"
-                  } group-hover:text-[rgb(var(--secondary-rgb))] group-hover:font-semibold`}
+                  } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
                 >
                   {item.label}
                 </Link>
@@ -155,9 +155,9 @@ const Header: React.FC<HeaderProps> = ({
                     href={item.href}
                     className={`text-[16px] font-normal transition-colors duration-200 ${
                       isActive(item)
-                        ? "text-[rgb(var(--secondary-rgb))] font-semibold"
+                        ? "text-[rgb(var(--fifteenth-rgb))] font-semibold"
                         : "text-gray-500"
-                    } group-hover:text-[rgb(var(--secondary-rgb))] group-hover:font-semibold`}
+                    } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
                   >
                     {item.label}
                   </Link>

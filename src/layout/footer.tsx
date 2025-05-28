@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   Facebook,
@@ -7,204 +7,382 @@ import {
   MessageCircle,
   Phone,
   MapPin,
+  ChevronDown,
 } from "lucide-react";
 import Image from "next/image";
 import { IMAGES } from "@/utils/image";
+import FacebookPageEmbed from "./facebook";
+import { ROUTES } from "@/utils/route";
 
 const Footer: React.FC = () => {
-  return (
-    <footer className="w-full bg-gray-900 text-gray-300 py-12 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          <div className="space-y-6">
-            <div className="flex flex-row items-center gap-2 font-medium">
-              <Link href="/" className="flex items-center">
-                <Image
-                  src={IMAGES.LOGO}
-                  alt="Logo"
-                  width={1000}
-                  height={1000}
-                  className="w-full h-10"
-                />
-              </Link>
-              <div>In Ảnh Trực Tuyến</div>
-            </div>
-            <div className="flex space-x-4">
-              <Link
-                href="#"
-                className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
-              >
-                <Facebook size={20} className="text-white" />
-              </Link>
-              <Link
-                href="#"
-                className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
-              >
-                <Twitter size={20} className="text-white" />
-              </Link>
-              <Link
-                href="#"
-                className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
-              >
-                <Youtube size={20} className="text-white" />
-              </Link>
-              <Link
-                href="#"
-                className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
-              >
-                <MessageCircle size={20} className="text-white" />
-              </Link>
-            </div>
-          </div>
-          <div>
-            <h3 className="text-white font-semibold text-lg mb-4">
-              Customer Services
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  My Account
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Track Your Order
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  FAQs
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Payment Methods
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Shipping Guide
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Products Support
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Gift Card Balance
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-white font-semibold text-lg mb-4">
-              More From Rubix
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  About Rubix
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Our Guarantees
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Terms and Conditions
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Wishlist
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Return Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Delivery & Return
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  Sitemap
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-white font-semibold text-lg mb-4">Lets Talk</h3>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <Phone size={18} />
-                <span>+391 (0)35 2568 4593</span>
-              </div>
-              <div>
-                <Link
-                  href="mailto:hello@domain.com"
-                  className="hover:text-white transition-colors"
-                >
-                  hello@domain.com
-                </Link>
-              </div>
+  const [toggle1, setToggle1] = useState(true);
+  const [toggle2, setToggle2] = useState(true);
+  const [toggle3, setToggle3] = useState(true);
 
-              <div className="pt-4">
-                <h4 className="text-white font-semibold mb-3">Find Us</h4>
-                <div className="flex items-start space-x-3">
-                  <MapPin size={18} className="mt-1 flex-shrink-0" />
-                  <div>
-                    <div>502 New Design Str</div>
-                    <div>Melbourne, Australia</div>
-                  </div>
-                </div>
+  return (
+    <footer className="w-full bg-[rgb(var(--primary-rgb))] pt-12 pb-6 flex justify-center items-center">
+      <div className="container !px-5 lg:!px-6 !mx-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-10">
+          <div className="space-y-4">
+            <h3 className="text-md font-semibold text-gray-900">
+              KẾT NỐI & CHIA SẺ
+            </h3>
+            <ul className="space-y-2 w-5/6">
+              <li>
+                <Link href="/" className="text-gray-600 hover:text-gray-900">
+                  Hãy đăng ký nhận bản tin & LIKE trên Facebook để xem tại sao
+                  mọi người lại yêu thích & lựa chọn{" "}
+                  <strong className="text-orange-600">In Ảnh Trực Tuyến</strong>{" "}
+                  là nhà in tin cậy của Photographer.
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="flex flex-col space-y-4">
+            <div className="space-y-4">
+              <h3 className="text-md font-semibold text-gray-900">
+                THEO DÕI CHÚNG TÔI
+              </h3>
+              <div className="flex space-x-4">
+                <Link href="/" className="text-blue-600 hover:text-blue-700">
+                  <Image
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/768px-Facebook_Logo_%282019%29.png"
+                    alt="alt"
+                    width={1000}
+                    height={1000}
+                    className="w-7 h-7 lg:w-9 lg:h-9"
+                  />
+                </Link>
+                <Link href="/" className="text-gray-900 hover:text-gray-700">
+                  <Image
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Icon_of_Zalo.svg/2048px-Icon_of_Zalo.svg.png"
+                    alt="alt"
+                    width={1000}
+                    height={1000}
+                    className="w-7 h-7 lg:w-9 lg:h-9"
+                  />
+                </Link>
+                <Link href="/">
+                  <Image
+                    src="https://banner2.cleanpng.com/20231123/xjc/transparent-tiktok-logo-black-and-white-logo-tiktok-app-minima-minimalist-black-and-white-tiktok-app-1711004158896.webp"
+                    alt="alt"
+                    width={1000}
+                    height={1000}
+                    className="w-7 h-7 lg:w-9 lg:h-9"
+                  />
+                </Link>
+                <Link href="/">
+                  <Image
+                    src="https://tiemquatiko.com/wp-content/uploads/2022/08/shopee-circle-logo-design-shopping-bag-13.png"
+                    alt="alt"
+                    width={1000}
+                    height={1000}
+                    className="w-7 h-7 lg:w-9 lg:h-9"
+                  />
+                </Link>
               </div>
+            </div>
+            <div className="w-full">
+              <FacebookPageEmbed />
+            </div>
+          </div>
+          <div className="space-y-4">
+            <h3
+              onClick={() => setToggle1(!toggle1)}
+              className="cursor-pointer text-md font-semibold text-gray-900 flex"
+            >
+              THÔNG TIN CHUNG{" "}
+              <ChevronDown
+                className={`w-5 h-5 ml-2 transition-transform ${
+                  toggle1 ? "rotate-180" : ""
+                }`}
+              />
+            </h3>
+            {toggle1 && (
+              <ul className="space-y-2">
+                {/* <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    Hỏi đáp
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    Thông tin vận chuyển
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    Hướng dẫn trực tiếp mua hàng trực tuyến
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    Phương thức giao hàng COD
+                  </Link>
+                </li> */}
+                <li>
+                  <Link
+                    href={`${ROUTES.HOME}?scrollTo=gt`}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Giới thiệu
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={`${ROUTES.HOME}?scrollTo=dt`}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Chính sách đổi trả
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={`${ROUTES.HOME}?scrollTo=gh`}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Điều khoản giao hàng
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={`${ROUTES.HOME}?scrollTo=bm`}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Chính sách bảo mật
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={`${ROUTES.HOME}?scrollTo=tt`}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Chính sách thanh toán
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </div>
+          <div className="space-y-4">
+            <h3
+              onClick={() => setToggle2(!toggle2)}
+              className="cursor-pointer text-md font-semibold text-gray-900 flex"
+            >
+              IN ẢNH TRỰC TUYẾN{" "}
+              <ChevronDown
+                className={`w-5 h-5 ml-2 transition-transform ${
+                  toggle2 ? "rotate-180" : ""
+                }`}
+              />
+            </h3>
+            {toggle2 && (
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    href={`${ROUTES.HOME}`}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Trang chủ
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={`${ROUTES.HOME}?scrollTo=gt`}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Về chúng tôi
+                  </Link>
+                </li>
+                {/* <li>
+                  <Link
+                    href={`${ROUTES.PLASTIC}?tag=Plastic`}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    In ấn
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={`${ROUTES.FRAME}?tag=Frame`}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Khung ảnh
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={`${ROUTES.ALBUM}?tag=Album`}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Photobook
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={`${ROUTES.PRICE}`}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Bảng giá
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={`${ROUTES.BLOG}`}
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Tin tức
+                  </Link>
+                </li> */}
+                {/* <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    Liên hệ với chúng tôi
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    Vị trí cửa hàng
+                  </Link>
+                </li> */}
+              </ul>
+            )}
+          </div>
+          <div className="space-y-4">
+            <h3
+              onClick={() => setToggle3(!toggle3)}
+              className="cursor-pointer text-md font-semibold text-gray-900 flex"
+            >
+              CÁC TỈNH THÀNH{" "}
+              <ChevronDown
+                className={`w-5 h-5 ml-2 transition-transform ${
+                  toggle3 ? "rotate-180" : ""
+                }`}
+              />
+            </h3>
+            {toggle3 && (
+              <ul className="space-y-2">
+                <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    TP. Hồ Chí Minh
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    Cần Thơ
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    Cà Mau
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    Đà Nẵng
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    Hải Phòng
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    Nha Trang
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className="text-gray-600 hover:text-gray-900">
+                    Vĩnh Long
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </div>
+          <div className="space-y-4">
+            <h3 className="text-md font-semibold text-gray-900">
+              PHƯƠNG THỨC THANH TOÁN
+            </h3>
+            <ul className="space-y-2">
+              <li className="flex items-center space-x-2">
+                <Image
+                  src="https://cdn-icons-png.flaticon.com/128/7630/7630510.png"
+                  alt="Tiền mặt"
+                  width={24}
+                  height={24}
+                />
+                <span className="text-gray-600">Tiền mặt</span>
+              </li>
+              <li className="flex items-center space-x-2">
+                <Image
+                  src="https://cdn-icons-png.flaticon.com/128/15953/15953021.png"
+                  alt="Chuyển khoản"
+                  width={24}
+                  height={24}
+                />
+                <span className="text-gray-600">Chuyển khoản</span>
+              </li>
+              <li className="flex items-center space-x-2">
+                <Image
+                  src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png"
+                  alt="Momo"
+                  width={24}
+                  height={24}
+                />
+                <span className="text-gray-600">Momo</span>
+              </li>
+              <li className="flex items-center space-x-2">
+                <Image
+                  src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR.png"
+                  alt="VNPay"
+                  width={24}
+                  height={24}
+                />
+                <span className="text-gray-600">VNPay</span>
+              </li>
+            </ul>
+          </div>
+          <div className="space-y-4">
+            <h3 className="text-md font-semibold text-gray-900">
+              CHỨNG CHỈ UY TÍN
+            </h3>
+            <div className="flex flex-row lg:flex-col justify-start items-center lg:items-start gap-7 !m-0">
+              <Image
+                src="https://res.cloudinary.com/farmcode/image/upload/v1741450139/iatt/Untitled_design_1_qj4hfg.png"
+                alt="DMCA Protected"
+                width={128}
+                height={0}
+              />
+              <Image
+                src="https://webmedia.com.vn/images/2021/09/logo-da-thong-bao-bo-cong-thuong-mau-xanh.png"
+                alt="Đã thông báo Bộ Công Thương"
+                width={128}
+                height={0}
+              />
+            </div>
+          </div>
+          <div className="space-y-4">
+            <h3 className="text-md font-semibold text-gray-900">TẢI APP</h3>
+            <div className="flex justify-start items-center gap-4">
+              <Image
+                src="https://res.cloudinary.com/farmcode/image/upload/v1740924247/iatt/karylba4x40rayg8rndh.png"
+                alt="ios"
+                width={140}
+                height={0}
+              />
+              <Image
+                src="https://res.cloudinary.com/farmcode/image/upload/v1740924245/iatt/tioltw838yiyu1zkhyuh.png"
+                alt="chplay"
+                width={140}
+                height={0}
+              />
             </div>
           </div>
         </div>
-
-        {/* Bottom Section */}
-        <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
-            <div className="text-sm">
-              Copyright © <span className="text-white">Rubix</span> all rights
-              reserved. Powered by{" "}
-              <Link
-                href="#"
-                className="text-white hover:text-gray-300 transition-colors"
-              >
-                Bluesky Team
-              </Link>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="bg-white rounded px-3 py-2">
-                <span className="text-blue-600 font-bold text-sm">VISA</span>
-              </div>
-              <div className="bg-blue-600 rounded px-3 py-2">
-                <span className="text-white font-bold text-xs">
-                  AMERICAN EXPRESS
-                </span>
-              </div>
-              <div className="bg-blue-500 rounded px-3 py-2">
-                <span className="text-white font-bold text-sm">PayPal</span>
-              </div>
-              <div className="bg-yellow-400 rounded px-3 py-2">
-                <span className="text-blue-900 font-bold text-sm">ebay</span>
-              </div>
-              <div className="bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center">
-                <div className="flex space-x-1">
-                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                  <div className="w-3 h-3 bg-yellow-500 rounded-full -ml-1"></div>
-                </div>
-              </div>
-            </div>
+        <div className="text-center mt-12 pt-6 border-t border-gray-200">
+          <div className="text-gray-600 text-sm">
+            <p>Copyright © 2025 IN ẢNH TRỰC TUYẾN.</p>
+            <p>Địa chỉ: Trần Văn Hoài, Ninh Kiều, Cần Thơ</p>
+            <p>Thời gian làm việc: Cả tuần: 9:00 - 17:00</p>
           </div>
         </div>
       </div>
