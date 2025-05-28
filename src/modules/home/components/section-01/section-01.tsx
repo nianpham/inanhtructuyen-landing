@@ -4,7 +4,15 @@
 import { IMAGES } from "@/utils/image";
 import Image from "next/image";
 import FastMarquee from "react-fast-marquee";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { Swiper as SwiperCore } from "swiper/types";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-coverflow";
+import "@/styles/contact.css";
 
 interface ProductCardProps {
   title: string;
@@ -67,6 +75,8 @@ const Section1: React.FC = () => {
     },
   ];
 
+  const swiperRef = useRef<SwiperCore | null>(null);
+
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-0">
       <section className="pt-6">
@@ -74,59 +84,115 @@ const Section1: React.FC = () => {
           <div className="max-w-7xl mx-auto p-0">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
               {/* Hero Section - Takes 2/3 width */}
-              <div className="lg:col-span-2">
-                <div className="min-h-[700px] relative overflow-hidden">
-                  <div className="absolute top-8 left-8 z-10 max-w-md">
-                    {/* <p className="text-gray-600 mb-4">
-                      <span className="font-medium">
-                        <span className="text-white">
-                          Giao hàng nhanh và tiết kiệm,
-                        </span>{" "}
-                        <span className="text-yellow-300  font-medium">
-                          chỉ từ 30.000đ
-                        </span>
-                      </span>
-                    </p> */}
-                    <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8 leading-tight mt-1">
-                      Dấu ấn thời gian
-                    </h1>
-                    <p className="text-white mb-8 line-clamp-4">
-                      Chúng tôi thấu hiểu rằng những khoảnh khắc quan trọng
-                      trong cuộc đời không chỉ là dấu ấn của thời gian, mà còn
-                      là những cột mốc ý nghĩa trong hành trình sống của mỗi
-                      người.
-                    </p>
-                    <button className="bg-[rgb(var(--primary-rgb))] text-gray-800 font-medium hover:bg-[rgb(var(--fifteenth-rgb))] hover:text-[rgb(var(--primary-rgb))] px-8 py-4 rounded-lg transition-colors">
-                      Đặt hàng ngay
-                    </button>
-                  </div>
+              <div className="relative lg:col-span-2">
+                <Swiper
+                  onSwiper={(swiper) => (swiperRef.current = swiper)}
+                  grabCursor={true}
+                  centeredSlides={true}
+                  autoplay={{
+                    delay: 2000,
+                    disableOnInteraction: false,
+                  }}
+                  slidesPerView={1}
+                  loop={true}
+                  spaceBetween={10}
+                  pagination={{
+                    clickable: true,
+                    bulletClass: "swiper-pagination-bullet",
+                    bulletActiveClass:
+                      "swiper-pagination-bullet-active bg-white",
+                  }}
+                  modules={[Pagination, Navigation, Autoplay]}
+                  className="w-full h-full"
+                >
+                  <SwiperSlide className="">
+                    <div className="min-h-[700px] relative overflow-hidden">
+                      <div className="absolute top-8 left-8 z-10 max-w-md">
+                        <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8 leading-tight mt-1">
+                          Dấu ấn thời gian
+                        </h1>
+                        <p className="text-white mb-8 line-clamp-4">
+                          Chúng tôi thấu hiểu rằng những khoảnh khắc quan trọng
+                          trong cuộc đời không chỉ là dấu ấn của thời gian, mà
+                          còn là những cột mốc ý nghĩa trong hành trình sống của
+                          mỗi người.
+                        </p>
+                        <button className="bg-[rgb(var(--primary-rgb))] text-gray-800 font-medium hover:bg-[rgb(var(--fifteenth-rgb))] hover:text-[rgb(var(--primary-rgb))] px-8 py-4 rounded-lg transition-colors">
+                          Đặt hàng ngay
+                        </button>
+                      </div>
 
-                  {/* Hero Image */}
-                  <div className="absolute bottom-0 right-0 left-0 top-0 w-full h-full flex items-center justify-center z-0">
-                    <Image
-                      src={IMAGES.BANNER_4}
-                      alt="Main Image 1"
-                      width={1200}
-                      height={1000}
-                      className="object-cover object-center w-full h-full"
-                    />
-                  </div>
+                      {/* Hero Image */}
+                      <div className="absolute bottom-0 right-0 left-0 top-0 w-full h-full flex items-center justify-center z-0">
+                        <Image
+                          src={IMAGES.BANNER_5}
+                          alt="Main Image 1"
+                          width={1200}
+                          height={1000}
+                          className="object-cover object-center w-full h-full"
+                        />
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="">
+                    <div className="min-h-[700px] relative overflow-hidden">
+                      <div className="absolute top-8 left-8 z-10 max-w-md">
+                        <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8 leading-tight mt-1">
+                          Dấu ấn thời gian
+                        </h1>
+                        <p className="text-white mb-8 line-clamp-4">
+                          Chúng tôi thấu hiểu rằng những khoảnh khắc quan trọng
+                          trong cuộc đời không chỉ là dấu ấn của thời gian, mà
+                          còn là những cột mốc ý nghĩa trong hành trình sống của
+                          mỗi người.
+                        </p>
+                        <button className="bg-[rgb(var(--primary-rgb))] text-gray-800 font-medium hover:bg-[rgb(var(--fifteenth-rgb))] hover:text-[rgb(var(--primary-rgb))] px-8 py-4 rounded-lg transition-colors">
+                          Đặt hàng ngay
+                        </button>
+                      </div>
 
-                  {/* Slide Indicators */}
-                  {/* <div className="absolute bottom-8 left-8 flex space-x-3">
-                    {heroSlides.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => goToSlide(index)}
-                        className={`w-3 h-3 rounded-full transition-colors ${
-                          index === currentSlide
-                            ? "bg-amber-500"
-                            : "bg-gray-300"
-                        }`}
-                      />
-                    ))}
-                  </div> */}
-                </div>
+                      {/* Hero Image */}
+                      <div className="absolute bottom-0 right-0 left-0 top-0 w-full h-full flex items-center justify-center z-0">
+                        <Image
+                          src={IMAGES.BANNER_2}
+                          alt="Main Image 1"
+                          width={1200}
+                          height={1000}
+                          className="object-cover object-center w-full h-full"
+                        />
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="">
+                    <div className="min-h-[700px] relative overflow-hidden">
+                      <div className="absolute top-8 left-8 z-10 max-w-md">
+                        <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8 leading-tight mt-1">
+                          Dấu ấn thời gian
+                        </h1>
+                        <p className="text-white mb-8 line-clamp-4">
+                          Chúng tôi thấu hiểu rằng những khoảnh khắc quan trọng
+                          trong cuộc đời không chỉ là dấu ấn của thời gian, mà
+                          còn là những cột mốc ý nghĩa trong hành trình sống của
+                          mỗi người.
+                        </p>
+                        <button className="bg-[rgb(var(--primary-rgb))] text-gray-800 font-medium hover:bg-[rgb(var(--fifteenth-rgb))] hover:text-[rgb(var(--primary-rgb))] px-8 py-4 rounded-lg transition-colors">
+                          Đặt hàng ngay
+                        </button>
+                      </div>
+
+                      {/* Hero Image */}
+                      <div className="absolute bottom-0 right-0 left-0 top-0 w-full h-full flex items-center justify-center z-0">
+                        <Image
+                          src={IMAGES.BANNER_4}
+                          alt="Main Image 1"
+                          width={1200}
+                          height={1000}
+                          className="object-cover object-center w-full h-full"
+                        />
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
               </div>
 
               {/* Product Cards Sidebar - Takes 1/3 width */}
