@@ -35,7 +35,7 @@ const TopBanner: React.FC = () => {
               href="mailto:hello@domain.com"
               className="hover:text-black transition-colors"
             >
-              hello@domain.com
+              inanhtructuyen@gmail.com
             </Link>
           </div>
         </div>
@@ -43,13 +43,13 @@ const TopBanner: React.FC = () => {
         {/* Center Section - Promotion */}
         <div className="flex items-center space-x-3 text-sm">
           <span className="text-black">
-            Free shipping on all orders over $79
+            Miễn phí vận chuyển cho đơn hàng từ 500.000đ
           </span>
           <Link
             href="/shop"
-            className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-1 rounded font-medium transition-colors"
+            className="bg-[rgb(var(--fifteenth-rgb))] hover:bg-yellow-700 text-white px-4 py-1 rounded font-medium transition-colors"
           >
-            Shop Now!
+            Đặt ngay!
           </Link>
         </div>
 

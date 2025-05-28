@@ -37,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           alt="Main Image 1"
           fill
           priority
-          className="object-cover object-center border border-gray-200"
+          className="object-cover h-full object-center border border-gray-200"
         />
       </div>
     </div>
@@ -68,10 +68,10 @@ const Section1: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-0">
-      <section className="pt-5">
+      <section className="pt-6">
         <div className="">
           <div className="max-w-7xl mx-auto p-0">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
               {/* Hero Section - Takes 2/3 width */}
               <div className="lg:col-span-2">
                 <div className="min-h-[700px] relative overflow-hidden">
@@ -121,7 +121,7 @@ const Section1: React.FC = () => {
               </div>
 
               {/* Product Cards Sidebar - Takes 1/3 width */}
-              <div className="grid grid-row-2 gap-6">
+              <div className="grid h-full lg:col-span-1 lg:grid-row-2 gap-6">
                 {products.map((product, index) => (
                   <ProductCard
                     key={index}

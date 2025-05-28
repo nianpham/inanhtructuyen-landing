@@ -27,7 +27,7 @@ export default function HomeContent() {
             <Section4 />
             <Section5 />
             <Section6 />
-            <Section7 />
+            {/* <Section7 /> */}
           </div>
         </div>
       </main>

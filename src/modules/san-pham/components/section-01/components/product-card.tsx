@@ -31,11 +31,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               alt={product.name}
               layout="fill"
               objectFit="cover"
-              className={`transition-opacity duration-300 border border-gray-200  ${
-                product.images[1]
-                  ? "group-hover:opacity-0"
-                  : "group-hover:opacity-100"
-              } rounded-lg`}
+              className={`transition-opacity duration-300 border border-gray-200  ${product.images[1]
+                ? "group-hover:opacity-0"
+                : "group-hover:opacity-100"
+                } rounded-lg`}
             />
             {product.images[1] && (
               <Image
@@ -61,9 +60,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </button>
           </div>
           <div className="absolute -bottom-16 group-hover:bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-500 ease-in-out">
-            <button className="w-full bg-gray-900 text-white py-3 px-4 rounded font-medium hover:bg-gray-800 transition-colors flex items-center justify-center space-x-2">
+            <button className="w-full bg-[rgb(var(--primary-rgb))] text-gray-800 py-3 px-4 rounded font-medium hover:bg-[rgb(var(--fifteenth-rgb))] hover:text-[rgb(var(--primary-rgb))] transition-colors flex items-center justify-center space-x-2">
               <ShoppingCart className="w-4 h-4" />
-              <span>Add To Cart</span>
+              <span>Thêm vào giỏ</span>
             </button>
           </div>
         </>

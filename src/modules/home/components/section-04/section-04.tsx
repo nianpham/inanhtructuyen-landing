@@ -49,20 +49,20 @@ const Section4: React.FC = () => {
           <div className="mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   Sản Phẩm Nổi Bật
                 </h2>
-                <div className="space-y-4">
+                <div className="space-y-1">
                   {featuredProducts.map((product) => (
                     <ProductCard key={product._id} product={product} />
                   ))}
                 </div>
               </div>
               <div className="">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   Sản Phẩm Đánh Giá Cao
                 </h2>
-                <div className="space-y-4">
+                <div className="space-y-1">
                   {topRatedProducts.map((product) => (
                     <ProductCard
                       key={product._id}
@@ -73,10 +73,10 @@ const Section4: React.FC = () => {
                 </div>
               </div>
               <div className="">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   Sản Phẩm Xu Hướng
                 </h2>
-                <div className="space-y-4">
+                <div className="space-y-1">
                   {trendingProducts.map((product) => (
                     <ProductCard key={product._id} product={product} />
                   ))}

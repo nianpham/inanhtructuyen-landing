@@ -30,11 +30,11 @@ const Header: React.FC<HeaderProps> = ({
 
   const navigationItems = [
     {
-      label: "Home ",
+      label: "Trang chủ",
       href: "/",
       icon: BookOpenText,
     },
-    { label: "Product", href: "/products", icon: Headphones },
+    { label: "Sản phẩm", href: "/products", icon: Headphones },
   ];
 
   const isActive = (item: any) => {
@@ -86,11 +86,10 @@ const Header: React.FC<HeaderProps> = ({
               <div key={item.label} className="relative group">
                 <Link
                   href={item.href}
-                  className={`text-[16px] font-normal transition-colors duration-200 ${
-                    isActive(item)
-                      ? "text-[rgb(var(--fifteenth-rgb))] font-semibold"
-                      : "text-gray-500"
-                  } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
+                  className={`text-[16px] font-normal transition-colors duration-200 ${isActive(item)
+                    ? "text-[rgb(var(--fifteenth-rgb))] font-semibold"
+                    : "text-gray-500"
+                    } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
                 >
                   {item.label}
                 </Link>
@@ -104,7 +103,7 @@ const Header: React.FC<HeaderProps> = ({
             <div className="hidden lg:flex items-center space-x-1 text-gray-700 hover:text-gray-900 transition-colors">
               <User className="w-5 h-5" />
               <span className="text-sm font-medium">
-                {isLoggedIn ? "Account" : "Login / Register"}
+                {isLoggedIn ? "Tài khoản" : "Đăng nhập / Đăng ký"}
               </span>
             </div>
 
@@ -127,10 +126,21 @@ const Header: React.FC<HeaderProps> = ({
       )}
 
       {open && (
-        <div className="fixed top-0 left-0 right-[16%] bottom-0 bg-white z-50 flex flex-col items-center justify-between space-y-4 shadow-lg lg:hidden px-4 pt-5 pb-10">
+        <div className="fixed top-0 left-0 right-[16%] bottom-0 bg-white z-[60] flex flex-col items-center justify-between space-y-4 shadow-lg lg:hidden px-4 pt-5 pb-10">
           <div className="w-full flex flex-col items-center space-y-4">
             <div className="flex flex-row items-center justify-between w-full">
-              <div className="w-full text-center">Sản phẩm</div>
+              <div className="w-full flex flex-row items-center gap-2 font-medium">
+                <Link href="/" className="flex items-center">
+                  <Image
+                    src={IMAGES.LOGO}
+                    alt="Logo"
+                    width={1000}
+                    height={1000}
+                    className="w-full h-10"
+                  />
+                </Link>
+                <div>In Ảnh Trực Tuyến</div>
+              </div>
               <div onClick={() => setOpen(false)} className="cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -153,11 +163,10 @@ const Header: React.FC<HeaderProps> = ({
                 <div key={item.label} className="relative group">
                   <Link
                     href={item.href}
-                    className={`text-[16px] font-normal transition-colors duration-200 ${
-                      isActive(item)
-                        ? "text-[rgb(var(--fifteenth-rgb))] font-semibold"
-                        : "text-gray-500"
-                    } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
+                    className={`text-[16px] font-normal transition-colors duration-200 ${isActive(item)
+                      ? "text-[rgb(var(--fifteenth-rgb))] font-semibold"
+                      : "text-gray-500"
+                      } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
                   >
                     {item.label}
                   </Link>

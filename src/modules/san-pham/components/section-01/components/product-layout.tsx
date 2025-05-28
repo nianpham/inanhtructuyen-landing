@@ -146,35 +146,33 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   };
 
   return (
-    <div className="flex-1 px-5 lg:px-0 pt-2">
+    <div className="flex-1 px-5 lg:px-0 pt-2 lg:ml-5">
       {/* Header */}
       <div className="flex justify-center lg:justify-between items-center my-6">
         <div className="hidden lg:flex text-gray-600">
           {sortedProducts.length > 0 ? (
             <>
-              Showing {(currenPage - 1) * COUNT + 1}-
-              {Math.min(currenPage * COUNT, sortedProducts.length)} of{" "}
+              Hiển thị {(currenPage - 1) * COUNT + 1}-
+              {Math.min(currenPage * COUNT, sortedProducts.length)} trên{" "}
               {sortedProducts.length}
             </>
           ) : (
-            "No products found"
+            "Không tìm thấy sản phẩm"
           )}
         </div>
         <div className="hidden lg:flex items-center gap-2">
-          <span className="text-gray-600">Views:</span>
+          <span className="text-gray-600">Xem dạng:</span>
           <button
             onClick={() => onViewModeChange("grid")}
-            className={`p-1 ${
-              viewMode === "grid" ? "text-black" : "text-gray-400"
-            }`}
+            className={`p-1 ${viewMode === "grid" ? "text-black" : "text-gray-400"
+              }`}
           >
             <Grip size={20} />
           </button>
           <button
             onClick={() => onViewModeChange("list")}
-            className={`p-1 ${
-              viewMode === "list" ? "text-black" : "text-gray-400"
-            }`}
+            className={`p-1 ${viewMode === "list" ? "text-black" : "text-gray-400"
+              }`}
           >
             <AlignJustify size={20} />
           </button>
@@ -191,9 +189,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       <div
         className={
           viewMode === "grid"
-            ? `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${
-                viewFilter ? "z-0" : "z-30"
-              }`
+            ? `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${viewFilter ? "z-0" : "z-30"
+            }`
             : "space-y-4"
         }
       >
@@ -208,7 +205,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           ))
         ) : (
           <div className="col-span-full text-center py-10 text-gray-500">
-            No products available
+            Không tìm thấy sản phẩm.
           </div>
         )}
       </div>
@@ -216,7 +213,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       {/* Pagination */}
       {sortedProducts.length > 0 && (
         <nav
-          className="flex flex-col items-start justify-center mt-4 p-4 space-y-3 md:flex-row md:items-center md:space-y-0"
+          className="flex flex-col items-center justify-center mt-4 p-4 space-y-3 md:flex-row md:items-center md:space-y-0"
           aria-label="Table navigation"
         >
           <ul className="inline-flex items-stretch -space-x-px">
@@ -248,11 +245,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                   <li key={index} onClick={() => selectPage(item)}>
                     <a
                       href="#"
-                      className={`${
-                        item === currenPage
-                          ? "bg-indigo-50 hover:bg-indigo-100 text-gray-700"
-                          : "bg-white"
-                      } flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700`}
+                      className={`${item === currenPage
+                        ? "bg-indigo-50 hover:bg-indigo-100 text-gray-700"
+                        : "bg-white"
+                        } flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700`}
                     >
                       {item}
                     </a>

@@ -41,9 +41,8 @@ const PromoBanner: React.FC<PromoBannerProps> = ({
       <div className="relative h-full flex items-center">
         <div className="max-w-lg px-8 lg:px-12">
           <p
-            className={`text-sm font-medium mb-2 ${
-              isDark ? "text-gray-300" : "text-gray-600"
-            }`}
+            className={`text-sm font-medium mb-2 ${isDark ? "text-gray-300" : "text-gray-600"
+              }`}
           >
             Quick parcel delivery,{" "}
             <span className="text-amber-500">from $25</span>
@@ -54,9 +53,8 @@ const PromoBanner: React.FC<PromoBannerProps> = ({
             {mainHeading}
           </h2>
           <p
-            className={`text-base mb-8 ${
-              isDark ? "text-gray-300" : "text-gray-600"
-            }`}
+            className={`text-base mb-8 ${isDark ? "text-gray-300" : "text-gray-600"
+              }`}
           >
             {description}
           </p>
@@ -79,12 +77,12 @@ const Banner1WithImages: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 py-0">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
         {/* Left Banner - Interior Home Decor */}
-        <div className="bg-white border-gray-200 border overflow-hidden">
+        <div className="bg-white border-gray-200 border overflow-hidden rounded-md">
           <div className="relative h-80">
             <Image
               src={IMAGES.BANNER_9}
               alt={``}
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 "
+              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 rounded-md"
               width={397}
               height={465}
             />
@@ -98,12 +96,12 @@ const Banner1WithImages: React.FC = () => {
         </div>
 
         {/* Right Banner - Pendant Lamp */}
-        <div className="bg-white border-gray-200 border overflow-hidden">
+        <div className="bg-white border-gray-200 border overflow-hidden rounded-md">
           <div className="relative h-80">
             <Image
               src={IMAGES.BANNER_3}
               alt={``}
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 "
+              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 rounded-md"
               width={397}
               height={465}
             />

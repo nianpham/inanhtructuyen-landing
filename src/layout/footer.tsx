@@ -10,7 +10,6 @@ import {
   ChevronDown,
 } from "lucide-react";
 import Image from "next/image";
-import { IMAGES } from "@/utils/image";
 import FacebookPageEmbed from "./facebook";
 import { ROUTES } from "@/utils/route";
 
@@ -21,7 +20,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="w-full bg-[rgb(var(--primary-rgb))] pt-12 pb-6 flex justify-center items-center">
-      <div className="container !px-5 lg:!px-6 !mx-0">
+      <div className="max-w-7xl container !px-5 lg:!px-0 !mx-0">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-10">
           <div className="space-y-4">
             <h3 className="text-md font-semibold text-gray-900">
@@ -32,7 +31,7 @@ const Footer: React.FC = () => {
                 <Link href="/" className="text-gray-600 hover:text-gray-900">
                   Hãy đăng ký nhận bản tin & LIKE trên Facebook để xem tại sao
                   mọi người lại yêu thích & lựa chọn{" "}
-                  <strong className="text-orange-600">In Ảnh Trực Tuyến</strong>{" "}
+                  <strong className="text-[rgb(var(--fifteenth-rgb))]">In Ảnh Trực Tuyến</strong>{" "}
                   là nhà in tin cậy của Photographer.
                 </Link>
               </li>
@@ -68,7 +67,7 @@ const Footer: React.FC = () => {
                     alt="alt"
                     width={1000}
                     height={1000}
-                    className="w-7 h-7 lg:w-9 lg:h-9"
+                    className="w-7 h-7 lg:w-9 lg:h-9 rounded-full"
                   />
                 </Link>
                 <Link href="/">
@@ -93,9 +92,8 @@ const Footer: React.FC = () => {
             >
               THÔNG TIN CHUNG{" "}
               <ChevronDown
-                className={`w-5 h-5 ml-2 transition-transform ${
-                  toggle1 ? "rotate-180" : ""
-                }`}
+                className={`w-5 h-5 ml-2 transition-transform ${toggle1 ? "rotate-180" : ""
+                  }`}
               />
             </h3>
             {toggle1 && (
@@ -170,9 +168,8 @@ const Footer: React.FC = () => {
             >
               IN ẢNH TRỰC TUYẾN{" "}
               <ChevronDown
-                className={`w-5 h-5 ml-2 transition-transform ${
-                  toggle2 ? "rotate-180" : ""
-                }`}
+                className={`w-5 h-5 ml-2 transition-transform ${toggle2 ? "rotate-180" : ""
+                  }`}
               />
             </h3>
             {toggle2 && (
@@ -253,9 +250,8 @@ const Footer: React.FC = () => {
             >
               CÁC TỈNH THÀNH{" "}
               <ChevronDown
-                className={`w-5 h-5 ml-2 transition-transform ${
-                  toggle3 ? "rotate-180" : ""
-                }`}
+                className={`w-5 h-5 ml-2 transition-transform ${toggle3 ? "rotate-180" : ""
+                  }`}
               />
             </h3>
             {toggle3 && (

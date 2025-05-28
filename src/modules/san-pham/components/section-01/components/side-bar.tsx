@@ -121,7 +121,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     { id: "Plastic", name: "Plastic", hasSubcategories: false },
     { id: "Frame", name: "Khung Ảnh", hasSubcategories: false },
     { id: "Album", name: "Album", hasSubcategories: false },
-    { id: "All", name: "All", hasSubcategories: false },
+    { id: "All", name: "Tất cả", hasSubcategories: false },
   ];
 
   const colors = ["black", "white", "gold", "silver", "wood"];
@@ -159,7 +159,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* Product Categories */}
       <div className="mb-8">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">
-          Product Categories
+          Phân loại sản phẩm
         </h3>
         <div className="space-y-2">
           {categories.map((category) => (
@@ -175,11 +175,10 @@ const Sidebar: React.FC<SidebarProps> = ({
               >
                 <div className="flex items-center">
                   <div
-                    className={`w-2 h-2 rounded-full mr-3 ${
-                      selectedCategory === category.id
-                        ? "bg-black"
-                        : "border border-gray-300"
-                    }`}
+                    className={`w-2 h-2 rounded-full mr-3 ${selectedCategory === category.id
+                      ? "bg-black"
+                      : "border border-gray-300"
+                      }`}
                   />
                   <span className="text-gray-700">{category.name}</span>
                 </div>
@@ -206,25 +205,20 @@ const Sidebar: React.FC<SidebarProps> = ({
             max={2000000}
             step={1}
           />
-          <div className="flex justify-between text-sm text-gray-600">
-            <span>{HELPER.formatVND(String(priceRange[0]))}</span>
-            <span>{HELPER.formatVND(String(priceRange[1]))}</span>
-          </div>
         </div>
       </div>
 
       {/* Color Filter */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Color</h3>
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Màu sắc</h3>
         <div className="flex flex-wrap gap-2">
           {colors.map((color, index) => (
             <button
               key={index}
-              className={`w-6 h-6 rounded-full border-2 ${
-                selectedColors.includes(color)
-                  ? "border-gray-800"
-                  : "border-gray-300"
-              } ${HELPER.renderColor(color)}`}
+              className={`w-6 h-6 rounded-full border-2 ${selectedColors.includes(color)
+                ? "border-gray-800"
+                : "border-gray-300"
+                } ${HELPER.renderColor(color)}`}
               onClick={() => {
                 setSelectedColors((prev) =>
                   prev.includes(color)
@@ -239,12 +233,11 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Size Filter */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Size</h3>
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Kích thước</h3>
         <div className="relative">
           <div
-            className={`absolute top-0 inset-x-0 bg-gradient-to-b from-white z-20 to-transparent pointer-events-none transition-opacity duration-300 ${
-              showTopGradient ? "opacity-100" : "opacity-0"
-            }`}
+            className={`absolute top-0 inset-x-0 bg-gradient-to-b from-white z-20 to-transparent pointer-events-none transition-opacity duration-300 ${showTopGradient ? "opacity-100" : "opacity-0"
+              }`}
             style={{ height: "60px" }}
           />
           <div
@@ -265,14 +258,13 @@ const Sidebar: React.FC<SidebarProps> = ({
                     );
                   }}
                 />
-                <span className="text-gray-700">{size} (1)</span>
+                <span className="text-gray-700">{size}</span>
               </label>
             ))}
           </div>
           <div
-            className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300 ${
-              showBottomGradient ? "opacity-100" : "opacity-0"
-            }`}
+            className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300 ${showBottomGradient ? "opacity-100" : "opacity-0"
+              }`}
             style={{ height: "60px" }}
           />
         </div>
@@ -281,7 +273,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* Featured Products */}
       <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-4">
-          Featured Products
+          Sản phẩm đặc trưng
         </h3>
         <div className="space-y-4">
           {products?.map((product, index) => (
