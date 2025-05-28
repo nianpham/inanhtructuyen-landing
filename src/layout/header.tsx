@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({
     <>
       <TopBanner />
       <header className="w-full bg-white py-1.5 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-2">
+        <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-2 lg:px-0">
           <label
             className="hamburger lg:hidden"
             onClick={() => {
@@ -86,10 +86,11 @@ const Header: React.FC<HeaderProps> = ({
               <div key={item.label} className="relative group">
                 <Link
                   href={item.href}
-                  className={`text-[16px] font-normal transition-colors duration-200 ${isActive(item)
-                    ? "text-[rgb(var(--fifteenth-rgb))] font-semibold"
-                    : "text-gray-500"
-                    } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
+                  className={`text-[16px] font-normal transition-colors duration-200 ${
+                    isActive(item)
+                      ? "text-[rgb(var(--fifteenth-rgb))] font-semibold"
+                      : "text-gray-500"
+                  } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
                 >
                   {item.label}
                 </Link>
@@ -163,10 +164,11 @@ const Header: React.FC<HeaderProps> = ({
                 <div key={item.label} className="relative group">
                   <Link
                     href={item.href}
-                    className={`text-[16px] font-normal transition-colors duration-200 ${isActive(item)
-                      ? "text-[rgb(var(--fifteenth-rgb))] font-semibold"
-                      : "text-gray-500"
-                      } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
+                    className={`text-[16px] font-normal transition-colors duration-200 ${
+                      isActive(item)
+                        ? "text-[rgb(var(--fifteenth-rgb))] font-semibold"
+                        : "text-gray-500"
+                    } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
                   >
                     {item.label}
                   </Link>
