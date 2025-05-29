@@ -43,7 +43,7 @@ const BlogCard: React.FC<{ post: BlogPost }> = ({ post }) => {
             href={`/blog/${post.title}`}
             className="inline-flex items-center space-x-2 text-gray-700 hover:text-gray-900 font-medium text-sm transition-colors group"
           >
-            <span>Read More</span>
+            <span>Xem thêm</span>
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

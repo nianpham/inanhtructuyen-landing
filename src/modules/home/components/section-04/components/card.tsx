@@ -4,6 +4,7 @@ import Image from "next/image";
 import { HELPER } from "@/utils/helper";
 import { useProduct } from "@/modules/san-pham/components/product-context";
 import { useRouter, useSearchParams } from "next/navigation";
+import { slugifyURL } from "@/utils/slugify";
 
 interface Product {
   _id: string;
@@ -45,72 +46,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  // Handle URL parameter persistence and hiding
-  useEffect(() => {
-    const PARAMS_KEY = "__params";
-
-    // Function to get parameters (from URL or sessionStorage)
-    const getParams = () => {
-      const urlParams = searchParams.toString();
-      if (urlParams) {
-        // Store URL parameters in sessionStorage if present
-        sessionStorage.setItem(PARAMS_KEY, urlParams);
-        return urlParams;
-      }
-      // Fallback to sessionStorage if no URL parameters
-      return sessionStorage.getItem(PARAMS_KEY) || "";
-    };
-
-    // Hide parameters from address bar
-    const hideParams = () => {
-      const params = getParams();
-      if (params && window.location.search) {
-        // Replace URL with clean pathname, preserving parameters in sessionStorage
-        window.history.replaceState(
-          null,
-          document.title,
-          window.location.pathname
-        );
-      }
-    };
-
-    // Run on initial load
-    hideParams();
-
-    // Restore parameters on beforeunload to ensure they persist in shared URLs
-    const handleBeforeUnload = () => {
-      const params = sessionStorage.getItem(PARAMS_KEY) || "";
-      if (params) {
-        window.history.replaceState(
-          null,
-          document.title,
-          `${window.location.pathname}?${params}`
-        );
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    // Cleanup event listener
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [searchParams]);
-
-  const { setSelectedProductId } = useProduct();
-
-  const handleClick = (id: string, title: string) => {
-    setSelectedProductId(id);
-    localStorage.setItem("selectedProductId", id);
-    // Append product ID as a query parameter
-    router.push(`/products/${HELPER.convertSpacesToDash(title)}?id=${id}`);
+  const handleProductClick = (productId: string, title: string) => {
+    router.push(`/products/${slugifyURL(title)}?spid=${productId}`);
   };
 
   return (
     <div
-      onClick={() => handleClick(product._id, product.name)}
+      onClick={() => handleProductClick(product._id, product.name)}
       className="flex items-start space-x-4 py-4 cursor-pointer"
     >
       <div className="w-20 h-20 bg-gray-100 rounded-md flex items-center justify-center overflow-hidden">
