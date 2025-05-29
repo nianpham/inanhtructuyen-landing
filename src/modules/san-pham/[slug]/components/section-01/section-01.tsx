@@ -29,6 +29,9 @@ import { ProductService } from "@/services/product";
 import { useRouter, useSearchParams } from "next/navigation";
 import { HELPER } from "@/utils/helper";
 import SectionHeader from "../section-header";
+import { useProduct } from "@/modules/san-pham/components/product-context";
+import { useDispatch } from "react-redux";
+import { setSelectedProductId } from "@/store/productSlice";
 
 interface Product {
   _id: string;
@@ -56,6 +59,7 @@ const Section1: React.FC = () => {
   const [relatedProduct, setRelatedProduct] = useState<Product[]>([]);
   const [expanded, setExpanded] = useState(false);
   const searchParams = useSearchParams();
+  const productID = searchParams.get("spid");
 
   const getPartialContent = (content: string) => {
     const words = content.split(" ");
@@ -64,13 +68,31 @@ const Section1: React.FC = () => {
 
   const init = async () => {
     try {
+      let productCate = "";
+      if (productID) {
+        const fetchProduct = async () => {
+          try {
+            const res = await ProductService.getProductById(productID);
+            if (res && res.data) {
+              setProduct(res.data);
+              productCate = res.data.category;
+              if (res.data?.product_option?.length > 0) {
+                setSelectedSize(res.data.product_option[0].size);
+              }
+            }
+          } catch (error) {
+            console.error("Error fetching product:", error);
+          }
+        };
+        fetchProduct();
+      }
+
       const res = await ProductService.getAll();
+
       if (res && res.data && res.data.length > 0) {
         const filteredProducts = res.data.filter(
-          (item: any) => item.category !== product?.category
+          (item: Product) => item?.category === productCate
         );
-
-        console.log("Filtered Products:", filteredProducts);
 
         setRelatedProduct(filteredProducts);
       } else {
@@ -99,61 +121,6 @@ const Section1: React.FC = () => {
       ? selectedOption.price
       : product?.product_option?.[0]?.price || "0";
   };
-
-  // Retrieve and log product ID
-  useEffect(() => {
-    const PARAMS_KEY = "__params";
-
-    // Get product ID from URL or sessionStorage
-    const getProductId = () => {
-      const urlProductId = searchParams.get("id");
-      if (urlProductId) {
-        // Store in sessionStorage if present in URL
-        sessionStorage.setItem(PARAMS_KEY, `id=${urlProductId}`);
-        return urlProductId;
-      }
-      // Fallback to sessionStorage
-      const storedParams = sessionStorage.getItem(PARAMS_KEY);
-      if (storedParams) {
-        const params = new URLSearchParams(storedParams);
-        return params.get("id") || "";
-      }
-      // Fallback to localStorage if no URL or sessionStorage params
-      return localStorage.getItem("selectedProductId") || "";
-    };
-
-    const productId = getProductId();
-
-    // Hide parameters from address bar
-    const hideParams = () => {
-      if (window.location.search) {
-        window.history.replaceState(
-          null,
-          document.title,
-          window.location.pathname
-        );
-      }
-    };
-
-    hideParams();
-
-    // Initialize product data
-    const init = async () => {
-      if (productId) {
-        const res = await ProductService.getProductById(productId);
-        if (res) {
-          setProduct(res.data);
-          if (res.data?.product_option?.length > 0) {
-            setSelectedSize(res.data.product_option[0].size);
-          }
-        }
-      } else {
-        setProduct(null);
-      }
-    };
-
-    init();
-  }, [searchParams]);
 
   const swiperRef = useRef<SwiperCore | null>(null);
 

@@ -1,11 +1,8 @@
 import { HELPER } from "@/utils/helper";
 import { BarChart3, Eye, Heart, ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import { Product } from "@/types/product";
-import { useProduct } from "../../product-context";
-import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: Product;
@@ -31,10 +28,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               alt={product.name}
               layout="fill"
               objectFit="cover"
-              className={`transition-opacity duration-300 border border-gray-200  ${product.images[1]
-                ? "group-hover:opacity-0"
-                : "group-hover:opacity-100"
-                } rounded-lg`}
+              className={`transition-opacity duration-300 border border-gray-200  ${
+                product.images[1]
+                  ? "group-hover:opacity-0"
+                  : "group-hover:opacity-100"
+              } rounded-lg`}
             />
             {product.images[1] && (
               <Image

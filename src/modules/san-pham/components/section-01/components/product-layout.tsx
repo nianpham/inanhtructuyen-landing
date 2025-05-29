@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Grid, List, LayoutGrid, AlignJustify, Grip } from "lucide-react";
+import { AlignJustify, Grip } from "lucide-react";
 import ProductCard from "./product-card";
 import Selection from "@/components/ui/comp-190";
-import { ProductService } from "@/services/product";
-import { useProduct } from "../../product-context";
+import { ProductProvider } from "../../product-context";
 import { useRouter, useSearchParams } from "next/navigation";
-import { HELPER } from "@/utils/helper";
+import { useDispatch } from "react-redux";
+import { slugifyURL } from "@/utils/slugify";
 
 interface Product {
   _id: string;
@@ -43,7 +43,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   const [sortedProducts, setSortedProducts] =
     useState<Product[]>(initialProducts); // State for sorted products
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   // Update sortedProducts when initialProducts change
   useEffect(() => {
@@ -87,56 +86,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
     }
   };
 
-  // Handle URL parameter persistence and hiding
-  useEffect(() => {
-    const PARAMS_KEY = "__params";
-
-    const getParams = () => {
-      const urlParams = searchParams.toString();
-      if (urlParams) {
-        sessionStorage.setItem(PARAMS_KEY, urlParams);
-        return urlParams;
-      }
-      return sessionStorage.getItem(PARAMS_KEY) || "";
-    };
-
-    const hideParams = () => {
-      const params = getParams();
-      if (params && window.location.search) {
-        window.history.replaceState(
-          null,
-          document.title,
-          window.location.pathname
-        );
-      }
-    };
-
-    hideParams();
-
-    const handleBeforeUnload = () => {
-      const params = sessionStorage.getItem(PARAMS_KEY) || "";
-      if (params) {
-        window.history.replaceState(
-          null,
-          document.title,
-          `${window.location.pathname}?${params}`
-        );
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [searchParams]);
-
-  const { setSelectedProductId } = useProduct();
-
-  const handleClick = (id: string, title: string) => {
-    setSelectedProductId(id);
-    localStorage.setItem("selectedProductId", id);
-    router.push(`/products/${HELPER.convertSpacesToDash(title)}?id=${id}`);
+  const handleProductClick = (productId: string, title: string) => {
+    router.push(`/products/${slugifyURL(title)}?spid=${productId}`);
   };
 
   // Handler for sorting products
@@ -201,9 +152,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           currenData.map((product) => (
             <div
               key={product._id}
-              onClick={() => handleClick(product._id, product.name)}
+              onClick={() => handleProductClick(product._id, product.name)}
             >
-              <ProductCard product={product} />
+              <ProductProvider>
+                <ProductCard product={product} />
+              </ProductProvider>
             </div>
           ))
         ) : (

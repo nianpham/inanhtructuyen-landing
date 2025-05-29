@@ -3,7 +3,6 @@
 import Contact from "@/components/ui/contact";
 import { ProductProvider } from "../components/product-context";
 import Section1 from "./components/section-01/section-01";
-import SectionHeader from "./components/section-header";
 
 export default function ProductDetailContent() {
   return (

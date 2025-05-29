@@ -2,11 +2,7 @@
 
 import Header from "@/layout/header";
 import Footer from "@/layout/footer";
-import HomeContent from "./main";
-import TopBanner from "@/layout/top-header";
-import ProductContent from "./main";
 import ProductDetailContent from "./main";
-import SectionHeader from "./components/section-header";
 import { ProductProvider } from "../components/product-context";
 
 export default function ProductDetailClient() {

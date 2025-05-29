@@ -7,6 +7,9 @@ import Sidebar from "./components/section-01/components/side-bar";
 import { CircleX, SlidersVertical } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { ProductService } from "@/services/product";
+import { ProductProvider } from "./components/product-context";
+import { useDispatch } from "react-redux";
+import { setSelectedProductId } from "@/store/productSlice";
 
 interface Product {
   _id: string;
@@ -112,6 +115,7 @@ export default function ProductClient() {
     },
     [products]
   );
+
   return (
     <div
       className="relative w-full flex flex-col justify-center items-center"
@@ -160,10 +164,12 @@ export default function ProductClient() {
         </div>
       </div>
       <div className="w-full mb-0">
-        <ProductContent
-          filteredProduct={filteredProducts}
-          viewFilter={viewFilter}
-        />
+        <ProductProvider>
+          <ProductContent
+            filteredProduct={filteredProducts}
+            viewFilter={viewFilter}
+          />
+        </ProductProvider>
       </div>
       <Footer />
     </div>

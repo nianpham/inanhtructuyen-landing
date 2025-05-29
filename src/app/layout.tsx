@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ProductProvider } from "@/modules/san-pham/components/product-context";
+import { ReduxProvider } from "@/providers/ReduxProvider";
 
 const font = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -43,10 +44,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className} suppressHydrationWarning={true}>
-        <ProductProvider>
-          {children}
-          <Toaster />
-        </ProductProvider>
+        <ReduxProvider>
+          <ProductProvider>
+            {children}
+            <Toaster />
+          </ProductProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
