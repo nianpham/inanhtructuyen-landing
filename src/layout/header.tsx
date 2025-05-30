@@ -7,6 +7,7 @@ import {
   Search,
   BookOpenText,
   Headphones,
+  LayoutGrid,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -14,6 +15,7 @@ import { IMAGES } from "@/utils/image";
 import TopBanner from "./top-header";
 import "@/styles/contact.css";
 import Contact from "@/components/ui/contact";
+import TopBannerMobile from "./top-header-mobile";
 
 interface HeaderProps {
   cartCount?: number;
@@ -49,6 +51,7 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <TopBanner />
+      <TopBannerMobile />
       <header className="w-full bg-white py-1.5 border-b border-gray-100">
         <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-2 lg:px-0">
           <label
@@ -113,10 +116,12 @@ const Header: React.FC<HeaderProps> = ({
 
             {/* Cart */}
             <Link
-              href="/cart"
-              className="relative flex justify-center items-center text-gray-700 hover:text-gray-900 transition-colors pr-2 lg:pr-0"
+              href="https://apps.apple.com/us/app/in-ảnh-trực-tuyến/id6745794485"
+              target="_blank"
+              className="relative flex flex-col justify-center items-center text-gray-700 hover:text-gray-900 transition-colors pr-2 lg:pr-0"
             >
-              <ShoppingBag className="w-5 h-5" />
+              <LayoutGrid className="w-5 h-5" />
+              <span className="text-sm mt-1">Tải app</span>
             </Link>
           </div>
         </div>
