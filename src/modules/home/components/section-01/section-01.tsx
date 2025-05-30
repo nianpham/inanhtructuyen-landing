@@ -125,7 +125,7 @@ const Section1: React.FC = () => {
                       {/* Hero Image */}
                       <div className="absolute bottom-0 right-0 left-0 top-0 w-full h-full flex items-center justify-center z-0">
                         <Image
-                          src={IMAGES.BANNER_5}
+                          src={IMAGES.BANNER_2}
                           alt="Main Image 1"
                           width={1200}
                           height={1000}
@@ -154,7 +154,7 @@ const Section1: React.FC = () => {
                       {/* Hero Image */}
                       <div className="absolute bottom-0 right-0 left-0 top-0 w-full h-full flex items-center justify-center z-0">
                         <Image
-                          src={IMAGES.BANNER_2}
+                          src={IMAGES.BANNER_5}
                           alt="Main Image 1"
                           width={1200}
                           height={1000}
