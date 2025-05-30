@@ -79,7 +79,7 @@ const Section1: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-0">
-      <section className="pt-6">
+      <section className="pt-4">
         <div className="">
           <div className="max-w-7xl mx-auto p-0">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
@@ -100,7 +100,7 @@ const Section1: React.FC = () => {
                     clickable: true,
                     bulletClass: "swiper-pagination-bullet",
                     bulletActiveClass:
-                      "swiper-pagination-bullet-active bg-white",
+                      "swiper-pagination-bullet-active",
                   }}
                   modules={[Pagination, Navigation, Autoplay]}
                   className="w-full h-full"

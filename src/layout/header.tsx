@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({
     <>
       <TopBanner />
       <TopBannerMobile />
-      <header className="w-full bg-white py-1.5 border-b border-gray-100">
+      <header className="w-full bg-white pt-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-2 lg:px-0">
           <label
             className="hamburger lg:hidden"
