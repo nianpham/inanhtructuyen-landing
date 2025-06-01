@@ -5,6 +5,7 @@ import { HELPER } from "@/utils/helper";
 import { useProduct } from "@/modules/san-pham/components/product-context";
 import { useRouter, useSearchParams } from "next/navigation";
 import { slugifyURL } from "@/utils/slugify";
+import { ROUTES } from "@/utils/route";
 
 interface Product {
   _id: string;
@@ -48,7 +49,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const router = useRouter();
 
   const handleProductClick = (productId: string, title: string) => {
-    router.push(`/products/${slugifyURL(title)}?spid=${productId}`);
+    router.push(`${ROUTES.PRODUCT}/${slugifyURL(title)}?spid=${productId}`);
   };
 
   return (
@@ -56,13 +57,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
       onClick={() => handleProductClick(product._id, product.name)}
       className="flex items-start space-x-4 py-4 cursor-pointer"
     >
-      <div className="w-20 h-20 bg-gray-100 rounded-md flex items-center justify-center overflow-hidden">
+      <div className="w-20 h-20 bg-gray-100 flex items-center justify-center overflow-hidden">
         <Image
           src={product.thumbnail}
           alt={product.name}
           width={1000}
           height={1000}
-          className="object-cover w-full h-full rounded-md border border-gray-200"
+          className="object-cover w-full h-full"
         />
       </div>
       <div className="flex-1">

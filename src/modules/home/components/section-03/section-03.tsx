@@ -41,8 +41,9 @@ const PromoBanner: React.FC<PromoBannerProps> = ({
       <div className="relative h-full flex items-center">
         <div className="max-w-lg px-8 lg:px-12">
           <p
-            className={`text-sm font-medium mb-2 ${isDark ? "text-gray-300" : "text-gray-600"
-              }`}
+            className={`text-sm font-medium mb-2 ${
+              isDark ? "text-gray-300" : "text-gray-600"
+            }`}
           >
             Quick parcel delivery,{" "}
             <span className="text-amber-500">from $25</span>
@@ -53,8 +54,9 @@ const PromoBanner: React.FC<PromoBannerProps> = ({
             {mainHeading}
           </h2>
           <p
-            className={`text-base mb-8 ${isDark ? "text-gray-300" : "text-gray-600"
-              }`}
+            className={`text-base mb-8 ${
+              isDark ? "text-gray-300" : "text-gray-600"
+            }`}
           >
             {description}
           </p>
@@ -74,15 +76,15 @@ const PromoBanner: React.FC<PromoBannerProps> = ({
 // Alternative version with background images
 const Banner1WithImages: React.FC = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 py-0">
+    <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-0 py-0">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
         {/* Left Banner - Interior Home Decor */}
-        <div className="bg-white border-gray-200 border overflow-hidden rounded-md">
+        <div className="bg-white overflow-hidden">
           <div className="relative h-80">
             <Image
               src={IMAGES.BANNER_9}
               alt={``}
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 rounded-md"
+              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
               width={397}
               height={465}
             />
@@ -96,12 +98,12 @@ const Banner1WithImages: React.FC = () => {
         </div>
 
         {/* Right Banner - Pendant Lamp */}
-        <div className="bg-white border-gray-200 border overflow-hidden rounded-md">
+        <div className="bg-white overflow-hidden">
           <div className="relative h-80">
             <Image
               src={IMAGES.BANNER_3}
               alt={``}
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 rounded-md"
+              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
               width={397}
               height={465}
             />
@@ -128,29 +130,8 @@ const Section3: React.FC = () => {
       </div>
 
       {/* Mobile version */}
-      <div className="lg:hidden max-w-7xl mx-auto px-5 lg:px-0 pb-20">
-        <div className="space-y-0">
-          <PromoBanner
-            topText="Quick parcel delivery, from $25"
-            mainHeading="Up to 70% Off Interior Home Decor"
-            description="Class aptent taciti sociosqu ad litora"
-            buttonText="Shop Collection"
-            buttonLink="/home-decor"
-            backgroundColor="bg-gray-50"
-            textColor="text-gray-900"
-            isDark={false}
-          />
-          <PromoBanner
-            topText="Quick parcel delivery, from $25"
-            mainHeading="Up to 70% Sale Off Pendant Lamp"
-            description="Class aptent taciti sociosqu ad litora"
-            buttonText="Shop Collection"
-            buttonLink="/pendant-lamps"
-            backgroundColor="bg-gray-800"
-            textColor="text-white"
-            isDark={true}
-          />
-        </div>
+      <div className="lg:hidden max-w-7xl mx-auto px-0 lg:px-0 pb-20">
+        <Banner1WithImages />
       </div>
     </>
   );

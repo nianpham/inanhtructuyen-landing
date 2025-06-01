@@ -5,6 +5,14 @@ export const IMAGES = {
   FACEBOOK:
     "https://res.cloudinary.com/farmcode/image/upload/v1748364865/ielts-test/facebook_ekthgh.png",
   ZALO: "https://res.cloudinary.com/farmcode/image/upload/v1748364890/ielts-test/zalo_q3w1pc.png",
+  APP_STORE:
+    "https://res.cloudinary.com/farmcode/image/upload/v1748681159/iatt/app-store_pzz1hy.png",
+  GOOGLE_PLAY:
+    "https://res.cloudinary.com/farmcode/image/upload/v1748681260/iatt/gg_play_s96cru.png",
+  GG_LOGO:
+    "https://res.cloudinary.com/farmcode/image/upload/v1748077666/ielts-test/Google_tturuf.png",
+  DEVELOP_IMG:
+    "https://res.cloudinary.com/farmcode/image/upload/v1748787235/iatt/develop_img_ujvwoa.svg",
   BANNER_1:
     "https://res.cloudinary.com/farmcode/image/upload/v1748167081/ielts-test/IMG_7515-Edit-2-1_cpdbxp.jpg",
   BANNER_2:

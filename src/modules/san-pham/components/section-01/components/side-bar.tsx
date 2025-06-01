@@ -159,13 +159,8 @@ const Sidebar: React.FC<SidebarProps> = ({
     };
   }, []);
 
-  // Handle URL parameter persistence and hiding
-  const handleProductClick = (productId: string, title: string) => {
-    router.push(`/products/${slugifyURL(title)}?spid=${productId}`);
-  };
-
   return (
-    <div className="w-full lg:w-64 bg-white h-full overflow-y-auto py-10 pr-5">
+    <div className="w-full lg:w-64 bg-white h-full overflow-y-auto py-10 lg:py-8 pr-5">
       {/* Product Categories */}
       <div className="mb-8">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">
@@ -281,40 +276,6 @@ const Sidebar: React.FC<SidebarProps> = ({
             }`}
             style={{ height: "60px" }}
           />
-        </div>
-      </div>
-
-      {/* Featured Products */}
-      <div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">
-          Sản phẩm đặc trưng
-        </h3>
-        <div className="space-y-4">
-          {products?.map((product, index) => (
-            <div
-              key={index}
-              onClick={() => handleProductClick(product._id, product.name)}
-              className="cursor-pointer grid grid-cols-12 items-center gap-4"
-            >
-              <div className="col-span-4">
-                <Image
-                  width={1000}
-                  height={1000}
-                  src={product?.thumbnail}
-                  alt={product?.name}
-                  className="w-full h-16 border border-gray-200 rounded-md object-cover"
-                />
-              </div>
-              <div className="col-span-8">
-                <h4 className="text-sm font-medium text-gray-800 line-clamp-2">
-                  {product.name}
-                </h4>
-                <p className="text-sm text-gray-600">
-                  {HELPER.formatVND(product.product_option[0].price)}
-                </p>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>

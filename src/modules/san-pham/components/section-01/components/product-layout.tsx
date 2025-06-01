@@ -6,6 +6,7 @@ import { ProductProvider } from "../../product-context";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { slugifyURL } from "@/utils/slugify";
+import { ROUTES } from "@/utils/route";
 
 interface Product {
   _id: string;
@@ -43,6 +44,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   const [sortedProducts, setSortedProducts] =
     useState<Product[]>(initialProducts); // State for sorted products
   const router = useRouter();
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   // Update sortedProducts when initialProducts change
   useEffect(() => {
@@ -87,7 +91,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   };
 
   const handleProductClick = (productId: string, title: string) => {
-    router.push(`/products/${slugifyURL(title)}?spid=${productId}`);
+    router.push(`${ROUTES.PRODUCT}/${slugifyURL(title)}?spid=${productId}`);
   };
 
   // Handler for sorting products
@@ -97,7 +101,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   };
 
   return (
-    <div className="flex-1 px-5 lg:px-0 pt-2 lg:ml-5">
+    <div className="flex-1 px-5 lg:px-0 pt-0 lg:ml-5" id="product-home">
       {/* Header */}
       <div className="flex justify-center lg:justify-between items-center my-6">
         <div className="hidden lg:flex text-gray-600">
@@ -142,23 +146,26 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       <div
         className={
           viewMode === "grid"
-            ? `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${
+            ? `grid grid-cols-2 lg:grid-cols-3 gap-6 ${
                 viewFilter ? "z-0" : "z-30"
               }`
             : "space-y-4"
         }
       >
         {currenData.length > 0 ? (
-          currenData.map((product) => (
-            <div
-              key={product._id}
-              onClick={() => handleProductClick(product._id, product.name)}
-            >
-              <ProductProvider>
-                <ProductCard product={product} />
-              </ProductProvider>
-            </div>
-          ))
+          currenData
+            .slice()
+            .reverse()
+            .map((product) => (
+              <div
+                key={product._id}
+                onClick={() => handleProductClick(product._id, product.name)}
+              >
+                <ProductProvider>
+                  <ProductCard product={product} />
+                </ProductProvider>
+              </div>
+            ))
         ) : (
           <div className="col-span-full text-center py-10 text-gray-500">
             Không tìm thấy sản phẩm.
@@ -198,17 +205,22 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             {Array.from({ length: totalPage }, (_, i) => i + 1)?.map(
               (item: any, index: any) => {
                 return (
-                  <li key={index} onClick={() => selectPage(item)}>
-                    <a
-                      href="#"
+                  <li
+                    key={index}
+                    onClick={() => {
+                      selectPage(item);
+                      scrollToSection(`product-home`);
+                    }}
+                  >
+                    <div
                       className={`${
                         item === currenPage
-                          ? "bg-indigo-50 hover:bg-indigo-100 text-gray-700"
+                          ? "bg-[rgb(var(--primary-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] text-gray-700"
                           : "bg-white"
-                      } flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700`}
+                      } cursor-pointer flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700`}
                     >
                       {item}
-                    </a>
+                    </div>
                   </li>
                 );
               }

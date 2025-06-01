@@ -14,6 +14,7 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import "@/styles/contact.css";
 import { BlogService } from "@/services/blog";
+import Title from "@/components/ui/title";
 
 interface BlogPost {
   _id: string;
@@ -69,10 +70,17 @@ const Section6: React.FC<BlogCarouselProps> = (props) => {
       <section>
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Bản Tin Mới Nhất
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <div className="relative z-20">
+            <div
+              className={`absolute bottom-[8%] right-[5%] lg:right-[39%] h-3 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+            ></div>
+            <h1
+              className={`text-3xl font-bold text-gray-900 mb-2 z-20 relative`}
+            >
+              Bản Tin Mới Nhất
+            </h1>
+          </div>
+          <p className="text-gray-600">
             Cập nhật những tin tức mới nhất từ chúng tôi. Đừng bỏ lỡ bất kỳ
             thông tin quan trọng nào!
           </p>

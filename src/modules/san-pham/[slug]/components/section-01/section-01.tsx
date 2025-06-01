@@ -60,6 +60,7 @@ const Section1: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
   const searchParams = useSearchParams();
   const productID = searchParams.get("spid");
+  const [selectedColor, setSelectedColor] = useState<string>("");
 
   const getPartialContent = (content: string) => {
     const words = content.split(" ");
@@ -78,6 +79,9 @@ const Section1: React.FC = () => {
               productCate = res.data.category;
               if (res.data?.product_option?.length > 0) {
                 setSelectedSize(res.data.product_option[0].size);
+              }
+              if (res.data?.color.length > 0) {
+                setSelectedColor(res.data.color[0]);
               }
             }
           } catch (error) {
@@ -108,6 +112,10 @@ const Section1: React.FC = () => {
   useEffect(() => {
     init();
   }, []);
+
+  const imageList = product
+    ? [product.thumbnail, ...product.images].filter(Boolean)
+    : [];
 
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
@@ -183,10 +191,10 @@ const Section1: React.FC = () => {
                 className="h-full w-full"
                 modules={[Navigation]}
               >
-                {product?.images?.map((proImg: any, index: any) => (
+                {imageList?.map((proImg: any, index: any) => (
                   <SwiperSlide key={index}>
                     <div
-                      className={`w-full h-full rounded-sm overflow-hidden cursor-pointer relative transition-all duration-300 ${
+                      className={`w-full h-full overflow-hidden cursor-pointer relative transition-all duration-300 ${
                         activeSlide === index
                           ? "border-[#6B3410] border-2"
                           : "border-transparent"
@@ -196,7 +204,7 @@ const Section1: React.FC = () => {
                       <Image
                         src={proImg}
                         alt={`variant ${index + 1}`}
-                        className="object-cover w-full h-full border border-gray-200 rounded-sm"
+                        className="object-cover w-full h-full border border-gray-200"
                         width={1000}
                         height={1000}
                       />
@@ -214,13 +222,13 @@ const Section1: React.FC = () => {
                 spaceBetween={10}
                 navigation={false}
               >
-                {product?.images?.map((proImg: any, index: any) => (
+                {imageList?.map((proImg: any, index: any) => (
                   <SwiperSlide key={index}>
-                    <div className="aspect-square w-full h-full relative bg-gray-50">
+                    <div className="aspect-square w-full h-full relative bg-gray-50 flex items-center justify-center">
                       <Image
                         src={proImg}
                         alt="Product Image"
-                        className="object-cover rounded-sm border border-gray-200"
+                        className="max-w-full max-h-full object-contain object-center"
                         width={1000}
                         height={1000}
                       />
@@ -242,10 +250,10 @@ const Section1: React.FC = () => {
                 className="h-full w-full"
                 modules={[Navigation]}
               >
-                {product?.images?.map((proImg: any, index: any) => (
+                {imageList?.map((proImg: any, index: any) => (
                   <SwiperSlide key={index}>
                     <div
-                      className={`w-full h-full rounded-sm overflow-hidden cursor-pointer relative transition-all duration-300 ${
+                      className={`w-full h-full overflow-hidden cursor-pointer relative transition-all duration-300 ${
                         activeSlide === index
                           ? "border-[#6B3410] border-2"
                           : "border-transparent"
@@ -255,7 +263,7 @@ const Section1: React.FC = () => {
                       <Image
                         src={proImg}
                         alt={`variant ${index + 1}`}
-                        className="object-cover h-full border border-gray-200 rounded-sm"
+                        className="object-cover h-full border border-gray-200"
                         width={1000}
                         height={1000}
                       />
@@ -290,7 +298,7 @@ const Section1: React.FC = () => {
                     key={index}
                     className={`h-10 text-sm lg:text-base font-base border rounded-md flex items-center justify-center py-2 cursor-pointer transition-all duration-300 ${
                       selectedSize === option.size
-                        ? "border-[#6B3410] border-2 bg-orange-50"
+                        ? "border-[rgb(var(--fifteenth-rgb))] border-2 bg-orange-50"
                         : "border-gray-300"
                     }`}
                     onClick={() => handleSizeSelect(option.size)}
@@ -320,9 +328,14 @@ const Section1: React.FC = () => {
                     {product?.color.map((color, index) => (
                       <div
                         key={index}
+                        onClick={() => setSelectedColor(color)}
                         className={`w-8 h-8 ${HELPER.renderColor(
                           color
-                        )} rounded-full border border-gray-300`}
+                        )} rounded-full cursor-pointer ${
+                          selectedColor === color
+                            ? "ring-2 ring-offset-2 ring-[rgb(var(--fifteenth-rgb))]"
+                            : ""
+                        }`}
                       ></div>
                     ))}
                   </div>
@@ -397,18 +410,18 @@ const Section1: React.FC = () => {
             </div>
 
             {/* Product Meta */}
-            <div className="space-y-2 text-sm text-gray-600 pt-6 border-t">
+            <div className="space-y-2 text-black pt-6 border-t">
               <div>
                 {/* <span className="font-medium">SKU:</span> {product?.sku} */}
               </div>
               <div>
-                <span className="font-medium">Phân loại:</span>
+                <span className="mb-3 font-medium">Phân loại:</span>
                 {"  "}
                 {HELPER.renderCategory(product?.category || "")}
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex flex-row items-center space-x-2">
                 <span className="font-medium">Chia sẻ:</span>
-                <div className="flex space-x-2">
+                <div className="flex space-x-3">
                   {social.map((icon, index) => (
                     <div key={index}>
                       <Image
@@ -416,7 +429,7 @@ const Section1: React.FC = () => {
                         alt={`Share on ${icon}`}
                         width={24}
                         height={24}
-                        className="w-8 h-8 rounded-full cursor-pointer hover:opacity-80"
+                        className="w-7 h-7 rounded-full cursor-pointer hover:opacity-80"
                       />
                     </div>
                   ))}
@@ -452,9 +465,22 @@ const Section1: React.FC = () => {
 
         {/* Related Products */}
         <div className="pb-12">
-          <h2 className="text-3xl font-medium text-gray-900 mb-8 text-center">
-            Sản phẩm liên quan
-          </h2>
+          <div className="text-center mb-12">
+            <div className="relative z-20">
+              <div
+                className={`absolute bottom-[8%] right-[5%] lg:right-[37.5%] h-3 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+              ></div>
+              <h1
+                className={`text-3xl font-bold text-gray-900 mb-2 z-20 relative`}
+              >
+                Sản phẩm liên quan
+              </h1>
+            </div>
+            <p className="text-gray-600">
+              Khám phá những sản phẩm được ưa chuộng nhất hiện nay, được nhiều
+              khách hàng tin dùng và lựa chọn.
+            </p>
+          </div>
 
           {/* Carousel Container */}
           <div className="relative">
@@ -483,7 +509,7 @@ const Section1: React.FC = () => {
                 bulletActiveClass: "swiper-pagination-bullet-active bg-white",
               }}
               modules={[Pagination, Navigation, Autoplay]}
-              className="w-80 sm:w-96 lg:w-full h-[450px] lg:h-[450px]"
+              className="w-full h-[450px] lg:h-[450px]"
             >
               {relatedProduct?.map((item, index: number) => (
                 <SwiperSlide key={index} className="">

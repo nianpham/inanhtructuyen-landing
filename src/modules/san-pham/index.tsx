@@ -41,6 +41,7 @@ export default function ProductClient() {
   const init = async () => {
     try {
       const res = await ProductService.getAll();
+
       if (res && res.data && res.data.length > 0) {
         setProducts(res.data);
         setFilteredProducts(res.data);

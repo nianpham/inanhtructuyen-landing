@@ -10,18 +10,22 @@ import {
   Send,
 } from "lucide-react";
 import Image from "next/image";
+import { ROUTES } from "@/utils/route";
 
 const TopBanner: React.FC = () => {
   return (
     <div className="hidden lg:flex w-full bg-[rgb(var(--primary-rgb))] text-black py-3 px-4">
-      <div className="w-[85%] mx-auto flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
+      <div className="max-w-7xl w-full mx-auto flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
         {/* Left Section - Contact Info */}
         <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-sm">
-          <div className="flex items-center space-x-2">
-            <Phone size={14} className="text-black" />
+          <div className="flex items-center space-x-2 group">
+            <Phone
+              size={14}
+              className="text-black group-hover:text-[rgb(var(--fifteenth-rgb))]"
+            />
             <Link
-              href="tel:+393352684593"
-              className="hover:text-black transition-colors"
+              href="tel:0939468252"
+              className="group-hover:text-[rgb(var(--fifteenth-rgb))]"
             >
               0939.468.252
             </Link>
@@ -29,13 +33,16 @@ const TopBanner: React.FC = () => {
 
           <div className="hidden sm:block text-black">|</div>
 
-          <div className="flex items-center space-x-2">
-            <Mail size={14} className="text-black" />
+          <div className="flex items-center space-x-2 group">
+            <Mail
+              size={14}
+              className="text-black group-hover:text-[rgb(var(--fifteenth-rgb))]"
+            />
             <Link
-              href="mailto:hello@domain.com"
-              className="hover:text-black transition-colors"
+              href="mailto:inanhtructuyen.2025@gmail.com"
+              className="group-hover:text-[rgb(var(--fifteenth-rgb))]"
             >
-              inanhtructuyen@gmail.com
+              inanhtructuyen.2025@gmail.com
             </Link>
           </div>
         </div>
@@ -43,10 +50,10 @@ const TopBanner: React.FC = () => {
         {/* Center Section - Promotion */}
         <div className="flex items-center space-x-3 text-sm">
           <span className="text-black">
-            Miễn phí vận chuyển cho đơn hàng từ 500.000đ
+            Miễn phí vận chuyển cho đơn hàng từ 100.000đ
           </span>
           <Link
-            href="/shop"
+            href={`${ROUTES.PRODUCT}`}
             className="bg-[rgb(var(--fifteenth-rgb))] hover:bg-yellow-700 text-white px-4 py-1 rounded font-medium transition-colors"
           >
             Đặt ngay!
@@ -54,7 +61,7 @@ const TopBanner: React.FC = () => {
         </div>
 
         {/* Right Section - Social Media Icons */}
-        <div className="flex space-x-3 bg-[rgb(var(--primary-rgb))]">
+        <div className="flex space-x-4 bg-[rgb(var(--primary-rgb))]">
           <Link href="/" className="text-blue-600 hover:text-blue-700">
             <Image
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/768px-Facebook_Logo_%282019%29.png"

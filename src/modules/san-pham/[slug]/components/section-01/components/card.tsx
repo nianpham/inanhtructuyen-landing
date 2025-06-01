@@ -1,5 +1,6 @@
 import { useProduct } from "@/modules/san-pham/components/product-context";
 import { HELPER } from "@/utils/helper";
+import { ROUTES } from "@/utils/route";
 import { slugifyURL } from "@/utils/slugify";
 import { Heart, Eye, BarChart3, ShoppingCart } from "lucide-react";
 import Image from "next/image";
@@ -29,7 +30,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const router = useRouter();
 
   const handleProductClick = (productId: string, title: string) => {
-    router.push(`/products/${slugifyURL(title)}?spid=${productId}`);
+    router.push(`${ROUTES.PRODUCT}/${slugifyURL(title)}?spid=${productId}`);
   };
   return (
     <div
@@ -52,7 +53,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             alt={product.name}
             layout="fill"
             objectFit="cover"
-            className={`transition-opacity duration-300  ${
+            className={`transition-opacity duration-300 border border-gray-200  ${
               product?.images[1]
                 ? "group-hover:opacity-0"
                 : "group-hover:opacity-100"

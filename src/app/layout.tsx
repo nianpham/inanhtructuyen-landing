@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+// import { Manrope } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ProductProvider } from "@/modules/san-pham/components/product-context";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 
-const font = Plus_Jakarta_Sans({ subsets: ["latin"] });
+// const font = Manrope({ subsets: ["latin"] });
+// const font = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "In Ảnh Trực Tuyến",
@@ -43,7 +44,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={font.className} suppressHydrationWarning={true}>
+      <body
+        // className={font.className}
+        suppressHydrationWarning={true}
+      >
         <ReduxProvider>
           <ProductProvider>
             {children}

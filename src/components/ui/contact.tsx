@@ -7,7 +7,7 @@ export default function Contact() {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className="flex flex-row lg:flex-col gap-3.5">
+    <div className="flex flex-row lg:flex-col gap-6 lg:gap-3.5">
       <div className="relative flex items-center justify-center">
         <div className="absolute inset-0 border border-gray-100 rounded-full animate-zoomFade z-10"></div>
         <div className="absolute inset-0 p-2 opacity-90 rounded-full animate-zoomIO z-0"></div>

@@ -11,7 +11,7 @@ const features = [
   {
     icon: <Plane className="w-12 h-12" strokeWidth={1.5} />,
     title: "Giao Hàng Toàn Quốc",
-    description: "Trên tất cả các đơn hàng trên 50.000đ",
+    description: "Trên tất cả các đơn hàng trên 100.000đ",
     linkText: "Tìm Hiểu Thêm",
   },
   {
@@ -52,17 +52,21 @@ const Section5: React.FC = () => {
                 alt=""
                 fill
                 priority
-                className="object-cover object-right"
+                className="object-cover object-[20%_70%] lg:object-right"
               />
             </div>
             <div className="relative w-5/6 lg:max-w-4xl mx-auto px-6 py-10 my-20 text-center backdrop-blur-xs bg-white/70 rounded-lg">
               <div className="text-2xl md:text-3xl font-semibold text-gray-900 mb-3">
                 Liên hệ với chúng tôi
               </div>
-              <p className="text-base text-gray-600 mb-10 max-w-2xl mx-auto">
+              <p className="hidden lg:flex text-base text-gray-600 mb-10 max-w-2xl mx-auto">
                 Chúng tôi cung cấp sản phẩm chất lượng cao với giá cả hợp lý.
                 Đăng ký nhận bản tin của chúng tôi để cập nhật thông tin mới
                 nhất và ưu đãi đặc biệt.
+              </p>
+              <p className="flex lg:hidden text-base text-gray-600 mb-10 max-w-2xl mx-auto">
+                Chúng tôi cung cấp sản phẩm chất lượng, giá hợp lý. Đăng ký bản
+                tin để nhận ưu đãi mới.
               </p>
               <div className="max-w-2xl mx-auto mb-8">
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -71,11 +75,11 @@ const Section5: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Nhập địa chỉ email của bạn"
-                    className="placeholder-gray-500 flex-1 px-6 py-2 text-lg border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent bg-transparent"
+                    className="placeholder-gray-500 flex-1 px-6 py-2 text-lg border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent bg-transparent"
                   />
                   <button
                     onClick={handleSubmit}
-                    className="px-8 py-3 bg-gray-900 text-white font-semibold rounded-md hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+                    className="px-8 py-3 bg-[rgb(var(--fifteenth-rgb))] text-white font-semibold rounded-md hover:opacity-80 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
                   >
                     {isSubscribed ? "Đã Đăng Ký!" : "Đăng Ký"}
                   </button>

@@ -13,6 +13,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import "@/styles/contact.css";
+import FurnitureSlider from "@/components/ui/furnitureSlide";
 
 interface ProductCardProps {
   title: string;
@@ -79,12 +80,15 @@ const Section1: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-0">
-      <section className="pt-4">
+      {/* <div>
+        <FurnitureSlider />
+      </div> */}
+      <section className="pt-0">
         <div className="">
           <div className="max-w-7xl mx-auto p-0">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
               {/* Hero Section - Takes 2/3 width */}
-              <div className="relative lg:col-span-2">
+              {/* <div className="relative lg:col-span-2">
                 <Swiper
                   onSwiper={(swiper) => (swiperRef.current = swiper)}
                   grabCursor={true}
@@ -99,8 +103,7 @@ const Section1: React.FC = () => {
                   pagination={{
                     clickable: true,
                     bulletClass: "swiper-pagination-bullet",
-                    bulletActiveClass:
-                      "swiper-pagination-bullet-active",
+                    bulletActiveClass: "swiper-pagination-bullet-active",
                   }}
                   modules={[Pagination, Navigation, Autoplay]}
                   className="w-full h-full"
@@ -122,7 +125,6 @@ const Section1: React.FC = () => {
                         </button>
                       </div>
 
-                      {/* Hero Image */}
                       <div className="absolute bottom-0 right-0 left-0 top-0 w-full h-full flex items-center justify-center z-0">
                         <Image
                           src={IMAGES.BANNER_2}
@@ -151,7 +153,6 @@ const Section1: React.FC = () => {
                         </button>
                       </div>
 
-                      {/* Hero Image */}
                       <div className="absolute bottom-0 right-0 left-0 top-0 w-full h-full flex items-center justify-center z-0">
                         <Image
                           src={IMAGES.BANNER_5}
@@ -180,7 +181,6 @@ const Section1: React.FC = () => {
                         </button>
                       </div>
 
-                      {/* Hero Image */}
                       <div className="absolute bottom-0 right-0 left-0 top-0 w-full h-full flex items-center justify-center z-0">
                         <Image
                           src={IMAGES.BANNER_4}
@@ -193,11 +193,14 @@ const Section1: React.FC = () => {
                     </div>
                   </SwiperSlide>
                 </Swiper>
+              </div> */}
+              <div className="relative lg:col-span-2">
+                <FurnitureSlider />
               </div>
 
               {/* Product Cards Sidebar - Takes 1/3 width */}
               <div className="grid h-full lg:col-span-1 lg:grid-row-2 gap-6">
-                {/* {products.map((product, index) => (
+                {products.map((product, index) => (
                   <ProductCard
                     key={index}
                     title={product.title}
@@ -207,33 +210,7 @@ const Section1: React.FC = () => {
                     image={product.image}
                     bgColor={product.bgColor}
                   />
-                ))} */}
-
-                <FastMarquee loop={0} speed={70}>
-                  {IMAGES.slider_1?.map((item: any, index: number) => (
-                    <Image
-                      key={`marquee-image-${index}`}
-                      src={item}
-                      alt="alt"
-                      className="w-full h-[338px] object-cover object-center pr-6"
-                      width={1000}
-                      height={1000}
-                    />
-                  ))}
-                </FastMarquee>
-
-                <FastMarquee loop={0} speed={70} direction="right">
-                  {IMAGES.slider_2?.map((item: any, index: number) => (
-                    <Image
-                      key={`marquee-image-${index}`}
-                      src={item}
-                      alt="alt"
-                      className="w-full h-[338px] object-cover object-center pr-6"
-                      width={1000}
-                      height={1000}
-                    />
-                  ))}
-                </FastMarquee>
+                ))}
               </div>
             </div>
           </div>
