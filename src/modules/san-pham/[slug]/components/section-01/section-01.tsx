@@ -513,7 +513,7 @@ const Section1: React.FC = () => {
                 bulletActiveClass: "swiper-pagination-bullet-active bg-white",
               }}
               modules={[Pagination, Navigation, Autoplay]}
-              className="w-full h-[520px] lg:h-[450px]"
+              className="w-full h-[500px] lg:h-[450px]"
             >
               {relatedProduct?.map((item, index: number) => (
                 <SwiperSlide key={index} className="">
