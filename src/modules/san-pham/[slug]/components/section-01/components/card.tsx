@@ -103,7 +103,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       {/* Product Info */}
       <div className="p-4 flex flex-row justify-between items-end">
         <div>
-          <h3 className="font-medium text-gray-900 mb-1 text-sm">
+          <h3 className="font-medium text-gray-900 mb-1 text-sm h-full line-clamp-1">
             {product.name}
           </h3>
           <div className="flex text-[14px] font-light items-center mb-2">
