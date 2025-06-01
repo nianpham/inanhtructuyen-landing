@@ -77,15 +77,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       {/* Product Info */}
-      <div className="py-4 flex flex-row justify-between items-end">
+      <div className="py-4 flex flex-col justify-between items-start w-full">
         <div className="flex flex-col justify-between">
           <h3 className="font-light text-gray-900 mb-1 text-[14px] lg:text-[16px] h-full line-clamp-1">
             {product.name}
           </h3>
-          <div className="flex text-[14px] font-light items-center mb-2">
+          <div className="flex text-xs lg:text-[14px] font-light items-center mb-2">
             {renderStars(Math.floor(Math.random() * 2) + 4)} &nbsp;&nbsp;(
             {Math.floor(Math.random() * 100) + 4} lượt mua)
           </div>
+        </div>
+        <div className="flex flex-col w-full lg:flex-row justify-between items-start lg:items-end">
           <div className="flex items-center space-x-2">
             {Number(product._id.charAt(7)) % 2 !== 0 && (
               <span className="text-[14px] lg:text-[16px] text-gray-500 line-through">
@@ -98,16 +100,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               {HELPER.formatVND(product.product_option[0].price)}
             </span>
           </div>
-        </div>
-        <div className="flex space-x-2 mt-3">
-          {product.color.slice(0, 3).map((color, index) => (
-            <div
-              key={index}
-              className={`w-4 h-4 ${HELPER.renderColor(
-                color
-              )} rounded-full border border-gray-200`}
-            ></div>
-          ))}
+          <div className="flex items-start w-full lg:justify-end space-x-2 mt-3">
+            {product.color.slice(0, 3).map((color, index) => (
+              <div
+                key={index}
+                className={`w-4 h-4 ${HELPER.renderColor(
+                  color
+                )} rounded-full border border-gray-200`}
+              ></div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
