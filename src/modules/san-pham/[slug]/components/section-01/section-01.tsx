@@ -196,7 +196,7 @@ const Section1: React.FC = () => {
                     <div
                       className={`w-full h-full overflow-hidden cursor-pointer relative transition-all duration-300 ${
                         activeSlide === index
-                          ? "border-[#6B3410] border-2"
+                          ? "border-[rgb(var(--fifteenth-rgb))] border-2"
                           : "border-transparent"
                       }`}
                       onClick={() => handleThumbnailClick(index)}
@@ -255,7 +255,7 @@ const Section1: React.FC = () => {
                     <div
                       className={`w-full h-full overflow-hidden cursor-pointer relative transition-all duration-300 ${
                         activeSlide === index
-                          ? "border-[#6B3410] border-2"
+                          ? "border-[rgb(var(--fifteenth-rgb))] border-2"
                           : "border-transparent"
                       }`}
                       onClick={() => handleThumbnailClick(index)}
@@ -331,9 +331,9 @@ const Section1: React.FC = () => {
                         onClick={() => setSelectedColor(color)}
                         className={`w-8 h-8 ${HELPER.renderColor(
                           color
-                        )} rounded-full cursor-pointer ${
+                        )} rounded-full border border-gray-200 cursor-pointer ${
                           selectedColor === color
-                            ? "ring-2 ring-offset-2 ring-[rgb(var(--fifteenth-rgb))]"
+                            ? "ring-2 ring-[rgb(var(--fifteenth-rgb))]"
                             : ""
                         }`}
                       ></div>
@@ -385,14 +385,14 @@ const Section1: React.FC = () => {
                 <div className="flex items-center border border-gray-300 rounded-md">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="p-2 hover:bg-gray-50"
+                    className="py-2 px-3.5 hover:bg-gray-50"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="px-4 py-2 border-x">{quantity}</span>
+                  <span className="px-5 py-2 border-x">{quantity}</span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="p-2 hover:bg-gray-50"
+                    className="py-2 px-3.5 hover:bg-gray-50"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
@@ -473,12 +473,16 @@ const Section1: React.FC = () => {
               <h1
                 className={`text-3xl font-bold text-gray-900 mb-2 z-20 relative`}
               >
-                Sản phẩm liên quan
+                Sản Phẩm Liên Quan
               </h1>
             </div>
-            <p className="text-gray-600">
+            <p className="hidden lg:flex text-center justify-center text-gray-600">
               Khám phá những sản phẩm được ưa chuộng nhất hiện nay, được nhiều
               khách hàng tin dùng và lựa chọn.
+            </p>
+
+            <p className="lg:hidden flex text-center justify-center text-gray-600">
+              Khám phá những sản phẩm được ưa chuộng và tin dùng hiện nay.
             </p>
           </div>
 

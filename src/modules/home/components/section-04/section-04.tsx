@@ -74,10 +74,10 @@ const Section4: React.FC = () => {
                 <div className="text-center lg:text-left mb-5">
                   <div className="relative z-20">
                     <div
-                      className={`absolute bottom-[8%] right-[5%] lg:right-[31%] h-3 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                      className={`absolute bottom-[8%] right-[5%] lg:right-[38%] h-3 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
                     ></div>
                     <h1
-                      className={`text-3xl font-bold text-gray-900 z-20 relative`}
+                      className={`text-2xl font-bold text-gray-900 z-20 relative`}
                     >
                       Sản Phẩm Nổi Bật
                     </h1>
@@ -93,10 +93,10 @@ const Section4: React.FC = () => {
                 <div className="text-center lg:text-left mb-5">
                   <div className="relative z-20">
                     <div
-                      className={`absolute bottom-[55%] sm:bottom-[8%] right-[5%] lg:right-[11%] h-3 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                      className={`absolute bottom-[8%] right-[5%] lg:right-[22%] h-3 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
                     ></div>
                     <h1
-                      className={`text-3xl font-bold text-gray-900 z-20 relative`}
+                      className={`text-2xl font-bold text-gray-900 z-20 relative`}
                     >
                       Sản Phẩm Đánh Giá Cao
                     </h1>
@@ -116,10 +116,10 @@ const Section4: React.FC = () => {
                 <div className="text-center lg:text-left mb-5">
                   <div className="relative z-20">
                     <div
-                      className={`absolute bottom-[8%] right-[5%] lg:right-[23%] h-3 w-40 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                      className={`absolute bottom-[8%] right-[5%] lg:right-[29%] h-3 w-40 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
                     ></div>
                     <h1
-                      className={`text-3xl font-bold text-gray-900 z-20 relative`}
+                      className={`text-2xl font-bold text-gray-900 z-20 relative`}
                     >
                       Sản Phẩm Xu Hướng
                     </h1>

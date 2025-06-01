@@ -1,5 +1,5 @@
 import { HELPER } from "@/utils/helper";
-import { BarChart3, Eye, Heart, ShoppingCart } from "lucide-react";
+import { BarChart3, Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { Product } from "@/types/product";
@@ -9,18 +9,28 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`w-4 h-4 ${
+          i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+        }`}
+      />
+    ));
+  };
   return (
     <div className="cursor-pointer group relative bg-white overflow-hidden transition-all duration-300">
       {Number(product._id.charAt(7)) % 2 !== 0 && (
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded">
-            Sale!
+            Khuyến mãi
           </span>
         </div>
       )}
 
       {/* Product Image Container */}
-      <div className="relative aspect-square rounded-lg overflow-hidden">
+      <div className="relative aspect-square overflow-hidden">
         <div>
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
             <Image
@@ -32,7 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 product.images[1]
                   ? "group-hover:opacity-0"
                   : "group-hover:opacity-100"
-              } rounded-lg`}
+              }`}
             />
             {product.images[1] && (
               <Image
@@ -40,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 alt={`${product.name} hover`}
                 layout="fill"
                 objectFit="cover"
-                className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg border border-gray-200"
+                className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-gray-200"
               />
             )}
           </div>
@@ -69,9 +79,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Product Info */}
       <div className="py-4 flex flex-row justify-between items-end">
         <div className="flex flex-col justify-between">
-          <h3 className="font-light text-gray-900 mb-3 text-[14px] lg:text-[16px] h-11 line-clamp-2">
+          <h3 className="font-light text-gray-900 mb-1 text-[14px] lg:text-[16px] h-full line-clamp-1">
             {product.name}
           </h3>
+          <div className="flex text-[14px] font-light items-center mb-2">
+            {renderStars(Math.floor(Math.random() * 2) + 4)} &nbsp;&nbsp;(
+            {Math.floor(Math.random() * 100) + 4} lượt mua)
+          </div>
           <div className="flex items-center space-x-2">
             {Number(product._id.charAt(7)) % 2 !== 0 && (
               <span className="text-[14px] lg:text-[16px] text-gray-500 line-through">

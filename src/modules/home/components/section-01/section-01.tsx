@@ -30,15 +30,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
   description,
   price,
   image,
-  bgColor = "bg-gray-100",
+  bgColor,
 }) => {
   return (
-    <div
-      className={`${bgColor} relative p-8 h-full flex flex-col justify-between`}
-    >
+    <div className={` relative p-8 h-full flex flex-col justify-between`}>
       <div className="relative z-10 flex flex-col items-end justify-start">
-        <h3 className="text-2xl font-bold text-gray-800 mb-2">{title}</h3>
-        <p className="text-xl font-semibold text-gray-800 mb-4">{discount}</p>
+        <h3 className={`text-2xl font-bold text-${bgColor}  text-right mb-2`}>
+          {title}
+        </h3>
+        <p className={`text-xl font-semibold text-${bgColor} mb-4`}>
+          {discount}
+        </p>
         <p className="text-amber-600 font-medium">{price}</p>
       </div>
       <div className="absolute top-0 left-0 right-0 bottom-0">
@@ -56,26 +58,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
 const Section1: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  const products = [
-    {
-      title: "Wood Chair",
-      discount: "Extra 15% off",
-      description: "Class aptent taciti sociosqu ad litora",
-      price: "From $49.59",
-      image: IMAGES.BANNER_7,
-      bgColor: "bg-gray-50",
-    },
-    {
-      title: "Khung Ảnh Hàn Quốc",
-      discount: "Giảm giá 20%",
-      description: "",
-      price: "Giá chỉ từ 48.000đ",
-      image: IMAGES.BANNER_8,
-      bgColor: "bg-gray-100",
-    },
-  ];
-
   const swiperRef = useRef<SwiperCore | null>(null);
 
   return (
@@ -200,17 +182,58 @@ const Section1: React.FC = () => {
 
               {/* Product Cards Sidebar - Takes 1/3 width */}
               <div className="grid h-full lg:col-span-1 lg:grid-row-2 gap-6">
-                {products.map((product, index) => (
-                  <ProductCard
-                    key={index}
-                    title={product.title}
-                    discount={product.discount}
-                    description={product.description}
-                    price={product.price}
-                    image={product.image}
-                    bgColor={product.bgColor}
-                  />
-                ))}
+                <div
+                  className={`flex relative p-8 h-[300px] lg:h-full flex-col justify-between`}
+                >
+                  <div className="relative z-10 flex flex-col items-end justify-start">
+                    <h3
+                      className={`text-2xl font-bold text-black  text-right mb-2`}
+                    >
+                      Ảnh Khung Nhôm Titan
+                    </h3>
+                    <p className={`text-xl font-base text-black mb-2`}>
+                      Giảm giá 10%
+                    </p>
+                    <p className="text-[rgb(var(--primary-rgb))] font-medium">
+                      Giá chỉ từ 50.000đ
+                    </p>
+                  </div>
+                  <div className="absolute top-0 left-0 right-0 bottom-0">
+                    <Image
+                      src={IMAGES.BANNER_7}
+                      alt="Main Image 1"
+                      fill
+                      priority
+                      className="object-cover h-full object-center border border-gray-200"
+                    />
+                  </div>
+                </div>
+                <div
+                  className={`hidden lg:flex relative p-8 h-full flex-col justify-between`}
+                >
+                  <div className="relative z-10 flex flex-col items-end justify-start">
+                    <h3
+                      className={`text-2xl font-bold text-black  text-right mb-2`}
+                    >
+                      Khung Ảnh Hàn Quốc
+                    </h3>
+                    <p className={`text-xl font-base text-black mb-2`}>
+                      Giảm giá 10%
+                    </p>
+                    <p className="text-[rgb(var(--fifteenth-rgb))] font-medium">
+                      Giá chỉ từ 50.000đ
+                    </p>
+                  </div>
+                  <div className="absolute top-0 left-0 right-0 bottom-0">
+                    <Image
+                      src={IMAGES.BANNER_8}
+                      alt="Main Image 1"
+                      fill
+                      priority
+                      className="object-cover h-full object-center border border-gray-200"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

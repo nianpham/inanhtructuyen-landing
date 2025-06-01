@@ -18,6 +18,7 @@ import "@/styles/contact.css";
 import TopBannerMobile from "./top-header-mobile";
 import LoginForm from "./login-form";
 import { ROUTES } from "@/utils/route";
+import LoginFormMobile from "./login-form-mobile";
 
 interface HeaderProps {
   cartCount?: number;
@@ -40,8 +41,7 @@ const Header: React.FC<HeaderProps> = ({
     },
     { label: "Sản phẩm", href: `${ROUTES.PRODUCT}`, icon: Gift },
     { label: "Giới thiệu", href: `${ROUTES.ABOUT}`, icon: Info },
-    { label: "Chính sách", href: `${ROUTES.POLICY}`, icon: ShieldCheck },
-    { label: "Giá cả", href: `${ROUTES.PRICING}`, icon: CircleDollarSign },
+    { label: "Bảng giá", href: `${ROUTES.PRICING}`, icon: CircleDollarSign },
     { label: "Blog", href: `${ROUTES.BLOG}`, icon: NotepadText },
   ];
 
@@ -76,7 +76,7 @@ const Header: React.FC<HeaderProps> = ({
       <TopBanner />
       <TopBannerMobile />
       <header className="w-full bg-white py-3">
-        <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-2 lg:px-0">
+        <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-5 lg:px-0">
           <label
             className="hamburger lg:hidden"
             onClick={() => {
@@ -105,7 +105,7 @@ const Header: React.FC<HeaderProps> = ({
               <span className="text-sm lg:text-lg font-bold">
                 IN ẢNH TRỰC TUYẾN
               </span>
-              <span className="text-xs font-medium text-[#f6842c]">
+              <span className="text-xs font-medium text-[rgb(var(--fifteenth-rgb))]">
                 In ảnh đẹp giá rẻ
               </span>
             </div>
@@ -119,7 +119,7 @@ const Header: React.FC<HeaderProps> = ({
                   className={`relative text-[16px] font-normal transition-colors duration-200 ${
                     isActive(item)
                       ? "text-[rgb(var(--fifteenth-rgb))] font-semibold border-b-2 border-[rgb(var(--fifteenth-rgb))] pb-1"
-                      : "text-gray-500"
+                      : "text-black"
                   } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
                 >
                   {item.label}
@@ -151,7 +151,7 @@ const Header: React.FC<HeaderProps> = ({
             <Link
               href="https://apps.apple.com/us/app/in-ảnh-trực-tuyến/id6745794485"
               target="_blank"
-              className="group relative flex flex-col lg:flex-row gap-1 lg:gap-2 justify-center items-center text-gray-700 hover:text-gray-900 transition-colors lg:pr-0"
+              className="group relative flex flex-col lg:flex-row gap-1 lg:gap-2 justify-center items-center text-black hover:text-gray-900 transition-colors lg:pr-0"
             >
               <div className="flex flex-row items-center gap-2 ">
                 <Image
@@ -159,17 +159,17 @@ const Header: React.FC<HeaderProps> = ({
                   alt={IMAGES.APP_STORE}
                   width={1000}
                   height={1000}
-                  className={`w-4 h-4`}
+                  className={`w-[18px] h-[18px]`}
                 />
                 <Image
                   src={IMAGES.GOOGLE_PLAY}
                   alt={IMAGES.GOOGLE_PLAY}
                   width={1000}
                   height={1000}
-                  className={`w-4 h-4`}
+                  className={`w-[18px] h-[18px]`}
                 />
               </div>
-              <span className="text-[16px] group-hover:text-[rgb(var(--fifteenth-rgb))]">
+              <span className="text-[16px] font-normal group-hover:text-[rgb(var(--fifteenth-rgb))]">
                 Tải app
               </span>
             </Link>
@@ -193,10 +193,10 @@ const Header: React.FC<HeaderProps> = ({
                   height={40}
                 />
                 <div className="flex flex-col justify-center items-start">
-                  <span className="text-sm lg:text-lg font-bold">
+                  <span className="text-base lg:text-lg font-bold">
                     IN ẢNH TRỰC TUYẾN
                   </span>
-                  <span className="text-xs font-medium text-[#f6842c]">
+                  <span className="text-sm font-medium text-[rgb(var(--fifteenth-rgb))]">
                     In ảnh đẹp giá rẻ
                   </span>
                 </div>
@@ -204,7 +204,7 @@ const Header: React.FC<HeaderProps> = ({
               <div onClick={() => setOpen(false)} className="cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-black"
+                  className="h-6 w-6 text-black"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -223,28 +223,28 @@ const Header: React.FC<HeaderProps> = ({
                 <div key={item.label} className="relative group">
                   <Link
                     href={item.href}
-                    className={`text-[16px] font-normal transition-colors duration-200 ${
+                    className={`relative text-[16px] font-normal transition-colors duration-200 ${
                       isActive(item)
                         ? "text-[rgb(var(--fifteenth-rgb))] font-semibold border-b-2 border-[rgb(var(--fifteenth-rgb))]"
-                        : "text-gray-500"
+                        : "text-black"
                     } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
                   >
                     <div className="flex flex-row items-center gap-1 text-[16px] mb-3">
                       {item.icon && <item.icon className="w-5 h-5 mr-2" />}{" "}
                       {item.label}
                     </div>
+                    <span
+                      className={`absolute -bottom-1 left-0 h-[2px] bg-[rgb(var(--fifteenth-rgb))] transition-all duration-300 ease-in-out ${
+                        isActive(item) ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
+                    ></span>
                   </Link>
                 </div>
               ))}
             </div>
           </div>
           <div className="w-full">
-            <div className="w-full flex items-center justify-between space-x-1 text-gray-700 hover:text-gray-900 transition-colors">
-              <span className="text-sm font-medium">
-                {isLoggedIn ? "Account" : "Login / Register"}
-              </span>
-              <User className="w-5 h-5" />
-            </div>
+            <LoginFormMobile />
           </div>
         </div>
       )}

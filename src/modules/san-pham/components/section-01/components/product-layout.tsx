@@ -112,7 +112,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
               {sortedProducts.length}
             </>
           ) : (
-            "Không tìm thấy sản phẩm"
+            " Hiển thị 0 trên 0"
           )}
         </div>
         <div className="hidden lg:flex items-center gap-2">
@@ -126,7 +126,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             <Grip size={20} />
           </button>
           <button
-            onClick={() => onViewModeChange("list")}
+            // onClick={() => onViewModeChange("list")}
             className={`p-1 ${
               viewMode === "list" ? "text-black" : "text-gray-400"
             }`}

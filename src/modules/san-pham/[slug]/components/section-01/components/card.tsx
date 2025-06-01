@@ -2,7 +2,7 @@ import { useProduct } from "@/modules/san-pham/components/product-context";
 import { HELPER } from "@/utils/helper";
 import { ROUTES } from "@/utils/route";
 import { slugifyURL } from "@/utils/slugify";
-import { Heart, Eye, BarChart3, ShoppingCart } from "lucide-react";
+import { Heart, Eye, BarChart3, ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
@@ -27,6 +27,16 @@ interface Product {
 }
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`w-4 h-4 ${
+          i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+        }`}
+      />
+    ));
+  };
   const router = useRouter();
 
   const handleProductClick = (productId: string, title: string) => {
@@ -40,13 +50,13 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       {Number(product._id.charAt(7)) % 2 !== 0 && (
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded">
-            Sale!
+            Khuyến mãi
           </span>
         </div>
       )}
 
       {/* Product Image Container */}
-      <div className="relative aspect-square rounded-lg overflow-hidden">
+      <div className="relative aspect-square overflow-hidden">
         <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
           <Image
             src={product.thumbnail}
@@ -57,7 +67,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
               product?.images[1]
                 ? "group-hover:opacity-0"
                 : "group-hover:opacity-100"
-            } rounded-lg`}
+            }`}
           />
           {product?.images[1] && (
             <Image
@@ -65,7 +75,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
               alt={`${product.name} hover`}
               layout="fill"
               objectFit="cover"
-              className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"
+              className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             />
           )}
         </div>
@@ -93,9 +103,13 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       {/* Product Info */}
       <div className="p-4 flex flex-row justify-between items-end">
         <div>
-          <h3 className="font-medium text-gray-900 mb-2 text-sm">
+          <h3 className="font-medium text-gray-900 mb-1 text-sm">
             {product.name}
           </h3>
+          <div className="flex text-[14px] font-light items-center mb-2">
+            {renderStars(Math.floor(Math.random() * 2) + 4)} &nbsp;&nbsp;(
+            {Math.floor(Math.random() * 100) + 4} lượt mua)
+          </div>
           <div className="flex items-center space-x-2">
             {Number(product._id.charAt(7)) % 2 !== 0 && (
               <span className="text-sm text-gray-500 line-through">

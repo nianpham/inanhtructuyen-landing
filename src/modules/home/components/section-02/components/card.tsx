@@ -2,7 +2,7 @@ import { useProduct } from "@/modules/san-pham/components/product-context";
 import { HELPER } from "@/utils/helper";
 import { ROUTES } from "@/utils/route";
 import { slugifyURL } from "@/utils/slugify";
-import { Heart, Eye, BarChart3, ShoppingCart } from "lucide-react";
+import { Heart, Eye, BarChart3, ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
@@ -27,6 +27,17 @@ interface Product {
 }
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`w-4 h-4 ${
+          i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+        }`}
+      />
+    ));
+  };
+
   const router = useRouter();
 
   const handleProductClick = (productId: string, title: string) => {
@@ -41,7 +52,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       {Number(product._id.charAt(7)) % 2 !== 0 && (
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded">
-            Khuyến mãi!
+            Khuyến mãi
           </span>
         </div>
       )}
@@ -94,9 +105,13 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       {/* Product Info */}
       <div className="py-4 flex flex-row justify-between items-end">
         <div className="flex flex-col justify-between">
-          <h3 className="font-light text-gray-900 mb-3 text-[16px] lg:text-[16px] h-10">
+          <h3 className="font-light text-gray-900 mb-1 text-[16px] lg:text-[16px] h-full line-clamp-1">
             {product.name}
           </h3>
+          <div className="flex text-[14px] font-light items-center mb-2">
+            {renderStars(Math.floor(Math.random() * 2) + 4)} &nbsp;&nbsp;(
+            {Math.floor(Math.random() * 100) + 4} lượt mua)
+          </div>
           <div className="flex items-center space-x-2">
             {Number(product._id.charAt(7)) % 2 !== 0 && (
               <span className="text-[16px] lg:text-[16px] text-gray-500 line-through">

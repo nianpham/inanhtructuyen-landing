@@ -93,7 +93,7 @@ const FurnitureSlider: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-[700px] bg-gray-50 overflow-hidden">
+    <div className="relative w-full h-[300px] lg:h-[700px] bg-gray-50 overflow-hidden">
       {/* Slider Container */}
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (
@@ -121,13 +121,13 @@ const FurnitureSlider: React.FC = () => {
             </div>
 
             {/* Content */}
-            <div className="relative z-10 flex items-start pt-20 h-full">
+            <div className="relative z-10 flex items-start pl-5 lg:pl-5 pt-6 lg:pt-20 h-full">
               <div className="container mx-auto px-4">
                 <div className="max-w-2xl">
                   {/* Delivery Text */}
                   <div className="mb-4">
                     <span
-                      className={`inline-block text-[rgb(var(--primary-rgb))] text-lg font-bold transition-all duration-1000 delay-0 ${
+                      className={`inline-block text-[rgb(var(--primary-rgb))] text-sm lg:text-lg font-bold transition-all duration-1000 delay-0 ${
                         index === currentSlide
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 -translate-y-20"
@@ -136,7 +136,7 @@ const FurnitureSlider: React.FC = () => {
                       {slide.delivery}
                     </span>
                     <span
-                      className={`inline-block text-[rgb(var(--fifteenth-rgb))] text-lg font-bold ml-2 transition-all duration-1000 delay-100 ${
+                      className={`inline-block text-[rgb(var(--fifteenth-rgb))] text-sm lg:text-lg font-bold lg:ml-2 transition-all duration-1000 delay-100 ${
                         index === currentSlide
                           ? "opacity-100 translate-x-0"
                           : "opacity-0 -translate-x-20"
@@ -148,7 +148,7 @@ const FurnitureSlider: React.FC = () => {
 
                   {/* Main Title */}
                   <h1
-                    className={`text-5xl md:text-6xl lg:text-6xl font-bold text-[rgb(var(--primary-rgb))] mb-2 leading-tight transition-all duration-1000 delay-300 ${
+                    className={`text-2xl md:text-6xl lg:text-6xl font-bold text-[rgb(var(--primary-rgb))] mb-2 leading-tight transition-all duration-1000 delay-300 ${
                       index === currentSlide
                         ? "opacity-100 scale-100"
                         : "opacity-0 scale-90"
@@ -159,7 +159,7 @@ const FurnitureSlider: React.FC = () => {
 
                   {/* Subtitle */}
                   <h2
-                    className={`text-4xl md:text-5xl lg:text-6xl font-bold text-[rgb(var(--primary-rgb))] mb-8 leading-tight transition-all duration-1000 delay-500 ${
+                    className={`text-2xl md:text-5xl lg:text-6xl font-bold text-[rgb(var(--primary-rgb))] mb-8 leading-tight transition-all duration-1000 delay-500 ${
                       index === currentSlide
                         ? "opacity-100 translate-x-0"
                         : "opacity-0 -translate-x-20"
@@ -194,7 +194,7 @@ const FurnitureSlider: React.FC = () => {
             disabled={isAnimating}
             className={`relative w-2 h-2 rounded-full transition-all duration-300 disabled:cursor-not-allowed ${
               index === currentSlide
-                ? "bg-yellow-600 scale-125"
+                ? "bg-[rgb(var(--primary-rgb))] scale-125"
                 : "bg-white bg-opacity-60 hover:bg-opacity-80"
             }`}
           >
@@ -211,11 +211,6 @@ const FurnitureSlider: React.FC = () => {
             width: `${progress}%`,
           }}
         />
-      </div>
-      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 flex space-x-2 md:hidden">
-        <div className="text-white text-sm bg-black bg-opacity-50 px-3 py-1 rounded-full">
-          {currentSlide + 1} / {slides.length}
-        </div>
       </div>
     </div>
   );

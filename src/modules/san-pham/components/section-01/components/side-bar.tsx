@@ -123,10 +123,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const categories = [
+    { id: "All", name: "Tất cả", hasSubcategories: false },
     { id: "Plastic", name: "Plastic", hasSubcategories: false },
     { id: "Frame", name: "Khung Ảnh", hasSubcategories: false },
     { id: "Album", name: "Album", hasSubcategories: false },
-    { id: "All", name: "Tất cả", hasSubcategories: false },
   ];
 
   const colors = ["black", "white", "gold", "silver", "wood"];
@@ -163,7 +163,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     <div className="w-full lg:w-64 bg-white h-full overflow-y-auto py-10 lg:py-8 pr-5">
       {/* Product Categories */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+        <h3 className="text-lg font-semibold text-black mb-4">
           Phân loại sản phẩm
         </h3>
         <div className="space-y-2">
@@ -180,9 +180,9 @@ const Sidebar: React.FC<SidebarProps> = ({
               >
                 <div className="flex items-center">
                   <div
-                    className={`w-2 h-2 rounded-full mr-3 ${
+                    className={`w-3.5 h-3.5 rounded-full mr-3 ${
                       selectedCategory === category.id
-                        ? "bg-black"
+                        ? "bg-[rgb(var(--fifteenth-rgb))]"
                         : "border border-gray-300"
                     }`}
                   />
@@ -202,7 +202,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Price Filter */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Giá</h3>
+        <h3 className="text-lg font-semibold text-black mb-4">Giá</h3>
         <div className="space-y-4">
           <SliderRange
             value={priceRange}
@@ -216,7 +216,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Color Filter */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Màu sắc</h3>
+        <h3 className="text-lg font-semibold text-black mb-4">Màu sắc</h3>
         <div className="flex flex-wrap gap-2">
           {colors.map((color, index) => (
             <button
@@ -240,7 +240,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Size Filter */}
       <div className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Kích thước</h3>
+        <h3 className="text-lg font-semibold text-black mb-4">Kích thước</h3>
         <div className="relative">
           <div
             className={`absolute top-0 inset-x-0 bg-gradient-to-b from-white z-20 to-transparent pointer-events-none transition-opacity duration-300 ${

@@ -64,7 +64,7 @@ export default function Selection({ products, onSortChange }: SelectionProps) {
     <div className="*:not-first:mt-2">
       <SelectNative id={id} defaultValue="" onChange={handleSortChange}>
         <option value="" disabled>
-          Mặc định
+          Sắp xếp theo
         </option>
         <option value="1">Mới nhất</option>
         <option value="2">Giá thấp đến cao</option>

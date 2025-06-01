@@ -23,7 +23,7 @@ const SectionHeader = () => {
       </div>
       <div className="relative z-10 flex items-center h-full mx-auto text-black max-w-7xl">
         <div className="px-5 lg:px-0">
-          <div className="text-3xl font-bold mb-3">Sản phẩm</div>
+          <div className="text-3xl font-bold mb-3">Danh sách sản phẩm</div>
           <div className="text-sm">
             <Link href={ROUTES.HOME}>Trang chủ </Link> &ensp;/&ensp;{" "}
             <Link href={ROUTES.PRODUCT}>Sản phẩm</Link>

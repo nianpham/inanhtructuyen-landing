@@ -64,9 +64,12 @@ const Section2: React.FC = () => {
                 Sản Phẩm Bán Chạy
               </h1>
             </div>
-            <p className="text-gray-600">
+            <p className="hidden lg:flex justify-center text-gray-600">
               Khám phá những sản phẩm được ưa chuộng nhất hiện nay, được nhiều
               khách hàng tin dùng và lựa chọn.
+            </p>
+            <p className="lg:hidden flex justify-center text-gray-600">
+              Khám phá những sản phẩm được ưa chuộng và tin dùng nhất hiện nay.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

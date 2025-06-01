@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import { Loader, User } from "lucide-react";
 import { IMAGES } from "@/utils/image";
 
-const LoginForm = () => {
+const LoginFormMobile = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -59,12 +59,12 @@ const LoginForm = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="hidden lg:flex cursor-pointer items-center space-x-1 text-black hover:text-[rgb(var(--fifteenth-rgb))] transition-colors">
-          <User className="w-4 h-4" />
-          <span className="text-[16px] font-normal">Đăng nhập</span>
+        <div className="w-full flex items-center justify-between space-x-1 text-black hover:text-gray-900 transition-colors">
+          <span className="text-[16px] font-medium">Đăng nhập</span>
+          <User className="w-5 h-5" />
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="max-w-[350px] lg:max-w-[425px] rounded-lg">
         <div className="w-full h-full flex flex-col justify-center items-center">
           <div className="flex w-full">
             <div className="w-full flex flex-col">
@@ -148,4 +148,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default LoginFormMobile;
