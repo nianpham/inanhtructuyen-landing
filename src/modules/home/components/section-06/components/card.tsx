@@ -28,7 +28,7 @@ const BlogCard: React.FC<{ post: BlogPost }> = ({ post }) => {
           />
         </div>
         <div className="py-5">
-          <div className="flex items-center space-x-2 text-sm text-amber-600 mb-3">
+          <div className="flex items-center space-x-2 text-sm text-[rgb(var(--fifteenth-rgb))] mb-3">
             <span className="font-medium">{post.author}</span>
             <span className="text-gray-400">•</span>
             <span>{HELPER.formatDate(post.created_at)}</span>
