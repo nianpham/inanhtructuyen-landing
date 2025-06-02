@@ -64,7 +64,10 @@ const LoginForm = () => {
           <span className="text-[16px] font-normal">Đăng nhập</span>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className="sm:max-w-[425px]"
+      >
         <div className="w-full h-full flex flex-col justify-center items-center">
           <div className="flex w-full">
             <div className="w-full flex flex-col">

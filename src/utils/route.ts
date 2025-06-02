@@ -3,7 +3,7 @@ export const ROUTES = {
   PRODUCT: "/san-pham",
   ABOUT: "/gioi-thieu",
   POLICY: "/chinh-sach",
-  PRICING: "/gia-ca",
+  PRICING: "/bang-gia",
   BLOG: "/blog",
   ACCOUNT: "/tai-khoan",
 };

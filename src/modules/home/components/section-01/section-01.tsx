@@ -218,10 +218,10 @@ const Section1: React.FC = () => {
                       Khung Ảnh Hàn Quốc
                     </h3>
                     <p className={`text-xl font-base text-black mb-2`}>
-                      Giảm giá 10%
+                      Giảm giá 15%
                     </p>
                     <p className="text-[rgb(var(--fifteenth-rgb))] font-medium">
-                      Giá chỉ từ 50.000đ
+                      Giá chỉ từ 48.000đ
                     </p>
                   </div>
                   <div className="absolute top-0 left-0 right-0 bottom-0">

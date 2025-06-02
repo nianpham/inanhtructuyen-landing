@@ -211,7 +211,7 @@ const Footer: React.FC = () => {
                       href={`${ROUTES.PRICING}`}
                       className="text-gray-600 hover:text-gray-900"
                     >
-                      Giá cả
+                      Bảng giá
                     </Link>
                   </li>
                   <li>

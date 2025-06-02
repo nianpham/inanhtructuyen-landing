@@ -17,6 +17,7 @@ const LoginFormMobile = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [logined, setLogined] = useState(false);
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   // const validateForm = () => {
   //   if (email === "" || password === "") {
@@ -64,7 +65,10 @@ const LoginFormMobile = () => {
           {/* <User className="w-5 h-5" /> */}
         </div>
       </DialogTrigger>
-      <DialogContent className="max-w-[350px] lg:max-w-[425px] rounded-lg">
+      <DialogContent
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className="max-w-[350px] lg:max-w-[425px] rounded-lg z-[70]"
+      >
         <div className="w-full h-full flex flex-col justify-center items-center">
           <div className="flex w-full">
             <div className="w-full flex flex-col">
