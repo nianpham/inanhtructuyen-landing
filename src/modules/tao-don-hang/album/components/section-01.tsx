@@ -108,6 +108,7 @@ const Section01 = () => {
   const [provinces, setProvinces] = React.useState<Province[]>([]);
   const [districts, setDistricts] = React.useState<District[]>([]);
   const [wards, setWards] = React.useState<Ward[]>([]);
+  const [isTermsAccepted, setIsTermsAccepted] = useState(true);
 
   const pages = [
     {
@@ -821,13 +822,21 @@ const Section01 = () => {
                 <div className="flex flex-col justify-center items-start">
                   <span>
                     Mã đơn hàng:{" "}
-                    <strong className="uppercase">{orderID?.slice(-6)}</strong>
+                    <strong className="uppercase font-semibold">
+                      {/* {orderID?.slice(-6)} */} &nbsp; #ABCDEF
+                    </strong>
                   </span>
                   <span>
-                    Kích thước: <strong>{formDataOrder?.size}</strong>
+                    Kích thước:{" "}
+                    <strong className="font-semibold">
+                      {/* {formDataOrder?.size} */} 25x25
+                    </strong>
                   </span>
                   <span>
-                    Tổng số trang: <strong>{formDataOrder?.pages}</strong>
+                    Tổng số trang:{" "}
+                    <strong className="font-semibold">
+                      {/* {formDataOrder?.pages} */} 20
+                    </strong>
                   </span>
                 </div>
                 <div className="w-full flex flex-col justify-center items-center ">
@@ -1165,129 +1174,146 @@ const Section01 = () => {
 
               {/* ORDER BUTTON  */}
             </div>
-            {selectedCore !== "chon-loai-ruot" &&
-              selectedCover !== "chon-loai-bia" && (
-                <>
-                  <div className="border-t pt-4 space-y-2">
-                    <div className="flex justify-between">
-                      <span>Giá bìa Album</span>
-                      <span>{HELPER.formatVND(String(albumPriceCover))}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Giá ruột Album</span>
-                      <span>{HELPER.formatVND(String(albumPriceCore))}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Phí vận chuyển</span>
-                      <span>{HELPER.formatVND("30000")}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Tạm tính</span>
-                      <span>
-                        {HELPER.formatVND(
-                          String(albumPriceCover + albumPriceCore + 30000)
-                        )}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center pt-2">
-                      <span>Khuyến mãi</span>
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <div className="">
-                            {!isValid ? (
-                              <div className="cursor-pointer text-white text-sm flex flex-row justify-center items-center gap-4 w-full mx-auto py-2 px-5 lg:py-2 bg-[rgb(var(--primary-rgb))] hover:bg-[rgb(var(--primary-rgb))] text-center rounded-md font-medium transition">
-                                Nhập mã
-                              </div>
-                            ) : (
-                              <div className="flex flex-row gap-2">
-                                <div className="text-white text-sm flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 bg-green-400 hover:bg-yellow-500 text-center rounded-md font-medium transition">
-                                  Đã áp dụng mã
-                                </div>
-                                <div className="text-white text-sm flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 bg-yellow-400 hover:bg-yellow-500 text-center rounded-md font-medium transition">
-                                  Đổi mã
-                                </div>
-                              </div>
-                            )}
+            {/* {selectedCore !== "chon-loai-ruot" &&
+              selectedCover !== "chon-loai-bia" && ( */}
+            <>
+              <div className="border-t pt-4 space-y-2">
+                <div className="flex justify-between">
+                  <span>Giá bìa Album</span>
+                  {selectedCover === "chon-loai-bia" ? (
+                    <span>Chọn bìa Album</span>
+                  ) : (
+                    <span>{HELPER.formatVND(String(albumPriceCover))}</span>
+                  )}
+                </div>
+                <div className="flex justify-between">
+                  <span>Giá ruột Album</span>
+                  {selectedCore === "chon-loai-ruot" ? (
+                    <span>Chọn ruột Album</span>
+                  ) : (
+                    <span>{HELPER.formatVND(String(albumPriceCore))}</span>
+                  )}
+                </div>
+                <div className="flex justify-between">
+                  <span>Phí vận chuyển</span>
+                  <span className="text-green-500">
+                    + {HELPER.formatVND("30000")}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Tạm tính</span>
+                  <span>
+                    {HELPER.formatVND(
+                      String(albumPriceCover + albumPriceCore + 30000)
+                    )}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center pt-2">
+                  <span>Khuyến mãi</span>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <div className="">
+                        {!isValid ? (
+                          <div className="cursor-pointer text-white text-sm flex flex-row justify-center items-center gap-4 w-full mx-auto py-2 px-5 lg:py-2 bg-[rgb(var(--primary-rgb))] hover:bg-[rgb(var(--primary-rgb))] text-center rounded-md font-medium transition">
+                            Nhập mã
                           </div>
-                        </DialogTrigger>
-                        <DialogContent
-                          className="-translate-y-52 z-[70]"
-                          onOpenAutoFocus={(e) => e.preventDefault()}
-                        >
-                          <DialogHeader>
-                            <DialogTitle>Vui lòng nhập mã giảm giá</DialogTitle>
-                            <DialogDescription className="max-h-96 overflow-y-auto">
-                              <div className="flex flex-col justify-center items-center gap-2 mt-5">
-                                <input
-                                  type="text"
-                                  placeholder="Nhập mã khuyến mãi"
-                                  className={`w-full h-10 border border-gray-200 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${
-                                    isValid === false
-                                      ? "border-none"
-                                      : isValid === true
-                                      ? "border-none"
-                                      : ""
-                                  }`}
-                                  value={promoCode}
-                                  onChange={(e) => {
-                                    setPromoCode(e.target.value);
-                                  }}
-                                  style={{ fontSize: "16px" }}
-                                />
-                              </div>
-                            </DialogDescription>
-                          </DialogHeader>
-                          <DialogClose>
-                            <div
-                              className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--primary-rgb))] hover:bg-[rgb(var(--primary-rgb))] text-center rounded-md font-medium cursor-pointer ${
-                                isChecking
-                                  ? "opacity-50 cursor-not-allowed"
+                        ) : (
+                          <div className="flex flex-row gap-2">
+                            <div className="text-white text-sm flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 bg-green-400 hover:bg-yellow-500 text-center rounded-md font-medium transition">
+                              Đã áp dụng mã
+                            </div>
+                            <div className="text-white text-sm flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 bg-yellow-400 hover:bg-yellow-500 text-center rounded-md font-medium transition">
+                              Đổi mã
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent
+                      className="-translate-y-52 z-[70]"
+                      onOpenAutoFocus={(e) => e.preventDefault()}
+                    >
+                      <DialogHeader>
+                        <DialogTitle>Vui lòng nhập mã giảm giá</DialogTitle>
+                        <DialogDescription className="max-h-96 overflow-y-auto">
+                          <div className="flex flex-col justify-center items-center gap-2 mt-5">
+                            <input
+                              type="text"
+                              placeholder="Nhập mã khuyến mãi"
+                              className={`w-full h-10 border border-gray-200 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${
+                                isValid === false
+                                  ? "border-none"
+                                  : isValid === true
+                                  ? "border-none"
                                   : ""
                               }`}
-                              onClick={
-                                !isChecking ? handleCheckDiscount : undefined
-                              }
-                            >
-                              {isChecking ? "Đang kiểm tra..." : "Dùng mã"}
-                            </div>
-                          </DialogClose>
-                        </DialogContent>
-                      </Dialog>
-                    </div>
-
-                    {isValid && (
-                      <div className="flex justify-between items-center pt-2">
-                        <span>Giảm giá</span>
-                        <div className="flex gap-2">
-                          <div className={`text-red-500`}>
-                            - {HELPER.formatVND(String(discountPrice))}
+                              value={promoCode}
+                              onChange={(e) => {
+                                setPromoCode(e.target.value);
+                              }}
+                              style={{ fontSize: "16px" }}
+                            />
                           </div>
+                        </DialogDescription>
+                      </DialogHeader>
+                      <DialogClose>
+                        <div
+                          className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--primary-rgb))] hover:bg-[rgb(var(--primary-rgb))] text-center rounded-md font-medium cursor-pointer ${
+                            isChecking ? "opacity-50 cursor-not-allowed" : ""
+                          }`}
+                          onClick={
+                            !isChecking ? handleCheckDiscount : undefined
+                          }
+                        >
+                          {isChecking ? "Đang kiểm tra..." : "Dùng mã"}
                         </div>
-                      </div>
-                    )}
+                      </DialogClose>
+                    </DialogContent>
+                  </Dialog>
+                </div>
 
-                    <div className="flex justify-between font-bold text-xl pt-4">
-                      <span>Tổng</span>
-                      <span>
-                        {HELPER.formatVND(String(totalPrice - discountPrice))}
-                      </span>
+                {isValid && (
+                  <div className="flex justify-between items-center pt-2">
+                    <span>Giảm giá</span>
+                    <div className="flex gap-2">
+                      <div className={`text-red-500`}>
+                        - {HELPER.formatVND(String(discountPrice))}
+                      </div>
                     </div>
                   </div>
+                )}
 
-                  <p className="text-sm text-black">
-                    Bằng cách tiến hành mua hàng, bạn đã đồng ý với các điều
-                    khoản và chính sách của chúng tôi.
-                  </p>
-                  <div className="flex flex-row justify-between items-center mt-6 w-full">
-                    <button
-                      onClick={() => handleSubmit()}
-                      className="w-full py-2 lg:py-4 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--primary-rgb))] text-center text-white rounded-md font-medium transition"
-                    >
-                      {isLoading ? "Đang xử lí đơn hàng..." : "Đặt hàng"}
-                    </button>
-                  </div>
-                </>
-              )}
+                <div className="flex justify-between font-bold text-xl pt-4">
+                  <span>Tổng</span>
+                  <span>
+                    {HELPER.formatVND(String(totalPrice - discountPrice))}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-row items-center">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  checked={isTermsAccepted}
+                  onChange={(e) => setIsTermsAccepted(e.target.checked)}
+                  className="mr-2"
+                />
+                <p className="text-sm text-black">
+                  Bằng cách tiến hành mua hàng, bạn đã đồng ý với các điều khoản
+                  và chính sách của chúng tôi.
+                </p>
+              </div>
+              <div className="flex flex-row justify-between items-center mt-6 w-full">
+                <button
+                  onClick={() => handleSubmit()}
+                  className="w-full py-2 lg:py-4 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--primary-rgb))] text-center text-white rounded-md font-medium transition"
+                >
+                  {isLoading ? "Đang xử lí đơn hàng..." : "Đặt hàng"}
+                </button>
+              </div>
+            </>
+            {/* )} */}
           </div>
         </div>
       </div>
