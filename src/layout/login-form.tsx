@@ -59,8 +59,8 @@ const LoginForm = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="hidden lg:flex cursor-pointer items-center space-x-1 text-black hover:text-[rgb(var(--fifteenth-rgb))] transition-colors">
-          <User className="w-4 h-4" />
+        <div className="hidden lg:flex cursor-pointer items-center space-x-2 text-black hover:text-[rgb(var(--fifteenth-rgb))] transition-colors">
+          <User className="w-[18px] h-[18px]" />
           <span className="text-[16px] font-normal">Đăng nhập</span>
         </div>
       </DialogTrigger>

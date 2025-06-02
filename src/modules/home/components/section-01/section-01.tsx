@@ -189,7 +189,7 @@ const Section1: React.FC = () => {
                     <h3
                       className={`text-2xl font-bold text-black  text-right mb-2`}
                     >
-                      Ảnh Khung Nhôm Titan
+                      Khung Nhôm Titan
                     </h3>
                     <p className={`text-xl font-base text-black mb-2`}>
                       Giảm giá 10%
@@ -213,7 +213,7 @@ const Section1: React.FC = () => {
                 >
                   <div className="relative z-10 flex flex-col items-end justify-start">
                     <h3
-                      className={`text-2xl font-bold text-black  text-right mb-2`}
+                      className={`text-2xl font-bold text-black text-right mb-2`}
                     >
                       Khung Ảnh Hàn Quốc
                     </h3>
@@ -230,7 +230,7 @@ const Section1: React.FC = () => {
                       alt="Main Image 1"
                       fill
                       priority
-                      className="object-cover h-full object-center border border-gray-200"
+                      className="object-cover h-full object-center border border-gray-300"
                     />
                   </div>
                 </div>

@@ -59,9 +59,9 @@ const LoginFormMobile = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="w-full flex items-center justify-between space-x-1 text-black hover:text-gray-900 transition-colors">
+        <div className="w-full flex items-center justify-center space-x-1 text-black hover:text-gray-900 transition-colors">
           <span className="text-[16px] font-medium">Đăng nhập</span>
-          <User className="w-5 h-5" />
+          {/* <User className="w-5 h-5" /> */}
         </div>
       </DialogTrigger>
       <DialogContent className="max-w-[350px] lg:max-w-[425px] rounded-lg">

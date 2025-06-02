@@ -110,7 +110,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           </h3>
           <div className="flex text-[14px] font-light items-center mb-2">
             {renderStars(Math.floor(Math.random() * 2) + 4)} &nbsp;&nbsp;(
-            {Math.floor(Math.random() * 100) + 4} lượt mua)
+            {Math.floor(Math.random() * 100) + 4} đã bán)
           </div>
           <div className="flex items-center space-x-2">
             {Number(product._id.charAt(7)) % 2 !== 0 && (

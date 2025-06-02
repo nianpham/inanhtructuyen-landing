@@ -84,7 +84,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </h3>
           <div className="flex text-xs lg:text-[14px] font-light items-center mb-2">
             {renderStars(Math.floor(Math.random() * 2) + 4)} &nbsp;&nbsp;(
-            {Math.floor(Math.random() * 100) + 4} lượt mua)
+            {Math.floor(Math.random() * 100) + 4} đã bán)
           </div>
         </div>
         <div className="flex flex-col w-full lg:flex-row justify-between items-start lg:items-end">
