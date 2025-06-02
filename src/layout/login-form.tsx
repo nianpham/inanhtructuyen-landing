@@ -66,7 +66,7 @@ const LoginForm = () => {
       </DialogTrigger>
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
-        className="sm:max-w-[425px]"
+        className="sm:max-w-[425px] z-[70]"
       >
         <div className="w-full h-full flex flex-col justify-center items-center">
           <div className="flex w-full">

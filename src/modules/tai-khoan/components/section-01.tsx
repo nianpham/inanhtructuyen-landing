@@ -111,7 +111,7 @@ const Section01 = () => {
 
   return (
     <section className="w-[100%] h-full mx-auto py-5 lg:py-10 relative">
-      <div className="max-w-7xl h-full mx-auto px-5">
+      <div className="max-w-7xl h-full mx-auto px-5 lg:px-0">
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="bg-white">
             <h2 className="text-xl font-semibold text-gray-900 mb-3.5">
@@ -134,8 +134,8 @@ const Section01 = () => {
                     </svg>
                   </div>
                 </div>
-                <div className="flex-1">
-                  <div className="space-y-2 mb-4">
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="space-y-2 mb-2.5">
                     <p className="text-gray-900">
                       <span className="font-medium">Họ và tên:</span> Phạm Thanh
                       Nghiêm
@@ -149,11 +149,11 @@ const Section01 = () => {
                       0911558539
                     </p>
                   </div>
-                  <div className="flex gap-3">
-                    <button className="bg-[rgb(var(--fifteenth-rgb))] text-white hover:opacity-80 px-4 py-2 rounded text-sm font-medium transition-colors">
+                  <div className="w-full flex flex-col lg:flex-row gap-3">
+                    <button className="bg-[rgb(var(--fifteenth-rgb))] text-white hover:opacity-80 px-4 py-2 rounded text-[16px] font-medium transition-colors">
                       Cập nhật thông tin
                     </button>
-                    <button className="bg-[rgb(var(--primary-rgb))] text-[rgb(var(--fifteenth-rgb))] hover:opacity-80 px-4 py-2 rounded text-sm font-medium transition-colors">
+                    <button className="bg-[rgb(var(--primary-rgb))] text-[rgb(var(--fifteenth-rgb))] hover:opacity-80 px-4 py-2 rounded text-[16px] font-medium transition-colors">
                       Đổi mật khẩu
                     </button>
                   </div>
@@ -170,9 +170,9 @@ const Section01 = () => {
                     key={index}
                     className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg"
                   >
-                    <div className="w-6 h-6 mt-0">
+                    <div className="w-7 h-7 mt-0">
                       <svg
-                        className="w-6 h-6 text-gray-400"
+                        className="w-7 h-7 text-gray-400"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -203,7 +203,9 @@ const Section01 = () => {
                           </span>
                         )}
                       </div>
-                      <p className="text-gray-600 text-sm">{address.address}</p>
+                      <p className="text-gray-600 text-base">
+                        {address.address}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -225,7 +227,7 @@ const Section01 = () => {
                 style={{ height: "40px" }}
               />
               <div
-                className="relative space-y-2 h-[340px] overflow-y-auto scroll-bar-style"
+                className="relative space-y-2 h-[346px] overflow-y-auto scroll-bar-style"
                 ref={scrollContainerRef}
               >
                 {orders.map((order, index) => (
@@ -233,7 +235,7 @@ const Section01 = () => {
                     key={index}
                     className="border border-gray-200 rounded-lg p-4"
                   >
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 items-center text-sm">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 items-center">
                       <div>
                         <p className="text-gray-500 mb-1">ID Đơn hàng:</p>
                         <p className="font-medium text-gray-900">{order.id}</p>
@@ -241,7 +243,9 @@ const Section01 = () => {
 
                       <div>
                         <p className="text-gray-500 mb-1">Ngày đặt:</p>
-                        <p className="text-gray-900">{order.date}</p>
+                        <p className="text-gray-900 font-medium">
+                          {order.date}
+                        </p>
                       </div>
 
                       <div>
@@ -262,21 +266,27 @@ const Section01 = () => {
                     </div>
 
                     <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mt-4 pt-3 border-t border-gray-100">
-                      <div className="lg:hidden flex text-sm mb-3">
+                      <div className="lg:hidden flex text-base mb-3">
                         <span className="text-gray-500">Loại đơn hàng:</span>{" "}
-                        <span className="font-medium text-gray-900">Album</span>
+                        <span className="font-medium text-gray-900">
+                          {" "}
+                          Khung Ảnh
+                        </span>
                       </div>
                       <div className="flex gap-2">
-                        <button className="text-red-600 hover:text-red-700 text-sm font-medium px-3 py-2 border border-red-200 hover:border-red-300 rounded transition-colors">
+                        <button className="text-red-600 hover:text-red-700 text-base font-medium px-3 py-2 border border-red-200 hover:border-red-300 rounded transition-colors">
                           Hủy đơn hàng
                         </button>
-                        <button className="text-gray-900 hover:text-gray-700 text-sm font-medium px-3 py-2 border border-gray-200 hover:border-gray-300 rounded transition-colors">
+                        <button className="text-gray-900 hover:text-gray-700 text-base font-medium px-3 py-2 border border-gray-200 hover:border-gray-300 rounded transition-colors">
                           Xem chi tiết
                         </button>
                       </div>
-                      <div className="hidden lg:flex text-sm">
+                      <div className="hidden lg:flex text-base">
                         <span className="text-gray-500">Loại đơn hàng:</span>{" "}
-                        <span className="font-medium text-gray-900">Album</span>
+                        <span className="font-medium text-gray-900">
+                          {" "}
+                          Khung Ảnh
+                        </span>
                       </div>
                     </div>
                   </div>
