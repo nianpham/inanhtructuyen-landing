@@ -265,7 +265,7 @@ const Section01 = () => {
                       </div>
                     </div>
 
-                    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mt-4 pt-3 border-t border-gray-100">
+                    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mt-4 pt-4 border-t border-gray-100">
                       <div className="lg:hidden flex text-base mb-3">
                         <span className="text-gray-500">Loại đơn hàng:</span>{" "}
                         <span className="font-medium text-gray-900">
