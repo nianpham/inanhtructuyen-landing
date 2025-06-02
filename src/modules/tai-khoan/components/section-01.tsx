@@ -6,6 +6,11 @@ import { IMAGES } from "@/utils/image";
 import Link from "next/link";
 import { ROUTES } from "@/utils/route";
 import "@/styles/hide-scroll.css";
+import ChangePasswordForm from "./account/change-password";
+import ProfileModal from "./account/account-management";
+import CancelOrderModal from "./order/cancel-order";
+import OrderDetailModal from "./order/order-detail";
+import { Clock8 } from "lucide-react";
 
 interface Order {
   id: string;
@@ -24,37 +29,37 @@ const Section01 = () => {
   const orders: Order[] = [
     {
       id: "#FWB127364372",
-      date: "20.12.2023",
+      date: "20/12/2023",
       price: "$4,756",
       status: "Pre-order",
     },
     {
       id: "#FWB127364372",
-      date: "20.12.2023",
+      date: "20/12/2023",
       price: "$4,756",
       status: "Pre-order",
     },
     {
       id: "#FWB127364372",
-      date: "20.12.2023",
+      date: "20/12/2023",
       price: "$4,756",
       status: "Pre-order",
     },
     {
       id: "#FWB127364372",
-      date: "20.12.2023",
+      date: "20/12/2023",
       price: "$4,756",
       status: "Pre-order",
     },
     {
       id: "#FWB127364372",
-      date: "20.12.2023",
+      date: "20/12/2023",
       price: "$4,756",
       status: "Pre-order",
     },
     {
       id: "#FWB127364372",
-      date: "20.12.2023",
+      date: "20/12/2023",
       price: "$4,756",
       status: "Pre-order",
     },
@@ -150,12 +155,8 @@ const Section01 = () => {
                     </p>
                   </div>
                   <div className="w-full flex flex-col lg:flex-row gap-3">
-                    <button className="bg-[rgb(var(--fifteenth-rgb))] text-white hover:opacity-80 px-4 py-2 rounded text-[16px] font-medium transition-colors">
-                      Cập nhật thông tin
-                    </button>
-                    <button className="bg-[rgb(var(--primary-rgb))] text-[rgb(var(--fifteenth-rgb))] hover:opacity-80 px-4 py-2 rounded text-[16px] font-medium transition-colors">
-                      Đổi mật khẩu
-                    </button>
+                    <ProfileModal />
+                    <ChangePasswordForm />
                   </div>
                 </div>
               </div>
@@ -255,13 +256,13 @@ const Section01 = () => {
 
                       <div>
                         <p className="text-gray-500 mb-1">Trạng thái:</p>
-                        <p
-                          className={`font-medium ${getStatusColor(
+                        <div
+                          className={`font-medium flex flex-row items-center gap-1 ${getStatusColor(
                             order.status
                           )}`}
                         >
-                          ⚡ Chờ xác nhận
-                        </p>
+                          <Clock8 size={18} /> Chờ xác nhận
+                        </div>
                       </div>
                     </div>
 
@@ -273,12 +274,8 @@ const Section01 = () => {
                         </span>
                       </div>
                       <div className="flex gap-2">
-                        <button className="text-red-600 hover:text-red-700 text-base font-medium px-3 py-2 border border-red-200 hover:border-red-300 rounded transition-colors">
-                          Hủy đơn hàng
-                        </button>
-                        <button className="text-gray-900 hover:text-gray-700 text-base font-medium px-3 py-2 border border-gray-200 hover:border-gray-300 rounded transition-colors">
-                          Xem chi tiết
-                        </button>
+                        <CancelOrderModal />
+                        <OrderDetailModal />
                       </div>
                       <div className="hidden lg:flex text-base">
                         <span className="text-gray-500">Loại đơn hàng:</span>{" "}

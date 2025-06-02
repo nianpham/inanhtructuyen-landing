@@ -840,15 +840,18 @@ const Section01 = () => {
         <div className="hidden lg:grid w-full md:w-1/2">
           <div>
             <div className="relative z-20">
-              <div
+              {/* <div
                 className={`absolute bottom-[10%] left-[16%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-              ></div>
+              ></div> */}
               <h2 className="text-lg lg:text-xl font-medium mb-3.5 z-20 relative">
                 Thông tin khách hàng
               </h2>
             </div>
             <div className="mb-4">
-              <Label htmlFor="name" className="text-black text-[16px]">
+              <Label
+                htmlFor="name"
+                className="text-black text-[16px] font-light"
+              >
                 Họ và tên:
               </Label>
               <Input
@@ -858,11 +861,14 @@ const Section01 = () => {
                 value={formData.name}
                 placeholder="Nhập họ và tên"
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none text-[16px]"
               />
             </div>
             <div className="mb-0">
-              <Label htmlFor="phone" className="text-black text-[16px]">
+              <Label
+                htmlFor="phone"
+                className="text-black text-[16px] font-light"
+              >
                 Số điện thoại:
               </Label>
               <Input
@@ -871,21 +877,24 @@ const Section01 = () => {
                 placeholder="Nhập số điện thoại"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none text-[16px]"
               />
             </div>
             <div className="mt-6">
               <div className="relative z-20">
-                <div
+                {/* <div
                   className={`absolute bottom-[10%] left-[11%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
+                ></div> */}
                 <h2 className="text-lg lg:text-xl font-medium mb-3.5 z-20 relative">
                   Địa chỉ nhận hàng
                 </h2>
               </div>
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="province" className="text-black text-[16px]">
+                  <Label
+                    htmlFor="province"
+                    className="text-black text-[16px] font-light"
+                  >
                     Tỉnh/Thành phố:
                   </Label>
                   <Select
@@ -893,7 +902,7 @@ const Section01 = () => {
                     onValueChange={handleProvinceChange}
                     disabled={loading}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
                       <SelectValue placeholder="Chọn Tỉnh/Thành phố" />
                     </SelectTrigger>
                     <SelectContent>
@@ -909,7 +918,10 @@ const Section01 = () => {
                   </Select>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="district" className="text-black text-[16px]">
+                  <Label
+                    htmlFor="district"
+                    className="text-black text-[16px] font-light"
+                  >
                     Quận/Huyện:
                   </Label>
                   <Select
@@ -917,7 +929,7 @@ const Section01 = () => {
                     onValueChange={handleDistrictChange}
                     disabled={!formData.province || loading}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
                       <SelectValue placeholder="Chọn Quận/Huyện" />
                     </SelectTrigger>
                     <SelectContent>
@@ -934,7 +946,10 @@ const Section01 = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-2 mb-3">
-                <Label htmlFor="ward" className="text-black text-[16px]">
+                <Label
+                  htmlFor="ward"
+                  className="text-black text-[16px] font-light"
+                >
                   Phường/Xã:
                 </Label>
                 <Select
@@ -942,7 +957,7 @@ const Section01 = () => {
                   onValueChange={handleWardChange}
                   disabled={!formData.district || loading}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
                     <SelectValue placeholder="Chọn Phường/Xã" />
                   </SelectTrigger>
                   <SelectContent>
@@ -955,7 +970,10 @@ const Section01 = () => {
                 </Select>
               </div>
               <div className="mb-0">
-                <Label htmlFor="address" className="text-black text-[16px]">
+                <Label
+                  htmlFor="address"
+                  className="text-black text-[16px] font-light"
+                >
                   Số nhà, tên đường:
                 </Label>
                 <Input
@@ -964,7 +982,7 @@ const Section01 = () => {
                   placeholder="Ví dụ: 123 Đường ABC"
                   value={formData.address}
                   onChange={handleInputChange}
-                  className="mt-2 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                  className="mt-2 text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                 />
               </div>
             </div>
@@ -974,9 +992,9 @@ const Section01 = () => {
             <>
               <div className="mt-6">
                 <div className="relative z-20">
-                  <div
+                  {/* <div
                     className={`absolute bottom-[10%] left-[15%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                  ></div>
+                  ></div> */}
                   <h2 className="text-lg lg:text-xl font-medium mb-3.5 z-20 relative">
                     Tùy chọn thanh toán
                   </h2>
@@ -1050,16 +1068,16 @@ const Section01 = () => {
               </div>
               <div className="mt-6">
                 <div className="relative z-20">
-                  <div
+                  {/* <div
                     className={`absolute bottom-[10%] left-[24%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                  ></div>
+                  ></div> */}
                   <h2 className="text-lg lg:text-xl font-medium mb-3.5 z-20 relative">
                     Thêm ghi chú cho đơn hàng
                   </h2>
                 </div>
                 <textarea
                   placeholder="Ghi chú về đơn hàng (Nếu có)"
-                  className="w-full p-3 border border-gray-200 rounded-md h-24 ml-0 mx-10 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                  className="w-full p-3 border border-gray-200 rounded-md h-24 ml-0 mx-10 text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                 ></textarea>
               </div>
             </>
@@ -1068,9 +1086,9 @@ const Section01 = () => {
         <div className="w-full lg:w-1/2 space-y-6">
           <div>
             <div className="relative z-20">
-              <div
+              {/* <div
                 className={`absolute bottom-[10%] left-[18%] lg:left-[15%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-              ></div>
+              ></div> */}
               <h2 className="text-lg lg:text-xl font-medium mb-3.5 z-20 relative">
                 Thông tin Khung ảnh
               </h2>
@@ -1083,7 +1101,7 @@ const Section01 = () => {
                       products?.find(
                         (item: any) => String(item?._id) === selectedProduct
                       ) ? (
-                        <div className="cursor-pointer flex flex-row items-center gap-2">
+                        <div className="cursor-pointer flex flex-row items-center gap-3">
                           <Image
                             src={
                               products?.find(
@@ -1094,11 +1112,11 @@ const Section01 = () => {
                             alt=""
                             width={1000}
                             height={1000}
-                            className="object-cover w-10 h-10 shrink-0"
+                            className="object-cover w-10 h-10 shrink-0 border border-gray-200"
                           />
 
                           <div className="flex flex-col justify-start items-start w-full gap-1">
-                            <p className="text-xs line-clamp-2">
+                            <p className="text-sm line-clamp-2">
                               {
                                 products?.find(
                                   (item: any) =>
@@ -1106,7 +1124,7 @@ const Section01 = () => {
                                 )?.name
                               }
                             </p>
-                            <div className="flex text-xs font-light items-center mb-0">
+                            <div className="flex text-xs font-light items-center mb-0 text-gray-600">
                               {renderStars(Math.floor(Math.random() * 2) + 4)}{" "}
                               &nbsp;&nbsp;(
                               {Math.floor(Math.random() * 100) + 4} đã bán)
@@ -1121,7 +1139,10 @@ const Section01 = () => {
                     )}
                   </div>
                 </DialogTrigger>
-                <DialogContent className="z-[70]">
+                <DialogContent
+                  className="z-[70]"
+                  onOpenAutoFocus={(e) => e.preventDefault()}
+                >
                   <DialogHeader>
                     <DialogTitle className="mb-3 text-[20px] px-2">
                       Vui lòng chọn sản phẩm
@@ -1144,10 +1165,10 @@ const Section01 = () => {
                                     className="object-cover border border-gray-200 w-14 h-14 shrink-0"
                                   />
                                   <div className="flex flex-col justify-start items-start w-full gap-1">
-                                    <p className="text-[14px] text-left w-full">
+                                    <p className="text-[14px] text-left w-full text-black">
                                       {item.name}
                                     </p>
-                                    <div className="flex text-[14px] font-light items-center mb-0">
+                                    <div className="flex text-[14px] font-light items-center mb-0 text-gray-600">
                                       {renderStars(
                                         Math.floor(Math.random() * 2) + 4
                                       )}{" "}
@@ -1252,15 +1273,17 @@ const Section01 = () => {
                       <DialogTitle>
                         <span className="!text-[20px]">Tùy chọn hình ảnh</span>
                       </DialogTitle>
-                      {currentImage.startsWith("http") && uploadedFile && (
-                        <DialogDescription>
-                          <span className="!text-[16px]">
-                            Chọn kích thước, màu sắc và nhấn{" "}
-                            <strong className="text-orange-700">Lưu</strong> để
-                            tùy chọn hình ảnh.
-                          </span>
-                        </DialogDescription>
-                      )}
+                      {/* {currentImage.startsWith("http") && uploadedFile && ( */}
+                      <DialogDescription>
+                        <span className="!text-[16px]">
+                          Chọn kích thước, màu sắc và nhấn{" "}
+                          <strong className="text-[rgb(var(--fifteenth-rgb))]">
+                            Lưu
+                          </strong>{" "}
+                          để tùy chọn hình ảnh.
+                        </span>
+                      </DialogDescription>
+                      {/* )} */}
                     </DialogHeader>
                     {!currentImage.startsWith("http") && !uploadedFile ? (
                       <div className="flex flex-col justify-center items-center gap-3">
@@ -1292,9 +1315,9 @@ const Section01 = () => {
                               onZoomChange={setZoom}
                             />
                           </div>
-                          <div className="flex flex-col gap-0 w-1/2">
+                          <div className="flex flex-col gap-0 w-full lg:w-1/2">
                             <div>
-                              <h2 className="text-lg lg:text-xl font-medium mb-2">
+                              <h2 className="text-[18px] font-medium mb-2">
                                 Kích thước khung ảnh:
                               </h2>
                               <div className="grid grid-cols-4 gap-4 mb-4">
@@ -1314,7 +1337,7 @@ const Section01 = () => {
                               </div>
                             </div>
                             <div>
-                              <h2 className="text-lg font-medium mb-2">
+                              <h2 className="text-[18px] font-medium mb-2">
                                 Màu sắc khung viền:
                               </h2>
                               <div className="flex gap-4 mb-6">
@@ -1331,7 +1354,7 @@ const Section01 = () => {
                                         color.bgColor,
                                         color.borderColor,
                                         selectedColor === color.id
-                                          ? "ring-2 ring-offset-2 ring-orange-700"
+                                          ? "ring-2 ring-offset-2 ring-[rgb(var(--fifteenth-rgb))]"
                                           : ""
                                       )}
                                       onClick={() => setSelectedColor(color.id)}
@@ -1355,7 +1378,7 @@ const Section01 = () => {
                             <Button
                               type="button"
                               onClick={handleCropSave}
-                              className="!px-10 !text-[16px] !mb-3 lg:!mb-0"
+                              className="!px-10 !text-[16px] !mb-3 lg:!mb-0 !bg-[rgb(var(--fifteenth-rgb))] hover:!bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 !text-white"
                               disabled={isLoading}
                             >
                               Lưu
@@ -1395,15 +1418,18 @@ const Section01 = () => {
           <div className=" lg:hidden w-full md:w-1/2 space-y-6">
             <div>
               <div className="relative z-20">
-                <div
+                {/* <div
                   className={`absolute bottom-[10%] left-[25%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
+                ></div> */}
                 <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
                   Thông tin khách hàng
                 </h2>
               </div>
               <div className="mb-4">
-                <Label htmlFor="name" className="text-black text-[16px]">
+                <Label
+                  htmlFor="name"
+                  className="text-black text-[16px] font-light"
+                >
                   Họ và tên:
                 </Label>
                 <Input
@@ -1413,12 +1439,15 @@ const Section01 = () => {
                   placeholder="Nhập họ và tên"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                   style={{ fontSize: "16px" }}
                 />
               </div>
               <div className="mb-0">
-                <Label htmlFor="phone" className="text-black text-[16px]">
+                <Label
+                  htmlFor="phone"
+                  className="text-black text-[16px] font-light"
+                >
                   Số điện thoại:
                 </Label>
                 <Input
@@ -1427,23 +1456,26 @@ const Section01 = () => {
                   placeholder="Nhập số điện thoại"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                   style={{ fontSize: "16px" }}
                 />
               </div>
             </div>
             <div>
               <div className="relative z-20">
-                <div
+                {/* <div
                   className={`absolute bottom-[10%] left-[18%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
+                ></div> */}
                 <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
                   Địa chỉ nhận hàng
                 </h2>
               </div>
               <div className="grid grid-cols-1 gap-2 mb-3">
                 <div className="mb-1">
-                  <Label htmlFor="province" className="text-black text-[16px]">
+                  <Label
+                    htmlFor="province"
+                    className="text-black text-[16px] font-light"
+                  >
                     Tỉnh/Thành phố:
                   </Label>
                   <Dialog open={openProvinces} onOpenChange={setOpenProvinces}>
@@ -1451,7 +1483,7 @@ const Section01 = () => {
                       <Input
                         readOnly
                         value={province || "Vui lòng chọn Tỉnh/Thành phố"}
-                        className="text-left w-full px-3 py-2 pr-16 border border-gray-200 rounded-md cursor-pointer mt-1 text-[16px]"
+                        className="text-left w-full px-3 py-2 pr-16 border border-gray-200 rounded-md cursor-pointer mt-1 text-[16px] "
                         onClick={() => setOpenProvinces(true)}
                       />
                     </DialogTrigger>
@@ -1478,7 +1510,10 @@ const Section01 = () => {
                   </Dialog>
                 </div>
                 <div>
-                  <Label htmlFor="district" className="text-black text-[16px]">
+                  <Label
+                    htmlFor="district"
+                    className="text-black text-[16px] font-light"
+                  >
                     Quận/Huyện:
                   </Label>
                   <Dialog open={openDistrict} onOpenChange={setOpenDistrict}>
@@ -1488,6 +1523,7 @@ const Section01 = () => {
                         value={district || "Vui lòng chọn Quận/Huyện"}
                         className="text-left w-full px-3 py-2 pr-16 border border-gray-200 rounded-md cursor-pointer mt-1 text-[16px]"
                         onClick={() => setOpenDistrict(true)}
+                        disabled={!formData.province}
                       />
                     </DialogTrigger>
                     <DialogContent className="z-[70]">
@@ -1514,7 +1550,10 @@ const Section01 = () => {
                 </div>
               </div>
               <div className="mb-3">
-                <Label htmlFor="ward" className="text-black text-[16px]">
+                <Label
+                  htmlFor="ward"
+                  className="text-black text-[16px] font-light"
+                >
                   Phường/Xã:
                 </Label>
                 <Dialog open={openWard} onOpenChange={setOpenWard}>
@@ -1524,6 +1563,7 @@ const Section01 = () => {
                       value={ward || "Vui lòng chọn Phường/Xã"}
                       className="text-left w-full px-3 py-2 pr-16 border border-gray-200 rounded-md cursor-pointer mt-1 text-[16px]"
                       onClick={() => setOpenWard(true)}
+                      disabled={!formData.district}
                     />
                   </DialogTrigger>
                   <DialogContent className="z-[70]">
@@ -1549,7 +1589,10 @@ const Section01 = () => {
                 </Dialog>
               </div>
               <div className="mb-0">
-                <Label htmlFor="address" className="text-black text-[16px]">
+                <Label
+                  htmlFor="address"
+                  className="text-black text-[16px] font-light"
+                >
                   Số nhà, tên đường:
                 </Label>
                 <Input
@@ -1558,7 +1601,7 @@ const Section01 = () => {
                   placeholder="Ví dụ: 123 Đường ABC"
                   value={formData.address}
                   onChange={handleInputChange}
-                  className="w-full mt-1 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                  className="w-full mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                   style={{ fontSize: "16px" }}
                 />
               </div>
@@ -1567,9 +1610,9 @@ const Section01 = () => {
               <>
                 <div>
                   <div className="relative z-20">
-                    <div
+                    {/* <div
                       className={`absolute bottom-[10%] left-[25%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                    ></div>
+                    ></div> */}
                     <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
                       Tùy chọn thanh toán
                     </h2>
@@ -1660,9 +1703,9 @@ const Section01 = () => {
                 </div>
                 <div>
                   <div className="relative z-20">
-                    <div
+                    {/* <div
                       className={`absolute bottom-[10%] left-[37%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                    ></div>
+                    ></div> */}
                     <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
                       Thêm ghi chú cho đơn hàng
                     </h2>
@@ -1677,7 +1720,7 @@ const Section01 = () => {
           </div>
           {/* {selectedProduct !== "Chon san pham" && ( */}
           <div className="border-t pt-4 space-y-2">
-            <div className="flex justify-between">
+            <div className="flex justify-between font-light">
               <span>Giá sản phẩm</span>
               {selectedProduct !== "Chon san pham" ? (
                 <span>{selectedProduct && HELPER.formatVND(productPrice)}</span>
@@ -1685,20 +1728,20 @@ const Section01 = () => {
                 <span>Chọn sản phẩm</span>
               )}
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between font-light">
               <span>Phí vận chuyển</span>
               <span className="text-green-500">
                 + {HELPER.formatVND("30000")}
               </span>
             </div>
-            <div className="flex justify-between font-base">
+            <div className="flex justify-between font-base font-light">
               <span>Tạm tính</span>
               <span>
                 {selectedProduct &&
                   HELPER.calculateTotal(productPrice, "30000", "0")}
               </span>
             </div>
-            <div className="flex justify-between items-center pt-2">
+            <div className="flex justify-between items-center pt-2 font-light">
               <span>Khuyến mãi</span>
               <Dialog>
                 <DialogTrigger asChild>
@@ -1748,7 +1791,7 @@ const Section01 = () => {
                   </DialogHeader>
                   <DialogClose>
                     <div
-                      className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--primary-rgb))] hover:bg-[rgb(var(--primary-rgb))] text-center rounded-md font-medium cursor-pointer ${
+                      className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center rounded-md font-medium cursor-pointer ${
                         isChecking ? "opacity-50 cursor-not-allowed" : ""
                       }`}
                       onClick={!isChecking ? handleCheckDiscount : undefined}
@@ -1788,7 +1831,7 @@ const Section01 = () => {
               onChange={(e) => setIsTermsAccepted(e.target.checked)}
               className="mr-2"
             />
-            <p className="text-sm text-black">
+            <p className="text-sm text-black font-light">
               Bằng cách tiến hành mua hàng, bạn đã đồng ý với các điều khoản và
               chính sách của chúng tôi.
             </p>

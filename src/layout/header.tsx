@@ -9,6 +9,8 @@ import {
   ShieldCheck,
   CircleDollarSign,
   NotepadText,
+  UserRound,
+  FolderPlus,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -38,11 +40,50 @@ const Header: React.FC<HeaderProps> = ({
       label: "Trang chủ",
       href: `${ROUTES.HOME}`,
       icon: House,
+      sideBar: false,
     },
-    { label: "Sản phẩm", href: `${ROUTES.PRODUCT}`, icon: Gift },
-    { label: "Giới thiệu", href: `${ROUTES.ABOUT}`, icon: Info },
-    { label: "Bảng giá", href: `${ROUTES.PRICING}`, icon: CircleDollarSign },
-    { label: "Blog", href: `${ROUTES.BLOG}`, icon: NotepadText },
+    {
+      label: "Sản phẩm",
+      href: `${ROUTES.PRODUCT}`,
+      icon: Gift,
+      sideBar: false,
+    },
+    {
+      label: "Giới thiệu",
+      href: `${ROUTES.ABOUT}`,
+      icon: Info,
+      sideBar: false,
+    },
+    {
+      label: "Bảng giá",
+      href: `${ROUTES.PRICING}`,
+      icon: CircleDollarSign,
+      sideBar: false,
+    },
+    {
+      label: "Blog",
+      href: `${ROUTES.BLOG}`,
+      icon: NotepadText,
+      sideBar: false,
+    },
+    {
+      label: "Tạo đơn hàng Album",
+      href: `${ROUTES.CREATE_ORDER}?type=album`,
+      icon: FolderPlus,
+      sideBar: true,
+    },
+    {
+      label: "Tạo đơn hàng Frame",
+      href: `${ROUTES.CREATE_ORDER}?type=frame`,
+      icon: FolderPlus,
+      sideBar: true,
+    },
+    {
+      label: "Hồ sơ cá nhân",
+      href: `${ROUTES.ACCOUNT}`,
+      icon: UserRound,
+      sideBar: true,
+    },
   ];
 
   const isActive = (item: any) => {
@@ -112,25 +153,27 @@ const Header: React.FC<HeaderProps> = ({
           </Link>
 
           <nav className="hidden lg:flex items-center gap-8">
-            {navigationItems.map((item) => (
-              <div key={item.label} className="relative group">
-                <Link
-                  href={item.href}
-                  className={`relative text-[16px] font-normal transition-colors duration-200 ${
-                    isActive(item)
-                      ? "text-[rgb(var(--fifteenth-rgb))] font-semibold border-b-2 border-[rgb(var(--fifteenth-rgb))] pb-1"
-                      : "text-black"
-                  } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
-                >
-                  {item.label}
-                  <span
-                    className={`absolute -bottom-1.5 left-0 h-[2px] bg-[rgb(var(--fifteenth-rgb))] transition-all duration-300 ease-in-out ${
-                      isActive(item) ? "w-0" : "w-0 group-hover:w-full"
-                    }`}
-                  ></span>
-                </Link>
-              </div>
-            ))}
+            {navigationItems
+              .filter((item) => item.sideBar === false)
+              .map((item) => (
+                <div key={item.label} className="relative group">
+                  <Link
+                    href={item.href}
+                    className={`relative text-[16px] font-normal transition-colors duration-200 ${
+                      isActive(item)
+                        ? "text-[rgb(var(--fifteenth-rgb))] font-semibold border-b-2 border-[rgb(var(--fifteenth-rgb))] pb-1"
+                        : "text-black"
+                    } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
+                  >
+                    {item.label}
+                    <span
+                      className={`absolute -bottom-1.5 left-0 h-[2px] bg-[rgb(var(--fifteenth-rgb))] transition-all duration-300 ease-in-out ${
+                        isActive(item) ? "w-0" : "w-0 group-hover:w-full"
+                      }`}
+                    ></span>
+                  </Link>
+                </div>
+              ))}
           </nav>
 
           {/* Right side navigation */}

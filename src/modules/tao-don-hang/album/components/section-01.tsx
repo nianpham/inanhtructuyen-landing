@@ -599,15 +599,18 @@ const Section01 = () => {
           <div className="hidden lg:grid w-full h-full md:w-1/2">
             <div>
               <div className="relative z-20">
-                <div
+                {/* <div
                   className={`absolute bottom-[10%] left-[16%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
+                ></div> */}
                 <h2 className="text-lg lg:text-xl font-medium mb-3.5 z-20 relative">
                   Thông tin khách hàng
                 </h2>
               </div>
               <div className="mb-4">
-                <Label htmlFor="name" className="text-black text-[16px]">
+                <Label
+                  htmlFor="name"
+                  className="text-black text-[16px] font-light"
+                >
                   Họ và tên:
                 </Label>
                 <Input
@@ -617,11 +620,14 @@ const Section01 = () => {
                   placeholder="Nhập họ và tên"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                 />
               </div>
               <div className="mb-6">
-                <Label htmlFor="phone" className="text-black text-[16px]">
+                <Label
+                  htmlFor="phone"
+                  className="text-black text-[16px] font-light"
+                >
                   Số điện thoại:
                 </Label>
                 <Input
@@ -630,22 +636,25 @@ const Section01 = () => {
                   placeholder="Nhập số điện thoại"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                 />
               </div>
             </div>
             <div>
               <div className="relative z-20 mb-3.5">
-                <div
+                {/* <div
                   className={`absolute bottom-[10%] left-[11%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
+                ></div> */}
                 <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
                   Địa chỉ nhận hàng
                 </h2>
               </div>
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                  <Label htmlFor="province" className="text-black text-[16px]">
+                  <Label
+                    htmlFor="province"
+                    className="text-black text-[16px] font-light"
+                  >
                     Tỉnh/Thành phố:
                   </Label>
                   <Select
@@ -653,7 +662,7 @@ const Section01 = () => {
                     onValueChange={handleProvinceChange}
                     disabled={loading}
                   >
-                    <SelectTrigger className="mt-2">
+                    <SelectTrigger className="mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
                       <SelectValue placeholder="Chọn Tỉnh/Thành phố" />
                     </SelectTrigger>
                     <SelectContent>
@@ -669,7 +678,10 @@ const Section01 = () => {
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="district" className="text-black text-[16px]">
+                  <Label
+                    htmlFor="district"
+                    className="text-black text-[16px] font-light"
+                  >
                     Quận/Huyện:
                   </Label>
                   <Select
@@ -677,7 +689,7 @@ const Section01 = () => {
                     onValueChange={handleDistrictChange}
                     disabled={!formData.province || loading}
                   >
-                    <SelectTrigger className="mt-2">
+                    <SelectTrigger className="mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
                       <SelectValue placeholder="Chọn Quận/Huyện" />
                     </SelectTrigger>
                     <SelectContent>
@@ -694,7 +706,10 @@ const Section01 = () => {
                 </div>
               </div>
               <div className="mb-3">
-                <Label htmlFor="ward" className="text-black text-[16px]">
+                <Label
+                  htmlFor="ward"
+                  className="text-black text-[16px] font-light"
+                >
                   Phường/Xã:
                 </Label>
                 <Select
@@ -702,7 +717,7 @@ const Section01 = () => {
                   onValueChange={handleWardChange}
                   disabled={!formData.district || loading}
                 >
-                  <SelectTrigger className="mt-2">
+                  <SelectTrigger className="mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
                     <SelectValue placeholder="Chọn Phường/Xã" />
                   </SelectTrigger>
                   <SelectContent>
@@ -715,11 +730,14 @@ const Section01 = () => {
                 </Select>
               </div>
               <div className="mb-6">
-                <Label htmlFor="address" className="text-black text-[16px]">
+                <Label
+                  htmlFor="address"
+                  className="text-black text-[16px] font-light"
+                >
                   Số nhà, tên đường:
                 </Label>
                 <Input
-                  className="mt-2 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                  className="mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                   id="address"
                   name="address"
                   placeholder="Ví dụ: 123 Đường ABC"
@@ -733,9 +751,9 @@ const Section01 = () => {
                 <>
                   <div>
                     <div className="relative z-20">
-                      <div
+                      {/* <div
                         className={`absolute bottom-[10%] left-[15%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                      ></div>
+                      ></div> */}
                       <h2 className="text-lg lg:text-xl font-medium mb-3.5 z-20 relative">
                         Tùy chọn thanh toán
                       </h2>
@@ -793,16 +811,16 @@ const Section01 = () => {
                   </div>
                   <div className="mt-6">
                     <div className="relative z-20">
-                      <div
+                      {/* <div
                         className={`absolute bottom-[10%] left-[24%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                      ></div>
+                      ></div> */}
                       <h2 className="text-lg lg:text-xl font-medium mb-3.5 z-20 relative">
                         Thêm ghi chú cho đơn hàng
                       </h2>
                     </div>
                     <textarea
                       placeholder="Ghi chú về đơn hàng (Nếu có)"
-                      className="w-full p-3 border border-gray-200 rounded h-24 ml-0 outline-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                      className="w-full p-3 border border-gray-200 rounded-md h-24 ml-0 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     ></textarea>
                   </div>
                 </>
@@ -811,28 +829,28 @@ const Section01 = () => {
           <div className="w-full lg:w-1/2 space-y-6">
             <div>
               <div className="relative z-20">
-                <div
+                {/* <div
                   className={`absolute bottom-[10%] left-[26%] lg:left-[16%] h-1.5 w-16 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
+                ></div> */}
                 <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
                   Thông tin Album
                 </h2>
               </div>
               <div className="space-y-4">
                 <div className="flex flex-col justify-center items-start">
-                  <span>
+                  <span className="font-light">
                     Mã đơn hàng:{" "}
                     <strong className="uppercase font-semibold">
                       {/* {orderID?.slice(-6)} */} &nbsp; #ABCDEF
                     </strong>
                   </span>
-                  <span>
+                  <span className="font-light">
                     Kích thước:{" "}
                     <strong className="font-semibold">
                       {/* {formDataOrder?.size} */} 25x25
                     </strong>
                   </span>
-                  <span>
+                  <span className="font-light">
                     Tổng số trang:{" "}
                     <strong className="font-semibold">
                       {/* {formDataOrder?.pages} */} 20
@@ -845,7 +863,7 @@ const Section01 = () => {
                       value={selectedCoverId}
                       onValueChange={handleCoverChange}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
                         {selectedCoverId === "chon-loai-bia"
                           ? "Chọn loại bìa"
                           : ""}
@@ -869,7 +887,7 @@ const Section01 = () => {
                       value={selectedCoreId}
                       onValueChange={handleCoreChange}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
                         {selectedCoreId === "chon-loai-ruot"
                           ? "Chọn loại ruột"
                           : ""}
@@ -902,15 +920,18 @@ const Section01 = () => {
             <div className="lg:hidden w-full md:w-1/2 space-y-6 !mt-3">
               <div>
                 <div className="relative z-20">
-                  <div
+                  {/* <div
                     className={`absolute bottom-[10%] left-[25%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                  ></div>
+                  ></div> */}
                   <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
                     Thông tin khách hàng
                   </h2>
                 </div>
                 <div className="mb-4">
-                  <Label htmlFor="name" className="text-black text-[16px]">
+                  <Label
+                    htmlFor="name"
+                    className="text-black text-[16px] font-light"
+                  >
                     Họ và tên:
                   </Label>
                   <Input
@@ -920,13 +941,15 @@ const Section01 = () => {
                     placeholder="Nhập họ và tên"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                    className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     style={{ fontSize: "16px" }}
                   />
                 </div>
-
                 <div className="mb-3">
-                  <Label htmlFor="phone" className="text-black text-[16px]">
+                  <Label
+                    htmlFor="phone"
+                    className="text-black text-[16px] font-light"
+                  >
                     Số điện thoại:
                   </Label>
                   <Input
@@ -935,16 +958,16 @@ const Section01 = () => {
                     placeholder="Nhập số điện thoại"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                    className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     style={{ fontSize: "16px" }}
                   />
                 </div>
               </div>
               <div>
                 <div className="relative z-20">
-                  <div
+                  {/* <div
                     className={`absolute bottom-[10%] left-[19%] lg:left-[17%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                  ></div>
+                  ></div> */}
                   <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
                     Địa chỉ nhận hàng
                   </h2>
@@ -953,7 +976,7 @@ const Section01 = () => {
                   <div className="mb-1">
                     <Label
                       htmlFor="province"
-                      className="text-black text-[16px]"
+                      className="text-black text-[16px] font-light"
                     >
                       Tỉnh/Thành phố:
                     </Label>
@@ -996,7 +1019,7 @@ const Section01 = () => {
                   <div>
                     <Label
                       htmlFor="district"
-                      className="text-black text-[16px]"
+                      className="text-black text-[16px] font-light"
                     >
                       Quận/Huyện:
                     </Label>
@@ -1007,6 +1030,7 @@ const Section01 = () => {
                           value={district || "Vui lòng chọn Quận/Huyện"}
                           className="text-left w-full px-3 py-2 pr-16 border border-gray-200 rounded-md cursor-pointer mt-1 text-[16px]"
                           onClick={() => setOpenDistrict(true)}
+                          disabled={!formData.province}
                         />
                       </DialogTrigger>
                       <DialogContent className="z-[70]">
@@ -1033,7 +1057,10 @@ const Section01 = () => {
                   </div>
                 </div>
                 <div className="mb-3">
-                  <Label htmlFor="ward" className="text-black text-[16px]">
+                  <Label
+                    htmlFor="ward"
+                    className="text-black text-[16px] font-light"
+                  >
                     Phường/Xã:
                   </Label>
                   <Dialog open={openWard} onOpenChange={setOpenWard}>
@@ -1043,6 +1070,7 @@ const Section01 = () => {
                         value={ward || "Vui lòng chọn Phường/Xã"}
                         className="text-left w-full px-3 py-2 pr-16 border border-gray-200 rounded-md cursor-pointer mt-1 text-[16px]"
                         onClick={() => setOpenWard(true)}
+                        disabled={!formData.district}
                       />
                     </DialogTrigger>
                     <DialogContent className="z-[70]">
@@ -1068,7 +1096,10 @@ const Section01 = () => {
                   </Dialog>
                 </div>
                 <div className="mb-4">
-                  <Label htmlFor="address" className="text-black text-[16px]">
+                  <Label
+                    htmlFor="address"
+                    className="text-black text-[16px] font-light"
+                  >
                     Số nhà, tên đường:
                   </Label>
                   <Input
@@ -1077,7 +1108,7 @@ const Section01 = () => {
                     placeholder="Ví dụ: 123 Đường ABC"
                     value={formData.address}
                     onChange={handleInputChange}
-                    className="w-full mt-1 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))]"
+                    className="w-full mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     style={{ fontSize: "16px" }}
                   />
                 </div>
@@ -1088,14 +1119,14 @@ const Section01 = () => {
                   <>
                     <div>
                       <div className="relative z-20">
-                        <div
+                        {/* <div
                           className={`absolute bottom-[10%] left-[25%] lg:left-[18%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                        ></div>
+                        ></div> */}
                         <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
                           Tùy chọn thanh toán
                         </h2>
                       </div>
-                      <div className="border border-gray-200 rounded divide-y">
+                      <div className="border border-gray-200 rounded-md divide-y">
                         <div
                           onClick={() => setSelectedPayment("cash")}
                           className="cursor-pointer p-4 flex items-center"
@@ -1157,16 +1188,16 @@ const Section01 = () => {
                     </div>
                     <div>
                       <div className="relative z-20">
-                        <div
+                        {/* <div
                           className={`absolute bottom-[10%] left-[40%] lg:left-[18%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                        ></div>
+                        ></div> */}
                         <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
                           Thêm ghi chú cho đơn hàng
                         </h2>
                       </div>
                       <textarea
                         placeholder="Ghi chú về đơn hàng (Nếu có)"
-                        className="w-full p-3 border border-gray-200 rounded h-24 ml-0"
+                        className="w-full p-3 border border-gray-200 rounded-md h-24 ml-0"
                       ></textarea>
                     </div>
                   </>
@@ -1179,37 +1210,41 @@ const Section01 = () => {
             <>
               <div className="border-t pt-4 space-y-2">
                 <div className="flex justify-between">
-                  <span>Giá bìa Album</span>
+                  <span className="font-light">Giá bìa Album</span>
                   {selectedCover === "chon-loai-bia" ? (
-                    <span>Chọn bìa Album</span>
+                    <span className="font-light">Chọn bìa Album</span>
                   ) : (
-                    <span>{HELPER.formatVND(String(albumPriceCover))}</span>
+                    <span className="font-light">
+                      {HELPER.formatVND(String(albumPriceCover))}
+                    </span>
                   )}
                 </div>
                 <div className="flex justify-between">
-                  <span>Giá ruột Album</span>
+                  <span className="font-light">Giá ruột Album</span>
                   {selectedCore === "chon-loai-ruot" ? (
-                    <span>Chọn ruột Album</span>
+                    <span className="font-light">Chọn ruột Album</span>
                   ) : (
-                    <span>{HELPER.formatVND(String(albumPriceCore))}</span>
+                    <span className="font-light">
+                      {HELPER.formatVND(String(albumPriceCore))}
+                    </span>
                   )}
                 </div>
                 <div className="flex justify-between">
-                  <span>Phí vận chuyển</span>
+                  <span className="font-light">Phí vận chuyển</span>
                   <span className="text-green-500">
                     + {HELPER.formatVND("30000")}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Tạm tính</span>
-                  <span>
+                  <span className="font-light">Tạm tính</span>
+                  <span className="font-light">
                     {HELPER.formatVND(
                       String(albumPriceCover + albumPriceCore + 30000)
                     )}
                   </span>
                 </div>
                 <div className="flex justify-between items-center pt-2">
-                  <span>Khuyến mãi</span>
+                  <span className="font-light">Khuyến mãi</span>
                   <Dialog>
                     <DialogTrigger asChild>
                       <div className="">
@@ -1299,7 +1334,7 @@ const Section01 = () => {
                   onChange={(e) => setIsTermsAccepted(e.target.checked)}
                   className="mr-2"
                 />
-                <p className="text-sm text-black">
+                <p className="text-sm text-black font-light">
                   Bằng cách tiến hành mua hàng, bạn đã đồng ý với các điều khoản
                   và chính sách của chúng tôi.
                 </p>
@@ -1307,7 +1342,7 @@ const Section01 = () => {
               <div className="flex flex-row justify-between items-center mt-6 w-full">
                 <button
                   onClick={() => handleSubmit()}
-                  className="w-full py-2 lg:py-4 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--primary-rgb))] text-center text-white rounded-md font-medium transition"
+                  className="w-full py-2 lg:py-4 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center text-white rounded-md font-medium transition"
                 >
                   {isLoading ? "Đang xử lí đơn hàng..." : "Đặt hàng"}
                 </button>

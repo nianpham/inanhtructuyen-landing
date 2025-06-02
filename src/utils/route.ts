@@ -6,4 +6,5 @@ export const ROUTES = {
   PRICING: "/bang-gia",
   BLOG: "/blog",
   ACCOUNT: "/tai-khoan",
+  CREATE_ORDER: "/tao-don-hang",
 };

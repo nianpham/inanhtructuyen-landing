@@ -81,7 +81,7 @@ const LoginForm = () => {
                   <div className="space-y-2">
                     <label
                       // htmlFor="email"
-                      className="text-sm font-medium flex items-center"
+                      className="text-[16px] font-medium flex items-center"
                     >
                       Email <span className="text-red-500 ml-1">*</span>
                     </label>
@@ -96,7 +96,7 @@ const LoginForm = () => {
                   <div className="space-y-2">
                     <label
                       htmlFor="password"
-                      className="text-sm font-medium flex items-center"
+                      className="text-[16px] font-medium flex items-center"
                     >
                       Mật khẩu <span className="text-red-500 ml-1">*</span>
                     </label>
