@@ -3,58 +3,71 @@
 import { toast } from "@/hooks/use-toast";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Image from "next/image";
 import Cookies from "js-cookie";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Loader, User } from "lucide-react";
 import { IMAGES } from "@/utils/image";
+import { API } from "@/utils/api";
+import { AccountService } from "@/services/account";
+import { ROUTES } from "@/utils/route";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [logined, setLogined] = useState(false);
-  const pathname = usePathname();
+  const router = useRouter();
 
-  // const validateForm = () => {
-  //   if (email === "" || password === "") {
-  //     toast({
-  //       variant: "destructive",
-  //       title: "Vui lòng điền đầy đủ thông tin",
-  //     });
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // };
+  const handleSubmitWithGoogle = async (e: any) => {
+    e.preventDefault();
+    window.location.href = API.AUTH.LOGIN_WITH_GOOGLE;
+  };
 
-  // const handleSubmit = async () => {
-  //   if (!validateForm()) return;
-  //   setIsLoading(true);
+  const validateForm = () => {
+    if (username === "" || password === "") {
+      toast({
+        variant: "destructive",
+        title: "Vui lòng điền đầy đủ thông tin",
+      });
+      return false;
+    } else {
+      return true;
+    }
+  };
 
-  //   try {
-  //     const data = await UserService.loginUserEmail(email, password);
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+    setIsLoading(true);
 
-  //     if (data?.message === "SUCCESS") {
-  //       Cookies.set("isLogin", data?.data._id, { expires: 7 });
-  //       Cookies.set("userLogin", data?.data._id, { expires: 7 });
-  //       setLogined(true);
-  //       window.location.href = pathname;
-  //     } else {
-  //       throw new Error("Email hoặc mật khẩu chưa chính xác");
-  //     }
-  //   } catch (error) {
-  //     console.error("========= Error Login:", error);
-  //     toast({
-  //       variant: "destructive",
-  //       title: "Email hoặc mật khẩu chưa chính xác",
-  //     });
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+    try {
+      let data;
+
+      if (/^\d+$/.test(username)) {
+        data = await AccountService.loginAccountPhone(username, password);
+      } else {
+        data = await AccountService.loginAccountEmail(username, password);
+      }
+
+      if (data?.message === "SUCCESS") {
+        Cookies.set("isLogin", data?.data, { expires: 7 });
+        Cookies.set("userLogin", data?.data, { expires: 7 });
+        setLogined(true);
+        router.push(ROUTES.HOME);
+      } else {
+        throw new Error("Email hoặc mật khẩu chưa chính xác");
+      }
+    } catch (error) {
+      console.error("========= Error Login:", error);
+      toast({
+        variant: "destructive",
+        title: "Email hoặc mật khẩu chưa chính xác",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Dialog>
@@ -83,14 +96,14 @@ const LoginForm = () => {
                       // htmlFor="email"
                       className="text-[16px] font-medium flex items-center"
                     >
-                      Email <span className="text-red-500 ml-1">*</span>
+                      Username <span className="text-red-500 ml-1">*</span>
                     </label>
                     <input
-                      id="email"
+                      id="username"
                       type="text"
-                      placeholder="Nhập email"
+                      placeholder="Nhập username hoặc số điện thoại"
                       className="w-full p-3 rounded-md border focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent"
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                   </div>
                   <div className="space-y-2">
