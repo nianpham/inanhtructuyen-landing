@@ -134,15 +134,7 @@ const LoginForm = () => {
                       )}
                     </Button>
                     <Button
-                      onClick={() => {
-                        toast({
-                          variant: "default",
-                          title: "Thông báo",
-                          description: "Chức năng này đang được phát triển",
-                          className:
-                            "bg-white text-black border-[rgb(var(--fifteenth-rgb))]",
-                        });
-                      }}
+                      onClick={(e: any) => handleSubmitWithGoogle(e)}
                       className="w-16 text-[14px] py-6 bg-gray-100 hover:bg-gray-200 text-white rounded-md"
                     >
                       <Image
