@@ -57,7 +57,7 @@ const CancelOrderModal = ({ order, customerAccount }: any) => {
     };
 
     await OrderService.updateOrder(id, body);
-    window.location.href = `${ROUTES.ACCOUNT}?tab=history`;
+    // window.location.href = `${ROUTES.ACCOUNT}?tab=history`;
   };
 
   return (

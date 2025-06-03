@@ -83,7 +83,7 @@ const ChangePasswordForm = () => {
   const [customerAccount, setCustomerAccount] =
     useState<CustomerAccount | null>(null);
   const router = useRouter();
-  const tab = new URLSearchParams(window.location.search).get("tab");
+  // const tab = new URLSearchParams(window.location.search).get("tab");
 
   const [provinces, setProvinces] = React.useState<Province[]>([]);
   const [formData, setFormData] = React.useState<FormData>({
@@ -207,7 +207,7 @@ const ChangePasswordForm = () => {
           confirmPassword: "",
         });
 
-        window.location.href = "/tai-khoan?tab=password";
+        // window.location.href = "/tai-khoan?tab=password";
       }
     } catch (error) {
       toast({
