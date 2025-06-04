@@ -40,7 +40,6 @@ import {
   ChevronDown,
   CreditCard,
   Frame,
-  Loader,
   MapPin,
   Star,
   StickyNote,
@@ -299,8 +298,6 @@ const Section01 = () => {
       try {
         const res = await ProductService.getProductById(selectedProduct);
         if (res && res.data) {
-          console.log("Fetched Product Data:", res.data);
-
           setProductsData(res.data);
         }
       } catch (error) {
@@ -383,19 +380,15 @@ const Section01 = () => {
       setIsLoading(false);
       return false;
     }
-
-    if (productsData?.color.length > 0) {
-      if (confirmColor === "") {
-        toast({
-          title: "",
-          description: "Vui lòng chọn màu sắc!",
-          variant: "destructive",
-        });
-        setIsLoading(false);
-        return false;
-      }
+    if (confirmColor === "") {
+      toast({
+        title: "",
+        description: "Vui lòng chọn màu sắc!",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return false;
     }
-
     if (confirmSize === "") {
       toast({
         title: "",
@@ -527,17 +520,12 @@ const Section01 = () => {
         ),
       };
 
-      // console.log("Order Data:", {
-      //   account: commonAccountData,
-      //   order: orderData,
-      // });
-
       let response;
       if (!isLogin) {
-        // console.log("Non-logged-in Order Data:", {
-        //   account: commonAccountData,
-        //   order: orderData,
-        // });
+        console.log("Non-logged-in Order Data:", {
+          account: commonAccountData,
+          order: orderData,
+        });
 
         response = await OrderService.createOrder_no_login({
           account: commonAccountData,
@@ -575,10 +563,10 @@ const Section01 = () => {
           setIsLoading(false);
         }
       } else {
-        // console.log("Logged-in Order Data:", {
-        //   account: { _id: isLogin, ...commonAccountData },
-        //   order: orderData,
-        // });
+        console.log("Logged-in Order Data:", {
+          account: { _id: isLogin, ...commonAccountData },
+          order: orderData,
+        });
 
         response = await OrderService.createOrder({
           account: { _id: isLogin, ...commonAccountData },
@@ -601,16 +589,16 @@ const Section01 = () => {
       if (selectedPayment === "momo" && response?.data) {
         window.open(response.data, "_blank");
         window.location.href = accountOrderLogin
-          ? `${ROUTES.ACCOUNT}`
+          ? `${ROUTES.ACCOUNT}?tab=history`
           : response?.data?.isAccountExisted === true
-          ? `${ROUTES.ACCOUNT}`
-          : `${ROUTES.ACCOUNT}?orderNoLogin=true`;
+          ? `${ROUTES.ACCOUNT}?tab=history`
+          : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
       } else {
         window.location.href = accountOrderLogin
-          ? `${ROUTES.ACCOUNT}`
+          ? `${ROUTES.ACCOUNT}?tab=history`
           : response?.data?.isAccountExisted === true
-          ? `${ROUTES.ACCOUNT}`
-          : `${ROUTES.ACCOUNT}?orderNoLogin=true`;
+          ? `${ROUTES.ACCOUNT}?tab=history`
+          : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
       }
     } catch (error) {
       console.error("Error submitting order:", error);
@@ -649,6 +637,37 @@ const Section01 = () => {
       }
     }
   }, [formData.province, formData.district, provinces, formData.ward]);
+
+  useEffect(() => {
+    const fetchAccount = async () => {
+      if (isLogin) {
+        try {
+          const data = await AccountService.getAccountById(isLogin);
+          setCustomerAccount(data);
+
+          console.log("province:", data.province);
+          console.log("district:", data.district);
+          console.log("ward:", data.ward);
+
+          setFormData({
+            name: data.name,
+            email: data.email,
+            avatar: data.avatar,
+            phone: data.phone,
+            address: data.address,
+            ward: data.ward,
+            district: data.district,
+            province: data.province,
+          });
+        } catch (error) {
+          console.error("Error fetching account:", error);
+        }
+      }
+    };
+
+    fetchAccount();
+    renderProduct();
+  }, []);
 
   React.useEffect(() => {
     const fetchProvinces = async () => {
@@ -956,9 +975,9 @@ const Section01 = () => {
         <div className="hidden lg:grid w-full md:w-1/2">
           <div>
             <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
-              <div
-                className={`absolute bottom-[10%] left-[19%] h-1 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-              ></div>
+              {/* <div
+                className={`absolute bottom-[10%] left-[16%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+              ></div> */}
               <UserRound className="w-5 h-5" />
               <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                 Thông tin khách hàng
@@ -999,9 +1018,9 @@ const Section01 = () => {
             </div>
             <div className="mt-6">
               <div className="flex flex-row items-center gap-2 relative mb-3.5 z-20">
-                <div
-                  className={`absolute bottom-[10%] left-[15%] h-1 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
+                {/* <div
+                  className={`absolute bottom-[10%] left-[11%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                ></div> */}
                 <MapPin className="w-5 h-5" />
                 <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                   Địa chỉ nhận hàng
@@ -1110,9 +1129,10 @@ const Section01 = () => {
             <>
               <div className="mt-6">
                 <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
-                  <div
-                    className={`absolute bottom-[10%] left-[19%] h-1 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                  ></div>
+                  {/* <div
+                    className={
+                    `absolute bottom-[10%] left-[15%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                  ></div> */}
                   <CreditCard className="w-5 h-5" />
                   <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                     Tùy chọn thanh toán
@@ -1199,9 +1219,9 @@ const Section01 = () => {
               </div>
               <div className="mt-6">
                 <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
-                  <div
-                    className={`absolute bottom-[10%] left-[32%] h-1 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                  ></div>
+                  {/* <div
+                    className={`absolute bottom-[10%] left-[24%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                  ></div> */}
                   <StickyNote className="w-5 h-5" />
                   <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                     Thêm ghi chú cho đơn hàng
@@ -1217,10 +1237,10 @@ const Section01 = () => {
         </div>
         <div className="w-full lg:w-1/2 space-y-6">
           <div>
-            <div className="flex flex-row gap-2 items-center mb-3.5 lg:mb-5 relative z-20">
-              <div
-                className={`absolute bottom-[10%] left-[34%] lg:left-[19%] h-1 w-24 lg:w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-              ></div>
+            <div className="flex flex-row gap-2 items-center mb-5 relative z-20">
+              {/* <div
+                className={`absolute bottom-[10%] left-[18%] lg:left-[15%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+              ></div> */}
               <Frame className="w-5 h-5" />
               <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                 Thông tin Khung ảnh
@@ -1234,7 +1254,7 @@ const Section01 = () => {
                       products?.find(
                         (item: any) => String(item?._id) === selectedProduct
                       ) ? (
-                        <div className="w-full flex flex-row justify-between items-center">
+                        <div className="w-full flex flex-row justify-between items-start">
                           <div className="cursor-pointer flex flex-row items-start gap-3">
                             <Image
                               src={
@@ -1342,7 +1362,7 @@ const Section01 = () => {
             </div>
             {/* {selectedProduct !== "Chon san pham" && ( */}
             <div className="flex flex-col justify-evenly lg:justify-between h-full lg:h-full lg:mt-5">
-              <div className="flex justify-center items-center mt-2 lg:mt-0">
+              <div className="flex justify-center items-center">
                 {!currentImage && !uploadedFile && !frameImage ? (
                   <div className="mt-3 lg:mt-0 w-full">
                     <ImageUpload
@@ -1360,7 +1380,7 @@ const Section01 = () => {
                             : "w-full h-60"
                         } */}
                     <div
-                      className={`mt-1 lg:mt-0 relative w-full h-64 flex items-center justify-center overflow-hidden rounded-md bg-gray-50`}
+                      className={`relative w-full h-64 flex items-center justify-center overflow-hidden rounded-md mt-0 bg-gray-50`}
                       style={getImageContainerStyle()}
                     >
                       <Image
@@ -1489,33 +1509,27 @@ const Section01 = () => {
                               <h2 className="text-[18px] font-medium mb-2">
                                 Màu sắc khung viền:
                               </h2>
-                              {productsData?.color.length < 0 ? (
-                                <div className="mb-6">Không có</div>
-                              ) : (
-                                <div className="flex gap-4 mb-6">
-                                  {colorOptions
-                                    .filter((color) =>
-                                      productsData.color?.includes(color.id)
-                                    )
-                                    .map((color) => (
-                                      <button
-                                        key={color.id}
-                                        type="button"
-                                        className={cn(
-                                          "w-8 h-8 rounded-full transition-all border-2",
-                                          color.bgColor,
-                                          color.borderColor,
-                                          selectedColor === color.id
-                                            ? "ring-2 ring-offset-2 ring-[rgb(var(--fifteenth-rgb))]"
-                                            : ""
-                                        )}
-                                        onClick={() =>
-                                          setSelectedColor(color.id)
-                                        }
-                                      />
-                                    ))}
-                                </div>
-                              )}
+                              <div className="flex gap-4 mb-6">
+                                {colorOptions
+                                  .filter((color) =>
+                                    productsData.color?.includes(color.id)
+                                  )
+                                  .map((color) => (
+                                    <button
+                                      key={color.id}
+                                      type="button"
+                                      className={cn(
+                                        "w-8 h-8 rounded-full transition-all border-2",
+                                        color.bgColor,
+                                        color.borderColor,
+                                        selectedColor === color.id
+                                          ? "ring-2 ring-offset-2 ring-[rgb(var(--fifteenth-rgb))]"
+                                          : ""
+                                      )}
+                                      onClick={() => setSelectedColor(color.id)}
+                                    />
+                                  ))}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1573,9 +1587,9 @@ const Section01 = () => {
           <div className=" lg:hidden w-full md:w-1/2 space-y-6">
             <div>
               <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
-                <div
-                  className={`absolute bottom-[10%] left-[34%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
+                {/* <div
+                className={`absolute bottom-[10%] left-[16%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+              ></div> */}
                 <UserRound className="w-5 h-5" />
                 <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                   Thông tin khách hàng
@@ -1619,9 +1633,9 @@ const Section01 = () => {
             </div>
             <div>
               <div className="flex flex-row items-center gap-2 relative mb-3.5 z-20">
-                <div
-                  className={`absolute bottom-[10%] left-[27%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
+                {/* <div
+                  className={`absolute bottom-[10%] left-[11%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                ></div> */}
                 <MapPin className="w-5 h-5" />
                 <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                   Địa chỉ nhận hàng
@@ -1767,38 +1781,26 @@ const Section01 = () => {
               <>
                 <div>
                   <div className="flex flex-row items-center gap-2 mb-2 relative z-20">
-                    <div
-                      className={`absolute bottom-[10%] left-[33%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                    ></div>
+                    {/* <div
+                      className={`absolute bottom-[10%] left-[25%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                    ></div> */}
                     <CreditCard className="w-5 h-5" />
                     <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                       Tùy chọn thanh toán
                     </h2>
                   </div>
-                  <div className="rounded-md divide-y">
+                  <div className="border border-gray-200 rounded-md divide-y">
                     <div
                       onClick={() => setSelectedPayment("cash")}
-                      className={`cursor-pointer p-4 flex items-center rounded-md
-                      ${
-                        selectedPayment === "cash"
-                          ? "border border-[rgb(var(--fifteenth-rgb))]"
-                          : "border border-gray-200"
-                      }
-                      `}
+                      className="cursor-pointer p-4 flex items-center"
                     >
-                      {/* <div
-                      className={`cursor-pointer w-5 h-5 rounded-full mr-2 ${
-                        selectedPayment === "cash"
-                          ? "border border-gray-200 bg-[rgb(var(--fifteenth-rgb))]"
-                          : "border border-gray-200"
-                      }`}
-                    ></div> */}
-                      <Image
-                        src="https://cdn-icons-png.flaticon.com/128/7630/7630510.png"
-                        alt="Tiền mặt"
-                        width={24}
-                        height={24}
-                      />
+                      <div
+                        className={`cursor-pointer w-5 h-5 rounded-full mr-2 ${
+                          selectedPayment === "cash"
+                            ? "border border-gray-200 bg-[rgb(var(--fifteenth-rgb))]"
+                            : "border border-gray-200"
+                        }`}
+                      ></div>
                       <label htmlFor="cash" className="cursor-pointer ml-2">
                         Thanh toán khi nhận hàng
                       </label>
@@ -1873,9 +1875,9 @@ const Section01 = () => {
                 </div>
                 <div>
                   <div className="flex flex-row items-center gap-2 mb-2 relative z-20">
-                    <div
-                      className={`absolute bottom-[10%] left-[54%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                    ></div>
+                    {/* <div
+                      className={`absolute bottom-[10%] left-[37%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                    ></div> */}
                     <StickyNote className="w-5 h-5" />
                     <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                       Thêm ghi chú cho đơn hàng
@@ -1927,11 +1929,11 @@ const Section01 = () => {
                           Nhập mã
                         </div>
                       ) : (
-                        <div className="flex flex-row gap-2 text-[16px]">
-                          <div className="cursor-pointer flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 text-green-400 text-center rounded-md font-medium transition">
+                        <div className="flex flex-row gap-2">
+                          <div className="cursor-pointer text-sm flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 text-green-400 text-center rounded-md font-medium transition">
                             Đã áp dụng mã
                           </div>
-                          <div className="cursor-pointer text-white flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[] hover:opacity-80 text-center rounded-md font-medium transition">
+                          <div className="cursor-pointer text-white text-sm flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 bg-yellow-400 hover:bg-yellow-500 text-center rounded-md font-medium transition">
                             Đổi mã
                           </div>
                         </div>
@@ -2024,16 +2026,9 @@ const Section01 = () => {
           <div className="flex flex-row justify-between items-center mt-6">
             <button
               onClick={() => handleSubmit()}
-              className="text-white flex flex-row justify-center items-center gap-2 w-full mx-auto py-2 lg:py-4 bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center rounded-md font-medium transition"
+              className="text-white flex flex-row justify-center items-center gap-4 w-full mx-auto py-2 lg:py-4 bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center rounded-md font-medium transition"
             >
-              {isLoading ? (
-                <>
-                  Đang xử lí đơn hàng{" "}
-                  <Loader className="animate-spin" size={18} />
-                </>
-              ) : (
-                "Đặt hàng"
-              )}
+              {isLoading ? "Đang xử lí đơn hàng..." : "Đặt hàng"}
             </button>
           </div>
         </div>

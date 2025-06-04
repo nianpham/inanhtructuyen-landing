@@ -45,7 +45,6 @@ const Section4: React.FC = () => {
 
   const init = async () => {
     const res = await ProductService.getAll();
-    console.log("res", res);
 
     if (res && res.data.length > 0) {
       const filteredProducts = res.data.filter((product: Product) =>

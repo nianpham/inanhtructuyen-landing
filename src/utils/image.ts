@@ -72,4 +72,6 @@ export const IMAGES = {
     "https://res.cloudinary.com/farmcode/image/upload/v1741329933/iatt/vnpay-logo_ch30eu.png",
   COD: "https://res.cloudinary.com/farmcode/image/upload/v1741330417/iatt/cash-on-delivery_6491511_s7i7qw.png",
   BANK: "https://res.cloudinary.com/farmcode/image/upload/v1741334095/iatt/bank_2830284_mmcz95.png",
+  YOUTUBE:
+    "https://res.cloudinary.com/farmcode/image/upload/v1748965254/iatt/YT-icon_crqwhn.avif",
 };

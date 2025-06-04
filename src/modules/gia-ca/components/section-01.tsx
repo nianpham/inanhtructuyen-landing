@@ -20,7 +20,7 @@ const Section01 = () => {
           />
         </div>
         <div className="text-lg lg:text-2xl font-base mt-8 text-black">
-          Trang giá cả đang phát triển.
+          Trang bảng giá đang phát triển.
         </div>
       </div>
     </section>

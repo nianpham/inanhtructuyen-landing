@@ -6,58 +6,45 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Image from "next/image";
 import Cookies from "js-cookie";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Loader, User } from "lucide-react";
 import { IMAGES } from "@/utils/image";
 import { API } from "@/utils/api";
 import { AccountService } from "@/services/account";
 import { ROUTES } from "@/utils/route";
 
-const LoginForm = () => {
+interface LoginFormProps {
+  onLogin: (username: string, password: string) => Promise<void>;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [logined, setLogined] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmitWithGoogle = async (e: any) => {
+  const handleSubmitWithGoogle = async (e: React.MouseEvent) => {
     e.preventDefault();
     window.location.href = API.AUTH.LOGIN_WITH_GOOGLE;
   };
 
   const validateForm = () => {
-    if (username === "" || password === "") {
+    if (!username || !password) {
       toast({
         variant: "destructive",
         title: "Vui lòng điền đầy đủ thông tin",
       });
       return false;
-    } else {
-      return true;
     }
+    return true;
   };
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
+
     setIsLoading(true);
-
     try {
-      let data;
-
-      if (/^\d+$/.test(username)) {
-        data = await AccountService.loginAccountPhone(username, password);
-      } else {
-        data = await AccountService.loginAccountEmail(username, password);
-      }
-
-      if (data?.message === "SUCCESS") {
-        Cookies.set("isLogin", data?.data, { expires: 7 });
-        Cookies.set("userLogin", data?.data, { expires: 7 });
-        setLogined(true);
-        router.push(ROUTES.HOME);
-      } else {
-        throw new Error("Email hoặc mật khẩu chưa chính xác");
-      }
+      await onLogin(username, password);
     } catch (error) {
       console.error("========= Error Login:", error);
       toast({
@@ -82,70 +69,72 @@ const LoginForm = () => {
         className="sm:max-w-[425px] z-[70]"
       >
         <div className="w-full h-full flex flex-col justify-center items-center">
-          <div className="flex w-full">
-            <div className="w-full flex flex-col">
-              <div className="mb-4">
-                <div className="flex justify-start items-center gap-4">
-                  <h1 className="text-2xl font-bold">Đăng nhập</h1>
-                </div>
+          <div className="w-full flex flex-col">
+            <div className="mb-1">
+              <div className="flex justify-start items-center gap-4">
+                <h1 className="text-2xl font-bold">Đăng nhập</h1>
               </div>
-              <div className="mt-4">
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <label
-                      // htmlFor="email"
-                      className="text-[16px] font-medium flex items-center"
-                    >
-                      Username <span className="text-red-500 ml-1">*</span>
-                    </label>
+            </div>
+            <div className="mt-2">
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-[16px] font-medium flex items-center">
+                    Email <span className="text-red-500 ml-1">*</span>
+                  </label>
+                  <input
+                    id="email"
+                    type="text"
+                    placeholder="Nhập email hoặc số điện thoại"
+                    className="w-full p-3 rounded-md border focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label
+                    htmlFor="password"
+                    className="text-[16px] font-medium flex items-center"
+                  >
+                    Mật khẩu <span className="text-red-500 ml-1">*</span>
+                  </label>
+                  <div className="relative">
                     <input
-                      id="username"
-                      type="text"
-                      placeholder="Nhập username hoặc số điện thoại"
-                      className="w-full p-3 rounded-md border focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent"
-                      onChange={(e) => setUsername(e.target.value)}
+                      id="password"
+                      type="password"
+                      placeholder="Nhập mật khẩu"
+                      className="w-full p-3 rounded-md border pr-10 focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="password"
-                      className="text-[16px] font-medium flex items-center"
-                    >
-                      Mật khẩu <span className="text-red-500 ml-1">*</span>
-                    </label>
-                    <div className="relative">
-                      <input
-                        id="password"
-                        type="password"
-                        placeholder="Nhập mật khẩu"
-                        className="w-full p-3 rounded-md border pr-10 focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent"
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div className="w-full flex justify-center items-center gap-2">
-                    <Button
-                      // onClick={() => handleSubmit()}
-                      className="w-full text-[16px] py-6 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-85 text-white rounded-md"
-                    >
-                      {isLoading ? "Vui lòng đợi" : "Đăng nhập"}{" "}
-                      {isLoading && (
-                        <Loader className="animate-spin" size={48} />
-                      )}
-                    </Button>
-                    <Button
-                      onClick={(e: any) => handleSubmitWithGoogle(e)}
-                      className="w-16 text-[14px] py-6 bg-gray-100 hover:bg-gray-200 text-white rounded-md"
-                    >
-                      <Image
-                        src={IMAGES.GG_LOGO}
-                        alt="loading"
-                        className="w-full h-auto rounded-full"
-                        width={1000}
-                        height={0}
-                      />
-                    </Button>
-                  </div>
+                </div>
+                <div className="w-full flex justify-center items-center gap-2">
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={isLoading}
+                    className="w-full text-[16px] py-6 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-85 text-white rounded-md"
+                  >
+                    {isLoading ? (
+                      <>
+                        Vui lòng đợi{" "}
+                        <Loader className="animate-spin ml-2" size={20} />
+                      </>
+                    ) : (
+                      "Đăng nhập"
+                    )}
+                  </Button>
+                  <Button
+                    onClick={handleSubmitWithGoogle}
+                    className="w-16 text-[14px] py-6 bg-gray-100 hover:bg-gray-200 text-white rounded-md"
+                  >
+                    <Image
+                      src={IMAGES.GG_LOGO}
+                      alt="Google Login"
+                      className="w-full h-auto rounded-full"
+                      width={1000}
+                      height={0}
+                    />
+                  </Button>
                 </div>
               </div>
             </div>

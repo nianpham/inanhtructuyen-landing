@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { IMAGES } from "@/utils/image";
 import Link from "next/link";
@@ -10,87 +10,193 @@ import ChangePasswordForm from "./account/change-password";
 import ProfileModal from "./account/account-management";
 import CancelOrderModal from "./order/cancel-order";
 import OrderDetailModal from "./order/order-detail";
-import { Clock8 } from "lucide-react";
+import {
+  CircleCheckBig,
+  CircleDollarSign,
+  ClipboardX,
+  Clock8,
+  Copy,
+  HandCoins,
+  Package2,
+  Truck,
+} from "lucide-react";
+import { AccountService } from "@/services/account";
+import Cookies from "js-cookie";
+import { toast } from "@/hooks/use-toast";
+import { useCopyToClipboard } from "usehooks-ts";
+import { OrderService } from "@/services/order";
+import { HELPER } from "@/utils/helper";
+import { useRouter, useSearchParams } from "next/navigation";
 
-interface Order {
-  id: string;
-  date: string;
-  price: string;
-  status: "Pre-order" | "Completed" | "Cancelled";
-}
+// interface Order {
+//   id: string;
+//   date: string;
+//   price: string;
+//   status: "Pre-order" | "Completed" | "Cancelled";
+// }
+
+export type OrderStatus =
+  | "pending"
+  | "cancelled"
+  | "waiting"
+  | "delivering"
+  | "completed"
+  | "paid"
+  | "paid pending";
 
 interface Address {
-  type: String;
+  type: string;
   address: string;
   isDefault?: boolean;
 }
 
+interface CustomerAccount {
+  _id: string;
+  email: string;
+  password: string;
+  name: string;
+  phone: string;
+  avatar: string;
+  address: string;
+  ward: string;
+  district: string;
+  province: string;
+  role: string;
+  status: boolean;
+  created_at: string;
+  districtName: string;
+  provinceName: string;
+  wardName: string;
+}
+
+interface UserData {
+  name?: string;
+  email?: string;
+  phone?: string;
+  avatar?: string;
+  address?: string;
+  ward?: string;
+  district?: string;
+  province?: string;
+  provinceName?: string;
+  districtName?: string;
+  wardName?: string;
+}
+
+export interface OrderItem {
+  id: string;
+  date: string;
+  image: string;
+  title: string;
+  category: string;
+  specs: string;
+  total: number;
+  status: OrderStatus;
+}
+
+export interface Order {
+  _id: string;
+  created_at: string;
+  total: string;
+  status: string;
+  order_type: string;
+  cover_image: string;
+  pages: number;
+  album_data: string[];
+  album_cover: string;
+  album_core: string;
+  payment_method: string;
+  discount_code: string;
+  discount_price: number;
+  product_id: string;
+  product_price: string;
+  image: string;
+  size: string;
+  color: string;
+  product_name: string;
+  product_category: string;
+}
+
+interface Product {
+  _id: string;
+  name: string;
+  description: string;
+  introduction: string;
+  price: string;
+  thumbnail: string;
+  category: string;
+  sold: number;
+  color: Array<string>;
+  images: Array<string>;
+  created_at: Date;
+}
+
 const Section01 = () => {
-  const orders: Order[] = [
-    {
-      id: "#FWB127364372",
-      date: "20/12/2023",
-      price: "$4,756",
-      status: "Pre-order",
-    },
-    {
-      id: "#FWB127364372",
-      date: "20/12/2023",
-      price: "$4,756",
-      status: "Pre-order",
-    },
-    {
-      id: "#FWB127364372",
-      date: "20/12/2023",
-      price: "$4,756",
-      status: "Pre-order",
-    },
-    {
-      id: "#FWB127364372",
-      date: "20/12/2023",
-      price: "$4,756",
-      status: "Pre-order",
-    },
-    {
-      id: "#FWB127364372",
-      date: "20/12/2023",
-      price: "$4,756",
-      status: "Pre-order",
-    },
-    {
-      id: "#FWB127364372",
-      date: "20/12/2023",
-      price: "$4,756",
-      status: "Pre-order",
-    },
-  ];
-
-  const addresses: Address[] = [
-    {
-      type: "Địa chỉ",
-      address: "744/2 Nguyễn Kiệm, Phường 4, Quận Phú Nhuận, TP. Hồ Chí Minh",
-      isDefault: false,
-    },
-  ];
-
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Pre-order":
+      case "pending":
         return "text-[rgb(var(--fifteenth-rgb))]";
-      case "Completed":
+      case "waiting":
+        return "text-[rgb(var(--fifteenth-rgb))]";
+      case "delivering":
+        return "text-blue-600";
+      case "completed":
         return "text-green-600";
-      case "Cancelled":
+      case "paid":
+        return "text-purple-600";
+      case "paid pending":
+        return "text-gray-600";
+      case "cancelled":
         return "text-red-600";
       default:
         return "text-gray-600";
     }
   };
 
+  const router = useRouter();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showTopGradient, setShowTopGradient] = useState(false);
   const [showBottomGradient, setShowBottomGradient] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [customerAccount, setCustomerAccount] =
+    useState<CustomerAccount | null>(null);
 
-  // Handle scroll for size filter
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  const [, copy] = useCopyToClipboard();
+  const pathParams = useSearchParams();
+  const tab = pathParams.get("orderNoLogin");
+  const [openDialog, setOpenDialog] = useState(false);
+
+  useEffect(() => {
+    if (tab === "true") {
+      setOpenDialog(true);
+    }
+  }, [tab]);
+
+  const init = async () => {
+    try {
+      const res = await OrderService.getAllOrderById(
+        Cookies.get("userLogin") || ""
+      );
+      if (res && res.length > 0) {
+        console.log("Products initialized successfully:", res);
+
+        setOrders(res);
+      } else {
+        console.log("No products found in response");
+        setOrders([]);
+      }
+    } catch (error) {
+      console.error("Error initializing products:", error);
+      setOrders([]);
+    }
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       if (scrollContainerRef.current) {
@@ -114,9 +220,144 @@ const Section01 = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchAccount = async () => {
+      const userId = Cookies.get("isLogin");
+      if (userId) {
+        try {
+          setLoading(true);
+          const data = await AccountService.getAccountById(userId);
+          setCustomerAccount(data);
+        } catch (error) {
+          console.error("Error fetching account:", error);
+          toast({
+            title: "Lỗi",
+            description: "Không thể tải thông tin tài khoản",
+            variant: "destructive",
+          });
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchAccount();
+  }, [toast]);
+
+  const handleProfileUpdate = (updatedData: UserData) => {
+    setCustomerAccount((prev) =>
+      prev
+        ? {
+            ...prev,
+            ...updatedData,
+            provinceName:
+              updatedData.provinceName || customerAccount?.provinceName || "",
+            districtName:
+              updatedData.districtName || customerAccount?.districtName || "",
+            wardName: updatedData.wardName || customerAccount?.wardName || "",
+          }
+        : null
+    );
+  };
+
+  const handleCancelOrder = async () => {
+    try {
+      setLoading(true);
+      await init();
+      toast({
+        title: "Hủy đơn thành công",
+        description: "Đơn hàng đã được hủy.",
+        className: "bg-green-500 text-white border-green-600",
+      });
+    } catch (error) {
+      console.error("Error refreshing orders:", error);
+      toast({
+        title: "Lỗi",
+        description: "Không thể làm mới danh sách đơn hàng.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <section className="w-[100%] h-full mx-auto py-5 lg:py-10 relative">
+    <section className="w-[100%] h-full mx-auto py-5 lg:py-7 relative">
       <div className="max-w-7xl h-full mx-auto px-5 lg:px-0">
+        {openDialog && (
+          <div
+            id="alert-additional-content-4"
+            className="p-4 mb-4 text-yellow-800 border border-[#A98F57] rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800"
+            role="alert"
+          >
+            <div className="flex items-center">
+              <svg
+                className="shrink-0 w-5 h-5 me-2"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+              </svg>
+              <span className="sr-only">Info</span>
+              <h3 className="text-lg font-medium">Thông báo tài khoản mới</h3>
+            </div>
+            <div className="mt-2 mb-3 text-[16px] text-justify">
+              Đây là tài khoản mới được tạo để quản lí đơn hàng của bạn. Vui
+              lòng cập nhật mật khẩu mới để tiếp tục sử dụng tài khoản.
+            </div>
+            <div className="mt-2 mb-3 text-[16px]">
+              Hãy sử dụng mật khẩu dưới đây để cập nhật mật khẩu mới.
+            </div>
+            <div className="mt-2 mb-4 text-[16px] flex flex-row justify-start items-center gap-2">
+              <div className="flex justify-center items-center gap-2">
+                <div className="text-[16px]">{customerAccount?.password}</div>
+
+                <div
+                  onClick={() => {
+                    if (customerAccount?.password) {
+                      copy(customerAccount.password);
+                      toast({
+                        title: "Thành công",
+                        description: "Đã sao chép mật khẩu!",
+                        className: "bg-green-500 text-white border-green-600",
+                      });
+                    } else {
+                      toast({
+                        title: "Lỗi",
+                        description: "Không có mật khẩu để sao chép!",
+                        variant: "destructive",
+                      });
+                    }
+                  }}
+                  className="cursor-pointer "
+                >
+                  <Copy size={22} />
+                </div>
+              </div>
+            </div>
+            <div className="flex w-full justify-end gap-2">
+              <button
+                type="button"
+                className="text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-base rounded text-[16px] px-3 h-8 text-center dark:hover:bg-yellow-300 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-gray-800 dark:focus:ring-yellow-800"
+                data-dismiss-target="#alert-additional-content-4"
+                aria-label="Close"
+                onClick={() => setOpenDialog(false)}
+              >
+                Bỏ qua
+              </button>
+              <Link href={`${ROUTES.ACCOUNT}?tab=password`} className="">
+                <button
+                  type="button"
+                  className="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-base rounded text-[16px] px-3 h-8 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800"
+                >
+                  Cập nhật mật khẩu
+                </button>
+              </Link>
+            </div>
+          </div>
+        )}
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="bg-white">
             <h2 className="text-xl font-semibold text-gray-900 mb-3.5">
@@ -126,36 +367,37 @@ const Section01 = () => {
               <div className="flex flex-col lg:flex-row items-start gap-6">
                 <div className="w-full lg:w-1/6 flex justify-center">
                   <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-10 h-10 text-gray-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                    <Image
+                      src={customerAccount?.avatar || ""}
+                      alt="Avatar"
+                      className="w-full h-full rounded-full"
+                      width={1000}
+                      height={1000}
+                    />
                   </div>
                 </div>
                 <div className="flex flex-col gap-4 w-full">
                   <div className="space-y-2 mb-2.5">
                     <p className="text-gray-900">
-                      <span className="font-medium">Họ và tên:</span> Phạm Thanh
-                      Nghiêm
+                      <span className="font-medium">Họ và tên:</span>{" "}
+                      {customerAccount?.name || ""}
                     </p>
                     <p className="text-gray-900">
                       <span className="font-medium">Email:</span>{" "}
-                      nghiempt.dev@gmail.com
+                      {customerAccount?.email || ""}
                     </p>
                     <p className="text-gray-900">
                       <span className="font-medium">Số điện thoại:</span>{" "}
-                      0911558539
+                      {customerAccount?.phone === ""
+                        ? "Chưa cập nhật số điện thoại"
+                        : customerAccount?.phone}
                     </p>
                   </div>
                   <div className="w-full flex flex-col lg:flex-row gap-3">
-                    <ProfileModal />
+                    <ProfileModal
+                      customerAccount={customerAccount}
+                      onUpdate={handleProfileUpdate}
+                    />
                     <ChangePasswordForm />
                   </div>
                 </div>
@@ -166,50 +408,47 @@ const Section01 = () => {
             </h2>
             <div className="relative">
               <div className="relative space-y-2 h-full">
-                {addresses.map((address, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg"
-                  >
-                    <div className="w-7 h-7 mt-0">
-                      <svg
-                        className="w-7 h-7 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                      </svg>
-                    </div>
-
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-medium text-gray-900">
-                          {address.type}
-                        </span>
-                        {address.isDefault && (
-                          <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
-                            mặc định
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-gray-600 text-base">
-                        {address.address}
-                      </p>
-                    </div>
+                <div className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg">
+                  <div className="w-7 h-7 mt-0">
+                    <svg
+                      className="w-7 h-7 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
                   </div>
-                ))}
+
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-medium text-gray-900">Địa chỉ</span>
+                    </div>
+                    {customerAccount?.address === "" ? (
+                      <p className="text-gray-600 text-base">
+                        Khách hàng chưa cập nhật địa chỉ giao hàng
+                      </p>
+                    ) : (
+                      <p className="text-gray-600 text-base">
+                        {customerAccount?.address || ""},{" "}
+                        {customerAccount?.wardName || ""},{" "}
+                        {customerAccount?.districtName || ""},{" "}
+                        {customerAccount?.provinceName || ""}
+                      </p>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -236,32 +475,70 @@ const Section01 = () => {
                     key={index}
                     className="border border-gray-200 rounded-lg p-4"
                   >
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 items-center">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 items-center">
                       <div>
                         <p className="text-gray-500 mb-1">ID Đơn hàng:</p>
-                        <p className="font-medium text-gray-900">{order.id}</p>
+                        <p className="font-medium text-gray-900">
+                          {order._id.slice(0, 10)}...
+                        </p>
                       </div>
 
                       <div>
                         <p className="text-gray-500 mb-1">Ngày đặt:</p>
                         <p className="text-gray-900 font-medium">
-                          {order.date}
+                          {HELPER.formatDate(order.created_at)}
                         </p>
                       </div>
 
                       <div>
                         <p className="text-gray-500 mb-1">Giá:</p>
-                        <p className="font-medium text-gray-900">200.000đ</p>
+                        <p className="font-medium text-gray-900">
+                          {HELPER.formatVND(order.total)}
+                        </p>
                       </div>
 
                       <div>
                         <p className="text-gray-500 mb-1">Trạng thái:</p>
                         <div
-                          className={`font-medium flex flex-row items-center gap-1 ${getStatusColor(
+                          className={`font-medium ${getStatusColor(
                             order.status
                           )}`}
                         >
-                          <Clock8 size={18} /> Chờ xác nhận
+                          {order?.status === "completed" && (
+                            <div className="flex flex-row items-center gap-1">
+                              <CircleCheckBig size={18} /> Hoàn thành
+                            </div>
+                          )}
+                          {order?.status === "paid pending" && (
+                            <div className="flex flex-row items-center gap-1">
+                              <HandCoins size={18} /> Chờ thanh toán
+                            </div>
+                          )}
+                          {order?.status === "paid" && (
+                            <div className="flex flex-row items-center gap-1">
+                              <CircleDollarSign size={18} /> Đã thanh toán
+                            </div>
+                          )}
+                          {order?.status === "delivering" && (
+                            <div className="flex flex-row items-center gap-1">
+                              <Truck size={18} /> Đang vận đơn
+                            </div>
+                          )}
+                          {order?.status === "pending" && (
+                            <div className="flex flex-row items-center gap-1">
+                              <Package2 size={18} /> Chuẩn bị hàng
+                            </div>
+                          )}
+                          {order?.status === "waiting" && (
+                            <div className="flex flex-row items-center gap-1">
+                              <Clock8 size={18} /> Đợi phản hồi
+                            </div>
+                          )}
+                          {order?.status === "cancelled" && (
+                            <div className="flex flex-row items-center gap-1">
+                              <ClipboardX size={18} /> Đã hủy đơn
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -274,8 +551,16 @@ const Section01 = () => {
                         </span>
                       </div>
                       <div className="flex gap-2">
-                        <CancelOrderModal />
-                        <OrderDetailModal />
+                        {order?.status !== "cancelled" && (
+                          <CancelOrderModal
+                            order={order}
+                            onCancelled={handleCancelOrder}
+                          />
+                        )}
+                        <OrderDetailModal
+                          order={order}
+                          customerAccount={customerAccount}
+                        />
                       </div>
                       <div className="hidden lg:flex text-base">
                         <span className="text-gray-500">Loại đơn hàng:</span>{" "}

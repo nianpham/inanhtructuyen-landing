@@ -139,6 +139,24 @@ const renderAlbumCore = (color: string) => {
   return result;
 };
 
+const renderCategory2 = (category: string) => {
+  let result = "";
+  switch (category) {
+    case "Plastic":
+      result = "Ép Plastic";
+      break;
+    case "Frame":
+      result = "Khung Ảnh";
+      break;
+    case "Album":
+      result = "Album";
+      break;
+    default:
+      break;
+  }
+  return result;
+};
+
 export const HELPER = {
   formatVND,
   formatDate,
@@ -151,4 +169,5 @@ export const HELPER = {
   renderAlbumCover,
   renderAlbumCore,
   renderCategory,
+  renderCategory2,
 };

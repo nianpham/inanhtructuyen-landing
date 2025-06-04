@@ -4,7 +4,14 @@ import React, { useEffect, useState } from "react";
 import Header from "@/layout/header";
 import Footer from "@/layout/footer";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import {
+  ChevronRight,
+  CreditCard,
+  Frame,
+  MapPin,
+  StickyNote,
+  UserRound,
+} from "lucide-react";
 import { ROUTES } from "@/utils/route";
 import Image from "next/image";
 import Cookies from "js-cookie";
@@ -598,11 +605,12 @@ const Section01 = () => {
         <div className="flex flex-col md:flex-row gap-8">
           <div className="hidden lg:grid w-full h-full md:w-1/2">
             <div>
-              <div className="relative z-20">
-                {/* <div
-                  className={`absolute bottom-[10%] left-[16%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div> */}
-                <h2 className="text-lg lg:text-xl font-medium mb-3.5 z-20 relative">
+              <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
+                <div
+                  className={`absolute bottom-[10%] left-[19%] h-1 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                ></div>
+                <UserRound className="w-5 h-5" />
+                <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                   Thông tin khách hàng
                 </h2>
               </div>
@@ -620,7 +628,7 @@ const Section01 = () => {
                   placeholder="Nhập họ và tên"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                  className="text-[16px] w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                 />
               </div>
               <div className="mb-6">
@@ -636,16 +644,17 @@ const Section01 = () => {
                   placeholder="Nhập số điện thoại"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                  className="text-[16px] w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                 />
               </div>
             </div>
             <div>
-              <div className="relative z-20 mb-3.5">
-                {/* <div
-                  className={`absolute bottom-[10%] left-[11%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div> */}
-                <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
+              <div className="flex flex-row items-center gap-2 relative mb-3.5 z-20">
+                <div
+                  className={`absolute bottom-[10%] left-[15%] h-1 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                ></div>
+                <MapPin className="w-5 h-5" />
+                <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                   Địa chỉ nhận hàng
                 </h2>
               </div>
@@ -662,7 +671,7 @@ const Section01 = () => {
                     onValueChange={handleProvinceChange}
                     disabled={loading}
                   >
-                    <SelectTrigger className="mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
+                    <SelectTrigger className="text-[16px] mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
                       <SelectValue placeholder="Chọn Tỉnh/Thành phố" />
                     </SelectTrigger>
                     <SelectContent>
@@ -689,7 +698,7 @@ const Section01 = () => {
                     onValueChange={handleDistrictChange}
                     disabled={!formData.province || loading}
                   >
-                    <SelectTrigger className="mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
+                    <SelectTrigger className="text-[16px] mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
                       <SelectValue placeholder="Chọn Quận/Huyện" />
                     </SelectTrigger>
                     <SelectContent>
@@ -717,7 +726,7 @@ const Section01 = () => {
                   onValueChange={handleWardChange}
                   disabled={!formData.district || loading}
                 >
-                  <SelectTrigger className="mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
+                  <SelectTrigger className="text-[16px] mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
                     <SelectValue placeholder="Chọn Phường/Xã" />
                   </SelectTrigger>
                   <SelectContent>
@@ -737,7 +746,7 @@ const Section01 = () => {
                   Số nhà, tên đường:
                 </Label>
                 <Input
-                  className="mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                  className="text-[16px] mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                   id="address"
                   name="address"
                   placeholder="Ví dụ: 123 Đường ABC"
@@ -750,26 +759,39 @@ const Section01 = () => {
               selectedCover !== "chon-loai-bia" && (
                 <>
                   <div>
-                    <div className="relative z-20">
-                      {/* <div
-                        className={`absolute bottom-[10%] left-[15%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                      ></div> */}
-                      <h2 className="text-lg lg:text-xl font-medium mb-3.5 z-20 relative">
+                    <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
+                      <div
+                        className={`absolute bottom-[10%] left-[19%] h-1 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                      ></div>
+                      <CreditCard className="w-5 h-5" />
+                      <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                         Tùy chọn thanh toán
                       </h2>
                     </div>
-                    <div className="border border-gray-200 rounded-md divide-y">
+                    <div className="rounded-md divide-y">
                       <div
                         onClick={() => setSelectedPayment("cash")}
-                        className="cursor-pointer p-4 flex items-center"
+                        className={`cursor-pointer p-4 flex items-center rounded-md
+                                          ${
+                                            selectedPayment === "cash"
+                                              ? "border border-[rgb(var(--fifteenth-rgb))]"
+                                              : "border border-gray-200"
+                                          }
+                                          `}
                       >
-                        <div
-                          className={`cursor-pointer w-5 h-5 rounded-full mr-2 ${
-                            selectedPayment === "cash"
-                              ? "border border-gray-200 bg-[rgb(var(--fifteenth-rgb))]"
-                              : "border border-gray-200"
-                          }`}
-                        ></div>
+                        {/* <div
+                                          className={`cursor-pointer w-5 h-5 rounded-full mr-2 ${
+                                            selectedPayment === "cash"
+                                              ? "border border-gray-200 bg-[rgb(var(--fifteenth-rgb))]"
+                                              : "border border-gray-200"
+                                          }`}
+                                        ></div> */}
+                        <Image
+                          src="https://cdn-icons-png.flaticon.com/128/7630/7630510.png"
+                          alt="Tiền mặt"
+                          width={24}
+                          height={24}
+                        />
                         <label htmlFor="cash" className="cursor-pointer ml-2">
                           Thanh toán khi nhận hàng
                         </label>
@@ -810,11 +832,12 @@ const Section01 = () => {
                     </div>
                   </div>
                   <div className="mt-6">
-                    <div className="relative z-20">
-                      {/* <div
-                        className={`absolute bottom-[10%] left-[24%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                      ></div> */}
-                      <h2 className="text-lg lg:text-xl font-medium mb-3.5 z-20 relative">
+                    <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
+                      <div
+                        className={`absolute bottom-[10%] left-[32%] h-1 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                      ></div>
+                      <StickyNote className="w-5 h-5" />
+                      <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                         Thêm ghi chú cho đơn hàng
                       </h2>
                     </div>
@@ -828,11 +851,12 @@ const Section01 = () => {
           </div>
           <div className="w-full lg:w-1/2 space-y-6">
             <div>
-              <div className="relative z-20">
-                {/* <div
-                  className={`absolute bottom-[10%] left-[26%] lg:left-[16%] h-1.5 w-16 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div> */}
-                <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
+              <div className="flex flex-row gap-2 items-center mb-3.5 relative z-20">
+                <div
+                  className={`absolute bottom-[10%] left-[34%] lg:left-[19%] h-1 w-16 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                ></div>
+                <Frame className="w-5 h-5" />
+                <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                   Thông tin Album
                 </h2>
               </div>
@@ -919,11 +943,12 @@ const Section01 = () => {
             {/* MOBILE  */}
             <div className="lg:hidden w-full md:w-1/2 space-y-6 !mt-3">
               <div>
-                <div className="relative z-20">
-                  {/* <div
-                    className={`absolute bottom-[10%] left-[25%] h-1.5 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                  ></div> */}
-                  <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
+                <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
+                  <div
+                    className={`absolute bottom-[10%] left-[34%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                  ></div>
+                  <UserRound className="w-5 h-5" />
+                  <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                     Thông tin khách hàng
                   </h2>
                 </div>
@@ -964,11 +989,12 @@ const Section01 = () => {
                 </div>
               </div>
               <div>
-                <div className="relative z-20">
-                  {/* <div
-                    className={`absolute bottom-[10%] left-[19%] lg:left-[17%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                  ></div> */}
-                  <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
+                <div className="flex flex-row items-center gap-2 relative mb-3.5 z-20">
+                  <div
+                    className={`absolute bottom-[10%] left-[27%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                  ></div>
+                  <MapPin className="w-5 h-5" />
+                  <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                     Địa chỉ nhận hàng
                   </h2>
                 </div>
@@ -1118,11 +1144,12 @@ const Section01 = () => {
                 selectedCover !== "chon-loai-bia" && (
                   <>
                     <div>
-                      <div className="relative z-20">
-                        {/* <div
-                          className={`absolute bottom-[10%] left-[25%] lg:left-[18%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                        ></div> */}
-                        <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
+                      <div className="flex flex-row items-center gap-2 mb-2 relative z-20">
+                        <div
+                          className={`absolute bottom-[10%] left-[33%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                        ></div>
+                        <CreditCard className="w-5 h-5" />
+                        <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                           Tùy chọn thanh toán
                         </h2>
                       </div>
@@ -1187,11 +1214,12 @@ const Section01 = () => {
                       </div>
                     </div>
                     <div>
-                      <div className="relative z-20">
-                        {/* <div
-                          className={`absolute bottom-[10%] left-[40%] lg:left-[18%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                        ></div> */}
-                        <h2 className="text-lg lg:text-xl font-medium mb-2 z-20 relative">
+                      <div className="flex flex-row items-center gap-2 mb-2 relative z-20">
+                        <div
+                          className={`absolute bottom-[10%] left-[54%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                        ></div>
+                        <StickyNote className="w-5 h-5" />
+                        <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                           Thêm ghi chú cho đơn hàng
                         </h2>
                       </div>
@@ -1235,80 +1263,89 @@ const Section01 = () => {
                     + {HELPER.formatVND("30000")}
                   </span>
                 </div>
-                <div className="flex justify-between">
+                {/* <div className="flex justify-between">
                   <span className="font-light">Tạm tính</span>
                   <span className="font-light">
                     {HELPER.formatVND(
                       String(albumPriceCover + albumPriceCore + 30000)
                     )}
                   </span>
-                </div>
-                <div className="flex justify-between items-center pt-2">
-                  <span className="font-light">Khuyến mãi</span>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <div className="">
-                        {!isValid ? (
-                          <div className="cursor-pointer text-white text-sm flex flex-row justify-center items-center gap-4 w-full mx-auto py-2 px-5 lg:py-2 bg-[rgb(var(--primary-rgb))] hover:bg-[rgb(var(--primary-rgb))] text-center rounded-md font-medium transition">
-                            Nhập mã
-                          </div>
-                        ) : (
-                          <div className="flex flex-row gap-2">
-                            <div className="text-white text-sm flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 bg-green-400 hover:bg-yellow-500 text-center rounded-md font-medium transition">
-                              Đã áp dụng mã
+                </div> */}
+                <div className="flex justify-between items-center pt-0 font-light">
+                  <span>Khuyến mãi</span>
+                  {selectedCore === "chon-loai-ruot" ||
+                  selectedCover === "chon-loai-bia" ? (
+                    <>
+                      <span className="text-black">Chọn đầy đủ sản phẩm</span>
+                    </>
+                  ) : (
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <div className="">
+                          {!isValid ? (
+                            <div className="cursor-pointer text-[16px] flex flex-row justify-center items-center gap-4 w-full mx-auto text-[rgb(var(--fifteenth-rgb))] text-center rounded-md font-medium transition">
+                              Nhập mã
                             </div>
-                            <div className="text-white text-sm flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 bg-yellow-400 hover:bg-yellow-500 text-center rounded-md font-medium transition">
-                              Đổi mã
+                          ) : (
+                            <div className="flex flex-row gap-2 text-[16px]">
+                              <div className="cursor-pointer flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 text-green-400 text-center rounded-md font-medium transition">
+                                Đã áp dụng mã
+                              </div>
+                              <div className="cursor-pointer text-white flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[] hover:opacity-80 text-center rounded-md font-medium transition">
+                                Đổi mã
+                              </div>
                             </div>
-                          </div>
-                        )}
-                      </div>
-                    </DialogTrigger>
-                    <DialogContent
-                      className="-translate-y-52 z-[70]"
-                      onOpenAutoFocus={(e) => e.preventDefault()}
-                    >
-                      <DialogHeader>
-                        <DialogTitle>Vui lòng nhập mã giảm giá</DialogTitle>
-                        <DialogDescription className="max-h-96 overflow-y-auto">
-                          <div className="flex flex-col justify-center items-center gap-2 mt-5">
-                            <input
-                              type="text"
-                              placeholder="Nhập mã khuyến mãi"
-                              className={`w-full h-10 border border-gray-200 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${
-                                isValid === false
-                                  ? "border-none"
-                                  : isValid === true
-                                  ? "border-none"
-                                  : ""
-                              }`}
-                              value={promoCode}
-                              onChange={(e) => {
-                                setPromoCode(e.target.value);
-                              }}
-                              style={{ fontSize: "16px" }}
-                            />
-                          </div>
-                        </DialogDescription>
-                      </DialogHeader>
-                      <DialogClose>
-                        <div
-                          className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--primary-rgb))] hover:bg-[rgb(var(--primary-rgb))] text-center rounded-md font-medium cursor-pointer ${
-                            isChecking ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
-                          onClick={
-                            !isChecking ? handleCheckDiscount : undefined
-                          }
-                        >
-                          {isChecking ? "Đang kiểm tra..." : "Dùng mã"}
+                          )}
                         </div>
-                      </DialogClose>
-                    </DialogContent>
-                  </Dialog>
+                      </DialogTrigger>
+                      <DialogContent
+                        className="-translate-y-52 z-[70]"
+                        onOpenAutoFocus={(e) => e.preventDefault()}
+                      >
+                        <DialogHeader>
+                          <DialogTitle className="text-[20px]">
+                            Vui lòng nhập mã giảm giá
+                          </DialogTitle>
+                          <DialogDescription className="max-h-96 overflow-y-auto">
+                            <div className="flex flex-col justify-center items-center gap-2 mt-1">
+                              <input
+                                type="text"
+                                placeholder="Nhập mã khuyến mãi"
+                                className={`w-full h-10 border border-gray-300 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${
+                                  isValid === false
+                                    ? ""
+                                    : isValid === true
+                                    ? ""
+                                    : ""
+                                }`}
+                                value={promoCode}
+                                onChange={(e) => {
+                                  setPromoCode(e.target.value);
+                                }}
+                                style={{ fontSize: "16px" }}
+                              />
+                            </div>
+                          </DialogDescription>
+                        </DialogHeader>
+                        <DialogClose>
+                          <div
+                            className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center rounded-md font-medium cursor-pointer ${
+                              isChecking ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
+                            onClick={
+                              !isChecking ? handleCheckDiscount : undefined
+                            }
+                          >
+                            {isChecking ? "Đang kiểm tra..." : "Dùng mã"}
+                          </div>
+                        </DialogClose>
+                      </DialogContent>
+                    </Dialog>
+                  )}
                 </div>
 
                 {isValid && (
-                  <div className="flex justify-between items-center pt-2">
+                  <div className="flex justify-between items-center pt-0">
                     <span>Giảm giá</span>
                     <div className="flex gap-2">
                       <div className={`text-red-500`}>

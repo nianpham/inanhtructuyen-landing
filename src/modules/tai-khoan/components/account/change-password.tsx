@@ -83,9 +83,8 @@ const ChangePasswordForm = () => {
   const [customerAccount, setCustomerAccount] =
     useState<CustomerAccount | null>(null);
   const router = useRouter();
-  // const tab = new URLSearchParams(window.location.search).get("tab");
+  const [open, setOpen] = useState(false);
 
-  const [provinces, setProvinces] = React.useState<Province[]>([]);
   const [formData, setFormData] = React.useState<FormData>({
     password: "",
     newPassword: "",
@@ -97,21 +96,6 @@ const ChangePasswordForm = () => {
     confirmPassword: "",
   });
 
-  React.useEffect(() => {
-    const fetchProvinces = async () => {
-      try {
-        const response = await fetch(
-          "https://provinces.open-api.vn/api/?depth=3"
-        );
-        const data = await response.json();
-        setProvinces(data);
-      } catch (error) {
-        console.error("Error fetching provinces:", error);
-      }
-    };
-    fetchProvinces();
-  }, []);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -121,10 +105,6 @@ const ChangePasswordForm = () => {
   };
 
   useEffect(() => {
-    // if (emailCookie) {
-    //   init(emailCookie);
-    // }
-
     const fetchAccount = async () => {
       if (isLogin) {
         try {
@@ -207,7 +187,7 @@ const ChangePasswordForm = () => {
           confirmPassword: "",
         });
 
-        // window.location.href = "/tai-khoan?tab=password";
+        setOpen(false);
       }
     } catch (error) {
       toast({
@@ -220,7 +200,7 @@ const ChangePasswordForm = () => {
     setLoading(false);
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <button className="border border-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:text-white text-[rgb(var(--fifteenth-rgb))] px-4 py-2 rounded text-[16px] font-medium transition-colors">
           Đổi mật khẩu
@@ -296,6 +276,7 @@ const ChangePasswordForm = () => {
               <div className="mt-8 flex justify-center items-center">
                 <Button
                   type="submit"
+                  onClick={handleSubmit}
                   className="text-[16px] w-full lg:w-64 py-2 px-4 mt-2 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-white font-medium transition-colors rounded"
                 >
                   Lưu thay đổi

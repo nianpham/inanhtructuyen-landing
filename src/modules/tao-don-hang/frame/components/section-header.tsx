@@ -25,8 +25,17 @@ const SectionHeader = () => {
     <section className="w-[100%] mx-auto relative overflow-hidden bg-[#F5F5F5]">
       <div className="relative z-10 flex items-center h-full mx-auto py-4 text-black max-w-7xl">
         <div className="flex flex-row items-center px-5 lg:px-0 text-[16px]">
-          <Link href={ROUTES.HOME}>Trang chủ </Link> &ensp;/&ensp;{" "}
-          <Link href={ROUTES.HOME}>
+          <Link
+            href={ROUTES.HOME}
+            className="hover:text-[rgb(var(--fifteenth-rgb))]"
+          >
+            Trang chủ{" "}
+          </Link>{" "}
+          &ensp;/&ensp;{" "}
+          <Link
+            href={ROUTES.HOME}
+            className="hover:text-[rgb(var(--fifteenth-rgb))]"
+          >
             {isMobile
               ? title.length <= 17
                 ? title
@@ -34,7 +43,13 @@ const SectionHeader = () => {
               : title}
           </Link>{" "}
           &ensp;
-          <Youtube color="#000000" strokeWidth={1.75} />
+          <Image
+            src={IMAGES.YOUTUBE}
+            alt="Youtube"
+            width={24}
+            height={24}
+            className="object-contain"
+          />
         </div>
       </div>
     </section>

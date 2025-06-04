@@ -89,8 +89,7 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
       <DialogContent className="sm:max-w-[600px] z-[70]">
         <DialogHeader>
           <DialogTitle className="!text-[20px]">
-            Chi tiết đơn hàng #
-            <span className="uppercase">{order?._id?.slice(-6)}</span>
+            Chi tiết đơn hàng #<span className="uppercase">{order?._id}</span>
           </DialogTitle>
         </DialogHeader>
         <div className="flex items-center justify-center">
@@ -100,8 +99,7 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                 <div className="text-black mb-2">
                   Ngày đặt đơn:{" "}
                   <strong className="font-semibold">
-                    {/* {HELPER.formatDate(order?.created_at)} */}
-                    15/01/2024
+                    {HELPER.formatDate(order?.created_at)}
                   </strong>
                 </div>
               </div>
@@ -109,46 +107,47 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                 <div
                   className={`${
                     order?.status === "completed"
-                      ? "bg-green-700 text-white text-sm lg:text-base px-2"
+                      ? "bg-green-600 text-white text-sm lg:text-base px-2"
                       : ""
                   }
                       ${
                         order?.status === "delivering"
-                          ? "bg-yellow-800 text-white text-sm lg:text-base px-2"
+                          ? "bg-blue-600 text-white text-sm lg:text-base px-2"
                           : ""
                       }
                       ${
                         order?.status === "waiting"
-                          ? "bg-blue-700 text-white text-sm lg:text-base px-2"
+                          ? "bg-[rgb(var(--fifteenth-rgb))] text-white text-sm lg:text-base px-2"
                           : ""
                       }
                       ${
                         order?.status === "pending"
-                          ? "bg-orange-600 text-white text-sm lg:text-base px-2"
+                          ? "bg-[rgb(var(--fifteenth-rgb))] text-white text-sm lg:text-base px-2"
                           : ""
                       }
                       ${
                         order?.status === "paid pending"
-                          ? "bg-yellow-400 text-white text-sm lg:text-base px-2"
+                          ? "bg-gray-600 text-white text-sm lg:text-base px-2"
                           : ""
                       }
                       ${
                         order?.status === "cancelled"
-                          ? "bg-red-500 text-white text-sm lg:text-base px-2"
+                          ? "bg-red-600 text-white text-sm lg:text-base px-2"
                           : ""
                       }
                       ${
-                        order?.status === "paid" ? "bg-pink-200 text-white" : ""
-                      } text-[16px] bg-orange-600 text-white rounded-sm flex items-center justify-center text-center py-2 px-0 lg:px-4 w-full lg:w-full`}
+                        order?.status === "paid"
+                          ? "bg-purple-600 text-white"
+                          : ""
+                      } rounded-sm flex items-center justify-center text-center py-2 px-0 lg:px-4 w-full lg:w-full`}
                 >
                   {order?.status === "completed" && "Hoàn thành"}
-                  {order?.status === "paid pending" && "Đang chờ thanh toán"}
+                  {order?.status === "paid pending" && "Chờ thanh toán"}
                   {order?.status === "paid" && "Đã thanh toán"}
-                  {order?.status === "delivering" && "Đang giao hàng"}
-                  {order?.status === "pending" && "Đang chuẩn bị đơn hàng"}
+                  {order?.status === "delivering" && "Đang vận đơn"}
+                  {order?.status === "pending" && "Chuẩn bị hàng"}
                   {order?.status === "waiting" && "Đợi phản hồi"}
-                  {order?.status === "cancelled" && "Đã hủy đơn hàng"}
-                  Đang xử lý
+                  {order?.status === "cancelled" && "Đã hủy đơn"}
                 </div>
               </div>
             </div>
@@ -157,10 +156,9 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                 <div className="w-24 h-24 border border-gray-200">
                   <Image
                     src={
-                      //   order?.order_type === "album"
-                      //     ? order?.album_data[0]
-                      //     : order?.image
-                      IMAGES.LOGO
+                      order?.order_type === "album"
+                        ? order?.album_data[0]
+                        : order?.image
                     }
                     alt="detail product"
                     width={1000}
@@ -191,23 +189,24 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                   </div>
                   <div className="text-black">
                     Kích thước:{" "}
-                    <span className="font-semibold">
-                      {/* {order?.size} */} 25x25
-                    </span>
+                    <span className="font-semibold">{order?.size}</span>
                   </div>
                   {order?.order_type === "frame" && (
                     <>
-                      <div className="font-base ">
+                      <div className="font-base flex flex-row items-center gap-2">
                         Màu:{" "}
-                        <span className="font-semibold">
-                          {HELPER.renderColor(order?.color)}
-                        </span>
+                        <div
+                          className={`font-semibold h-5 w-5 border border-gray-200 rounded-full ${HELPER.renderColor(
+                            order?.color
+                          )}`}
+                        >
+                          {}
+                        </div>
                       </div>
                       <div className="font-base ">
                         Loại khung:{" "}
                         <span className="font-semibold">
-                          {/* {HELPER.renderCategory2(order?.product_price)} */}
-                          50.000đ
+                          {HELPER.renderCategory2(order?.product_price)}
                         </span>
                       </div>
                     </>
@@ -241,25 +240,18 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
               </div>
               <div className="text-black mb-1">
                 Tên:{" "}
-                <span className="font-semibold">
-                  {/* {customerAccount?.name} */}
-                  Phạm Thanh Nghiêm{" "}
-                </span>
+                <span className="font-semibold">{customerAccount?.name}</span>
               </div>
               <div className="text-black mb-1">
                 Số điện thoại:{" "}
-                <span className="font-semibold">
-                  {/* {customerAccount?.phone} */}
-                  0911558539
-                </span>
+                <span className="font-semibold">{customerAccount?.phone}</span>
               </div>
               <div className="text-black">
                 {" "}
                 Địa chỉ:{" "}
                 <span className="font-semibold">
-                  {/* {order?.address}, {order?.wardName}, {order?.districtName},{" "}
-                  {order?.provinceName} */}
-                  744/2 Nguyễn Kiệm, Phường 4, Quận Phú Nhuận, TP. Hồ Chí Minh
+                  {order?.address}, {order?.wardName}, {order?.districtName},{" "}
+                  {order?.provinceName}
                 </span>
               </div>
             </div>
@@ -267,14 +259,13 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
               <div className="flex justify-between py-2 border-b border-gray-200">
                 <div className="text-black px-0">Giá sản phẩm</div>
                 <div className="text-black">
-                  {/* {HELPER.formatVND(
+                  {HELPER.formatVND(
                     String(
                       order?.order_type === "frame"
                         ? productPrice
                         : order?.album_price
                     )
-                  )} */}
-                  25.000đ
+                  )}
                 </div>
               </div>
               <div className="flex justify-between py-2 border-b border-gray-200">
@@ -299,14 +290,14 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
               <div className="flex justify-between py-2">
                 <div className="text-black px-0">Khuyến mãi</div>
                 <div className="text-red-500">
-                  {/* {HELPER.formatVND(
+                  -{" "}
+                  {HELPER.formatVND(
                     String(
                       order?.order_type === "frame"
                         ? discountPrice
                         : order?.discount_price
                     )
-                  )} */}
-                  - 15.000đ
+                  )}
                 </div>
               </div>
             </div>
@@ -314,14 +305,13 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
               <div className="flex justify-between items-center">
                 <div className="text-lg font-semibold">Tổng đơn:</div>
                 <div className="text-xl font-semibold">
-                  {/* {HELPER.formatVND(
+                  {HELPER.formatVND(
                     String(
                       order?.order_type === "frame"
                         ? order?.total
                         : order?.total - order?.discount_price
                     )
-                  )} */}
-                  50.000đ
+                  )}
                 </div>
               </div>
             </div>
@@ -352,18 +342,18 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                       lg:py-2 rounded-md py-2 text-center w-1/2 lg:w-[34.5%]
                       bg-green-700 text-white text-sm lg:text-base px-2`}
               >
-                {/* {order?.payment_method === "cash" && ( */}
-                <div className="flex flex-row items-center justify-center gap-3">
-                  <Image
-                    src={IMAGES.COD}
-                    alt="momo"
-                    width={1000}
-                    height={1000}
-                    className="w-6 h-6 object-cover rounded-lg"
-                  />
-                  <div>COD</div>
-                </div>
-                {/* )} */}
+                {order?.payment_method === "cash" && (
+                  <div className="flex flex-row items-center justify-center gap-3">
+                    <Image
+                      src={IMAGES.COD}
+                      alt="momo"
+                      width={1000}
+                      height={1000}
+                      className="w-6 h-6 object-cover rounded-lg"
+                    />
+                    <div>COD</div>
+                  </div>
+                )}
                 {order?.payment_method === "bank" && (
                   <div className="flex flex-row items-center justify-center gap-3">
                     <Image

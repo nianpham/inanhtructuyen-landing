@@ -11,57 +11,47 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { OrderService } from "@/services/order";
-import { ROUTES } from "@/utils/route";
-import { ProductService } from "@/services/product";
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  introduction: string;
-  price: string;
-  thumbnail: string;
-  category: string;
-  sold: number;
-  color: Array<string>;
-  images: Array<string>;
-  created_at: Date;
+import { toast } from "@/hooks/use-toast"; // Import toast for notifications
+import { Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+interface CancelOrderModalProps {
+  order: any;
+  onCancelled: () => void;
 }
 
-const CancelOrderModal = ({ order, customerAccount }: any) => {
-  const [productPrice, setProductPrice] = useState<Number | 0>(0);
-  const shippingFee = 30000;
-  const total = Number(productPrice) + shippingFee;
-  const [product, setProduct] = useState<Product | null>(null);
-
-  const init = async () => {
-    const fetchProduct = async () => {
-      try {
-        const data = await ProductService.getProductById(order?.product_id);
-        setProduct(data.data);
-        setProductPrice(data.data.price);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      }
-    };
-
-    fetchProduct();
-  };
-
-  useEffect(() => {
-    init();
-  }, []);
+const CancelOrderModal = ({ order, onCancelled }: CancelOrderModalProps) => {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUpdateStatus = async (id: string, status: string) => {
-    const body = {
-      status: status,
-    };
-
-    await OrderService.updateOrder(id, body);
-    // window.location.href = `${ROUTES.ACCOUNT}?tab=history`;
+    try {
+      setIsLoading(true);
+      const body = { status };
+      await OrderService.updateOrder(id, body);
+      toast({
+        title: "Thành công",
+        description: `Đơn hàng #${id} đã được hủy.`,
+        className: "bg-green-500 text-white border-green-600",
+      });
+      router.refresh();
+      onCancelled();
+    } catch (error) {
+      console.error("Error cancelling order:", error);
+      toast({
+        title: "Lỗi",
+        description: "Không thể hủy đơn hàng. Vui lòng thử lại.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+      setOpen(false);
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <button className="text-red-600 hover:text-white hover:bg-red-600 text-base font-medium px-3 py-2 border border-red-600 hover:border-red-600 rounded transition-colors">
           Hủy đơn hàng
@@ -70,13 +60,14 @@ const CancelOrderModal = ({ order, customerAccount }: any) => {
       <DialogContent className="sm:max-w-[600px] z-[70]">
         <DialogHeader>
           <DialogTitle className="!text-[20px]">
-            Hủy đơn hàng #{order?._id?.slice(-6)}
+            Hủy đơn hàng #{order?._id}
           </DialogTitle>
         </DialogHeader>
         <DialogDescription className="text-center lg:!text-left">
           <span className="!text-[16px]">
-            Để hủy đơn hàng #{order?._id?.slice(-6)} vui lòng bấm{" "}
-            <strong className="!text-red-600">Xác nhận</strong> để hủy.
+            Để hủy đơn hàng{" "}
+            <span className="font-medium text-black">#{order?._id}</span> vui
+            lòng bấm <strong className="!text-red-600">Xác nhận</strong> để hủy.
           </span>
         </DialogDescription>
         <DialogFooter className="flex flex-row justify-between">
@@ -94,8 +85,16 @@ const CancelOrderModal = ({ order, customerAccount }: any) => {
             variant="destructive"
             className="!px-10 !text-[16px] !bg-red-600 hover:opacity-80 w-32 !rounded"
             onClick={() => handleUpdateStatus(order?._id, "cancelled")}
+            disabled={isLoading}
           >
-            Xác nhận
+            {isLoading ? (
+              <>
+                <Loader className="animate-spin mr-2" size={18} />
+                Đang xử lý
+              </>
+            ) : (
+              "Xác nhận"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

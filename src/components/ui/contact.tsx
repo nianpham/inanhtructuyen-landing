@@ -1,6 +1,8 @@
 import { IMAGES } from "@/utils/image";
+import { SOCIAL_LINKS } from "@/utils/route";
 import { ChevronUp, Phone } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Contact() {
   const scrollToSection = (sectionId: string) => {
@@ -11,19 +13,27 @@ export default function Contact() {
       <div className="relative flex items-center justify-center">
         <div className="absolute inset-0 border border-gray-100 rounded-full animate-zoomFade z-10"></div>
         <div className="absolute inset-0 p-2 opacity-90 rounded-full animate-zoomIO z-0"></div>
-        <div className="relative bg-gray-100 rounded-full p-2.5 z-10">
+        <Link
+          href={SOCIAL_LINKS.PHONE}
+          target="_blank"
+          className="relative bg-gray-100 rounded-full p-2.5 z-10"
+        >
           <Phone
             size={23}
             fill="black"
             strokeWidth={0}
             className="animate-bellRing"
           />
-        </div>
+        </Link>
       </div>
       <div className="relative flex items-center justify-center">
         <div className="absolute inset-0 border border-gray-100 rounded-full animate-zoomFade z-20"></div>
         <div className="absolute inset-0 p-2 opacity-90 rounded-full animate-zoomIO z-0"></div>
-        <div className="relative bg-gray-100 rounded-full p-2 z-20">
+        <Link
+          href={SOCIAL_LINKS.FACEBOOK}
+          target="_blank"
+          className="relative bg-gray-100 rounded-full p-2 z-20"
+        >
           <Image
             src={IMAGES.FACEBOOK}
             alt="Facebook icon"
@@ -31,12 +41,16 @@ export default function Contact() {
             height={1000}
             className="w-7 h-7 rounded-full animate-bellRing"
           />
-        </div>
+        </Link>
       </div>
       <div className="relative flex items-center justify-center">
         <div className="absolute inset-0 border border-gray-100 rounded-full animate-zoomFade z-30"></div>
         <div className="absolute inset-0 p-2 opacity-90 rounded-full animate-zoomIO z-0"></div>
-        <div className="relative bg-gray-100 rounded-full p-2 z-30">
+        <Link
+          href={SOCIAL_LINKS.ZALO}
+          target="_blank"
+          className="relative bg-gray-100 rounded-full p-2 z-30"
+        >
           <Image
             src={IMAGES.ZALO}
             alt="Facebook icon"
@@ -44,7 +58,7 @@ export default function Contact() {
             height={1000}
             className="w-7 h-7 rounded-full animate-bellRing"
           />
-        </div>
+        </Link>
       </div>
       <div
         onClick={() => scrollToSection("home")}

@@ -10,7 +10,7 @@ import {
   Send,
 } from "lucide-react";
 import Image from "next/image";
-import { ROUTES } from "@/utils/route";
+import { ROUTES, SOCIAL_LINKS } from "@/utils/route";
 
 const TopBanner: React.FC = () => {
   return (
@@ -24,7 +24,7 @@ const TopBanner: React.FC = () => {
               className="text-black group-hover:text-[rgb(var(--fifteenth-rgb))]"
             />
             <Link
-              href="tel:0939468252"
+              href={SOCIAL_LINKS.PHONE}
               className="group-hover:text-[rgb(var(--fifteenth-rgb))]"
             >
               0939.468.252
@@ -39,7 +39,7 @@ const TopBanner: React.FC = () => {
               className="text-black group-hover:text-[rgb(var(--fifteenth-rgb))]"
             />
             <Link
-              href="mailto:inanhtructuyen.2025@gmail.com"
+              href={SOCIAL_LINKS.EMAIL}
               className="group-hover:text-[rgb(var(--fifteenth-rgb))]"
             >
               inanhtructuyen.2025@gmail.com
@@ -62,7 +62,11 @@ const TopBanner: React.FC = () => {
 
         {/* Right Section - Social Media Icons */}
         <div className="flex space-x-4 bg-[rgb(var(--primary-rgb))]">
-          <Link href="/" className="text-blue-600 hover:text-blue-700">
+          <Link
+            href={SOCIAL_LINKS.FACEBOOK}
+            target="_blank"
+            className="text-blue-600 hover:text-blue-700"
+          >
             <Image
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/768px-Facebook_Logo_%282019%29.png"
               alt="alt"
@@ -71,7 +75,11 @@ const TopBanner: React.FC = () => {
               className="w-5 h-5 lg:w-6 lg:h-6"
             />
           </Link>
-          <Link href="/" className="text-gray-900 hover:text-gray-700">
+          <Link
+            href={SOCIAL_LINKS.ZALO}
+            target="_blank"
+            className="text-gray-900 hover:text-gray-700"
+          >
             <Image
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Icon_of_Zalo.svg/2048px-Icon_of_Zalo.svg.png"
               alt="alt"
@@ -80,7 +88,7 @@ const TopBanner: React.FC = () => {
               className="w-5 h-5 lg:w-6 lg:h-6"
             />
           </Link>
-          <Link href="/">
+          <Link href={SOCIAL_LINKS.TIKTOK} target="_blank">
             <Image
               src="https://banner2.cleanpng.com/20231123/xjc/transparent-tiktok-logo-black-and-white-logo-tiktok-app-minima-minimalist-black-and-white-tiktok-app-1711004158896.webp"
               alt="alt"
@@ -89,7 +97,7 @@ const TopBanner: React.FC = () => {
               className="w-5 h-5 lg:w-6 lg:h-6 rounded-full"
             />
           </Link>
-          <Link href="/">
+          <Link href={SOCIAL_LINKS.SHOPPE} target="_blank">
             <Image
               src="https://tiemquatiko.com/wp-content/uploads/2022/08/shopee-circle-logo-design-shopping-bag-13.png"
               alt="alt"

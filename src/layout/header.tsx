@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Link from "next/link";
 import {
   User,
@@ -11,21 +11,52 @@ import {
   NotepadText,
   UserRound,
   FolderPlus,
+  History,
+  LogOut,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { IMAGES } from "@/utils/image";
 import TopBanner from "./top-header";
 import "@/styles/contact.css";
 import TopBannerMobile from "./top-header-mobile";
 import LoginForm from "./login-form";
-import { ROUTES } from "@/utils/route";
+import { ROUTES, SOCIAL_LINKS } from "@/utils/route";
+import Cookies from "js-cookie";
 import LoginFormMobile from "./login-form-mobile";
+import { AccountService } from "@/services/account";
+import { toast } from "@/hooks/use-toast";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@heroui/dropdown";
+import path from "path";
 
 interface HeaderProps {
   cartCount?: number;
   wishlistCount?: number;
   isLoggedIn?: boolean;
+}
+
+interface CustomerAccount {
+  _id: string;
+  email: string;
+  password: string;
+  name: string;
+  phone: string;
+  avatar: string;
+  address: string;
+  ward: string;
+  district: string;
+  province: string;
+  role: string;
+  status: boolean;
+  created_at: string;
+  districtName: string;
+  provinceName: string;
+  wardName: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -34,6 +65,111 @@ const Header: React.FC<HeaderProps> = ({
   isLoggedIn = false,
 }) => {
   const pathname = usePathname();
+  const pathnameUrl = useRouter();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [logined, setLogined] = useState<boolean>(!!Cookies.get("isLogin"));
+  const [customerAccount, setCustomerAccount] =
+    useState<CustomerAccount | null>(null);
+
+  const getFullPathname = () => {
+    const queryString = searchParams.toString();
+    return queryString;
+  };
+
+  useEffect(() => {
+    const isLogin = Cookies.get("isLogin");
+    const fetchAccount = async () => {
+      if (isLogin) {
+        try {
+          const data = await AccountService.getAccountById(isLogin);
+          if (data) {
+            setCustomerAccount(data);
+            setLogined(true);
+          } else {
+            setLogined(false);
+            Cookies.remove("isLogin");
+            Cookies.remove("userLogin");
+          }
+        } catch (error) {
+          console.error("Error fetching account:", error);
+          setLogined(false);
+          Cookies.remove("isLogin");
+          Cookies.remove("userLogin");
+        }
+      } else {
+        setLogined(false);
+      }
+    };
+
+    fetchAccount();
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsVisible(false);
+      setTimeout(() => {
+        setCurrentImage((prev) =>
+          prev === IMAGES.APP_STORE ? IMAGES.GOOGLE_PLAY : IMAGES.APP_STORE
+        );
+        setIsVisible(true);
+      }, 500);
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleLogin = async (username: string, password: string) => {
+    if (!username || !password) {
+      toast({
+        variant: "destructive",
+        title: "Vui lòng điền đầy đủ thông tin",
+      });
+      return;
+    }
+
+    try {
+      let data;
+      if (/^\d+$/.test(username)) {
+        data = await AccountService.loginAccountPhone(username, password);
+      } else {
+        data = await AccountService.loginAccountEmail(username, password);
+      }
+
+      if (data?.message === "SUCCESS") {
+        Cookies.set("isLogin", data?.data, { expires: 7 });
+        Cookies.set("userLogin", data?.data, { expires: 7 });
+        setLogined(true);
+        const accountData = await AccountService.getAccountById(data?.data);
+        setCustomerAccount(accountData);
+
+        let pullPathname = pathname;
+        if (getFullPathname() !== "") {
+          pullPathname = pathname + "?" + getFullPathname();
+        }
+        router.push(pullPathname);
+        if (pullPathname.includes("tao-don-hang")) {
+          window.location.reload();
+        }
+      } else {
+        throw new Error("Email hoặc mật khẩu chưa chính xác");
+      }
+    } catch (error) {
+      console.error("========= Error Login:", error);
+      toast({
+        variant: "destructive",
+        title: "Email hoặc mật khẩu chưa chính xác",
+      });
+    }
+  };
+
+  const handleLogOut = () => {
+    Cookies.remove("isLogin");
+    Cookies.remove("userLogin");
+    setLogined(false);
+    setCustomerAccount(null);
+    router.push(ROUTES.HOME);
+  };
 
   const navigationItems = [
     {
@@ -112,6 +248,62 @@ const Header: React.FC<HeaderProps> = ({
     return () => clearInterval(interval);
   }, []);
 
+  const detectDevice = () => {
+    if (typeof navigator === "undefined") {
+      return "unknown"; // Fallback for server-side rendering
+    }
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (/(iphone|ipad|ipod)/i.test(userAgent)) {
+      return "ios";
+    } else if (/android/i.test(userAgent)) {
+      return "android";
+    }
+    return "unknown"; // Default for non-mobile or unknown devices
+  };
+
+  // Updated Link component for the Header
+  const AppDownloadLink = () => {
+    const [deviceType, setDeviceType] = useState<"ios" | "android" | "unknown">(
+      "unknown"
+    );
+
+    useEffect(() => {
+      setDeviceType(detectDevice());
+    }, []);
+
+    // Determine the link and image based on device type
+    const downloadLink =
+      deviceType === "ios"
+        ? SOCIAL_LINKS.DOWNLOAD_IOS
+        : deviceType === "android"
+        ? SOCIAL_LINKS.DOWNLOAD_ANDROID
+        : SOCIAL_LINKS.DOWNLOAD_IOS; // Fallback to iOS link for unknown devices
+
+    const appImage =
+      deviceType === "android" ? IMAGES.GOOGLE_PLAY : IMAGES.APP_STORE;
+    const appAlt = deviceType === "android" ? "Google Play" : "App Store";
+    return (
+      <Link
+        href={downloadLink}
+        target="_blank"
+        className="group relative flex flex-col lg:flex-row gap-1 lg:gap-2 justify-center items-center text-black hover:text-gray-900 transition-colors lg:pr-0"
+      >
+        <div className="flex flex-row items-center gap-2">
+          <Image
+            src={appImage}
+            alt={appAlt}
+            width={1000}
+            height={1000}
+            className="w-[18px] h-[18px]"
+          />
+        </div>
+        <span className="text-[16px] font-normal group-hover:text-[rgb(var(--fifteenth-rgb))]">
+          Tải app
+        </span>
+      </Link>
+    );
+  };
+
   return (
     <>
       <TopBanner />
@@ -179,20 +371,80 @@ const Header: React.FC<HeaderProps> = ({
           {/* Right side navigation */}
           <div className="flex items-center lg:space-x-6">
             {/* Login/Register */}
-            <LoginForm />
+            {logined ? (
+              <div className="hidden lg:flex">
+                <Dropdown>
+                  <DropdownTrigger>
+                    <Image
+                      src={customerAccount?.avatar || IMAGES.LOGO}
+                      alt="avatar"
+                      width={1000}
+                      height={1000}
+                      className="w-11 h-11 object-cover rounded-full cursor-pointer"
+                    />
+                  </DropdownTrigger>
 
-            <ShoppingBag
-              size={18}
-              strokeWidth={1.5}
-              className="hidden lg:flex cursor-pointer hover:text-[rgb(var(--fifteenth-rgb))]"
-            />
+                  <DropdownMenu
+                    className="bg-white rounded-md border border-gray-200"
+                    aria-label="Static Actions"
+                  >
+                    <DropdownItem
+                      className="px-3 py-2.5 text-left text-md hover:bg-gray-200 rounded-md"
+                      key="Quản lí hồ sơ"
+                    >
+                      <a
+                        href={`${ROUTES.ACCOUNT}`}
+                        className="flex items-center justify-start gap-3 text-gray-700 hover:text-black"
+                      >
+                        <UserRound size={18} /> Quản lí hồ sơ
+                      </a>
+                    </DropdownItem>
+
+                    <DropdownItem
+                      className="px-3 py-2.5 text-left text-md hover:bg-gray-200 rounded-md"
+                      key="Tạo đơn hàng mới"
+                    >
+                      <a
+                        href={`${ROUTES.CREATE_ORDER}?type=frame`}
+                        className="flex items-center justify-start gap-3 text-gray-700 hover:text-black"
+                      >
+                        <FolderPlus size={18} /> Tạo đơn hàng
+                      </a>
+                    </DropdownItem>
+                    <DropdownItem
+                      key="delete"
+                      className="text-[rgb(var(--fifteenth-rgb))] hover:text-white hover:bg-[rgb(var(--fifteenth-rgb))] font-medium rounded-lg text-md px-3 py-2.5 text-left dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                    >
+                      <button
+                        onClick={handleLogOut}
+                        className="flex items-center justify-start gap-3 hover:text-white"
+                      >
+                        <LogOut size={18} /> Đăng xuất
+                      </button>
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
+            ) : (
+              <div>
+                <LoginForm onLogin={handleLogin} />
+              </div>
+            )}
+
+            <Link href={`${ROUTES.CREATE_ORDER}?type=frame`}>
+              <ShoppingBag
+                size={18}
+                strokeWidth={1.5}
+                className="hidden lg:flex cursor-pointer hover:text-[rgb(var(--fifteenth-rgb))]"
+              />
+            </Link>
 
             {/* Divider */}
             <div className="hidden lg:flex h-5 w-px bg-gray-300"></div>
 
             {/* Cart */}
-            <Link
-              href="https://apps.apple.com/us/app/in-ảnh-trực-tuyến/id6745794485"
+            {/* <Link
+              href={SOCIAL_LINKS.DOWNLOAD_IOS || SOCIAL_LINKS.DOWNLOAD_ANDROID}
               target="_blank"
               className="group relative flex flex-col lg:flex-row gap-1 lg:gap-2 justify-center items-center text-black hover:text-gray-900 transition-colors lg:pr-0"
             >
@@ -215,7 +467,9 @@ const Header: React.FC<HeaderProps> = ({
               <span className="text-[16px] font-normal group-hover:text-[rgb(var(--fifteenth-rgb))]">
                 Tải app
               </span>
-            </Link>
+            </Link> */}
+
+            <AppDownloadLink />
           </div>
         </div>
       </header>

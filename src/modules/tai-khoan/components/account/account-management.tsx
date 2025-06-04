@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -22,6 +22,9 @@ import { AccountService } from "@/services/account";
 import { Loader } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import "@/styles/hide-scroll.css";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/utils/route";
+import Image from "next/image";
 
 export interface Province {
   code: string;
@@ -50,6 +53,7 @@ export interface Ward {
 }
 
 export interface UserData {
+  _id?: string;
   name: string;
   email: string;
   avatar: string;
@@ -58,6 +62,9 @@ export interface UserData {
   ward?: string;
   district?: string;
   province?: string;
+  provinceName?: string;
+  districtName?: string;
+  wardName?: string;
 }
 
 export interface FormData extends UserData {
@@ -66,64 +73,75 @@ export interface FormData extends UserData {
   province: string;
 }
 
-const ProfileModal = () =>
-  // { user }: { user: any }
-  {
-    const { toast } = useToast();
+interface ProfileModalProps {
+  customerAccount: UserData | null;
+  onUpdate: (updatedData: UserData) => void;
+}
 
-    const [provinces, setProvinces] = React.useState<Province[]>([]);
-    const [districts, setDistricts] = React.useState<District[]>([]);
-    const [wards, setWards] = React.useState<Ward[]>([]);
-    const [loading, setLoading] = React.useState(false);
-    const [formData, setFormData] = React.useState<FormData>({
-      name: "Phạm Thanh Nghiêm",
-      email: "nghiempt.dev@gmail.com",
-      avatar: "",
-      phone: "0911558539",
-      address: "744/2 Nguyễn Kiệm",
-      ward: "",
-      district: "",
-      province: "",
-    });
+const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
+  const { toast } = useToast();
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
 
-    React.useEffect(() => {
-      const fetchProvinces = async () => {
-        try {
-          setLoading(true);
-          const response = await fetch(
-            "https://provinces.open-api.vn/api/?depth=3"
-          );
-          const data = await response.json();
-          const formattedData = data.map((province: any) => ({
-            ...province,
-            code: province.code.toString(),
-            districts: province.districts.map((district: any) => ({
-              ...district,
-              code: district.code.toString(),
-              wards: district.wards.map((ward: any) => ({
-                ...ward,
-                code: ward.code.toString(),
-              })),
-            })),
-          }));
-          setProvinces(formattedData);
-        } catch (error) {
-          console.error("Error fetching provinces:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchProvinces();
-    }, []);
+  const [provinces, setProvinces] = useState<Province[]>([]);
+  const [districts, setDistricts] = useState<District[]>([]);
+  const [wards, setWards] = useState<Ward[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    name: customerAccount?.name || "",
+    email: customerAccount?.email || "",
+    avatar: customerAccount?.avatar || "",
+    phone: customerAccount?.phone || "",
+    address: customerAccount?.address || "",
+    ward: customerAccount?.ward || "",
+    district: customerAccount?.district || "",
+    province: customerAccount?.province || "",
+  });
 
-    React.useEffect(() => {
-      if (formData.province) {
-        const selectedProvince = provinces.find(
-          (p) => p.code === formData.province
+  React.useEffect(() => {
+    const fetchProvinces = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          "https://provinces.open-api.vn/api/?depth=3"
         );
-        if (selectedProvince) {
-          setDistricts(selectedProvince.districts);
+        const data = await response.json();
+        const formattedData = data.map((province: any) => ({
+          ...province,
+          code: province.code.toString(),
+          districts: province.districts.map((district: any) => ({
+            ...district,
+            code: district.code.toString(),
+            wards: district.wards.map((ward: any) => ({
+              ...ward,
+              code: ward.code.toString(),
+            })),
+          })),
+        }));
+        setProvinces(formattedData);
+      } catch (error) {
+        console.error("Error fetching provinces:", error);
+        toast({
+          title: "Lỗi",
+          description: "Không thể tải dữ liệu tỉnh/thành phố",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProvinces();
+  }, [toast]);
 
+  React.useEffect(() => {
+    if (formData.province) {
+      const selectedProvince = provinces.find(
+        (p) => p.code === formData.province
+      );
+      if (selectedProvince) {
+        setDistricts(selectedProvince.districts);
+        setWards([]);
+        if (formData.district) {
           const selectedDistrict = selectedProvince.districts.find(
             (d) => d.code === formData.district
           );
@@ -131,106 +149,102 @@ const ProfileModal = () =>
             setWards(selectedDistrict.wards);
           }
         }
-      }
-    }, [formData.province, formData.district, provinces]);
-
-    const handleProvinceChange = (provinceCode: string) => {
-      const selectedProvince = provinces.find((p) => p.code === provinceCode);
-      if (selectedProvince) {
-        setDistricts(selectedProvince.districts);
-        setWards([]);
-        setFormData((prev) => ({
-          ...prev,
-          province: provinceCode,
-          district: "",
-          ward: "",
-        }));
       } else {
         setDistricts([]);
         setWards([]);
       }
-    };
+    }
+  }, [formData.province, formData.district, provinces]);
 
-    const handleDistrictChange = (districtCode: string) => {
-      const selectedDistrict = districts.find((d) => d.code === districtCode);
-      if (selectedDistrict) {
-        setWards(selectedDistrict.wards || []);
-        setFormData((prev) => ({
-          ...prev,
-          district: districtCode,
-          ward: "",
-        }));
-      } else {
-        setWards([]);
-      }
-    };
+  const handleProvinceChange = (provinceCode: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      province: provinceCode,
+      district: "",
+      ward: "",
+    }));
+  };
 
-    const handleWardChange = (wardCode: string) => {
-      setFormData((prev) => ({
-        ...prev,
-        ward: wardCode,
-      }));
-    };
+  const handleDistrictChange = (districtCode: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      district: districtCode,
+      ward: "",
+    }));
+  };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    };
+  const handleWardChange = (wardCode: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      ward: wardCode,
+    }));
+  };
 
-    const validateForm = () => {
-      if (!formData?.name) {
-        toast({
-          title: "",
-          description: "Vui lòng nhập tên!",
-          variant: "destructive",
-        });
-        return false;
-      }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-      if (!formData?.address) {
-        toast({
-          title: "",
-          description: "Vui lòng nhập địa chỉ giao hàng!",
-          variant: "destructive",
-        });
-        return false;
-      }
-      if (!formData?.ward) {
-        toast({
-          title: "",
-          description:
-            "Vui lòng chọn đầy đủ Tỉnh/Thành phố, Quận/Huyện, Phường/Xã.",
-          variant: "destructive",
-        });
-        return false;
-      }
-      if (!formData?.phone) {
-        toast({
-          title: "",
-          description: "Vui lòng nhập số điện thoại!",
-          variant: "destructive",
-        });
-        return false;
-      }
-      const phoneRegex = /^\d{10,11}$/;
-      if (!phoneRegex.test(formData.phone)) {
-        toast({
-          title: "",
-          description:
-            "Số điện thoại phải là một dãy số hợp lệ (10 đến 11 chữ số)! ",
-          variant: "destructive",
-        });
-        return false;
-      }
-      return true;
-    };
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      toast({
+        title: "Lỗi",
+        description: "Vui lòng nhập tên!",
+        variant: "destructive",
+      });
+      return false;
+    }
 
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      setLoading(true);
+    if (!formData.address.trim()) {
+      toast({
+        title: "Lỗi",
+        description: "Vui lòng nhập địa chỉ giao hàng!",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    if (!formData.province || !formData.district || !formData.ward) {
+      toast({
+        title: "Lỗi",
+        description:
+          "Vui lòng chọn đầy đủ Tỉnh/Thành phố, Quận/Huyện, Phường/Xã.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    if (!formData.phone.trim()) {
+      toast({
+        title: "Lỗi",
+        description: "Vui lòng nhập số điện thoại!",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    const phoneRegex = /^\d{10,11}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      toast({
+        title: "Lỗi",
+        description:
+          "Số điện thoại phải là một dãy số hợp lệ (10 đến 11 chữ số)!",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    setLoading(true);
+    try {
       const selectedProvince = provinces.find(
         (p) => p.code === formData.province
       );
@@ -238,65 +252,94 @@ const ProfileModal = () =>
         (d) => d.code === formData.district
       );
       const selectedWard = wards.find((w) => w.code === formData.ward);
+
       const formattedData = {
         ...formData,
-        provinceName: selectedProvince?.name,
-        districtName: selectedDistrict?.name,
-        wardName: selectedWard?.name,
+        provinceName: selectedProvince?.name || "",
+        districtName: selectedDistrict?.name || "",
+        wardName: selectedWard?.name || "",
       };
-      const response = await AccountService.updateAccount(
-        // user?._id,
-        "123", // Replace with actual user ID
-        formattedData
-      );
-      if (response === false) {
-        toast({
-          title: "",
-          description: "Số điện thoại đã được sử dụng!",
-          variant: "destructive",
-        });
-        setLoading(false);
-      } else {
-        setLoading(false);
-        // window.location.href = "/tai-khoan?tab=profile";
+
+      if (customerAccount?._id) {
+        const response = await AccountService.updateAccount(
+          customerAccount._id,
+          formattedData
+        );
+        if (response === false) {
+          toast({
+            title: "Lỗi",
+            description: "Số điện thoại đã được sử dụng!",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Thành công",
+            description: "Cập nhật thông tin thành công!",
+          });
+          onUpdate(formattedData);
+          setOpen(false);
+          router.push(ROUTES.ACCOUNT);
+        }
       }
-    };
+    } catch (error) {
+      console.error("Error updating account:", error);
+      toast({
+        title: "Lỗi",
+        description: "Đã có lỗi xảy ra khi cập nhật thông tin!",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const updateDOM = () => {
-      //   if (user) {
-      //     setFormData({
-      //       name: user?.name || "",
-      //       email: user?.email || "",
-      //       avatar: user?.avatar || "",
-      //       phone: user?.phone || "",
-      //       address: user?.address || "",
-      //       ward: user?.ward || "",
-      //       district: user?.district || "",
-      //       province: user?.province || "",
-      //     });
-      //   }
-    };
+  const updateDOM = () => {
+    if (customerAccount) {
+      setFormData({
+        name: customerAccount.name || "",
+        email: customerAccount.email || "",
+        avatar: customerAccount.avatar || "",
+        phone: customerAccount.phone || "",
+        address: customerAccount.address || "",
+        ward: customerAccount.ward || "",
+        district: customerAccount.district || "",
+        province: customerAccount.province || "",
+      });
+    }
+  };
 
-    return (
-      <Dialog>
-        <DialogTrigger asChild onClick={updateDOM}>
-          <button className="bg-[rgb(var(--fifteenth-rgb))] text-white hover:opacity-80 px-4 py-2 rounded text-[16px] font-medium transition-colors">
-            Cập nhật thông tin
-          </button>
-        </DialogTrigger>
-        <DialogContent
-          className="sm:max-w-[425px] max-h-[90vh] z-[70]"
-          onOpenAutoFocus={(e) => e.preventDefault()}
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <button
+          onClick={updateDOM}
+          className="bg-[rgb(var(--fifteenth-rgb))] text-white hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 px-4 py-2 rounded text-[16px] font-medium transition-colors"
         >
-          <DialogHeader className="px-1 ">
-            <DialogTitle className="!text-[20px]">
-              Chỉnh sửa thông tin
-            </DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4 max-h-[80vh] overflow-y-auto z-[70] scroll-bar-style px-1">
-            <div className="grid gap-2.5">
-              <div className="w-full flex justify-center mt-3">
-                <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
+          Cập nhật thông tin
+        </button>
+      </DialogTrigger>
+      <DialogContent
+        className="sm:max-w-[425px] max-h-[90vh] z-[70]"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
+        <DialogHeader className="px-1">
+          <DialogTitle className="!text-[20px]">
+            Chỉnh sửa thông tin
+          </DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4 max-h-[80vh] overflow-y-auto z-[70] scroll-bar-style px-1">
+          <div className="grid gap-2.5">
+            <div className="w-full flex justify-center mt-3">
+              <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
+                {formData.avatar ? (
+                  <Image
+                    src={formData.avatar}
+                    alt="Avatar"
+                    className="w-full h-full rounded-full object-cover"
+                    width={96}
+                    height={96}
+                  />
+                ) : (
                   <svg
                     className="w-10 h-10 text-gray-400"
                     fill="currentColor"
@@ -308,138 +351,138 @@ const ProfileModal = () =>
                       clipRule="evenodd"
                     />
                   </svg>
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="name" className="text-[16px]">
-                  Họ và tên
-                </Label>
-                <Input
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
-                  style={{ fontSize: "16px" }}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="email" className="text-[16px]">
-                  Email
-                </Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  // onChange={handleInputChange}
-                  disabled={true}
-                  style={{ fontSize: "16px" }}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="phone" className="text-[16px]">
-                  Số điện thoại
-                </Label>
-                <Input
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className="focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
-                  style={{ fontSize: "16px" }}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="province" className="text-[16px]">
-                  Tỉnh/Thành phố
-                </Label>
-                <Select
-                  value={formData.province}
-                  onValueChange={handleProvinceChange}
-                  disabled={loading}
-                >
-                  <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
-                    <SelectValue placeholder="Chọn tỉnh/thành phố" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[80]">
-                    {provinces.map((province) => (
-                      <SelectItem key={province.code} value={province.code}>
-                        {province.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="district" className="text-[16px]">
-                  Quận/Huyện
-                </Label>
-                <Select
-                  value={formData.district}
-                  onValueChange={handleDistrictChange}
-                  disabled={!formData.province || loading}
-                >
-                  <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
-                    <SelectValue placeholder="Chọn quận/huyện" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[80]">
-                    {districts.map((district) => (
-                      <SelectItem key={district.code} value={district.code}>
-                        {district.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="ward" className="text-[16px]">
-                  Phường/Xã
-                </Label>
-                <Select
-                  value={formData.ward}
-                  onValueChange={handleWardChange}
-                  disabled={!formData.district || loading}
-                >
-                  <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
-                    <SelectValue placeholder="Chọn phường/xã" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[80]">
-                    {wards.map((ward) => (
-                      <SelectItem key={ward.code} value={ward.code}>
-                        {ward.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="address" className="text-[16px]">
-                  Số nhà, tên đường
-                </Label>
-                <Input
-                  id="address"
-                  name="address"
-                  placeholder="Ví dụ: 123 Đường ABC"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  className="focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
-                  style={{ fontSize: "16px" }}
-                />
+                )}
               </div>
             </div>
-            <Button
-              type="submit"
-              // onSubmit={handleSubmit}
-              className="text-[16px] w-full bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-white flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed rounded"
-            >
-              Lưu thay đổi
-              {loading && <Loader className="animate-spin" size={48} />}
-            </Button>
+            <div className="grid gap-2">
+              <Label htmlFor="name" className="text-[16px]">
+                Họ và tên
+              </Label>
+              <Input
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                style={{ fontSize: "16px" }}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="email" className="text-[16px]">
+                Email
+              </Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                disabled={true}
+                style={{ fontSize: "16px" }}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="phone" className="text-[16px]">
+                Số điện thoại
+              </Label>
+              <Input
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                className="focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                style={{ fontSize: "16px" }}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="province" className="text-[16px]">
+                Tỉnh/Thành phố
+              </Label>
+              <Select
+                value={formData.province}
+                onValueChange={handleProvinceChange}
+                disabled={loading}
+              >
+                <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
+                  <SelectValue placeholder="Chọn Tỉnh/Thành phố" />
+                </SelectTrigger>
+                <SelectContent className="z-[80]">
+                  {provinces.map((province) => (
+                    <SelectItem key={province.code} value={province.code}>
+                      {province.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="district" className="text-[16px]">
+                Quận/Huyện
+              </Label>
+              <Select
+                value={formData.district}
+                onValueChange={handleDistrictChange}
+                disabled={!formData.province || loading}
+              >
+                <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
+                  <SelectValue placeholder="Chọn Quận/Huyện" />
+                </SelectTrigger>
+                <SelectContent className="z-[80]">
+                  {districts.map((district) => (
+                    <SelectItem key={district.code} value={district.code}>
+                      {district.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="ward" className="text-[16px]">
+                Phường/Xã
+              </Label>
+              <Select
+                value={formData.ward}
+                onValueChange={handleWardChange}
+                disabled={!formData.district || loading}
+              >
+                <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
+                  <SelectValue placeholder="Chọn Phường/Xã" />
+                </SelectTrigger>
+                <SelectContent className="z-[80]">
+                  {wards.map((ward) => (
+                    <SelectItem key={ward.code} value={ward.code}>
+                      {ward.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="address" className="text-[16px]">
+                Số nhà, tên đường
+              </Label>
+              <Input
+                id="address"
+                name="address"
+                placeholder="Ví dụ: 123 Đường ABC"
+                value={formData.address}
+                onChange={handleInputChange}
+                className="focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                style={{ fontSize: "16px" }}
+              />
+            </div>
           </div>
-        </DialogContent>
-      </Dialog>
-    );
-  };
+          <Button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="text-[16px] w-full bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-white flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed rounded"
+          >
+            Lưu thay đổi
+            {loading && <Loader className="animate-spin" size={20} />}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 export default ProfileModal;

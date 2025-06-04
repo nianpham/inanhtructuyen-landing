@@ -85,13 +85,13 @@ const LoginFormMobile = () => {
         <div className="w-full h-full flex flex-col justify-center items-center">
           <div className="flex w-full">
             <div className="w-full flex flex-col">
-              <div className="mb-4">
+              <div className="mb-1">
                 <div className="flex justify-start items-center gap-4">
                   <h1 className="text-2xl font-bold">Đăng nhập</h1>
                 </div>
               </div>
-              <div className="mt-4">
-                <div className="space-y-6">
+              <div className="mt-2">
+                <div className="space-y-4">
                   <div className="space-y-2">
                     <label
                       // htmlFor="email"

@@ -1,11 +1,15 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { toast } from "@/hooks/use-toast"; // Import the toast hook
 
 interface ImageUploadProps {
   onImageChange: (file: File | null) => void;
   selectedColor: string;
   selectedSize: string;
+  selectedProduct: string; // Add selectedProduct prop
   className?: string;
 }
 
@@ -13,6 +17,7 @@ const ImageUpload = ({
   onImageChange,
   selectedColor,
   selectedSize,
+  selectedProduct,
   className,
 }: ImageUploadProps) => {
   const [preview, setPreview] = React.useState<string | null>(null);
@@ -32,20 +37,37 @@ const ImageUpload = ({
     return {
       aspectRatio: `${aspectRatio}`,
       width: "100%",
-      // maxWidth: "600px",
       margin: "0 auto",
     };
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // Validate product selection
+    if (selectedProduct === "Chon san pham") {
+      toast({
+        title: "",
+        description: "Vui lòng chọn một sản phẩm trước khi tải lên hình ảnh!",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const file = event.target.files?.[0];
     if (!file) return;
     if (file.size > 10 * 1024 * 1024) {
-      alert("File quá lớn. Vui lòng chọn file nhỏ hơn 10MB");
+      toast({
+        title: "",
+        description: "File quá lớn. Vui lòng chọn file nhỏ hơn 10MB",
+        variant: "destructive",
+      });
       return;
     }
     if (!file.type.startsWith("image/")) {
-      alert("Vui lòng chọn file hình ảnh");
+      toast({
+        title: "",
+        description: "Vui lòng chọn file hình ảnh",
+        variant: "destructive",
+      });
       return;
     }
     const reader = new FileReader();
@@ -57,6 +79,15 @@ const ImageUpload = ({
   };
 
   const handleClick = () => {
+    // Prevent file input click if no product is selected
+    if (selectedProduct === "Chon san pham") {
+      toast({
+        title: "",
+        description: "Vui lòng chọn một sản phẩm trước khi tải lên hình ảnh!",
+        variant: "destructive",
+      });
+      return;
+    }
     fileInputRef.current?.click();
   };
 
@@ -68,10 +99,25 @@ const ImageUpload = ({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
+
+    // Validate product selection
+    if (selectedProduct === "Chon san pham") {
+      toast({
+        title: "",
+        description: "Vui lòng chọn một sản phẩm trước khi tải lên hình ảnh!",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const file = e.dataTransfer.files?.[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
-      alert("Vui lòng chọn file hình ảnh");
+      toast({
+        title: "",
+        description: "Vui lòng chọn file hình ảnh",
+        variant: "destructive",
+      });
       return;
     }
     const reader = new FileReader();
@@ -150,16 +196,7 @@ const ImageUpload = ({
               }`
             )}
           >
-            <div
-              // style={{
-              //   paddingBottom: `${
-              //     (sizeMap[selectedSize as keyof typeof sizeMap].height /
-              //       sizeMap[selectedSize as keyof typeof sizeMap].width) *
-              //     100
-              //   }%`,
-              // }}
-              className="relative !w-64 !h-64"
-            />
+            <div className="relative !w-64 !h-64" />
             <Image
               src={preview}
               alt="Preview"
@@ -169,14 +206,14 @@ const ImageUpload = ({
               className="absolute top-0 left-0 !w-full !h-64 object-contain"
             />
           </div>
-          <div
+          {/* <div
             onClick={handleClick}
             className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-dashed border-gray-300 bg-white px-5 py-3 mt-5 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-primary-700 cursor-pointer"
           >
             <div className="flex flex-col items-center">
               <span className="text-xs text-gray-500">Thay đổi hình ảnh</span>
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

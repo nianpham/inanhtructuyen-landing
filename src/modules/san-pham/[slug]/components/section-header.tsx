@@ -22,8 +22,20 @@ const SectionHeader = ({ title }: { title: string }) => {
     <section className="w-[100%] mx-auto relative overflow-hidden bg-[#F5F5F5]">
       <div className="relative z-10 flex items-center h-full mx-auto py-4 text-black max-w-7xl">
         <div className="px-5 lg:px-0 text-[16px]">
-          <Link href={ROUTES.HOME}>Trang chủ </Link>  / {" "}
-          <Link href={ROUTES.PRODUCT}>Sản phẩm</Link>  / {" "}
+          <Link
+            href={ROUTES.HOME}
+            className="hover:text-[rgb(var(--fifteenth-rgb))]"
+          >
+            Trang chủ{" "}
+          </Link>{" "}
+           / {" "}
+          <Link
+            href={ROUTES.PRODUCT}
+            className="hover:text-[rgb(var(--fifteenth-rgb))]"
+          >
+            Sản phẩm
+          </Link>{" "}
+           / {" "}
           {isMobile
             ? title.length <= 13
               ? title

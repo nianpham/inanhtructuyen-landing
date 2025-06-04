@@ -4,8 +4,10 @@ import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { ROUTES } from "@/utils/route";
 import { Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function SSOAuth() {
+  const router = useRouter();
   useEffect(() => {
     if (typeof window !== "undefined") {
       const urlParams = new URLSearchParams(window.location.search);
@@ -15,7 +17,7 @@ export default function SSOAuth() {
         Cookies.set("isLogin", accountId, { expires: 7 });
         Cookies.set("userLogin", accountId, { expires: 7 });
 
-        window.location.href = ROUTES.HOME;
+        router.push(ROUTES.HOME);
       }
     }
   }, []);
