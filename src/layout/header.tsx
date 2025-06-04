@@ -248,24 +248,35 @@ const Header: React.FC<HeaderProps> = ({
     return () => clearInterval(interval);
   }, []);
 
+  // Device detection function
   const detectDevice = () => {
     if (typeof navigator === "undefined") {
       return "unknown"; // Fallback for server-side rendering
     }
     const userAgent = navigator.userAgent.toLowerCase();
+    const platform = navigator.platform.toLowerCase();
+
+    // Mobile devices
     if (/(iphone|ipad|ipod)/i.test(userAgent)) {
       return "ios";
     } else if (/android/i.test(userAgent)) {
       return "android";
     }
-    return "unknown"; // Default for non-mobile or unknown devices
+
+    // Laptops/Desktops
+    if (/macintosh|mac os x/i.test(userAgent) || platform.includes("mac")) {
+      return "macos";
+    }
+
+    // Default to "android" for non-macOS laptops/desktops
+    return "other";
   };
 
-  // Updated Link component for the Header
+  // Updated AppDownloadLink component
   const AppDownloadLink = () => {
-    const [deviceType, setDeviceType] = useState<"ios" | "android" | "unknown">(
-      "unknown"
-    );
+    const [deviceType, setDeviceType] = useState<
+      "ios" | "android" | "macos" | "other" | "unknown"
+    >("unknown");
 
     useEffect(() => {
       setDeviceType(detectDevice());
@@ -273,15 +284,18 @@ const Header: React.FC<HeaderProps> = ({
 
     // Determine the link and image based on device type
     const downloadLink =
-      deviceType === "ios"
+      deviceType === "ios" || deviceType === "macos"
         ? SOCIAL_LINKS.DOWNLOAD_IOS
-        : deviceType === "android"
-        ? SOCIAL_LINKS.DOWNLOAD_ANDROID
-        : SOCIAL_LINKS.DOWNLOAD_IOS; // Fallback to iOS link for unknown devices
+        : SOCIAL_LINKS.DOWNLOAD_ANDROID; // Use Android link for android and other devices
 
     const appImage =
-      deviceType === "android" ? IMAGES.GOOGLE_PLAY : IMAGES.APP_STORE;
-    const appAlt = deviceType === "android" ? "Google Play" : "App Store";
+      deviceType === "ios" || deviceType === "macos"
+        ? IMAGES.APP_STORE
+        : IMAGES.GOOGLE_PLAY;
+    const appAlt =
+      deviceType === "ios" || deviceType === "macos"
+        ? "App Store"
+        : "Google Play";
     return (
       <Link
         href={downloadLink}

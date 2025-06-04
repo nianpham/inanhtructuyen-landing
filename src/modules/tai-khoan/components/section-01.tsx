@@ -467,7 +467,7 @@ const Section01 = () => {
                 style={{ height: "40px" }}
               />
               <div
-                className="relative space-y-2 h-[346px] overflow-y-auto scroll-bar-style"
+                className="relative space-y-2 h-full scroll-bar-style"
                 ref={scrollContainerRef}
               >
                 {orders.map((order, index) => (
