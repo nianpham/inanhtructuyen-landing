@@ -645,10 +645,6 @@ const Section01 = () => {
           const data = await AccountService.getAccountById(isLogin);
           setCustomerAccount(data);
 
-          console.log("province:", data.province);
-          console.log("district:", data.district);
-          console.log("ward:", data.ward);
-
           setFormData({
             name: data.name,
             email: data.email,

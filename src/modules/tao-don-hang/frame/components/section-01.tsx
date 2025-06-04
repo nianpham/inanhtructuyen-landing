@@ -137,7 +137,6 @@ const Section01 = () => {
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const [ward, setWard] = useState("");
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedPayment, setSelectedPayment] = React.useState<string>("cash");
   const [provinces, setProvinces] = React.useState<Province[]>([]);
@@ -163,7 +162,6 @@ const Section01 = () => {
   const [confirmColor, setConfirmColor] = React.useState<string>("");
   const [confirmSize, setConfirmSize] = React.useState<string>("");
   const [originalImage, setOriginalImage] = React.useState<string | null>(null);
-
   const [uploadedFile, setUploadedFile] = React.useState<File | null>(null);
   const [formData, setFormData] = React.useState<FormData>({
     name: "",
@@ -175,9 +173,12 @@ const Section01 = () => {
     district: 0,
     province: 0,
   });
-
   const [sizeOptions, setSizeOptions] = useState<SizeOption[]>([]);
   const [isTermsAccepted, setIsTermsAccepted] = useState(true);
+  const [pendingFrameImage, setPendingFrameImage] = useState<{
+    file: File;
+    url: string;
+  } | null>(null);
 
   useEffect(() => {
     if (productsData?.product_option?.length > 0) {
@@ -956,9 +957,6 @@ const Section01 = () => {
         <div className="hidden lg:grid w-full md:w-1/2">
           <div>
             <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
-              <div
-                className={`absolute bottom-[10%] left-[19%] h-1 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-              ></div>
               <UserRound className="w-5 h-5" />
               <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                 Thông tin khách hàng
@@ -999,9 +997,6 @@ const Section01 = () => {
             </div>
             <div className="mt-6">
               <div className="flex flex-row items-center gap-2 relative mb-3.5 z-20">
-                <div
-                  className={`absolute bottom-[10%] left-[15%] h-1 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
                 <MapPin className="w-5 h-5" />
                 <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                   Địa chỉ nhận hàng
@@ -1110,9 +1105,6 @@ const Section01 = () => {
             <>
               <div className="mt-6">
                 <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
-                  <div
-                    className={`absolute bottom-[10%] left-[19%] h-1 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                  ></div>
                   <CreditCard className="w-5 h-5" />
                   <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                     Tùy chọn thanh toán
@@ -1121,7 +1113,7 @@ const Section01 = () => {
                 <div className=" rounded-md divide-y">
                   <div
                     onClick={() => setSelectedPayment("cash")}
-                    className={`cursor-pointer p-4 flex items-center rounded-md
+                    className={`cursor-pointer p-4 flex justify-between items-center rounded-md
                       ${
                         selectedPayment === "cash"
                           ? "border border-[rgb(var(--fifteenth-rgb))]"
@@ -1129,22 +1121,24 @@ const Section01 = () => {
                       }
                       `}
                   >
-                    {/* <div
-                      className={`cursor-pointer w-5 h-5 rounded-full mr-2 ${
+                    <div className="flex flex-row items-center">
+                      <Image
+                        src="https://cdn-icons-png.flaticon.com/128/7630/7630510.png"
+                        alt="Tiền mặt"
+                        width={24}
+                        height={24}
+                      />
+                      <label htmlFor="cash" className="cursor-pointer ml-2">
+                        Thanh toán khi nhận hàng
+                      </label>
+                    </div>
+                    <div
+                      className={`cursor-pointer w-4 h-4 rounded-full mr-2 ${
                         selectedPayment === "cash"
-                          ? "border border-gray-200 bg-[rgb(var(--fifteenth-rgb))]"
-                          : "border border-gray-200"
+                          ? "bg-[rgb(var(--fifteenth-rgb))]"
+                          : ""
                       }`}
-                    ></div> */}
-                    <Image
-                      src="https://cdn-icons-png.flaticon.com/128/7630/7630510.png"
-                      alt="Tiền mặt"
-                      width={24}
-                      height={24}
-                    />
-                    <label htmlFor="cash" className="cursor-pointer ml-2">
-                      Thanh toán khi nhận hàng
-                    </label>
+                    ></div>
                   </div>
                   {/* <div
                     onClick={() => setSelectedPayment("bank")}
@@ -1199,9 +1193,6 @@ const Section01 = () => {
               </div>
               <div className="mt-6">
                 <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
-                  <div
-                    className={`absolute bottom-[10%] left-[32%] h-1 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                  ></div>
                   <StickyNote className="w-5 h-5" />
                   <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                     Thêm ghi chú cho đơn hàng
@@ -1218,12 +1209,9 @@ const Section01 = () => {
         <div className="w-full lg:w-1/2 space-y-6">
           <div>
             <div className="flex flex-row gap-2 items-center mb-3.5 lg:mb-5 relative z-20">
-              <div
-                className={`absolute bottom-[10%] left-[34%] lg:left-[19%] h-1 w-24 lg:w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-              ></div>
               <Frame className="w-5 h-5" />
               <h2 className="text-lg lg:text-xl font-medium z-20 relative">
-                Thông tin Khung ảnh
+                Thông tin khung ảnh
               </h2>
             </div>
             <div className="bg-gray-50 border border-gray-200 text-black rounded-md block w-full mt-1 mb-2">
@@ -1292,7 +1280,7 @@ const Section01 = () => {
                   onOpenAutoFocus={(e) => e.preventDefault()}
                 >
                   <DialogHeader>
-                    <DialogTitle className="mb-3 text-[20px] px-2 font-medium underline">
+                    <DialogTitle className="mb-3 text-[20px] px-2 font-medium">
                       Vui lòng chọn sản phẩm
                     </DialogTitle>
                     <DialogDescription className="max-h-96 overflow-y-auto scroll-bar-style">
@@ -1402,7 +1390,7 @@ const Section01 = () => {
                   </>
                 )}
               </div>
-              {currentImage && (
+              {currentImage && selectedProduct !== "Chon san pham" && (
                 <Dialog>
                   <DialogTrigger asChild>
                     <div
@@ -1489,7 +1477,7 @@ const Section01 = () => {
                               <h2 className="text-[18px] font-medium mb-2">
                                 Màu sắc khung viền:
                               </h2>
-                              {productsData?.color.length < 0 ? (
+                              {productsData?.color?.length < 0 ? (
                                 <div className="mb-6">Không có</div>
                               ) : (
                                 <div className="flex gap-4 mb-6">
@@ -1573,9 +1561,6 @@ const Section01 = () => {
           <div className=" lg:hidden w-full md:w-1/2 space-y-6">
             <div>
               <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
-                <div
-                  className={`absolute bottom-[10%] left-[34%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
                 <UserRound className="w-5 h-5" />
                 <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                   Thông tin khách hàng
@@ -1619,9 +1604,6 @@ const Section01 = () => {
             </div>
             <div>
               <div className="flex flex-row items-center gap-2 relative mb-3.5 z-20">
-                <div
-                  className={`absolute bottom-[10%] left-[27%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
                 <MapPin className="w-5 h-5" />
                 <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                   Địa chỉ nhận hàng
@@ -1767,9 +1749,6 @@ const Section01 = () => {
               <>
                 <div>
                   <div className="flex flex-row items-center gap-2 mb-2 relative z-20">
-                    <div
-                      className={`absolute bottom-[10%] left-[33%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                    ></div>
                     <CreditCard className="w-5 h-5" />
                     <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                       Tùy chọn thanh toán
@@ -1901,17 +1880,15 @@ const Section01 = () => {
             </div>
             <div className="flex justify-between font-light">
               <span>Phí vận chuyển</span>
-              <span className="text-green-500">
-                + {HELPER.formatVND("30000")}
-              </span>
+              <span className="text-black">{HELPER.formatVND("30000")}</span>
             </div>
-            <div className="flex justify-between font-base font-light">
+            {/* <div className="flex justify-between font-base font-light">
               <span>Tạm tính</span>
               <span>
                 {selectedProduct &&
                   HELPER.calculateTotal(productPrice, "30000", "0")}
               </span>
-            </div>
+            </div> */}
             <div className="flex justify-between items-center pt-0 font-light">
               <span>Khuyến mãi</span>
               {selectedProduct === "Chon san pham" ? (
@@ -1928,10 +1905,7 @@ const Section01 = () => {
                         </div>
                       ) : (
                         <div className="flex flex-row gap-2 text-[16px]">
-                          <div className="cursor-pointer flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 text-green-400 text-center rounded-md font-medium transition">
-                            Đã áp dụng mã
-                          </div>
-                          <div className="cursor-pointer text-white flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[] hover:opacity-80 text-center rounded-md font-medium transition">
+                          <div className="cursor-pointer text-white flex flex-row justify-center items-center gap-4 mx-auto py-1 px-3 lg:py-1 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[] hover:opacity-80 text-center rounded-md font-medium transition">
                             Đổi mã
                           </div>
                         </div>
@@ -2002,13 +1976,13 @@ const Section01 = () => {
             </div>
           </div>
           {/* )} */}
-          <div className="flex flex-row items-center">
+          <div className="flex flex-row items-start">
             <input
               type="checkbox"
               id="terms"
               checked={isTermsAccepted}
               onChange={(e) => setIsTermsAccepted(e.target.checked)}
-              className="mr-2"
+              className="mr-2 mt-1"
             />
             <p className="text-sm text-black font-light">
               Bằng cách tiến hành mua hàng, bạn đã đồng ý với các{" "}

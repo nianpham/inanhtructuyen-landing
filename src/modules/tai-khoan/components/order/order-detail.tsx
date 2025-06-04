@@ -13,6 +13,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { ProductService } from "@/services/product";
 import { IMAGES } from "@/utils/image";
+import {
+  CircleCheckBig,
+  CircleDollarSign,
+  ClipboardX,
+  Clock8,
+  HandCoins,
+  Package2,
+  Truck,
+} from "lucide-react";
 
 interface Product {
   _id: string;
@@ -107,47 +116,75 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                 <div
                   className={`${
                     order?.status === "completed"
-                      ? "bg-green-600 text-white text-sm lg:text-base px-2"
+                      ? "text-green-600 font-medium text-[16px] lg:text-[16px] px-2"
                       : ""
                   }
                       ${
                         order?.status === "delivering"
-                          ? "bg-blue-600 text-white text-sm lg:text-base px-2"
+                          ? "text-blue-600 font-medium text-[16px] lg:text-[16px] px-2"
                           : ""
                       }
                       ${
                         order?.status === "waiting"
-                          ? "bg-[rgb(var(--fifteenth-rgb))] text-white text-sm lg:text-base px-2"
+                          ? "text-[rgb(var(--fifteenth-rgb))] font-medium text-[16px] lg:text-[16px] px-2"
                           : ""
                       }
                       ${
                         order?.status === "pending"
-                          ? "bg-[rgb(var(--fifteenth-rgb))] text-white text-sm lg:text-base px-2"
+                          ? "text-[rgb(var(--fifteenth-rgb))] font-medium text-[16px] lg:text-[16px] px-2"
                           : ""
                       }
                       ${
                         order?.status === "paid pending"
-                          ? "bg-gray-600 text-white text-sm lg:text-base px-2"
+                          ? "text-gray-600 font-medium text-[16px] lg:text-[16px] px-2"
                           : ""
                       }
                       ${
                         order?.status === "cancelled"
-                          ? "bg-red-600 text-white text-sm lg:text-base px-2"
+                          ? "text-red-600 font-medium text-sm lg:text-base px-2"
                           : ""
                       }
                       ${
                         order?.status === "paid"
-                          ? "bg-purple-600 text-white"
+                          ? "text-purple-600 font-medium"
                           : ""
                       } rounded-sm flex items-center justify-center text-center py-2 px-0 lg:px-4 w-full lg:w-full`}
                 >
-                  {order?.status === "completed" && "Hoàn thành"}
-                  {order?.status === "paid pending" && "Chờ thanh toán"}
-                  {order?.status === "paid" && "Đã thanh toán"}
-                  {order?.status === "delivering" && "Đang vận đơn"}
-                  {order?.status === "pending" && "Chuẩn bị hàng"}
-                  {order?.status === "waiting" && "Đợi phản hồi"}
-                  {order?.status === "cancelled" && "Đã hủy đơn"}
+                  {order?.status === "completed" && (
+                    <div className="flex flex-row items-center gap-1">
+                      <CircleCheckBig size={18} /> Hoàn thành
+                    </div>
+                  )}
+                  {order?.status === "paid pending" && (
+                    <div className="flex flex-row items-center gap-1">
+                      <HandCoins size={18} /> Chờ thanh toán
+                    </div>
+                  )}
+                  {order?.status === "paid" && (
+                    <div className="flex flex-row items-center gap-1">
+                      <CircleDollarSign size={18} /> Đã thanh toán
+                    </div>
+                  )}
+                  {order?.status === "delivering" && (
+                    <div className="flex flex-row items-center gap-1">
+                      <Truck size={18} /> Vận chuyển
+                    </div>
+                  )}
+                  {order?.status === "pending" && (
+                    <div className="flex flex-row items-center gap-1">
+                      <Package2 size={18} /> Chuẩn bị đơn
+                    </div>
+                  )}
+                  {order?.status === "waiting" && (
+                    <div className="flex flex-row items-center gap-1">
+                      <Clock8 size={18} /> Đợi phản hồi
+                    </div>
+                  )}
+                  {order?.status === "cancelled" && (
+                    <div className="flex flex-row items-center gap-1">
+                      <ClipboardX size={18} /> Đã hủy đơn
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -301,49 +338,34 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                 </div>
               </div>
             </div>
-            <div className="px-0 py-4 border-b border-gray-200">
-              <div className="flex justify-between items-center">
-                <div className="text-lg font-semibold">Tổng đơn:</div>
-                <div className="text-xl font-semibold">
-                  {HELPER.formatVND(
-                    String(
-                      order?.order_type === "frame"
-                        ? order?.total
-                        : order?.total - order?.discount_price
-                    )
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="py-4 flex flex-row justify-between items-center text-black">
+            <div className="py-0 flex flex-row justify-between items-center text-black">
               <div>Thanh toán: </div>
               <div
                 className={`
                       ${
                         order?.payment_method === "cash"
-                          ? "bg-green-700 text-white text-sm lg:text-base px-2"
+                          ? "text-black text-sm lg:text-base"
                           : ""
                       }
                       ${
                         order?.payment_method === "bank"
-                          ? "bg-orange-600 text-white text-sm lg:text-base px-2"
+                          ? "text-orange-600 text-sm lg:text-base"
                           : ""
                       }
                       ${
                         order?.payment_method === "momo"
-                          ? "bg-pink-500 text-white text-sm lg:text-base px-2"
+                          ? "text-pink-500 text-sm lg:text-base"
                           : ""
                       }
                       ${
                         order?.payment_method === "vnpay"
-                          ? "bg-blue-600 text-white text-sm lg:text-base px-2"
+                          ? "text-blue-600 text-sm lg:text-base"
                           : ""
                       }
-                      lg:py-2 rounded-md py-2 text-center w-1/2 lg:w-[34.5%]
-                      bg-green-700 text-white text-sm lg:text-base px-2`}
+                      lg:py-2 rounded-md py-2 text-center w-1/2 lg:w-[34.5%]`}
               >
                 {order?.payment_method === "cash" && (
-                  <div className="flex flex-row items-center justify-center gap-3">
+                  <div className="flex flex-row items-center justify-end gap-3">
                     <Image
                       src={IMAGES.COD}
                       alt="momo"
@@ -351,10 +373,10 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                       height={1000}
                       className="w-6 h-6 object-cover rounded-lg"
                     />
-                    <div>COD</div>
+                    <div>Tiền mặt</div>
                   </div>
                 )}
-                {order?.payment_method === "bank" && (
+                {/* {order?.payment_method === "bank" && (
                   <div className="flex flex-row items-center justify-center gap-3">
                     <Image
                       src={IMAGES.BANK}
@@ -389,22 +411,25 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                     />
                     <div>VNPay</div>
                   </div>
-                )}
+                )} */}
+              </div>
+            </div>
+            <div className="px-0 py-4 border-t border-gray-200">
+              <div className="flex justify-between items-center">
+                <div className="text-lg font-semibold">Tổng tiền:</div>
+                <div className="text-xl font-semibold">
+                  {HELPER.formatVND(
+                    String(
+                      order?.order_type === "frame"
+                        ? order?.total
+                        : order?.total - order?.discount_price
+                    )
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button
-              type="button"
-              variant="secondary"
-              className="!px-10 !text-[16px]"
-            >
-              Đóng
-            </Button>
-          </DialogClose>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

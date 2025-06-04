@@ -105,20 +105,6 @@ const Header: React.FC<HeaderProps> = ({
     fetchAccount();
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsVisible(false);
-      setTimeout(() => {
-        setCurrentImage((prev) =>
-          prev === IMAGES.APP_STORE ? IMAGES.GOOGLE_PLAY : IMAGES.APP_STORE
-        );
-        setIsVisible(true);
-      }, 500);
-    }, 2500);
-
-    return () => clearInterval(interval);
-  }, []);
-
   const handleLogin = async (username: string, password: string) => {
     if (!username || !password) {
       toast({
@@ -177,78 +163,79 @@ const Header: React.FC<HeaderProps> = ({
       href: `${ROUTES.HOME}`,
       icon: House,
       sideBar: false,
+      isLoggedIn: true,
     },
     {
       label: "Sản phẩm",
       href: `${ROUTES.PRODUCT}`,
       icon: Gift,
       sideBar: false,
+      isLoggedIn: true,
     },
     {
       label: "Giới thiệu",
       href: `${ROUTES.ABOUT}`,
       icon: Info,
       sideBar: false,
+      isLoggedIn: true,
     },
     {
       label: "Bảng giá",
       href: `${ROUTES.PRICING}`,
       icon: CircleDollarSign,
       sideBar: false,
+      isLoggedIn: true,
     },
     {
       label: "Blog",
       href: `${ROUTES.BLOG}`,
       icon: NotepadText,
       sideBar: false,
+      isLoggedIn: true,
     },
     {
-      label: "Tạo đơn hàng Album",
-      href: `${ROUTES.CREATE_ORDER}?type=album`,
-      icon: FolderPlus,
-      sideBar: true,
-    },
-    {
-      label: "Tạo đơn hàng Frame",
+      label: "Tạo đơn hàng",
       href: `${ROUTES.CREATE_ORDER}?type=frame`,
       icon: FolderPlus,
       sideBar: true,
+      isLoggedIn: logined,
     },
     {
       label: "Hồ sơ cá nhân",
       href: `${ROUTES.ACCOUNT}`,
       icon: UserRound,
       sideBar: true,
+      isLoggedIn: logined,
     },
   ];
 
   const isActive = (item: any) => {
-    if (item.label === "Home") {
-      return pathname === "/";
+    if (item.label === "Tạo đơn hàng") {
+      return pathname.startsWith(ROUTES.CREATE_ORDER);
+    }
+    if (item.label === "Hồ sơ cá nhân") {
+      return pathname.startsWith(ROUTES.ACCOUNT);
+    }
+    if (item.label === "Sản phẩm") {
+      return pathname.startsWith(ROUTES.PRODUCT);
+    }
+    if (item.label === "Blog") {
+      return pathname.startsWith(ROUTES.BLOG);
+    }
+    if (item.label === "Giới thiệu") {
+      return pathname.startsWith(ROUTES.ABOUT);
+    }
+    if (item.label === "Bảng giá") {
+      return pathname.startsWith(ROUTES.PRICING);
+    }
+    if (item.label === "Trang chủ") {
+      return pathname === ROUTES.HOME;
     }
     return item.href === pathname;
   };
 
   const [open, setOpen] = React.useState(false);
 
-  const [currentImage, setCurrentImage] = useState(IMAGES.APP_STORE);
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsVisible(false);
-      setTimeout(() => {
-        setCurrentImage((prev) =>
-          prev === IMAGES.APP_STORE ? IMAGES.GOOGLE_PLAY : IMAGES.APP_STORE
-        );
-        setIsVisible(true);
-      }, 500);
-    }, 2500);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // Device detection function
   const detectDevice = () => {
     if (typeof navigator === "undefined") {
       return "unknown"; // Fallback for server-side rendering
@@ -530,38 +517,51 @@ const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
             <div className="flex flex-col items-start space-y-4 w-full">
-              {navigationItems.map((item) => (
-                <div key={item.label} className="relative group">
-                  <Link
-                    href={item.href}
-                    className={`relative text-[16px] font-normal transition-colors duration-200 ${
-                      isActive(item)
-                        ? "text-[rgb(var(--fifteenth-rgb))] font-semibold border-b-2 border-[rgb(var(--fifteenth-rgb))]"
-                        : "text-black"
-                    } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
-                  >
-                    <div
-                      className={`flex flex-row items-center gap-1 text-[16px] mb-3`}
+              {navigationItems
+                .filter((item) => item.isLoggedIn === true)
+                .map((item) => (
+                  <div key={item.label} className="relative group">
+                    <Link
+                      href={item.href}
+                      className={`relative text-[16px] font-normal transition-colors duration-200 ${
+                        isActive(item)
+                          ? "text-[rgb(var(--fifteenth-rgb))] font-semibold border-b-2 border-[rgb(var(--fifteenth-rgb))]"
+                          : "text-black"
+                      } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
                     >
-                      <div>
-                        {item.icon && <item.icon className="w-5 h-5 mr-2" />}{" "}
+                      <div
+                        className={`flex flex-row items-center gap-1 text-[16px] mb-3`}
+                      >
+                        <div>
+                          {item.icon && <item.icon className="w-5 h-5 mr-2" />}{" "}
+                        </div>
+                        <div className="relative">
+                          {item.label}
+                          <span
+                            className={`absolute -bottom-0.5 left-0 h-[2px] bg-[rgb(var(--fifteenth-rgb))] transition-all duration-300 ease-in-out ${
+                              isActive(item)
+                                ? "w-full"
+                                : "w-0 group-hover:w-full"
+                            }`}
+                          ></span>
+                        </div>
                       </div>
-                      <div className="relative">
-                        {item.label}
-                        <span
-                          className={`absolute -bottom-0.5 left-0 h-[2px] bg-[rgb(var(--fifteenth-rgb))] transition-all duration-300 ease-in-out ${
-                            isActive(item) ? "w-full" : "w-0 group-hover:w-full"
-                          }`}
-                        ></span>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              ))}
+                    </Link>
+                  </div>
+                ))}
             </div>
           </div>
-          <div className="w-full">
-            <LoginFormMobile />
+          <div className="w-full flex items-center justify-center">
+            {logined ? (
+              <button
+                onClick={handleLogOut}
+                className="flex items-center justify-center gap-3 hover:text-white text-red-600"
+              >
+                Đăng xuất
+              </button>
+            ) : (
+              <LoginFormMobile onLogin={handleLogin} />
+            )}
           </div>
         </div>
       )}

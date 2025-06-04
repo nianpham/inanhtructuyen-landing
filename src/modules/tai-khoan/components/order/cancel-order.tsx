@@ -60,14 +60,20 @@ const CancelOrderModal = ({ order, onCancelled }: CancelOrderModalProps) => {
       <DialogContent className="sm:max-w-[600px] z-[70]">
         <DialogHeader>
           <DialogTitle className="!text-[20px]">
-            Hủy đơn hàng #{order?._id}
+            Xác nhận hủy đơn hàng
           </DialogTitle>
         </DialogHeader>
-        <DialogDescription className="text-center lg:!text-left">
+        <DialogDescription className="text-center lg:!text-center">
+          <span className="!text-[16px] mb-3">Để hủy đơn hàng</span>
+          <br />
+          <span className="font-semibold text-black mb-3 text-[16px]">
+            {order?.product_name}
+          </span>{" "}
+          <br />
           <span className="!text-[16px]">
-            Để hủy đơn hàng{" "}
-            <span className="font-medium text-black">#{order?._id}</span> vui
-            lòng bấm <strong className="!text-red-600">Xác nhận</strong> để hủy.
+            Vui lòng bấm{" "}
+            <strong className="!text-red-600 text-[16px]">Xác nhận</strong> để
+            hủy.
           </span>
         </DialogDescription>
         <DialogFooter className="flex flex-row justify-between">

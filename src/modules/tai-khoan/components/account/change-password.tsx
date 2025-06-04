@@ -277,7 +277,7 @@ const ChangePasswordForm = () => {
                 <Button
                   type="submit"
                   onClick={handleSubmit}
-                  className="text-[16px] w-full lg:w-64 py-2 px-4 mt-2 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-white font-medium transition-colors rounded"
+                  className="text-[16px] w-full lg:w-full py-2 px-4 mt-2 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-white font-medium transition-colors rounded"
                 >
                   Lưu thay đổi
                   {loading && <Loader className="animate-spin" size={48} />}

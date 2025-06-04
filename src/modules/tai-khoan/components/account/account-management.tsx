@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -27,7 +27,7 @@ import { ROUTES } from "@/utils/route";
 import Image from "next/image";
 
 export interface Province {
-  code: string;
+  code: number;
   codename: string;
   districts: District[];
   division_type: string;
@@ -36,7 +36,7 @@ export interface Province {
 }
 
 export interface District {
-  code: string;
+  code: number;
   codename: string;
   division_type: string;
   name: string;
@@ -45,7 +45,7 @@ export interface District {
 }
 
 export interface Ward {
-  code: string;
+  code: number;
   codename: string;
   division_type: string;
   name: string;
@@ -59,18 +59,18 @@ export interface UserData {
   avatar: string;
   phone: string;
   address: string;
-  ward?: string;
-  district?: string;
-  province?: string;
+  ward?: string | number;
+  district?: string | number;
+  province?: string | number;
   provinceName?: string;
   districtName?: string;
   wardName?: string;
 }
 
 export interface FormData extends UserData {
-  ward: string;
-  district: string;
-  province: string;
+  ward: number;
+  district: number;
+  province: number;
 }
 
 interface ProfileModalProps {
@@ -83,6 +83,12 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
+  const [openProvinces, setOpenProvinces] = useState(false);
+  const [openDistrict, setOpenDistrict] = useState(false);
+  const [openWard, setOpenWard] = useState(false);
+  const [province, setProvince] = useState("");
+  const [district, setDistrict] = useState("");
+  const [ward, setWard] = useState("");
   const [provinces, setProvinces] = useState<Province[]>([]);
   const [districts, setDistricts] = useState<District[]>([]);
   const [wards, setWards] = useState<Ward[]>([]);
@@ -93,10 +99,36 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
     avatar: customerAccount?.avatar || "",
     phone: customerAccount?.phone || "",
     address: customerAccount?.address || "",
-    ward: customerAccount?.ward || "",
-    district: customerAccount?.district || "",
-    province: customerAccount?.province || "",
+    ward: Number(customerAccount?.ward) || 0,
+    district: Number(customerAccount?.district) || 0,
+    province: Number(customerAccount?.province) || 0,
   });
+
+  React.useEffect(() => {
+    if (formData.province) {
+      const selectedProvince = provinces.find(
+        (p) => Number(p.code) === formData.province
+      );
+      if (selectedProvince) {
+        setDistricts(selectedProvince.districts);
+        const selectedDistrict = selectedProvince.districts.find(
+          (d) => Number(d.code) === formData.district
+        );
+        setProvince(selectedProvince.name);
+        if (selectedDistrict) {
+          setDistrict(selectedDistrict.name);
+          setWards(selectedDistrict.wards);
+          const selectedWard = selectedDistrict.wards.find(
+            (w) => Number(w.code) === formData.ward
+          );
+
+          if (selectedWard) {
+            setWard(selectedWard.name);
+          }
+        }
+      }
+    }
+  }, [formData.province, formData.district, provinces, formData.ward]);
 
   React.useEffect(() => {
     const fetchProvinces = async () => {
@@ -133,51 +165,197 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
     fetchProvinces();
   }, [toast]);
 
+  // React.useEffect(() => {
+  //   if (formData.province) {
+  //     const selectedProvince = provinces.find(
+  //       (p) => p.code === formData.province
+  //     );
+  //     if (selectedProvince) {
+  //       setDistricts(selectedProvince.districts);
+  //       setWards([]);
+  //       if (formData.district) {
+  //         const selectedDistrict = selectedProvince.districts.find(
+  //           (d) => d.code === formData.district
+  //         );
+  //         if (selectedDistrict) {
+  //           setWards(selectedDistrict.wards);
+  //         }
+  //       }
+  //     } else {
+  //       setDistricts([]);
+  //       setWards([]);
+  //     }
+  //   }
+  // }, [formData.province, formData.district, provinces]);
+
+  // useEffect(() => {
+  //   const fetchAccount = async () => {
+  //       try {
+
+  //         const selectedProvince = provinces.find(
+  //           (p) => p.code === Number(data.province)
+  //         );
+  //         if (selectedProvince) {
+  //           setProvince(selectedProvince.name);
+  //           setDistricts(selectedProvince.districts);
+
+  //           const selectedDistrict = selectedProvince.districts.find(
+  //             (d) => d.code === Number(data.district)
+  //           );
+  //           if (selectedDistrict) {
+  //             setDistrict(selectedDistrict.name);
+  //             setWards(selectedDistrict.wards);
+
+  //             const selectedWard = selectedDistrict.wards.find(
+  //               (w) => w.code === Number(data.ward)
+  //             );
+  //             if (selectedWard) {
+  //               setWard(selectedWard.name);
+  //             }
+  //           }
+  //         }
+  //       } catch (error) {
+  //         console.error("Error fetching account:", error);
+  //       }
+  //     }
+  //   };
+
+  //   if (provinces.length > 0) {
+  //     fetchAccount();
+  //   }
+  //   renderProduct();
+  // }, [isLogin, provinces]);
+
   React.useEffect(() => {
-    if (formData.province) {
+    if (formData.province && provinces.length > 0) {
       const selectedProvince = provinces.find(
-        (p) => p.code === formData.province
+        (p) => Number(p.code) === formData.province
       );
       if (selectedProvince) {
+        setProvince(selectedProvince.name);
         setDistricts(selectedProvince.districts);
-        setWards([]);
+
         if (formData.district) {
           const selectedDistrict = selectedProvince.districts.find(
-            (d) => d.code === formData.district
+            (d) => Number(d.code) === formData.district
           );
           if (selectedDistrict) {
+            setDistrict(selectedDistrict.name);
             setWards(selectedDistrict.wards);
+
+            if (formData.ward) {
+              const selectedWard = selectedDistrict.wards.find(
+                (w) => Number(w.code) === formData.ward
+              );
+              if (selectedWard) {
+                setWard(selectedWard.name);
+              } else {
+                setWard("Vui lòng chọn Phường/Xã");
+                setFormData((prev) => ({ ...prev, ward: 0 }));
+              }
+            } else {
+              setWard("Vui lòng chọn Phường/Xã");
+              setFormData((prev) => ({ ...prev, ward: 0 }));
+            }
+          } else {
+            setDistrict("Vui lòng chọn Quận/Huyện");
+            setWards([]);
+            setFormData((prev) => ({ ...prev, district: 0, ward: 0 }));
           }
+        } else {
+          setDistrict("Vui lòng chọn Quận/Huyện");
+          setWards([]);
+          setFormData((prev) => ({ ...prev, district: 0, ward: 0 }));
         }
       } else {
+        setProvince("Vui lòng chọn Tỉnh/Thành phố");
         setDistricts([]);
         setWards([]);
+        setFormData((prev) => ({ ...prev, province: 0, district: 0, ward: 0 }));
       }
     }
-  }, [formData.province, formData.district, provinces]);
+  }, [formData.province, formData.district, formData.ward, provinces]);
 
   const handleProvinceChange = (provinceCode: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      province: provinceCode,
-      district: "",
-      ward: "",
-    }));
+    // setFormData((prev) => ({
+    //   ...prev,
+    //   province: provinceCode,
+    //   district: "",
+    //   ward: "",
+    // }));
+
+    const selectedProvince = provinces.find(
+      (p) => Number(p.code) === Number(provinceCode)
+    );
+    if (selectedProvince) {
+      setDistricts(selectedProvince.districts);
+      setWards([]);
+      setFormData((prev) => ({
+        ...prev,
+        province: Number(provinceCode),
+        district: 0,
+        ward: 0,
+      }));
+      setProvince(selectedProvince.name);
+      setDistrict("Vui lòng chọn Quận/Huyện");
+      setWard("Vui lòng chọn Phường/Xã");
+      setOpenProvinces(false);
+    } else {
+      setDistricts([]);
+      setWards([]);
+      setFormData((prev) => ({ ...prev, province: 0, district: 0, ward: 0 }));
+      setProvince("Vui lòng chọn Tỉnh/Thành phố");
+      setDistrict("Vui lòng chọn Quận/Huyện");
+      setWard("Vui lòng chọn Phường/Xã");
+    }
   };
 
   const handleDistrictChange = (districtCode: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      district: districtCode,
-      ward: "",
-    }));
+    // setFormData((prev) => ({
+    //   ...prev,
+    //   district: districtCode,
+    //   ward: "",
+    // }));
+
+    const selectedDistrict = districts.find(
+      (d) => Number(d.code) === Number(districtCode)
+    );
+    if (selectedDistrict) {
+      setWards(selectedDistrict.wards || []);
+      setFormData((prev) => ({
+        ...prev,
+        district: Number(districtCode),
+        ward: 0,
+      }));
+      setDistrict(selectedDistrict.name);
+      setWard("Vui lòng chọn Phường/Xã");
+      setOpenDistrict(false);
+    } else {
+      setWards([]);
+      setFormData((prev) => ({ ...prev, district: 0, ward: 0 }));
+      setDistrict("Vui lòng chọn Quận/Huyện");
+      setWard("Vui lòng chọn Phường/Xã");
+    }
   };
 
   const handleWardChange = (wardCode: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      ward: wardCode,
-    }));
+    // setFormData((prev) => ({
+    //   ...prev,
+    //   ward: wardCode,
+    // }));
+
+    const selectedWard = wards.find((w) => Number(w.code) === Number(wardCode));
+    if (selectedWard) {
+      setFormData((prev) => ({
+        ...prev,
+        ward: Number(wardCode),
+      }));
+      setWard(selectedWard.name);
+      setOpenWard(false);
+    } else {
+      setFormData((prev) => ({ ...prev, ward: 0 }));
+      setWard("Vui lòng chọn Phường/Xã");
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -246,12 +424,12 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
     setLoading(true);
     try {
       const selectedProvince = provinces.find(
-        (p) => p.code === formData.province
+        (p) => Number(p.code) === formData.province
       );
       const selectedDistrict = districts.find(
-        (d) => d.code === formData.district
+        (d) => Number(d.code) === formData.district
       );
-      const selectedWard = wards.find((w) => w.code === formData.ward);
+      const selectedWard = wards.find((w) => Number(w.code) === formData.ward);
 
       const formattedData = {
         ...formData,
@@ -301,9 +479,9 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
         avatar: customerAccount.avatar || "",
         phone: customerAccount.phone || "",
         address: customerAccount.address || "",
-        ward: customerAccount.ward || "",
-        district: customerAccount.district || "",
-        province: customerAccount.province || "",
+        ward: Number(customerAccount.ward) || 0,
+        district: Number(customerAccount.district) || 0,
+        province: Number(customerAccount.province) || 0,
       });
     }
   };
@@ -398,7 +576,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 Tỉnh/Thành phố
               </Label>
               <Select
-                value={formData.province}
+                value={formData.province ? String(formData.province) : ""}
                 onValueChange={handleProvinceChange}
                 disabled={loading}
               >
@@ -407,7 +585,10 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 </SelectTrigger>
                 <SelectContent className="z-[80]">
                   {provinces.map((province) => (
-                    <SelectItem key={province.code} value={province.code}>
+                    <SelectItem
+                      key={province.code}
+                      value={String(province.code)}
+                    >
                       {province.name}
                     </SelectItem>
                   ))}
@@ -419,7 +600,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 Quận/Huyện
               </Label>
               <Select
-                value={formData.district}
+                value={formData.district ? String(formData.district) : ""}
                 onValueChange={handleDistrictChange}
                 disabled={!formData.province || loading}
               >
@@ -428,7 +609,10 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 </SelectTrigger>
                 <SelectContent className="z-[80]">
                   {districts.map((district) => (
-                    <SelectItem key={district.code} value={district.code}>
+                    <SelectItem
+                      key={district.code}
+                      value={String(district.code)}
+                    >
                       {district.name}
                     </SelectItem>
                   ))}
@@ -440,7 +624,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 Phường/Xã
               </Label>
               <Select
-                value={formData.ward}
+                value={formData.ward ? String(formData.ward) : ""}
                 onValueChange={handleWardChange}
                 disabled={!formData.district || loading}
               >
@@ -449,7 +633,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 </SelectTrigger>
                 <SelectContent className="z-[80]">
                   {wards.map((ward) => (
-                    <SelectItem key={ward.code} value={ward.code}>
+                    <SelectItem key={ward.code} value={String(ward.code)}>
                       {ward.name}
                     </SelectItem>
                   ))}

@@ -75,9 +75,9 @@ interface UserData {
   phone?: string;
   avatar?: string;
   address?: string;
-  ward?: string;
-  district?: string;
-  province?: string;
+  ward?: string | number;
+  district?: string | number;
+  province?: string | number;
   provinceName?: string;
   districtName?: string;
   wardName?: string;
@@ -250,11 +250,21 @@ const Section01 = () => {
         ? {
             ...prev,
             ...updatedData,
-            provinceName:
-              updatedData.provinceName || customerAccount?.provinceName || "",
-            districtName:
-              updatedData.districtName || customerAccount?.districtName || "",
-            wardName: updatedData.wardName || customerAccount?.wardName || "",
+            ward:
+              updatedData.ward !== undefined
+                ? String(updatedData.ward)
+                : prev.ward,
+            district:
+              updatedData.district !== undefined
+                ? String(updatedData.district)
+                : prev.district,
+            province:
+              updatedData.province !== undefined
+                ? String(updatedData.province)
+                : prev.province,
+            provinceName: updatedData.provinceName || prev.provinceName || "",
+            districtName: updatedData.districtName || prev.districtName || "",
+            wardName: updatedData.wardName || prev.wardName || "",
           }
         : null
     );
@@ -408,10 +418,10 @@ const Section01 = () => {
             </h2>
             <div className="relative">
               <div className="relative space-y-2 h-full">
-                <div className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg">
-                  <div className="w-7 h-7 mt-0">
+                <div className="flex items-start gap-3 p-4 border border-gray-200 rounded-lg">
+                  <div className="w-6 h-6 mt-0">
                     <svg
-                      className="w-7 h-7 text-gray-400"
+                      className="w-6 h-6 text-gray-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -432,9 +442,11 @@ const Section01 = () => {
                   </div>
 
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-gray-900">Địa chỉ</span>
-                    </div>
+                    {/* <div className="flex items-center gap-2 mb-1">
+                      <span className="font-medium text-gray-900">
+                        Nhà riêng
+                      </span>
+                    </div> */}
                     {customerAccount?.address === "" ? (
                       <p className="text-gray-600 text-base">
                         Khách hàng chưa cập nhật địa chỉ giao hàng
@@ -470,107 +482,113 @@ const Section01 = () => {
                 className="relative space-y-2 h-full scroll-bar-style"
                 ref={scrollContainerRef}
               >
-                {orders.map((order, index) => (
-                  <div
-                    key={index}
-                    className="border border-gray-200 rounded-lg p-4"
-                  >
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 items-center">
-                      <div>
-                        <p className="text-gray-500 mb-1">ID Đơn hàng:</p>
-                        <p className="font-medium text-gray-900">
-                          {order._id.slice(0, 10)}...
-                        </p>
+                {[...orders]
+                  .sort(
+                    (a, b) =>
+                      new Date(b.created_at).getTime() -
+                      new Date(a.created_at).getTime()
+                  )
+                  .map((order, index) => (
+                    <div
+                      key={index}
+                      className="border border-gray-200 rounded-lg p-4"
+                    >
+                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 items-center">
+                        <div>
+                          <p className="text-gray-500 mb-1">ID Đơn hàng:</p>
+                          <p className="font-medium text-gray-900">
+                            {order._id.slice(0, 10)}...
+                          </p>
+                        </div>
+
+                        <div>
+                          <p className="text-gray-500 mb-1">Ngày đặt:</p>
+                          <p className="text-gray-900 font-medium">
+                            {HELPER.formatDate(order.created_at)}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p className="text-gray-500 mb-1">Giá:</p>
+                          <p className="font-medium text-gray-900">
+                            {HELPER.formatVND(order.total)}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p className="text-gray-500 mb-1">Trạng thái:</p>
+                          <div
+                            className={`font-medium ${getStatusColor(
+                              order.status
+                            )}`}
+                          >
+                            {order?.status === "completed" && (
+                              <div className="flex flex-row items-center gap-1">
+                                <CircleCheckBig size={18} /> Hoàn thành
+                              </div>
+                            )}
+                            {order?.status === "paid pending" && (
+                              <div className="flex flex-row items-center gap-1">
+                                <HandCoins size={18} /> Chờ thanh toán
+                              </div>
+                            )}
+                            {order?.status === "paid" && (
+                              <div className="flex flex-row items-center gap-1">
+                                <CircleDollarSign size={18} /> Đã thanh toán
+                              </div>
+                            )}
+                            {order?.status === "delivering" && (
+                              <div className="flex flex-row items-center gap-1">
+                                <Truck size={18} /> Vận chuyển
+                              </div>
+                            )}
+                            {order?.status === "pending" && (
+                              <div className="flex flex-row items-center gap-1">
+                                <Package2 size={18} /> Chuẩn bị đơn
+                              </div>
+                            )}
+                            {order?.status === "waiting" && (
+                              <div className="flex flex-row items-center gap-1">
+                                <Clock8 size={18} /> Đợi phản hồi
+                              </div>
+                            )}
+                            {order?.status === "cancelled" && (
+                              <div className="flex flex-row items-center gap-1">
+                                <ClipboardX size={18} /> Đã hủy đơn
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
 
-                      <div>
-                        <p className="text-gray-500 mb-1">Ngày đặt:</p>
-                        <p className="text-gray-900 font-medium">
-                          {HELPER.formatDate(order.created_at)}
-                        </p>
-                      </div>
-
-                      <div>
-                        <p className="text-gray-500 mb-1">Giá:</p>
-                        <p className="font-medium text-gray-900">
-                          {HELPER.formatVND(order.total)}
-                        </p>
-                      </div>
-
-                      <div>
-                        <p className="text-gray-500 mb-1">Trạng thái:</p>
-                        <div
-                          className={`font-medium ${getStatusColor(
-                            order.status
-                          )}`}
-                        >
-                          {order?.status === "completed" && (
-                            <div className="flex flex-row items-center gap-1">
-                              <CircleCheckBig size={18} /> Hoàn thành
-                            </div>
-                          )}
-                          {order?.status === "paid pending" && (
-                            <div className="flex flex-row items-center gap-1">
-                              <HandCoins size={18} /> Chờ thanh toán
-                            </div>
-                          )}
-                          {order?.status === "paid" && (
-                            <div className="flex flex-row items-center gap-1">
-                              <CircleDollarSign size={18} /> Đã thanh toán
-                            </div>
-                          )}
-                          {order?.status === "delivering" && (
-                            <div className="flex flex-row items-center gap-1">
-                              <Truck size={18} /> Đang vận đơn
-                            </div>
-                          )}
-                          {order?.status === "pending" && (
-                            <div className="flex flex-row items-center gap-1">
-                              <Package2 size={18} /> Chuẩn bị hàng
-                            </div>
-                          )}
+                      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mt-4 pt-4 border-t border-gray-100">
+                        <div className="lg:hidden flex text-base mb-3">
+                          <span className="text-gray-500">Loại đơn hàng:</span>{" "}
+                          <span className="font-medium text-gray-900">
+                            &nbsp; Khung Ảnh
+                          </span>
+                        </div>
+                        <div className="flex gap-2">
                           {order?.status === "waiting" && (
-                            <div className="flex flex-row items-center gap-1">
-                              <Clock8 size={18} /> Đợi phản hồi
-                            </div>
+                            <CancelOrderModal
+                              order={order}
+                              onCancelled={handleCancelOrder}
+                            />
                           )}
-                          {order?.status === "cancelled" && (
-                            <div className="flex flex-row items-center gap-1">
-                              <ClipboardX size={18} /> Đã hủy đơn
-                            </div>
-                          )}
+                          <OrderDetailModal
+                            order={order}
+                            customerAccount={customerAccount}
+                          />
+                        </div>
+                        <div className="hidden lg:flex text-base">
+                          <span className="text-gray-500">Loại đơn hàng:</span>{" "}
+                          <span className="font-medium text-gray-900">
+                            &nbsp; Khung Ảnh
+                          </span>
                         </div>
                       </div>
                     </div>
-
-                    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mt-4 pt-4 border-t border-gray-100">
-                      <div className="lg:hidden flex text-base mb-3">
-                        <span className="text-gray-500">Loại đơn hàng:</span>{" "}
-                        <span className="font-medium text-gray-900">
-                          &nbsp; Khung Ảnh
-                        </span>
-                      </div>
-                      <div className="flex gap-2">
-                        {order?.status !== "cancelled" && (
-                          <CancelOrderModal
-                            order={order}
-                            onCancelled={handleCancelOrder}
-                          />
-                        )}
-                        <OrderDetailModal
-                          order={order}
-                          customerAccount={customerAccount}
-                        />
-                      </div>
-                      <div className="hidden lg:flex text-base">
-                        <span className="text-gray-500">Loại đơn hàng:</span>{" "}
-                        <span className="font-medium text-gray-900">
-                          &nbsp; Khung Ảnh
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
               <div
                 className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300 ${

@@ -13,52 +13,38 @@ import { IMAGES } from "@/utils/image";
 import { API } from "@/utils/api";
 import { AccountService } from "@/services/account";
 import { ROUTES } from "@/utils/route";
+interface LoginFormProps {
+  onLogin: (username: string, password: string) => Promise<void>;
+}
 
-const LoginFormMobile = () => {
+const LoginFormMobile = ({ onLogin }: LoginFormProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [logined, setLogined] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmitWithGoogle = async (e: any) => {
+  const handleSubmitWithGoogle = async (e: React.MouseEvent) => {
     e.preventDefault();
     window.location.href = API.AUTH.LOGIN_WITH_GOOGLE;
   };
 
   const validateForm = () => {
-    if (username === "" || password === "") {
+    if (!username || !password) {
       toast({
         variant: "destructive",
         title: "Vui lòng điền đầy đủ thông tin",
       });
       return false;
-    } else {
-      return true;
     }
+    return true;
   };
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
+
     setIsLoading(true);
-
     try {
-      let data;
-
-      if (/^\d+$/.test(username)) {
-        data = await AccountService.loginAccountPhone(username, password);
-      } else {
-        data = await AccountService.loginAccountEmail(username, password);
-      }
-
-      if (data?.message === "SUCCESS") {
-        Cookies.set("isLogin", data?.data, { expires: 7 });
-        Cookies.set("userLogin", data?.data, { expires: 7 });
-        setLogined(true);
-        router.push(ROUTES.HOME);
-      } else {
-        throw new Error("Email hoặc mật khẩu chưa chính xác");
-      }
+      await onLogin(username, password);
     } catch (error) {
       console.error("========= Error Login:", error);
       toast({
@@ -126,7 +112,7 @@ const LoginFormMobile = () => {
                   </div>
                   <div className="w-full flex justify-center items-center gap-2">
                     <Button
-                      // onClick={() => handleSubmit()}
+                      onClick={() => handleSubmit()}
                       className="w-full text-[16px] py-6 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-85 text-white rounded-md"
                     >
                       {isLoading ? "Vui lòng đợi" : "Đăng nhập"}{" "}
