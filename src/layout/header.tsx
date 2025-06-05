@@ -381,7 +381,7 @@ const Header: React.FC<HeaderProps> = ({
                       alt="avatar"
                       width={1000}
                       height={1000}
-                      className="w-11 h-11 object-cover rounded-full cursor-pointer"
+                      className="w-10 h-10 object-cover rounded-full cursor-pointer"
                     />
                   </DropdownTrigger>
 

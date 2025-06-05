@@ -160,6 +160,7 @@ const Section01 = () => {
   const pathParams = useSearchParams();
   const tab = pathParams.get("orderNoLogin");
   const [openDialog, setOpenDialog] = useState(false);
+  const [openChangePassword, setOpenChangePassword] = useState(false);
 
   useEffect(() => {
     if (tab === "true") {
@@ -241,24 +242,24 @@ const Section01 = () => {
     setCustomerAccount((prev) =>
       prev
         ? {
-          ...prev,
-          ...updatedData,
-          ward:
-            updatedData.ward !== undefined
-              ? String(updatedData.ward)
-              : prev.ward,
-          district:
-            updatedData.district !== undefined
-              ? String(updatedData.district)
-              : prev.district,
-          province:
-            updatedData.province !== undefined
-              ? String(updatedData.province)
-              : prev.province,
-          provinceName: updatedData.provinceName || prev.provinceName || "",
-          districtName: updatedData.districtName || prev.districtName || "",
-          wardName: updatedData.wardName || prev.wardName || "",
-        }
+            ...prev,
+            ...updatedData,
+            ward:
+              updatedData.ward !== undefined
+                ? String(updatedData.ward)
+                : prev.ward,
+            district:
+              updatedData.district !== undefined
+                ? String(updatedData.district)
+                : prev.district,
+            province:
+              updatedData.province !== undefined
+                ? String(updatedData.province)
+                : prev.province,
+            provinceName: updatedData.provinceName || prev.provinceName || "",
+            districtName: updatedData.districtName || prev.districtName || "",
+            wardName: updatedData.wardName || prev.wardName || "",
+          }
         : null
     );
   };
@@ -350,14 +351,13 @@ const Section01 = () => {
               >
                 Bỏ qua
               </button>
-              <Link href={`${ROUTES.ACCOUNT}?tab=password`} className="">
-                <button
-                  type="button"
-                  className="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-base rounded text-[16px] px-3 h-8 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800"
-                >
-                  Cập nhật mật khẩu
-                </button>
-              </Link>
+              <button
+                onClick={() => setOpenChangePassword(true)}
+                type="button"
+                className="text-white bg-yellow-800 hover:bg-yellow-900 font-base rounded text-[16px] px-3 h-8 text-center inline-flex items-center"
+              >
+                Cập nhật mật khẩu
+              </button>
             </div>
           </div>
         )}
@@ -401,7 +401,10 @@ const Section01 = () => {
                       customerAccount={customerAccount}
                       onUpdate={handleProfileUpdate}
                     />
-                    <ChangePasswordForm />
+                    <ChangePasswordForm
+                      open={openChangePassword}
+                      setOpen={setOpenChangePassword}
+                    />
                   </div>
                 </div>
               </div>
@@ -466,8 +469,9 @@ const Section01 = () => {
 
             <div className="relative">
               <div
-                className={`absolute top-0 inset-x-0 bg-gradient-to-b from-white z-20 to-transparent pointer-events-none transition-opacity duration-300 ${showTopGradient ? "opacity-100" : "opacity-0"
-                  }`}
+                className={`absolute top-0 inset-x-0 bg-gradient-to-b from-white z-20 to-transparent pointer-events-none transition-opacity duration-300 ${
+                  showTopGradient ? "opacity-100" : "opacity-0"
+                }`}
                 style={{ height: "40px" }}
               />
               <div
@@ -583,8 +587,9 @@ const Section01 = () => {
                   ))}
               </div>
               <div
-                className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300 ${showBottomGradient ? "opacity-100" : "opacity-0"
-                  }`}
+                className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300 ${
+                  showBottomGradient ? "opacity-100" : "opacity-0"
+                }`}
                 style={{ height: "40px" }}
               />
             </div>

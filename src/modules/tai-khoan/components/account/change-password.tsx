@@ -76,14 +76,18 @@ export interface CustomerAccount {
   wardName: string;
 }
 
-const ChangePasswordForm = () => {
+interface ChangePasswordFormProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}
+
+const ChangePasswordForm = ({ open, setOpen }: ChangePasswordFormProps) => {
   const emailCookie = Cookies.get("isLogin");
   const isLogin = Cookies.get("isLogin");
   const [loading, setLoading] = React.useState(false);
   const [customerAccount, setCustomerAccount] =
     useState<CustomerAccount | null>(null);
   const router = useRouter();
-  const [open, setOpen] = useState(false);
 
   const [formData, setFormData] = React.useState<FormData>({
     password: "",
