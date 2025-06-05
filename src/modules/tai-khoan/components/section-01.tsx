@@ -28,13 +28,6 @@ import { OrderService } from "@/services/order";
 import { HELPER } from "@/utils/helper";
 import { useRouter, useSearchParams } from "next/navigation";
 
-// interface Order {
-//   id: string;
-//   date: string;
-//   price: string;
-//   status: "Pre-order" | "Completed" | "Cancelled";
-// }
-
 export type OrderStatus =
   | "pending"
   | "cancelled"
@@ -248,24 +241,24 @@ const Section01 = () => {
     setCustomerAccount((prev) =>
       prev
         ? {
-            ...prev,
-            ...updatedData,
-            ward:
-              updatedData.ward !== undefined
-                ? String(updatedData.ward)
-                : prev.ward,
-            district:
-              updatedData.district !== undefined
-                ? String(updatedData.district)
-                : prev.district,
-            province:
-              updatedData.province !== undefined
-                ? String(updatedData.province)
-                : prev.province,
-            provinceName: updatedData.provinceName || prev.provinceName || "",
-            districtName: updatedData.districtName || prev.districtName || "",
-            wardName: updatedData.wardName || prev.wardName || "",
-          }
+          ...prev,
+          ...updatedData,
+          ward:
+            updatedData.ward !== undefined
+              ? String(updatedData.ward)
+              : prev.ward,
+          district:
+            updatedData.district !== undefined
+              ? String(updatedData.district)
+              : prev.district,
+          province:
+            updatedData.province !== undefined
+              ? String(updatedData.province)
+              : prev.province,
+          provinceName: updatedData.provinceName || prev.provinceName || "",
+          districtName: updatedData.districtName || prev.districtName || "",
+          wardName: updatedData.wardName || prev.wardName || "",
+        }
         : null
     );
   };
@@ -473,9 +466,8 @@ const Section01 = () => {
 
             <div className="relative">
               <div
-                className={`absolute top-0 inset-x-0 bg-gradient-to-b from-white z-20 to-transparent pointer-events-none transition-opacity duration-300 ${
-                  showTopGradient ? "opacity-100" : "opacity-0"
-                }`}
+                className={`absolute top-0 inset-x-0 bg-gradient-to-b from-white z-20 to-transparent pointer-events-none transition-opacity duration-300 ${showTopGradient ? "opacity-100" : "opacity-0"
+                  }`}
                 style={{ height: "40px" }}
               />
               <div
@@ -591,9 +583,8 @@ const Section01 = () => {
                   ))}
               </div>
               <div
-                className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300 ${
-                  showBottomGradient ? "opacity-100" : "opacity-0"
-                }`}
+                className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300 ${showBottomGradient ? "opacity-100" : "opacity-0"
+                  }`}
                 style={{ height: "40px" }}
               />
             </div>

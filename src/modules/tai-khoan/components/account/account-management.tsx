@@ -453,6 +453,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
           toast({
             title: "Thành công",
             description: "Cập nhật thông tin thành công!",
+            className: "bg-green-500 text-white",
           });
           onUpdate(formattedData);
           setOpen(false);

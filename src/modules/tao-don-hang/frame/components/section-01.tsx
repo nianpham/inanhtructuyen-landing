@@ -300,8 +300,6 @@ const Section01 = () => {
       try {
         const res = await ProductService.getProductById(selectedProduct);
         if (res && res.data) {
-          console.log("Fetched Product Data:", res.data);
-
           setProductsData(res.data);
         }
       } catch (error) {
@@ -604,14 +602,14 @@ const Section01 = () => {
         window.location.href = accountOrderLogin
           ? `${ROUTES.ACCOUNT}`
           : response?.data?.isAccountExisted === true
-          ? `${ROUTES.ACCOUNT}`
-          : `${ROUTES.ACCOUNT}?orderNoLogin=true`;
+            ? `${ROUTES.ACCOUNT}`
+            : `${ROUTES.ACCOUNT}?orderNoLogin=true`;
       } else {
         window.location.href = accountOrderLogin
           ? `${ROUTES.ACCOUNT}`
           : response?.data?.isAccountExisted === true
-          ? `${ROUTES.ACCOUNT}`
-          : `${ROUTES.ACCOUNT}?orderNoLogin=true`;
+            ? `${ROUTES.ACCOUNT}`
+            : `${ROUTES.ACCOUNT}?orderNoLogin=true`;
       }
     } catch (error) {
       console.error("Error submitting order:", error);
@@ -944,9 +942,8 @@ const Section01 = () => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`w-4 h-4 ${
-          i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
-        }`}
+        className={`w-4 h-4 ${i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+          }`}
       />
     ));
   };
@@ -1114,10 +1111,9 @@ const Section01 = () => {
                   <div
                     onClick={() => setSelectedPayment("cash")}
                     className={`cursor-pointer p-4 flex justify-between items-center rounded-md
-                      ${
-                        selectedPayment === "cash"
-                          ? "border border-[rgb(var(--fifteenth-rgb))]"
-                          : "border border-gray-200"
+                      ${selectedPayment === "cash"
+                        ? "border border-[rgb(var(--fifteenth-rgb))]"
+                        : "border border-gray-200"
                       }
                       `}
                   >
@@ -1133,11 +1129,10 @@ const Section01 = () => {
                       </label>
                     </div>
                     <div
-                      className={`cursor-pointer w-4 h-4 rounded-full mr-2 ${
-                        selectedPayment === "cash"
-                          ? "bg-[rgb(var(--fifteenth-rgb))]"
-                          : ""
-                      }`}
+                      className={`cursor-pointer w-4 h-4 rounded-full mr-2 ${selectedPayment === "cash"
+                        ? "bg-[rgb(var(--fifteenth-rgb))]"
+                        : ""
+                        }`}
                     ></div>
                   </div>
                   {/* <div
@@ -1332,7 +1327,7 @@ const Section01 = () => {
             <div className="flex flex-col justify-evenly lg:justify-between h-full lg:h-full lg:mt-5">
               <div className="flex justify-center items-center mt-2 lg:mt-0">
                 {!currentImage && !uploadedFile && !frameImage ? (
-                  <div className="mt-3 lg:mt-0 w-full">
+                  <div className="mt-1 lg:mt-0 w-full">
                     <ImageUpload
                       onImageChange={handleImageUpload}
                       selectedColor={selectedColor}
@@ -1356,8 +1351,8 @@ const Section01 = () => {
                           croppedImage
                             ? croppedImage
                             : uploadedFile && !frameImage
-                            ? URL.createObjectURL(uploadedFile)
-                            : currentImage || IMAGES.LOGO
+                              ? URL.createObjectURL(uploadedFile)
+                              : currentImage || IMAGES.LOGO
                         }
                         alt="Selected product image"
                         width={1000}
@@ -1367,21 +1362,19 @@ const Section01 = () => {
                         //     ? "w-full h-full"
                         //     : "w-1/2 lg:w-full h-full"
                         // }
-                        className={`object-contain w-full !h-64 ${
-                          selectedProduct !== "Chon san pham" ? "border-8" : ""
-                        } ${
-                          selectedColor === "white"
+                        className={`object-contain w-full !h-64 ${selectedProduct !== "Chon san pham" ? "border-8" : ""
+                          } ${selectedColor === "white"
                             ? "border-gray-100"
                             : selectedColor === "black"
-                            ? "border-black"
-                            : selectedColor === "gold"
-                            ? "border-yellow-400"
-                            : selectedColor === "silver"
-                            ? "border-gray-200"
-                            : selectedColor === "wood"
-                            ? "border-yellow-950"
-                            : "border-gray-200"
-                        } rounded-md`}
+                              ? "border-black"
+                              : selectedColor === "gold"
+                                ? "border-yellow-400"
+                                : selectedColor === "silver"
+                                  ? "border-gray-200"
+                                  : selectedColor === "wood"
+                                    ? "border-yellow-950"
+                                    : "border-gray-200"
+                          } rounded-md`}
                         onError={(e) => {
                           e.currentTarget.src = IMAGES.LOGO;
                         }}
@@ -1461,11 +1454,10 @@ const Section01 = () => {
                                 {sizeOptions.map((size) => (
                                   <button
                                     key={size.id}
-                                    className={`border w-20 px-0 py-2 rounded-md ${
-                                      selectedSize === size.id
-                                        ? "border-yellow-500 bg-yellow-50"
-                                        : "border-gray-300"
-                                    }`}
+                                    className={`border w-20 px-0 py-2 rounded-md ${selectedSize === size.id
+                                      ? "border-yellow-500 bg-yellow-50"
+                                      : "border-gray-300"
+                                      }`}
                                     onClick={() => setSelectedSize(size.id)}
                                   >
                                     {size.label}
@@ -1757,30 +1749,30 @@ const Section01 = () => {
                   <div className="rounded-md divide-y">
                     <div
                       onClick={() => setSelectedPayment("cash")}
-                      className={`cursor-pointer p-4 flex items-center rounded-md
-                      ${
-                        selectedPayment === "cash"
+                      className={`cursor-pointer p-4 flex justify-between items-center rounded-md
+                      ${selectedPayment === "cash"
                           ? "border border-[rgb(var(--fifteenth-rgb))]"
                           : "border border-gray-200"
-                      }
+                        }
                       `}
                     >
-                      {/* <div
-                      className={`cursor-pointer w-5 h-5 rounded-full mr-2 ${
-                        selectedPayment === "cash"
-                          ? "border border-gray-200 bg-[rgb(var(--fifteenth-rgb))]"
-                          : "border border-gray-200"
-                      }`}
-                    ></div> */}
-                      <Image
-                        src="https://cdn-icons-png.flaticon.com/128/7630/7630510.png"
-                        alt="Tiền mặt"
-                        width={24}
-                        height={24}
-                      />
-                      <label htmlFor="cash" className="cursor-pointer ml-2">
-                        Thanh toán khi nhận hàng
-                      </label>
+                      <div className="flex flex-row items-center">
+                        <Image
+                          src="https://cdn-icons-png.flaticon.com/128/7630/7630510.png"
+                          alt="Tiền mặt"
+                          width={24}
+                          height={24}
+                        />
+                        <label htmlFor="cash" className="cursor-pointer ml-2">
+                          Thanh toán khi nhận hàng
+                        </label>
+                      </div>
+                      <div
+                        className={`cursor-pointer w-4 h-4 rounded-full mr-2 ${selectedPayment === "cash"
+                          ? "bg-[rgb(var(--fifteenth-rgb))]"
+                          : ""
+                          }`}
+                      ></div>
                     </div>
                     {/* <div
                       onClick={() => setSelectedPayment("bank")}
@@ -1925,13 +1917,12 @@ const Section01 = () => {
                           <input
                             type="text"
                             placeholder="Nhập mã khuyến mãi"
-                            className={`w-full h-10 border border-gray-300 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${
-                              isValid === false
-                                ? ""
-                                : isValid === true
+                            className={`w-full h-10 border border-gray-300 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${isValid === false
+                              ? ""
+                              : isValid === true
                                 ? ""
                                 : ""
-                            }`}
+                              }`}
                             value={promoCode}
                             onChange={(e) => {
                               setPromoCode(e.target.value);
@@ -1943,9 +1934,8 @@ const Section01 = () => {
                     </DialogHeader>
                     <DialogClose>
                       <div
-                        className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center rounded-md font-medium cursor-pointer ${
-                          isChecking ? "opacity-50 cursor-not-allowed" : ""
-                        }`}
+                        className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center rounded-md font-medium cursor-pointer ${isChecking ? "opacity-50 cursor-not-allowed" : ""
+                          }`}
                         onClick={!isChecking ? handleCheckDiscount : undefined}
                       >
                         {isChecking ? "Đang kiểm tra..." : "Dùng mã"}

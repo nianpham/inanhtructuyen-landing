@@ -431,14 +431,14 @@ const Section01 = () => {
         window.location.href = accountOrderLogin
           ? `${ROUTES.ACCOUNT}?tab=history`
           : response?.data?.isAccountExisted === true
-          ? `${ROUTES.ACCOUNT}?tab=history`
-          : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
+            ? `${ROUTES.ACCOUNT}?tab=history`
+            : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
       } else {
         window.location.href = accountOrderLogin
           ? `${ROUTES.ACCOUNT}?tab=history`
           : response?.data?.isAccountExisted === true
-          ? `${ROUTES.ACCOUNT}?tab=history`
-          : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
+            ? `${ROUTES.ACCOUNT}?tab=history`
+            : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
       }
     } catch (error) {
       console.error("Error submitting order:", error);
@@ -478,47 +478,6 @@ const Section01 = () => {
     }
   }, [formData.province, formData.district, provinces, formData.ward]);
 
-  useEffect(() => {
-    const fetchAccount = async () => {
-      if (isLogin) {
-        try {
-          const data = await AccountService.getAccountById(isLogin);
-          setCustomerAccount(data);
-          setFormData({
-            name: data?.name,
-            email: data?.email,
-            avatar: data?.avatar,
-            phone: data?.phone,
-            address: data?.address,
-            ward: data?.ward,
-            district: data?.district,
-            province: data?.province,
-          });
-        } catch (error) {
-          console.error("Error fetching account:", error);
-        }
-      }
-    };
-
-    const fetchOrder = async () => {
-      if (orderID) {
-        try {
-          const data = await OrderService.getOrderById(orderID);
-          setFormDataOrder({
-            pages: data?.pages,
-            size: data?.size,
-            album_data: data?.album_data,
-          });
-        } catch (error) {
-          console.error("Error fetching order:", error);
-        }
-      }
-    };
-
-    fetchAccount();
-    fetchOrder();
-  }, []);
-
   React.useEffect(() => {
     const fetchProvinces = async () => {
       try {
@@ -533,6 +492,190 @@ const Section01 = () => {
     };
     fetchProvinces();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchAccount = async () => {
+  //     if (isLogin) {
+  //       try {
+  //         const data = await AccountService.getAccountById(isLogin);
+  //         setCustomerAccount(data);
+  //         setFormData({
+  //           name: data?.name,
+  //           email: data?.email,
+  //           avatar: data?.avatar,
+  //           phone: data?.phone,
+  //           address: data?.address,
+  //           ward: data?.ward,
+  //           district: data?.district,
+  //           province: data?.province,
+  //         });
+  //       } catch (error) {
+  //         console.error("Error fetching account:", error);
+  //       }
+  //     }
+  //   };
+
+  //   const fetchOrder = async () => {
+  //     if (orderID) {
+  //       try {
+  //         const data = await OrderService.getOrderById(orderID);
+  //         setFormDataOrder({
+  //           pages: data?.pages,
+  //           size: data?.size,
+  //           album_data: data?.album_data,
+  //         });
+  //       } catch (error) {
+  //         console.error("Error fetching order:", error);
+  //       }
+  //     }
+  //   };
+
+  //   fetchAccount();
+  //   fetchOrder();
+  // }, []);
+
+  useEffect(() => {
+    const fetchAccount = async () => {
+      if (isLogin) {
+        try {
+          const data = await AccountService.getAccountById(isLogin);
+          setCustomerAccount(data);
+
+          // Update formData with account data
+          setFormData({
+            name: data.name,
+            email: data.email,
+            avatar: data.avatar,
+            phone: data.phone,
+            address: data.address,
+            ward: Number(data.ward),
+            district: Number(data.district),
+            province: Number(data.province),
+          });
+
+          // Find and set province, district, and ward names
+          const selectedProvince = provinces.find(
+            (p) => p.code === Number(data.province)
+          );
+          if (selectedProvince) {
+            setProvince(selectedProvince.name);
+            setDistricts(selectedProvince.districts);
+
+            const selectedDistrict = selectedProvince.districts.find(
+              (d) => d.code === Number(data.district)
+            );
+            if (selectedDistrict) {
+              setDistrict(selectedDistrict.name);
+              setWards(selectedDistrict.wards);
+
+              const selectedWard = selectedDistrict.wards.find(
+                (w) => w.code === Number(data.ward)
+              );
+              if (selectedWard) {
+                setWard(selectedWard.name);
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching account:", error);
+        }
+      }
+    };
+
+    if (provinces.length > 0) {
+      fetchAccount();
+    }
+  }, [isLogin, provinces]);
+
+
+  React.useEffect(() => {
+    if (formData.province && provinces.length > 0) {
+      const selectedProvince = provinces.find(
+        (p) => p.code === formData.province
+      );
+      if (selectedProvince) {
+        setProvince(selectedProvince.name);
+        setDistricts(selectedProvince.districts);
+
+        if (formData.district) {
+          const selectedDistrict = selectedProvince.districts.find(
+            (d) => d.code === formData.district
+          );
+          if (selectedDistrict) {
+            setDistrict(selectedDistrict.name);
+            setWards(selectedDistrict.wards);
+
+            if (formData.ward) {
+              const selectedWard = selectedDistrict.wards.find(
+                (w) => w.code === formData.ward
+              );
+              if (selectedWard) {
+                setWard(selectedWard.name);
+              } else {
+                setWard("Vui lòng chọn Phường/Xã");
+                setFormData((prev) => ({ ...prev, ward: 0 }));
+              }
+            } else {
+              setWard("Vui lòng chọn Phường/Xã");
+              setFormData((prev) => ({ ...prev, ward: 0 }));
+            }
+          } else {
+            setDistrict("Vui lòng chọn Quận/Huyện");
+            setWards([]);
+            setFormData((prev) => ({ ...prev, district: 0, ward: 0 }));
+          }
+        } else {
+          setDistrict("Vui lòng chọn Quận/Huyện");
+          setWards([]);
+          setFormData((prev) => ({ ...prev, district: 0, ward: 0 }));
+        }
+      } else {
+        setProvince("Vui lòng chọn Tỉnh/Thành phố");
+        setDistricts([]);
+        setWards([]);
+        setFormData((prev) => ({ ...prev, province: 0, district: 0, ward: 0 }));
+      }
+    }
+  }, [formData.province, formData.district, formData.ward, provinces]);
+
+
+  // React.useEffect(() => {
+  //   const fetchProvinces = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "https://provinces.open-api.vn/api/?depth=3"
+  //       );
+  //       const data = await response.json();
+  //       setProvinces(data);
+  //     } catch (error) {
+  //       console.error("Error fetching provinces:", error);
+  //     }
+  //   };
+  //   fetchProvinces();
+  // }, []);
+
+  // const handleProvinceChange = (provinceCode: string) => {
+  //   const selectedProvince = provinces.find(
+  //     (p) => p.code === Number(provinceCode)
+  //   );
+  //   if (selectedProvince) {
+  //     setDistricts(selectedProvince.districts);
+  //     setWards([]);
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       province: Number(provinceCode),
+  //       district: 0,
+  //       ward: 0,
+  //     }));
+  //     setProvince(selectedProvince.name);
+  //     setDistrict("Vui lòng chọn Quận/Huyện");
+  //     setWard("Vui lòng chọn Phường/Xã");
+  //     setOpenProvinces(false);
+  //   } else {
+  //     setDistricts([]);
+  //     setWards([]);
+  //   }
+  // };
 
   const handleProvinceChange = (provinceCode: string) => {
     const selectedProvince = provinces.find(
@@ -554,9 +697,31 @@ const Section01 = () => {
     } else {
       setDistricts([]);
       setWards([]);
+      setFormData((prev) => ({ ...prev, province: 0, district: 0, ward: 0 }));
+      setProvince("Vui lòng chọn Tỉnh/Thành phố");
+      setDistrict("Vui lòng chọn Quận/Huyện");
+      setWard("Vui lòng chọn Phường/Xã");
     }
   };
 
+  // const handleDistrictChange = (districtCode: string) => {
+  //   const selectedDistrict = districts.find(
+  //     (d) => d.code === Number(districtCode)
+  //   );
+  //   if (selectedDistrict) {
+  //     setWards(selectedDistrict.wards || []);
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       district: Number(districtCode),
+  //       ward: 0,
+  //     }));
+  //     setDistrict(selectedDistrict.name);
+  //     setWard("Vui lòng chọn Phường/Xã");
+  //     setOpenDistrict(false);
+  //   } else {
+  //     setWards([]);
+  //   }
+  // };
   const handleDistrictChange = (districtCode: string) => {
     const selectedDistrict = districts.find(
       (d) => d.code === Number(districtCode)
@@ -573,20 +738,37 @@ const Section01 = () => {
       setOpenDistrict(false);
     } else {
       setWards([]);
+      setFormData((prev) => ({ ...prev, district: 0, ward: 0 }));
+      setDistrict("Vui lòng chọn Quận/Huyện");
+      setWard("Vui lòng chọn Phường/Xã");
     }
   };
 
+  // const handleWardChange = (wardCode: String) => {
+  //   const selectedWard = wards.find((w) => w.code === Number(wardCode));
+
+  //   if (selectedWard) {
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       ward: Number(wardCode),
+  //     }));
+
+  //     setWard(selectedWard.name);
+  //     setOpenWard(false);
+  //   }
+  // };
   const handleWardChange = (wardCode: String) => {
     const selectedWard = wards.find((w) => w.code === Number(wardCode));
-
     if (selectedWard) {
       setFormData((prev) => ({
         ...prev,
         ward: Number(wardCode),
       }));
-
       setWard(selectedWard.name);
       setOpenWard(false);
+    } else {
+      setFormData((prev) => ({ ...prev, ward: 0 }));
+      setWard("Vui lòng chọn Phường/Xã");
     }
   };
 
@@ -606,9 +788,6 @@ const Section01 = () => {
           <div className="hidden lg:grid w-full h-full md:w-1/2">
             <div>
               <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
-                <div
-                  className={`absolute bottom-[10%] left-[19%] h-1 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
                 <UserRound className="w-5 h-5" />
                 <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                   Thông tin khách hàng
@@ -650,9 +829,6 @@ const Section01 = () => {
             </div>
             <div>
               <div className="flex flex-row items-center gap-2 relative mb-3.5 z-20">
-                <div
-                  className={`absolute bottom-[10%] left-[15%] h-1 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
                 <MapPin className="w-5 h-5" />
                 <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                   Địa chỉ nhận hàng
@@ -667,7 +843,7 @@ const Section01 = () => {
                     Tỉnh/Thành phố:
                   </Label>
                   <Select
-                    // value={String(formData.province)}
+                    value={formData.province ? String(formData.province) : ""}
                     onValueChange={handleProvinceChange}
                     disabled={loading}
                   >
@@ -694,7 +870,7 @@ const Section01 = () => {
                     Quận/Huyện:
                   </Label>
                   <Select
-                    // value={String(formData.district)}
+                    value={formData.district ? String(formData.district) : ""}
                     onValueChange={handleDistrictChange}
                     disabled={!formData.province || loading}
                   >
@@ -722,7 +898,7 @@ const Section01 = () => {
                   Phường/Xã:
                 </Label>
                 <Select
-                  // value={String(formData.ward)}
+                  value={formData.ward ? String(formData.ward) : ""}
                   onValueChange={handleWardChange}
                   disabled={!formData.district || loading}
                 >
@@ -760,9 +936,6 @@ const Section01 = () => {
                 <>
                   <div>
                     <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
-                      <div
-                        className={`absolute bottom-[10%] left-[19%] h-1 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                      ></div>
                       <CreditCard className="w-5 h-5" />
                       <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                         Tùy chọn thanh toán
@@ -771,30 +944,30 @@ const Section01 = () => {
                     <div className="rounded-md divide-y">
                       <div
                         onClick={() => setSelectedPayment("cash")}
-                        className={`cursor-pointer p-4 flex items-center rounded-md
-                                          ${
-                                            selectedPayment === "cash"
-                                              ? "border border-[rgb(var(--fifteenth-rgb))]"
-                                              : "border border-gray-200"
-                                          }
-                                          `}
+                        className={`cursor-pointer p-4 flex justify-between items-center rounded-md
+                                           ${selectedPayment === "cash"
+                            ? "border border-[rgb(var(--fifteenth-rgb))]"
+                            : "border border-gray-200"
+                          }
+                                           `}
                       >
-                        {/* <div
-                                          className={`cursor-pointer w-5 h-5 rounded-full mr-2 ${
-                                            selectedPayment === "cash"
-                                              ? "border border-gray-200 bg-[rgb(var(--fifteenth-rgb))]"
-                                              : "border border-gray-200"
-                                          }`}
-                                        ></div> */}
-                        <Image
-                          src="https://cdn-icons-png.flaticon.com/128/7630/7630510.png"
-                          alt="Tiền mặt"
-                          width={24}
-                          height={24}
-                        />
-                        <label htmlFor="cash" className="cursor-pointer ml-2">
-                          Thanh toán khi nhận hàng
-                        </label>
+                        <div className="flex flex-row items-center">
+                          <Image
+                            src="https://cdn-icons-png.flaticon.com/128/7630/7630510.png"
+                            alt="Tiền mặt"
+                            width={24}
+                            height={24}
+                          />
+                          <label htmlFor="cash" className="cursor-pointer ml-2">
+                            Thanh toán khi nhận hàng
+                          </label>
+                        </div>
+                        <div
+                          className={`cursor-pointer w-4 h-4 rounded-full mr-2 ${selectedPayment === "cash"
+                            ? "bg-[rgb(var(--fifteenth-rgb))]"
+                            : ""
+                            }`}
+                        ></div>
                       </div>
                       {/* <div
                         onClick={() => setSelectedPayment("bank")}
@@ -833,9 +1006,6 @@ const Section01 = () => {
                   </div>
                   <div className="mt-6">
                     <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
-                      <div
-                        className={`absolute bottom-[10%] left-[32%] h-1 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                      ></div>
                       <StickyNote className="w-5 h-5" />
                       <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                         Thêm ghi chú cho đơn hàng
@@ -852,9 +1022,6 @@ const Section01 = () => {
           <div className="w-full lg:w-1/2 space-y-6">
             <div>
               <div className="flex flex-row gap-2 items-center mb-3.5 relative z-20">
-                <div
-                  className={`absolute bottom-[10%] left-[34%] lg:left-[19%] h-1 w-16 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                ></div>
                 <Frame className="w-5 h-5" />
                 <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                   Thông tin Album
@@ -944,9 +1111,6 @@ const Section01 = () => {
             <div className="lg:hidden w-full md:w-1/2 space-y-6 !mt-3">
               <div>
                 <div className="flex flex-row items-center gap-2 mb-3.5 relative z-20">
-                  <div
-                    className={`absolute bottom-[10%] left-[34%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                  ></div>
                   <UserRound className="w-5 h-5" />
                   <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                     Thông tin khách hàng
@@ -990,9 +1154,6 @@ const Section01 = () => {
               </div>
               <div>
                 <div className="flex flex-row items-center gap-2 relative mb-3.5 z-20">
-                  <div
-                    className={`absolute bottom-[10%] left-[27%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                  ></div>
                   <MapPin className="w-5 h-5" />
                   <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                     Địa chỉ nhận hàng
@@ -1145,9 +1306,6 @@ const Section01 = () => {
                   <>
                     <div>
                       <div className="flex flex-row items-center gap-2 mb-2 relative z-20">
-                        <div
-                          className={`absolute bottom-[10%] left-[33%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                        ></div>
                         <CreditCard className="w-5 h-5" />
                         <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                           Tùy chọn thanh toán
@@ -1156,23 +1314,30 @@ const Section01 = () => {
                       <div className="border border-gray-200 rounded-md divide-y">
                         <div
                           onClick={() => setSelectedPayment("cash")}
-                          className="cursor-pointer p-4 flex items-center"
+                          className={`cursor-pointer p-4 flex justify-between items-center rounded-md
+                                             ${selectedPayment === "cash"
+                              ? "border border-[rgb(var(--fifteenth-rgb))]"
+                              : "border border-gray-200"
+                            }
+                                             `}
                         >
-                          <div className="cursor-pointer grid grid-cols-12 items-center">
-                            <div
-                              className={`col-span-1 cursor-pointer w-5 h-5 rounded-full mr-2 ${
-                                selectedPayment === "cash"
-                                  ? "border border-gray-200 bg-[rgb(var(--fifteenth-rgb))]"
-                                  : "border border-gray-200"
-                              }`}
-                            ></div>
-                            <label
-                              htmlFor="cash"
-                              className="col-span-11 cursor-pointer ml-2"
-                            >
+                          <div className="flex flex-row items-center">
+                            <Image
+                              src="https://cdn-icons-png.flaticon.com/128/7630/7630510.png"
+                              alt="Tiền mặt"
+                              width={24}
+                              height={24}
+                            />
+                            <label htmlFor="cash" className="cursor-pointer ml-2">
                               Thanh toán khi nhận hàng
                             </label>
                           </div>
+                          <div
+                            className={`cursor-pointer w-4 h-4 rounded-full mr-2 ${selectedPayment === "cash"
+                              ? "bg-[rgb(var(--fifteenth-rgb))]"
+                              : ""
+                              }`}
+                          ></div>
                         </div>
                         {/* <div
                           onClick={() => setSelectedPayment("bank")}
@@ -1215,9 +1380,6 @@ const Section01 = () => {
                     </div>
                     <div>
                       <div className="flex flex-row items-center gap-2 mb-2 relative z-20">
-                        <div
-                          className={`absolute bottom-[10%] left-[54%] h-1.5 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-                        ></div>
                         <StickyNote className="w-5 h-5" />
                         <h2 className="text-lg lg:text-xl font-medium z-20 relative">
                           Thêm ghi chú cho đơn hàng
@@ -1236,7 +1398,7 @@ const Section01 = () => {
             {/* {selectedCore !== "chon-loai-ruot" &&
               selectedCover !== "chon-loai-bia" && ( */}
             <>
-              <div className="border-t pt-4 space-y-2">
+              <div className="border-t pt-4 space-y-2 !mt-2">
                 <div className="flex justify-between">
                   <span className="font-light">Giá bìa Album</span>
                   {selectedCover === "chon-loai-bia" ? (
@@ -1257,10 +1419,10 @@ const Section01 = () => {
                     </span>
                   )}
                 </div>
-                <div className="flex justify-between">
-                  <span className="font-light">Phí vận chuyển</span>
-                  <span className="text-green-500">
-                    + {HELPER.formatVND("30000")}
+                <div className="flex justify-between font-light">
+                  <span className="">Phí vận chuyển</span>
+                  <span className="">
+                    {HELPER.formatVND("30000")}
                   </span>
                 </div>
                 {/* <div className="flex justify-between">
@@ -1274,7 +1436,7 @@ const Section01 = () => {
                 <div className="flex justify-between items-center pt-0 font-light">
                   <span>Khuyến mãi</span>
                   {selectedCore === "chon-loai-ruot" ||
-                  selectedCover === "chon-loai-bia" ? (
+                    selectedCover === "chon-loai-bia" ? (
                     <>
                       <span className="text-black">Chọn đầy đủ sản phẩm</span>
                     </>
@@ -1288,10 +1450,7 @@ const Section01 = () => {
                             </div>
                           ) : (
                             <div className="flex flex-row gap-2 text-[16px]">
-                              <div className="cursor-pointer flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 text-green-400 text-center rounded-md font-medium transition">
-                                Đã áp dụng mã
-                              </div>
-                              <div className="cursor-pointer text-white flex flex-row justify-center items-center gap-4 mx-auto py-2 px-2 lg:py-2 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[] hover:opacity-80 text-center rounded-md font-medium transition">
+                              <div className="cursor-pointer text-white flex flex-row justify-center items-center gap-4 mx-auto py-1 px-3 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[] hover:opacity-80 text-center rounded-md font-medium transition">
                                 Đổi mã
                               </div>
                             </div>
@@ -1311,13 +1470,12 @@ const Section01 = () => {
                               <input
                                 type="text"
                                 placeholder="Nhập mã khuyến mãi"
-                                className={`w-full h-10 border border-gray-300 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${
-                                  isValid === false
-                                    ? ""
-                                    : isValid === true
+                                className={`w-full h-10 border border-gray-300 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${isValid === false
+                                  ? ""
+                                  : isValid === true
                                     ? ""
                                     : ""
-                                }`}
+                                  }`}
                                 value={promoCode}
                                 onChange={(e) => {
                                   setPromoCode(e.target.value);
@@ -1329,9 +1487,8 @@ const Section01 = () => {
                         </DialogHeader>
                         <DialogClose>
                           <div
-                            className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center rounded-md font-medium cursor-pointer ${
-                              isChecking ? "opacity-50 cursor-not-allowed" : ""
-                            }`}
+                            className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center rounded-md font-medium cursor-pointer ${isChecking ? "opacity-50 cursor-not-allowed" : ""
+                              }`}
                             onClick={
                               !isChecking ? handleCheckDiscount : undefined
                             }
@@ -1363,13 +1520,13 @@ const Section01 = () => {
                 </div>
               </div>
 
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-start">
                 <input
                   type="checkbox"
                   id="terms"
                   checked={isTermsAccepted}
                   onChange={(e) => setIsTermsAccepted(e.target.checked)}
-                  className="mr-2"
+                  className="mr-2 mt-1"
                 />
                 <p className="text-sm text-black font-light">
                   Bằng cách tiến hành mua hàng, bạn đã đồng ý với các điều khoản
