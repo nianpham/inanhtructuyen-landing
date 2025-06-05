@@ -67,7 +67,9 @@ const CancelOrderModal = ({ order, onCancelled }: CancelOrderModalProps) => {
           <span className="!text-[16px] mb-3">Để hủy đơn hàng</span>
           <br />
           <span className="font-semibold text-black mb-3 text-[16px]">
-            {order?.product_name}
+            {order?.product_name
+              ? order?.product_name
+              : "Album" + " " + order?.size + " (" + order?.pages + " trang)"}
           </span>{" "}
           <br />
           <span className="!text-[16px]">

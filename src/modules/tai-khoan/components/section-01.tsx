@@ -561,7 +561,12 @@ const Section01 = () => {
                         <div className="lg:hidden flex text-base mb-3">
                           <span className="text-gray-500">Loại đơn hàng:</span>{" "}
                           <span className="font-medium text-gray-900">
-                            &nbsp; Khung Ảnh
+                            &nbsp;
+                            {order?.order_type === "album"
+                              ? "Album"
+                              : order?.order_type === "frame"
+                              ? "Khung Ảnh"
+                              : ""}
                           </span>
                         </div>
                         <div className="flex gap-2">
@@ -579,7 +584,12 @@ const Section01 = () => {
                         <div className="hidden lg:flex text-base">
                           <span className="text-gray-500">Loại đơn hàng:</span>{" "}
                           <span className="font-medium text-gray-900">
-                            &nbsp; Khung Ảnh
+                            &nbsp;
+                            {order?.order_type === "album"
+                              ? "Album"
+                              : order?.order_type === "frame"
+                              ? "Khung Ảnh"
+                              : ""}
                           </span>
                         </div>
                       </div>

@@ -431,14 +431,14 @@ const Section01 = () => {
         window.location.href = accountOrderLogin
           ? `${ROUTES.ACCOUNT}?tab=history`
           : response?.data?.isAccountExisted === true
-            ? `${ROUTES.ACCOUNT}?tab=history`
-            : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
+          ? `${ROUTES.ACCOUNT}?tab=history`
+          : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
       } else {
         window.location.href = accountOrderLogin
           ? `${ROUTES.ACCOUNT}?tab=history`
           : response?.data?.isAccountExisted === true
-            ? `${ROUTES.ACCOUNT}?tab=history`
-            : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
+          ? `${ROUTES.ACCOUNT}?tab=history`
+          : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
       }
     } catch (error) {
       console.error("Error submitting order:", error);
@@ -493,46 +493,46 @@ const Section01 = () => {
     fetchProvinces();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchAccount = async () => {
-  //     if (isLogin) {
-  //       try {
-  //         const data = await AccountService.getAccountById(isLogin);
-  //         setCustomerAccount(data);
-  //         setFormData({
-  //           name: data?.name,
-  //           email: data?.email,
-  //           avatar: data?.avatar,
-  //           phone: data?.phone,
-  //           address: data?.address,
-  //           ward: data?.ward,
-  //           district: data?.district,
-  //           province: data?.province,
-  //         });
-  //       } catch (error) {
-  //         console.error("Error fetching account:", error);
-  //       }
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchAccount = async () => {
+      if (isLogin) {
+        try {
+          const data = await AccountService.getAccountById(isLogin);
+          setCustomerAccount(data);
+          setFormData({
+            name: data?.name,
+            email: data?.email,
+            avatar: data?.avatar,
+            phone: data?.phone,
+            address: data?.address,
+            ward: data?.ward,
+            district: data?.district,
+            province: data?.province,
+          });
+        } catch (error) {
+          console.error("Error fetching account:", error);
+        }
+      }
+    };
 
-  //   const fetchOrder = async () => {
-  //     if (orderID) {
-  //       try {
-  //         const data = await OrderService.getOrderById(orderID);
-  //         setFormDataOrder({
-  //           pages: data?.pages,
-  //           size: data?.size,
-  //           album_data: data?.album_data,
-  //         });
-  //       } catch (error) {
-  //         console.error("Error fetching order:", error);
-  //       }
-  //     }
-  //   };
+    const fetchOrder = async () => {
+      if (orderID) {
+        try {
+          const data = await OrderService.getOrderById(orderID);
+          setFormDataOrder({
+            pages: data?.pages,
+            size: data?.size,
+            album_data: data?.album_data,
+          });
+        } catch (error) {
+          console.error("Error fetching order:", error);
+        }
+      }
+    };
 
-  //   fetchAccount();
-  //   fetchOrder();
-  // }, []);
+    fetchAccount();
+    fetchOrder();
+  }, []);
 
   useEffect(() => {
     const fetchAccount = async () => {
@@ -587,7 +587,6 @@ const Section01 = () => {
     }
   }, [isLogin, provinces]);
 
-
   React.useEffect(() => {
     if (formData.province && provinces.length > 0) {
       const selectedProvince = provinces.find(
@@ -637,7 +636,6 @@ const Section01 = () => {
       }
     }
   }, [formData.province, formData.district, formData.ward, provinces]);
-
 
   // React.useEffect(() => {
   //   const fetchProvinces = async () => {
@@ -945,10 +943,11 @@ const Section01 = () => {
                       <div
                         onClick={() => setSelectedPayment("cash")}
                         className={`cursor-pointer p-4 flex justify-between items-center rounded-md
-                                           ${selectedPayment === "cash"
-                            ? "border border-[rgb(var(--fifteenth-rgb))]"
-                            : "border border-gray-200"
-                          }
+                                           ${
+                                             selectedPayment === "cash"
+                                               ? "border border-[rgb(var(--fifteenth-rgb))]"
+                                               : "border border-gray-200"
+                                           }
                                            `}
                       >
                         <div className="flex flex-row items-center">
@@ -963,10 +962,11 @@ const Section01 = () => {
                           </label>
                         </div>
                         <div
-                          className={`cursor-pointer w-4 h-4 rounded-full mr-2 ${selectedPayment === "cash"
-                            ? "bg-[rgb(var(--fifteenth-rgb))]"
-                            : ""
-                            }`}
+                          className={`cursor-pointer w-4 h-4 rounded-full mr-2 ${
+                            selectedPayment === "cash"
+                              ? "bg-[rgb(var(--fifteenth-rgb))]"
+                              : ""
+                          }`}
                         ></div>
                       </div>
                       {/* <div
@@ -1032,19 +1032,19 @@ const Section01 = () => {
                   <span className="font-light">
                     Mã đơn hàng:{" "}
                     <strong className="uppercase font-semibold">
-                      {/* {orderID?.slice(-6)} */} &nbsp; #ABCDEF
+                      {orderID}
                     </strong>
                   </span>
                   <span className="font-light">
                     Kích thước:{" "}
                     <strong className="font-semibold">
-                      {/* {formDataOrder?.size} */} 25x25
+                      {formDataOrder?.size}
                     </strong>
                   </span>
                   <span className="font-light">
                     Tổng số trang:{" "}
                     <strong className="font-semibold">
-                      {/* {formDataOrder?.pages} */} 20
+                      {formDataOrder?.pages}
                     </strong>
                   </span>
                 </div>
@@ -1315,10 +1315,11 @@ const Section01 = () => {
                         <div
                           onClick={() => setSelectedPayment("cash")}
                           className={`cursor-pointer p-4 flex justify-between items-center rounded-md
-                                             ${selectedPayment === "cash"
-                              ? "border border-[rgb(var(--fifteenth-rgb))]"
-                              : "border border-gray-200"
-                            }
+                                             ${
+                                               selectedPayment === "cash"
+                                                 ? "border border-[rgb(var(--fifteenth-rgb))]"
+                                                 : "border border-gray-200"
+                                             }
                                              `}
                         >
                           <div className="flex flex-row items-center">
@@ -1328,15 +1329,19 @@ const Section01 = () => {
                               width={24}
                               height={24}
                             />
-                            <label htmlFor="cash" className="cursor-pointer ml-2">
+                            <label
+                              htmlFor="cash"
+                              className="cursor-pointer ml-2"
+                            >
                               Thanh toán khi nhận hàng
                             </label>
                           </div>
                           <div
-                            className={`cursor-pointer w-4 h-4 rounded-full mr-2 ${selectedPayment === "cash"
-                              ? "bg-[rgb(var(--fifteenth-rgb))]"
-                              : ""
-                              }`}
+                            className={`cursor-pointer w-4 h-4 rounded-full mr-2 ${
+                              selectedPayment === "cash"
+                                ? "bg-[rgb(var(--fifteenth-rgb))]"
+                                : ""
+                            }`}
                           ></div>
                         </div>
                         {/* <div
@@ -1421,9 +1426,7 @@ const Section01 = () => {
                 </div>
                 <div className="flex justify-between font-light">
                   <span className="">Phí vận chuyển</span>
-                  <span className="">
-                    {HELPER.formatVND("30000")}
-                  </span>
+                  <span className="">{HELPER.formatVND("30000")}</span>
                 </div>
                 {/* <div className="flex justify-between">
                   <span className="font-light">Tạm tính</span>
@@ -1436,7 +1439,7 @@ const Section01 = () => {
                 <div className="flex justify-between items-center pt-0 font-light">
                   <span>Khuyến mãi</span>
                   {selectedCore === "chon-loai-ruot" ||
-                    selectedCover === "chon-loai-bia" ? (
+                  selectedCover === "chon-loai-bia" ? (
                     <>
                       <span className="text-black">Chọn đầy đủ sản phẩm</span>
                     </>
@@ -1470,12 +1473,13 @@ const Section01 = () => {
                               <input
                                 type="text"
                                 placeholder="Nhập mã khuyến mãi"
-                                className={`w-full h-10 border border-gray-300 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${isValid === false
-                                  ? ""
-                                  : isValid === true
+                                className={`w-full h-10 border border-gray-300 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${
+                                  isValid === false
+                                    ? ""
+                                    : isValid === true
                                     ? ""
                                     : ""
-                                  }`}
+                                }`}
                                 value={promoCode}
                                 onChange={(e) => {
                                   setPromoCode(e.target.value);
@@ -1487,8 +1491,9 @@ const Section01 = () => {
                         </DialogHeader>
                         <DialogClose>
                           <div
-                            className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center rounded-md font-medium cursor-pointer ${isChecking ? "opacity-50 cursor-not-allowed" : ""
-                              }`}
+                            className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center rounded-md font-medium cursor-pointer ${
+                              isChecking ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
                             onClick={
                               !isChecking ? handleCheckDiscount : undefined
                             }
