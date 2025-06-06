@@ -33,7 +33,7 @@ const getProductById = async (id: string) => {
 
     if (!response.ok) {
       console.error(`Login failed - Status: ${response.status}`);
-      throw new Error(`Get Account Failed - Status: ${response.status}`);
+      throw new Error(`Get Product Failed - Status: ${response.status}`);
     }
 
     const data = await response.json();

@@ -74,4 +74,8 @@ export const IMAGES = {
   BANK: "https://res.cloudinary.com/farmcode/image/upload/v1741334095/iatt/bank_2830284_mmcz95.png",
   YOUTUBE:
     "https://res.cloudinary.com/farmcode/image/upload/v1748965254/iatt/YT-icon_crqwhn.avif",
+  FOOTER_ANDROID:
+    "https://res.cloudinary.com/farmcode/image/upload/v1740924245/iatt/tioltw838yiyu1zkhyuh.png",
+  FOOTER_IOS:
+    "https://res.cloudinary.com/farmcode/image/upload/v1740924247/iatt/karylba4x40rayg8rndh.png",
 };

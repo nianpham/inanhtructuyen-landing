@@ -12,6 +12,7 @@ import {
 import Image from "next/image";
 import FacebookPageEmbed from "./facebook";
 import { ROUTES, SOCIAL_LINKS } from "@/utils/route";
+import { IMAGES } from "@/utils/image";
 
 const Footer: React.FC = () => {
   const [toggle1, setToggle1] = useState(true);
@@ -342,7 +343,7 @@ const Footer: React.FC = () => {
                 </li>
                 <li className="flex items-center space-x-2">
                   <Image
-                    src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png"
+                    src={IMAGES.MOMO || ""}
                     alt="Momo"
                     width={24}
                     height={24}
@@ -351,7 +352,7 @@ const Footer: React.FC = () => {
                 </li>
                 <li className="flex items-center space-x-2">
                   <Image
-                    src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR.png"
+                    src={IMAGES.VNPAY || ""}
                     alt="VNPay"
                     width={24}
                     height={24}
@@ -384,7 +385,7 @@ const Footer: React.FC = () => {
               <div className="flex flex-row lg:flex-col justify-start items-start gap-4">
                 <Link href={SOCIAL_LINKS.DOWNLOAD_IOS} target="_blank">
                   <Image
-                    src="https://res.cloudinary.com/farmcode/image/upload/v1740924247/iatt/karylba4x40rayg8rndh.png"
+                    src={IMAGES.FOOTER_IOS || ""}
                     alt="ios"
                     width={140}
                     height={0}
@@ -392,7 +393,7 @@ const Footer: React.FC = () => {
                 </Link>
                 <Link href={SOCIAL_LINKS.DOWNLOAD_ANDROID} target="_blank">
                   <Image
-                    src="https://res.cloudinary.com/farmcode/image/upload/v1740924245/iatt/tioltw838yiyu1zkhyuh.png"
+                    src={IMAGES.FOOTER_ANDROID || ""}
                     alt="chplay"
                     width={140}
                     height={0}

@@ -174,8 +174,6 @@ const Section01 = () => {
         Cookies.get("userLogin") || ""
       );
       if (res && res.length > 0) {
-        console.log("Products initialized successfully:", res);
-
         setOrders(res);
       } else {
         console.log("No products found in response");
@@ -371,7 +369,7 @@ const Section01 = () => {
                 <div className="w-full lg:w-1/6 flex justify-center">
                   <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
                     <Image
-                      src={customerAccount?.avatar || ""}
+                      src={customerAccount?.avatar || IMAGES.LOGO}
                       alt="Avatar"
                       className="w-full h-full rounded-full"
                       width={1000}

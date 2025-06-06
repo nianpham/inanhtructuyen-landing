@@ -63,30 +63,30 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
     (Number(productPrice) + shippingFee) * (order?.discount_price / 100)
   );
 
-  const init = async () => {
-    const fetchProduct = async () => {
-      try {
-        const data = await ProductService.getProductById(order?.product_id);
-        setProduct(data.data);
+  // const init = async () => {
+  //   const fetchProduct = async () => {
+  //     try {
+  //       const data = await ProductService.getProductById(order?.product_id);
+  //       setProduct(data.data);
 
-        // Find the price based on order.size in product_option
-        const matchedOption = data.data.product_option.find(
-          (option: { size: string; price: string }) =>
-            option.size === order?.size
-        );
-        const price = matchedOption ? parseInt(matchedOption.price) : 0;
-        setProductPrice(price);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      }
-    };
+  //       // Find the price based on order.size in product_option
+  //       const matchedOption = data.data.product_option.find(
+  //         (option: { size: string; price: string }) =>
+  //           option.size === order?.size
+  //       );
+  //       const price = matchedOption ? parseInt(matchedOption.price) : 0;
+  //       setProductPrice(price);
+  //     } catch (error) {
+  //       console.error("Error fetching product:", error);
+  //     }
+  //   };
 
-    fetchProduct();
-  };
+  //   fetchProduct();
+  // };
 
-  useEffect(() => {
-    init();
-  }, []);
+  // useEffect(() => {
+  //   init();
+  // }, []);
 
   return (
     <Dialog>

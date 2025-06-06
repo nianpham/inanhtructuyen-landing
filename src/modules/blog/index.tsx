@@ -7,7 +7,10 @@ import BlogContent from "./main";
 
 export default function BlogClient() {
   return (
-    <div className="relative w-full flex flex-col justify-center items-center">
+    <div
+      className="relative w-full flex flex-col justify-center items-center"
+      id="home"
+    >
       <div className={`w-full`}>
         <Header />
       </div>
