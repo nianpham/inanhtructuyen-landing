@@ -8,6 +8,7 @@ import {
   ChevronRight,
   CreditCard,
   Frame,
+  Loader,
   MapPin,
   StickyNote,
   UserRound,
@@ -1543,7 +1544,14 @@ const Section01 = () => {
                   onClick={() => handleSubmit()}
                   className="w-full py-2 lg:py-4 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center text-white rounded-md font-medium transition"
                 >
-                  {isLoading ? "Đang xử lí đơn hàng..." : "Đặt hàng"}
+                  {isLoading ? (
+                    <>
+                      Đang xử lí đơn hàng{" "}
+                      <Loader className="animate-spin" size={18} />
+                    </>
+                  ) : (
+                    "Đặt hàng"
+                  )}
                 </button>
               </div>
             </>

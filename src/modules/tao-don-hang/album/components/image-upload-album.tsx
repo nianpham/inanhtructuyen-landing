@@ -79,7 +79,7 @@ const ImageUploadAlbum = ({
           onClick={handleClick}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          className="flex w-full h-full items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-primary-700 cursor-pointer"
+          className="flex w-full h-full items-center justify-center rounded-md border-2 border-dashed border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-primary-700 cursor-pointer"
         >
           <div className="flex flex-col items-center gap-2">
             <svg
@@ -104,13 +104,13 @@ const ImageUploadAlbum = ({
           </div>
         </div>
       ) : (
-        <div className="relative h-full group">
+        <div className="relative h-full group rounded-md">
           <Image
             src={preview}
             alt="Preview"
             fill
             priority
-            className="rounded-lg object-cover"
+            className="rounded-md object-cover border-8 border-gray-200"
           />
         </div>
       )}
