@@ -260,12 +260,12 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                           {HELPER.renderAlbumCover(order?.album_cover)}
                         </span>
                       </div>
-                      <div className="font-base ">
+                      {/* <div className="font-base ">
                         Ruột Album:{" "}
                         <span className="font-semibold">
                           {HELPER.renderAlbumCore(order?.album_core)}
                         </span>
-                      </div>
+                      </div> */}
                     </>
                   )}
                 </div>

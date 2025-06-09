@@ -361,7 +361,7 @@ const Section01 = () => {
         order_type: "album",
         cover_image: upload[0]?.secure_url || "",
         album_cover: selectedCover || "",
-        // album_core: selectedCore || "",
+        album_core: "",
         album_price: albumPriceCore + albumPriceCover,
         address: formData?.address || "",
         payment_method: selectedPayment || "",
