@@ -79,7 +79,7 @@ const ImageUploadAlbum = ({
           onClick={handleClick}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          className="flex w-full h-full items-center justify-center rounded-md border-2 border-dashed border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-primary-700 cursor-pointer"
+          className="mt-1 flex w-full h-full items-center justify-center rounded-md border-2 border-dashed border-gray-300 bg-white text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-primary-700 cursor-pointer"
         >
           <div className="flex flex-col items-center gap-2">
             <svg

@@ -4,7 +4,7 @@ const FacebookPageEmbed = () => {
   return (
     <div className="flex justify-center">
       <iframe
-        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com/profile.php?id=100063665163990&width=1000&height=128&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
+        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com/profile.php?id=61575496534772&width=1000&height=128&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
         width="600"
         height="128"
         style={{ border: "none", overflow: "hidden", width: "100%" }}

@@ -147,11 +147,11 @@ const Section01 = () => {
       name: "bia-da",
       price: 150000,
     },
-    {
-      id: 3,
-      name: "bia-cung",
-      price: 120000,
-    },
+    // {
+    //   id: 3,
+    //   name: "bia-cung",
+    //   price: 120000,
+    // },
   ];
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -162,7 +162,7 @@ const Section01 = () => {
   const [selectedPayment, setSelectedPayment] = React.useState<string>("cash");
   const [promoCode, setPromoCode] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [selectedCore, setSelectedCore] = React.useState<any>("chon-loai-ruot");
+  // const [selectedCore, setSelectedCore] = React.useState<any>("chon-loai-ruot");
   const [selectedCover, setSelectedCover] =
     React.useState<any>("chon-loai-bia");
   const [selectedCoreId, setSelectedCoreId] =
@@ -191,14 +191,14 @@ const Section01 = () => {
   const [albumPriceCore, setAlbumPriceCore] = React.useState(0);
   const [totalPrice, setTotalPrice] = React.useState(0);
 
-  const handleCoreChange = (coreId: string) => {
-    const selectedCoreItem = pages.find((item) => String(item.id) === coreId);
-    setSelectedCoreId(coreId);
-    setSelectedCore(selectedCoreItem ? selectedCoreItem.name : "");
+  // const handleCoreChange = (coreId: string) => {
+  //   const selectedCoreItem = pages.find((item) => String(item.id) === coreId);
+  //   setSelectedCoreId(coreId);
+  //   setSelectedCore(selectedCoreItem ? selectedCoreItem.name : "");
 
-    const corePrice = selectedCoreItem ? selectedCoreItem.price : 0;
-    setAlbumPriceCore(corePrice);
-  };
+  //   const corePrice = selectedCoreItem ? selectedCoreItem.price : 0;
+  //   setAlbumPriceCore(corePrice);
+  // };
 
   const handleCoverChange = (coverId: string) => {
     const selectedCoverItem = covers.find(
@@ -361,7 +361,7 @@ const Section01 = () => {
         order_type: "album",
         cover_image: upload[0]?.secure_url || "",
         album_cover: selectedCover || "",
-        album_core: selectedCore || "",
+        // album_core: selectedCore || "",
         album_price: albumPriceCore + albumPriceCover,
         address: formData?.address || "",
         payment_method: selectedPayment || "",
@@ -913,7 +913,7 @@ const Section01 = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="mb-6">
+              <div className="mb-6 !pt-1">
                 <Label
                   htmlFor="address"
                   className="text-black text-[16px] font-light"
@@ -930,7 +930,8 @@ const Section01 = () => {
                 />
               </div>
             </div>
-            {selectedCore !== "chon-loai-ruot" &&
+            {
+              // selectedCore !== "chon-loai-ruot" &&
               selectedCover !== "chon-loai-bia" && (
                 <>
                   <div>
@@ -1018,7 +1019,8 @@ const Section01 = () => {
                     ></textarea>
                   </div>
                 </>
-              )}
+              )
+            }
           </div>
           <div className="w-full lg:w-1/2 space-y-6">
             <div>
@@ -1050,7 +1052,7 @@ const Section01 = () => {
                   </span>
                 </div>
                 <div className="w-full flex flex-col justify-center items-center ">
-                  <div className="bg-gray-50 border border-gray-200 text-gray-900 rounded-lg block w-full">
+                  <div className="bg-gray-50 border border-gray-200 text-gray-900 rounded-lg block w-full mb-3">
                     <Select
                       value={selectedCoverId}
                       onValueChange={handleCoverChange}
@@ -1074,7 +1076,7 @@ const Section01 = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="bg-gray-50 border border-gray-200 text-gray-900 rounded-lg block w-full my-4">
+                  {/* <div className="bg-gray-50 border border-gray-200 text-gray-900 rounded-lg block w-full my-4">
                     <Select
                       value={selectedCoreId}
                       onValueChange={handleCoreChange}
@@ -1098,13 +1100,15 @@ const Section01 = () => {
                         ))}
                       </SelectContent>
                     </Select>
-                  </div>
-                  {selectedCore !== "chon-loai-ruot" &&
+                  </div> */}
+                  {
+                    // selectedCore !== "chon-loai-ruot" &&
                     selectedCoverId === "2" && (
-                      <div className="w-full">
+                      <div className="w-full mb-2">
                         <ImageUploadAlbum onImageChange={setUploadedFile} />
                       </div>
-                    )}
+                    )
+                  }
                 </div>
               </div>
             </div>
@@ -1302,7 +1306,8 @@ const Section01 = () => {
                 </div>
               </div>
               {/* MOBILE  */}
-              {selectedCore !== "chon-loai-ruot" &&
+              {
+                // selectedCore !== "chon-loai-ruot" &&
                 selectedCover !== "chon-loai-bia" && (
                   <>
                     <div>
@@ -1397,7 +1402,8 @@ const Section01 = () => {
                       ></textarea>
                     </div>
                   </>
-                )}
+                )
+              }
 
               {/* ORDER BUTTON  */}
             </div>
@@ -1415,7 +1421,7 @@ const Section01 = () => {
                     </span>
                   )}
                 </div>
-                <div className="flex justify-between">
+                {/* <div className="flex justify-between">
                   <span className="font-light">Giá ruột Album</span>
                   {selectedCore === "chon-loai-ruot" ? (
                     <span className="font-light">Chọn ruột Album</span>
@@ -1424,7 +1430,7 @@ const Section01 = () => {
                       {HELPER.formatVND(String(albumPriceCore))}
                     </span>
                   )}
-                </div>
+                </div> */}
                 <div className="flex justify-between font-light">
                   <span className="">Phí vận chuyển</span>
                   <span className="">{HELPER.formatVND("30000")}</span>
@@ -1439,72 +1445,76 @@ const Section01 = () => {
                 </div> */}
                 <div className="flex justify-between items-center pt-0 font-light">
                   <span>Khuyến mãi</span>
-                  {selectedCore === "chon-loai-ruot" ||
-                  selectedCover === "chon-loai-bia" ? (
-                    <>
-                      <span className="text-black">Chọn đầy đủ sản phẩm</span>
-                    </>
-                  ) : (
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <div className="">
-                          {!isValid ? (
-                            <div className="cursor-pointer text-[16px] flex flex-row justify-center items-center gap-4 w-full mx-auto text-[rgb(var(--fifteenth-rgb))] text-center rounded-md font-medium transition">
-                              Nhập mã
-                            </div>
-                          ) : (
-                            <div className="flex flex-row gap-2 text-[16px]">
-                              <div className="cursor-pointer text-white flex flex-row justify-center items-center gap-4 mx-auto py-1 px-3 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[] hover:opacity-80 text-center rounded-md font-medium transition">
-                                Đổi mã
+                  {
+                    // selectedCore === "chon-loai-ruot" ||
+                    selectedCover === "chon-loai-bia" ? (
+                      <>
+                        <span className="text-black">Chọn đầy đủ sản phẩm</span>
+                      </>
+                    ) : (
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <div className="">
+                            {!isValid ? (
+                              <div className="cursor-pointer text-[16px] flex flex-row justify-center items-center gap-4 w-full mx-auto text-[rgb(var(--fifteenth-rgb))] text-center rounded-md font-medium transition">
+                                Nhập mã
                               </div>
-                            </div>
-                          )}
-                        </div>
-                      </DialogTrigger>
-                      <DialogContent
-                        className="-translate-y-52 z-[70]"
-                        onOpenAutoFocus={(e) => e.preventDefault()}
-                      >
-                        <DialogHeader>
-                          <DialogTitle className="text-[20px]">
-                            Vui lòng nhập mã giảm giá
-                          </DialogTitle>
-                          <DialogDescription className="max-h-96 overflow-y-auto">
-                            <div className="flex flex-col justify-center items-center gap-2 mt-1">
-                              <input
-                                type="text"
-                                placeholder="Nhập mã khuyến mãi"
-                                className={`w-full h-10 border border-gray-300 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${
-                                  isValid === false
-                                    ? ""
-                                    : isValid === true
-                                    ? ""
-                                    : ""
-                                }`}
-                                value={promoCode}
-                                onChange={(e) => {
-                                  setPromoCode(e.target.value);
-                                }}
-                                style={{ fontSize: "16px" }}
-                              />
-                            </div>
-                          </DialogDescription>
-                        </DialogHeader>
-                        <DialogClose>
-                          <div
-                            className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center rounded-md font-medium cursor-pointer ${
-                              isChecking ? "opacity-50 cursor-not-allowed" : ""
-                            }`}
-                            onClick={
-                              !isChecking ? handleCheckDiscount : undefined
-                            }
-                          >
-                            {isChecking ? "Đang kiểm tra..." : "Dùng mã"}
+                            ) : (
+                              <div className="flex flex-row gap-2 text-[16px]">
+                                <div className="cursor-pointer text-white flex flex-row justify-center items-center gap-4 mx-auto py-1 px-3 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[] hover:opacity-80 text-center rounded-md font-medium transition">
+                                  Đổi mã
+                                </div>
+                              </div>
+                            )}
                           </div>
-                        </DialogClose>
-                      </DialogContent>
-                    </Dialog>
-                  )}
+                        </DialogTrigger>
+                        <DialogContent
+                          className="-translate-y-52 z-[70]"
+                          onOpenAutoFocus={(e) => e.preventDefault()}
+                        >
+                          <DialogHeader>
+                            <DialogTitle className="text-[20px]">
+                              Vui lòng nhập mã giảm giá
+                            </DialogTitle>
+                            <DialogDescription className="max-h-96 overflow-y-auto">
+                              <div className="flex flex-col justify-center items-center gap-2 mt-1">
+                                <input
+                                  type="text"
+                                  placeholder="Nhập mã khuyến mãi"
+                                  className={`w-full h-10 border border-gray-300 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${
+                                    isValid === false
+                                      ? ""
+                                      : isValid === true
+                                      ? ""
+                                      : ""
+                                  }`}
+                                  value={promoCode}
+                                  onChange={(e) => {
+                                    setPromoCode(e.target.value);
+                                  }}
+                                  style={{ fontSize: "16px" }}
+                                />
+                              </div>
+                            </DialogDescription>
+                          </DialogHeader>
+                          <DialogClose>
+                            <div
+                              className={`w-full px-5 py-2 mx-auto text-white bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center rounded-md font-medium cursor-pointer ${
+                                isChecking
+                                  ? "opacity-50 cursor-not-allowed"
+                                  : ""
+                              }`}
+                              onClick={
+                                !isChecking ? handleCheckDiscount : undefined
+                              }
+                            >
+                              {isChecking ? "Đang kiểm tra..." : "Dùng mã"}
+                            </div>
+                          </DialogClose>
+                        </DialogContent>
+                      </Dialog>
+                    )
+                  }
                 </div>
 
                 {isValid && (
