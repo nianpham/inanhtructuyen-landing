@@ -385,7 +385,7 @@ const Section01 = () => {
                     </p>
                     <p className="text-gray-900">
                       <span className="font-medium">Email:</span>{" "}
-                      {customerAccount?.email || ""}
+                      {customerAccount?.email || "Không có email"}
                     </p>
                     <p className="text-gray-900">
                       <span className="font-medium">Số điện thoại:</span>{" "}

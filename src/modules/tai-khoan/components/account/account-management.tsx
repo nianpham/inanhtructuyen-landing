@@ -554,7 +554,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 id="email"
                 name="email"
                 type="email"
-                value={formData.email}
+                value={formData.email || "Không có email"}
                 disabled={true}
                 style={{ fontSize: "16px" }}
               />
