@@ -1552,7 +1552,7 @@ const Section01 = () => {
               <div className="flex flex-row justify-between items-center mt-6 w-full">
                 <button
                   onClick={() => handleSubmit()}
-                  className="w-full py-2 lg:py-4 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center text-white rounded-md font-medium transition"
+                  className="flex flex-row justify-center items-center w-full py-2 lg:py-4 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-center text-white rounded-md font-medium transition"
                 >
                   {isLoading ? (
                     <>
