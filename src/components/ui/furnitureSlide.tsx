@@ -109,6 +109,7 @@ const FurnitureSlider: React.FC = () => {
           >
             {/* Background Image */}
             <div className="absolute inset-0">
+              <div className="absolute inset-0 transition-all duration-1000 ease-in-out bg-black z-10 opacity-20"></div>
               <Image
                 src={slide.image}
                 alt={slide.alt}
@@ -206,7 +207,7 @@ const FurnitureSlider: React.FC = () => {
       </div>
       <div className="absolute top-0 left-0 w-full h-1 bg-gray-200 z-20">
         <div
-          className="h-full bg-yellow-600 transition-all duration-100 ease-linear"
+          className="h-full bg-[rgb(var(--fifteenth-rgb))] transition-all duration-100 ease-linear"
           style={{
             width: `${progress}%`,
           }}
