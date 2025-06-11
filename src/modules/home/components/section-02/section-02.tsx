@@ -27,23 +27,11 @@ interface Product {
 
 const Section2: React.FC = () => {
   const [products, setProducts] = useState([] as Product[]);
-  const selectedProductsID = [
-    "67b876b6657af903c5a4c957",
-    "67b8762d657af903c5a4c955",
-    "67b876f7657af903c5a4c958",
-    "680715dba9f9918f148c2f33",
-    "680744aea9f9918f148c2f3b",
-    "6809b7c6c40fcd1e6ab3fa82",
-    "6809e112c40fcd1e6ab3fa88",
-    "67b877db657af903c5a4c959",
-  ];
+
   const init = async () => {
     const res = await ProductService.getAll();
     if (res && res.data.length > 0) {
-      const filteredProducts = res.data.filter((product: Product) =>
-        selectedProductsID.includes(product._id)
-      );
-      setProducts(filteredProducts);
+      setProducts(res.data);
     }
   };
   useEffect(() => {

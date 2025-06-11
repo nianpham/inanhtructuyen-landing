@@ -67,7 +67,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
         />
       </div>
       <div className="flex-1">
-        <h3 className="font-medium text-gray-900 mb-1">{product.name}</h3>
+        <h3 className="font-medium text-gray-900 mb-1 line-clamp-2">
+          {product.name}
+        </h3>
         <div className="flex items-center space-x-2">
           {Number(product._id.charAt(7)) % 2 !== 0 && (
             <span className="text-sm text-gray-500 line-through">
