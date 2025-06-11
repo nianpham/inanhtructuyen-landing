@@ -68,7 +68,7 @@ const Section1: React.FC = () => {
       <section className="pt-0">
         <div className="">
           <div className="max-w-7xl mx-auto p-0">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-[16px] h-full">
               {/* Hero Section - Takes 2/3 width */}
               {/* <div className="relative lg:col-span-2">
                 <Swiper
@@ -181,23 +181,10 @@ const Section1: React.FC = () => {
               </div>
 
               {/* Product Cards Sidebar - Takes 1/3 width */}
-              <div className="grid h-full lg:col-span-1 lg:grid-row-2 gap-6">
+              <div className="grid h-full lg:col-span-1 lg:grid-row-2 gap-[16px]">
                 <div
-                  className={`flex relative p-8 h-[300px] lg:h-full flex-col justify-between`}
+                  className={`flex relative p-8 h-[400px] flex-col justify-between`}
                 >
-                  <div className="relative z-10 flex flex-col items-end justify-start">
-                    <h3
-                      className={`text-2xl font-bold text-black  text-right mb-2`}
-                    >
-                      Khung Nhôm Titan
-                    </h3>
-                    <p className={`text-xl font-base text-black mb-2`}>
-                      Giảm giá 10%
-                    </p>
-                    <p className="text-[rgb(var(--primary-rgb))] font-medium">
-                      Giá chỉ từ 50.000đ
-                    </p>
-                  </div>
                   <div className="absolute top-0 left-0 right-0 bottom-0">
                     <Image
                       src={IMAGES.BANNER_7}
@@ -209,21 +196,8 @@ const Section1: React.FC = () => {
                   </div>
                 </div>
                 <div
-                  className={`hidden lg:flex relative p-8 h-full flex-col justify-between`}
+                  className={`hidden lg:flex relative p-8 h-[400px] flex-col justify-between`}
                 >
-                  <div className="relative z-10 flex flex-col items-end justify-start">
-                    <h3
-                      className={`text-2xl font-bold text-black text-right mb-2`}
-                    >
-                      Khung Ảnh Hàn Quốc
-                    </h3>
-                    <p className={`text-xl font-base text-black mb-2`}>
-                      Giảm giá 15%
-                    </p>
-                    <p className="text-[rgb(var(--fifteenth-rgb))] font-medium">
-                      Giá chỉ từ 48.000đ
-                    </p>
-                  </div>
                   <div className="absolute top-0 left-0 right-0 bottom-0">
                     <Image
                       src={IMAGES.BANNER_8}

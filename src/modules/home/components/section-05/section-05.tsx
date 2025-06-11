@@ -55,7 +55,7 @@ const Section5: React.FC = () => {
                 className="object-cover object-[20%_70%] lg:object-right"
               />
             </div>
-            <div className="relative w-5/6 lg:max-w-4xl mx-auto px-6 py-10 my-20 text-center backdrop-blur-xs bg-white/70 rounded-lg">
+            <div className="relative w-5/6 lg:max-w-4xl mx-auto px-6 py-10 my-20 text-center backdrop-blur-xs bg-white/90 rounded-lg">
               <div className="text-2xl md:text-3xl font-semibold text-gray-900 mb-3">
                 Liên hệ với chúng tôi
               </div>

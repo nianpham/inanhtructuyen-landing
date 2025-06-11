@@ -27,7 +27,7 @@ const FurnitureSlider: React.FC = () => {
       subtitle: "lưu giữ khoảnh khắc",
       price: "chỉ từ 30.000đ",
       delivery: "Giao hàng tiết kiệm,",
-      image: IMAGES.BANNER_2,
+      image: IMAGES.BANNER_02,
       alt: "Craft salt and pepper grinder",
     },
     {
@@ -93,7 +93,7 @@ const FurnitureSlider: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-[300px] lg:h-[700px] bg-gray-50 overflow-hidden">
+    <div className="relative w-full h-[300px] lg:h-[816px] bg-gray-50 overflow-hidden">
       {/* Slider Container */}
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (

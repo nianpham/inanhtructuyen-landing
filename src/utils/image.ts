@@ -16,21 +16,23 @@ export const IMAGES = {
   BANNER_1:
     "https://res.cloudinary.com/farmcode/image/upload/v1748167081/ielts-test/IMG_7515-Edit-2-1_cpdbxp.jpg",
   BANNER_2:
-    "https://res.cloudinary.com/farmcode/image/upload/v1748167124/ielts-test/IMG_7522_fill_1-1_jweldw.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1749618349/iatt/jvbovqagdcabxodjmo18.jpg",
+  BANNER_02:
+    "https://res.cloudinary.com/farmcode/image/upload/v1749618076/iatt/xfj7opsrgi4qtfvjydim.jpg",
   BANNER_3:
-    "https://res.cloudinary.com/farmcode/image/upload/v1748167318/ielts-test/IMG_7522_fill_3-3_ejqxjv.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1749618110/iatt/zkhanfk0prccquufaxqj.jpg",
   BANNER_4:
-    "https://res.cloudinary.com/farmcode/image/upload/v1740925245/iatt/tq0p7ekzpcmlkm3g6ccq.png",
+    "https://res.cloudinary.com/farmcode/image/upload/v1749618035/iatt/j3tbwzvldkegxoqaj4l7.jpg",
   BANNER_5:
-    "https://res.cloudinary.com/farmcode/image/upload/v1740925209/iatt/fhwyaaj9z4vxbtps6lqm.png",
+    "https://res.cloudinary.com/farmcode/image/upload/v1749618095/iatt/bqglcjqo0ipzvexdkoib.jpg",
   BANNER_6:
     "https://res.cloudinary.com/farmcode/image/upload/v1728996038/iatt/IMG_7555_p4bqwc.jpg",
   BANNER_7:
-    "http://res.cloudinary.com/farmcode/image/upload/v1745467330/iatt/zy6fkeccplolhx9zrftd.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1749617436/iatt/i6glmcaesvom7c4eqbmp.jpg",
   BANNER_8:
-    "http://res.cloudinary.com/farmcode/image/upload/v1739376547/iatt/tecc1fpffd0amkalu2bp.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1749617471/iatt/qnjsnaleoz7gbue38au1.jpg",
   BANNER_9:
-    "https://res.cloudinary.com/farmcode/image/upload/v1745334263/iatt/d4eb9c49c1f92fba641ceff562e7014c157e33e4_nkvglk.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1749618043/iatt/ga3bhhqxdtneicm6dnff.jpg",
   MAIN_1:
     "https://res.cloudinary.com/farmcode/image/upload/v1748171752/ielts-test/main1_ck4lr0.jpg",
   MAIN_2:
