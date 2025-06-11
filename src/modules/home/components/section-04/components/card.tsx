@@ -66,8 +66,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
           className="object-cover w-full h-full"
         />
       </div>
-      <div className="flex-1">
-        <h3 className="font-medium text-gray-900 mb-1 line-clamp-2">
+      <div className="flex-1 items-start">
+        <h3 className="font-base text-gray-900 mb-1 line-clamp-1">
           {product.name}
         </h3>
         <div className="flex items-center space-x-2">
@@ -78,7 +78,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               )}
             </span>
           )}
-          <span className="text-lg font-semibold text-orange-600">
+          <span className="text-lg font-base text-orange-600">
             {HELPER.formatVND(product.product_option[0].price)}
           </span>
         </div>
