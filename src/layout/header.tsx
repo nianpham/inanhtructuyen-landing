@@ -32,7 +32,6 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@heroui/dropdown";
-import path from "path";
 
 interface HeaderProps {
   cartCount?: number;
@@ -262,46 +261,72 @@ const Header: React.FC<HeaderProps> = ({
   // Updated AppDownloadLink component
   const AppDownloadLink = () => {
     const [deviceType, setDeviceType] = useState<
-      "ios" | "android" | "macos" | "other" | "unknown"
-    >("unknown");
+      'ios' | 'android' | 'macos' | 'other' | 'unknown'
+    >('unknown');
 
     useEffect(() => {
-      setDeviceType(detectDevice());
+      const detectedDevice = detectDevice();
+      setDeviceType(detectedDevice);
     }, []);
 
     // Determine the link and image based on device type
-    const downloadLink =
-      deviceType === "ios" || deviceType === "macos"
-        ? SOCIAL_LINKS.DOWNLOAD_IOS
-        : SOCIAL_LINKS.DOWNLOAD_ANDROID; // Use Android link for android and other devices
+    const getDownloadInfo = () => {
+      switch (deviceType) {
+        case 'ios':
+        case 'macos':
+          return {
+            link: SOCIAL_LINKS.DOWNLOAD_IOS,
+            image: IMAGES.APP_STORE,
+            alt: 'App Store',
+          };
+        case 'android':
+          return {
+            link: SOCIAL_LINKS.DOWNLOAD_ANDROID,
+            image: IMAGES.GOOGLE_PLAY,
+            alt: 'Google Play',
+          };
+        default:
+          return {
+            link: null,
+            image: IMAGES.GOOGLE_PLAY, // Fallback image
+            alt: 'Download App',
+          };
+      }
+    };
 
-    const appImage =
-      deviceType === "ios" || deviceType === "macos"
-        ? IMAGES.APP_STORE
-        : IMAGES.GOOGLE_PLAY;
-    const appAlt =
-      deviceType === "ios" || deviceType === "macos"
-        ? "App Store"
-        : "Google Play";
+    const { link, image, alt } = getDownloadInfo();
+
+    const handleClick = () => {
+      if (!link) {
+        toast({
+          variant: 'default',
+          title: 'Thông báo',
+          description: 'Chức năng đang được phát triển.',
+        });
+      } else {
+        window.open(link, '_blank', 'noopener,noreferrer');
+      }
+    };
+
     return (
-      <Link
-        href={downloadLink}
-        target="_blank"
-        className="group relative flex flex-col lg:flex-row gap-1 lg:gap-2 justify-center items-center text-black hover:text-gray-900 transition-colors lg:pr-0"
+      <div
+        onClick={handleClick}
+        rel="noopener noreferrer"
+        className="cursor-pointer group relative flex flex-col lg:flex-row gap-1 lg:gap-2 justify-center items-center text-black hover:text-gray-900 transition-colors lg:pr-0"
       >
         <div className="flex flex-row items-center gap-2">
           <Image
-            src={appImage}
-            alt={appAlt}
-            width={1000}
-            height={1000}
+            src={image}
+            alt={alt}
+            width={18}
+            height={18}
             className="w-[18px] h-[18px]"
           />
         </div>
         <span className="text-[16px] font-normal group-hover:text-[rgb(var(--fifteenth-rgb))]">
           Tải app
         </span>
-      </Link>
+      </div>
     );
   };
 
@@ -317,7 +342,7 @@ const Header: React.FC<HeaderProps> = ({
               setOpen(true);
             }}
           >
-            <input type="checkbox" checked={open} onChange={() => {}} />
+            <input type="checkbox" checked={open} onChange={() => { }} />
             <svg viewBox="0 0 32 32">
               <path
                 className="line line-top-bottom"
@@ -352,17 +377,15 @@ const Header: React.FC<HeaderProps> = ({
                 <div key={item.label} className="relative group">
                   <Link
                     href={item.href}
-                    className={`relative text-[16px] font-normal transition-colors duration-200 ${
-                      isActive(item)
-                        ? "text-[rgb(var(--fifteenth-rgb))] font-semibold border-b-2 border-[rgb(var(--fifteenth-rgb))] pb-1"
-                        : "text-black"
-                    } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
+                    className={`relative text-[16px] font-normal transition-colors duration-200 ${isActive(item)
+                      ? "text-[rgb(var(--fifteenth-rgb))] font-semibold border-b-2 border-[rgb(var(--fifteenth-rgb))] pb-1"
+                      : "text-black"
+                      } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
                   >
                     {item.label}
                     <span
-                      className={`absolute -bottom-1.5 left-0 h-[2px] bg-[rgb(var(--fifteenth-rgb))] transition-all duration-300 ease-in-out ${
-                        isActive(item) ? "w-0" : "w-0 group-hover:w-full"
-                      }`}
+                      className={`absolute -bottom-1.5 left-0 h-[2px] bg-[rgb(var(--fifteenth-rgb))] transition-all duration-300 ease-in-out ${isActive(item) ? "w-0" : "w-0 group-hover:w-full"
+                        }`}
                     ></span>
                   </Link>
                 </div>
@@ -523,11 +546,10 @@ const Header: React.FC<HeaderProps> = ({
                   <div key={item.label} className="relative group">
                     <Link
                       href={item.href}
-                      className={`relative text-[16px] font-normal transition-colors duration-200 ${
-                        isActive(item)
-                          ? "text-[rgb(var(--fifteenth-rgb))] font-semibold border-b-2 border-[rgb(var(--fifteenth-rgb))]"
-                          : "text-black"
-                      } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
+                      className={`relative text-[16px] font-normal transition-colors duration-200 ${isActive(item)
+                        ? "text-[rgb(var(--fifteenth-rgb))] font-semibold border-b-2 border-[rgb(var(--fifteenth-rgb))]"
+                        : "text-black"
+                        } group-hover:text-[rgb(var(--fifteenth-rgb))] group-hover:font-semibold`}
                     >
                       <div
                         className={`flex flex-row items-center gap-1 text-[16px] mb-3`}
@@ -538,11 +560,10 @@ const Header: React.FC<HeaderProps> = ({
                         <div className="relative">
                           {item.label}
                           <span
-                            className={`absolute -bottom-0.5 left-0 h-[2px] bg-[rgb(var(--fifteenth-rgb))] transition-all duration-300 ease-in-out ${
-                              isActive(item)
-                                ? "w-full"
-                                : "w-0 group-hover:w-full"
-                            }`}
+                            className={`absolute -bottom-0.5 left-0 h-[2px] bg-[rgb(var(--fifteenth-rgb))] transition-all duration-300 ease-in-out ${isActive(item)
+                              ? "w-full"
+                              : "w-0 group-hover:w-full"
+                              }`}
                           ></span>
                         </div>
                       </div>

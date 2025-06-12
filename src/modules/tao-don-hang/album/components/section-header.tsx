@@ -6,6 +6,7 @@ import { IMAGES } from "@/utils/image";
 import Link from "next/link";
 import { ROUTES } from "@/utils/route";
 import { Youtube } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 const SectionHeader = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -32,8 +33,14 @@ const SectionHeader = () => {
             Trang chủ{" "}
           </Link>{" "}
           &ensp;/&ensp;{" "}
-          <Link
-            href={ROUTES.HOME}
+          <div
+            onClick={() => {
+              toast({
+                variant: "default",
+                title: "Thông báo",
+                description: "Chức năng đang được phát triển.",
+              });
+            }}
             className="hover:text-[rgb(var(--fifteenth-rgb))]"
           >
             {isMobile
@@ -41,7 +48,7 @@ const SectionHeader = () => {
                 ? title
                 : title.slice(0, 17) + "..."
               : title}
-          </Link>{" "}
+          </div>{" "}
           &ensp;
           <Image
             src={IMAGES.YOUTUBE}

@@ -16,7 +16,7 @@ interface BlogPost {
 
 const BlogCard: React.FC<{ post: BlogPost }> = ({ post }) => {
   return (
-    <div className="w-full px-3 flex-shrink-0">
+    <div className="w-full lg:px-3 flex-shrink-0">
       <article className="bg-white rounded-lg overflow-hidden duration-300 group">
         <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
           <Image

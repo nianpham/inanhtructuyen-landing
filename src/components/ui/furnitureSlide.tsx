@@ -23,8 +23,8 @@ const FurnitureSlider: React.FC = () => {
   const slides: SlideData[] = [
     {
       id: 1,
-      title: "Khung ảnh thời thượng",
-      subtitle: "lưu giữ khoảnh khắc",
+      title: "Khoảnh khắc yêu thương",
+      subtitle: "Lưu giữ tình thân trong từng nụ cười",
       price: "chỉ từ 30.000đ",
       delivery: "Giao hàng tiết kiệm,",
       image: IMAGES.BANNER_02,
@@ -32,8 +32,8 @@ const FurnitureSlider: React.FC = () => {
     },
     {
       id: 2,
-      title: "Khung ảnh thời thượng",
-      subtitle: "lưu giữ khoảnh khắc",
+      title: "Kỷ yếu học trò",
+      subtitle: "Ghi lại thanh xuân đầy kỷ niệm",
       price: "chỉ từ 30.000đ",
       delivery: "Giao hàng tiết kiệm,",
       image: IMAGES.BANNER_4,
@@ -41,8 +41,8 @@ const FurnitureSlider: React.FC = () => {
     },
     {
       id: 3,
-      title: "Khung ảnh thời thượng",
-      subtitle: "lưu giữ khoảnh khắc",
+      title: "Sinh nhật đầu đời",
+      subtitle: "Khoảnh khắc ngọt ngào của bé yêu",
       price: "chỉ từ 30.000đ",
       delivery: "Giao hàng tiết kiệm,",
       image: IMAGES.BANNER_5,
@@ -93,23 +93,22 @@ const FurnitureSlider: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-[300px] lg:h-[816px] bg-gray-50 overflow-hidden">
+    <div className="relative w-full h-[390px] lg:h-[816px] bg-gray-50 overflow-hidden">
       {/* Slider Container */}
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (
           <div
             key={slide.id}
-            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-              index === currentSlide
-                ? "opacity-100 translate-x-0"
-                : index < currentSlide
+            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === currentSlide
+              ? "opacity-100 translate-x-0"
+              : index < currentSlide
                 ? "opacity-0 -translate-x-full"
                 : "opacity-0 translate-x-full"
-            }`}
+              }`}
           >
             {/* Background Image */}
             <div className="absolute inset-0">
-              <div className="absolute inset-0 transition-all duration-1000 ease-in-out bg-black z-10 opacity-20"></div>
+              <div className="absolute inset-0 transition-all duration-1000 ease-in-out bg-black z-10 opacity-30"></div>
               <Image
                 src={slide.image}
                 alt={slide.alt}
@@ -122,26 +121,24 @@ const FurnitureSlider: React.FC = () => {
             </div>
 
             {/* Content */}
-            <div className="relative z-10 flex items-start pl-5 lg:pl-5 pt-6 lg:pt-20 h-full">
+            <div className="relative z-10 flex items-start pl-3 lg:pl-5 pt-6 lg:pt-20 h-full">
               <div className="container mx-auto px-4">
                 <div className="max-w-2xl">
                   {/* Delivery Text */}
                   <div className="mb-4">
                     <span
-                      className={`inline-block text-[rgb(var(--primary-rgb))] text-sm lg:text-lg font-bold transition-all duration-1000 delay-0 ${
-                        index === currentSlide
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 -translate-y-20"
-                      }`}
+                      className={`inline-block text-[rgb(var(--primary-rgb))] text-sm lg:text-lg font-bold transition-all duration-1000 delay-0 ${index === currentSlide
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 -translate-y-20"
+                        }`}
                     >
                       {slide.delivery}
                     </span>
                     <span
-                      className={`inline-block text-[rgb(var(--fifteenth-rgb))] text-sm lg:text-lg font-bold lg:ml-2 transition-all duration-1000 delay-100 ${
-                        index === currentSlide
-                          ? "opacity-100 translate-x-0"
-                          : "opacity-0 -translate-x-20"
-                      }`}
+                      className={`inline-block text-[rgb(var(--fifteenth-rgb))] text-sm lg:text-lg font-bold lg:ml-2 transition-all duration-1000 delay-100 ${index === currentSlide
+                        ? "opacity-100 translate-x-0"
+                        : "opacity-0 -translate-x-20"
+                        }`}
                     >
                       {slide.price}
                     </span>
@@ -149,22 +146,20 @@ const FurnitureSlider: React.FC = () => {
 
                   {/* Main Title */}
                   <h1
-                    className={`text-2xl md:text-6xl lg:text-6xl font-bold text-[rgb(var(--primary-rgb))] mb-2 leading-tight transition-all duration-1000 delay-300 ${
-                      index === currentSlide
-                        ? "opacity-100 scale-100"
-                        : "opacity-0 scale-90"
-                    }`}
+                    className={`text-2xl md:text-5xl lg:text-5xl font-bold text-[rgb(var(--primary-rgb))] mb-2 leading-tight transition-all duration-1000 delay-300 ${index === currentSlide
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-90"
+                      }`}
                   >
                     {slide.title}
                   </h1>
 
                   {/* Subtitle */}
                   <h2
-                    className={`text-2xl md:text-5xl lg:text-6xl font-bold text-[rgb(var(--primary-rgb))] mb-8 leading-tight transition-all duration-1000 delay-500 ${
-                      index === currentSlide
-                        ? "opacity-100 translate-x-0"
-                        : "opacity-0 -translate-x-20"
-                    }`}
+                    className={`text-2xl md:text-5xl lg:text-5xl font-bold text-[rgb(var(--primary-rgb))] mb-8 leading-tight transition-all duration-1000 delay-500 ${index === currentSlide
+                      ? "opacity-100 translate-x-0"
+                      : "opacity-0 -translate-x-20"
+                      }`}
                   >
                     {slide.subtitle}
                   </h2>
@@ -172,11 +167,10 @@ const FurnitureSlider: React.FC = () => {
                   {/* CTA Button */}
                   <Link
                     href={`${ROUTES.PRODUCT}`}
-                    className={`bg-[rgb(var(--fifteenth-rgb))] text-white px-8 py-3 rounded-md font-medium text-sm uppercase tracking-wide transition-all duration-1000 delay-700 hover:text-white transform hover:scale-105 z-50 ${
-                      index === currentSlide
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-20"
-                    }`}
+                    className={`bg-[rgb(var(--fifteenth-rgb))] text-white px-8 py-3 rounded-md font-medium text-sm uppercase tracking-wide transition-all duration-1000 delay-700 hover:text-white transform hover:scale-105 z-50 ${index === currentSlide
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-20"
+                      }`}
                   >
                     Đặt hàng ngay
                   </Link>
@@ -193,11 +187,10 @@ const FurnitureSlider: React.FC = () => {
             key={index}
             onClick={() => goToSlide(index)}
             disabled={isAnimating}
-            className={`relative w-2 h-2 rounded-full transition-all duration-300 disabled:cursor-not-allowed ${
-              index === currentSlide
-                ? "bg-[rgb(var(--primary-rgb))] scale-125"
-                : "bg-white bg-opacity-60 hover:bg-opacity-80"
-            }`}
+            className={`relative w-2 h-2 rounded-full transition-all duration-300 disabled:cursor-not-allowed ${index === currentSlide
+              ? "bg-[rgb(var(--primary-rgb))] scale-125"
+              : "bg-white bg-opacity-60 hover:bg-opacity-80"
+              }`}
           >
             <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
               {slides[index].subtitle}

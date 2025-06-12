@@ -3,6 +3,8 @@ import { BarChart3, Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { Product } from "@/types/product";
+import { toast } from "@/hooks/use-toast";
+
 
 interface ProductCardProps {
   product: Product;
@@ -13,9 +15,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`w-4 h-4 ${
-          i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
-        }`}
+        className={`w-4 h-4 ${i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+          }`}
       />
     ));
   };
@@ -38,11 +39,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               alt={product.name}
               layout="fill"
               objectFit="cover"
-              className={`transition-opacity duration-300 border border-gray-200  ${
-                product.images[1]
-                  ? "group-hover:opacity-0"
-                  : "group-hover:opacity-100"
-              }`}
+              className={`transition-opacity duration-300 border border-gray-200  ${product.images[1]
+                ? "group-hover:opacity-0"
+                : "group-hover:opacity-100"
+                }`}
             />
             {product.images[1] && (
               <Image
@@ -56,7 +56,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
         </div>
         <>
-          <div className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div onClick={() => {
+            toast({
+              variant: "default",
+              title: "Thông báo",
+              description: "Chức năng đang được phát triển.",
+            });
+          }} className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button className="p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow">
               <Heart className="w-4 h-4 text-gray-600" />
             </button>

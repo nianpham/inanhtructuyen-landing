@@ -12,6 +12,7 @@ import {
 import Image from "next/image";
 import FacebookPageEmbed from "./facebook";
 import { ROUTES, SOCIAL_LINKS } from "@/utils/route";
+import { toast } from "@/hooks/use-toast";
 import { IMAGES } from "@/utils/image";
 
 const Footer: React.FC = () => {
@@ -107,9 +108,8 @@ const Footer: React.FC = () => {
               >
                 THÔNG TIN CHUNG{" "}
                 <ChevronDown
-                  className={`w-5 h-5 ml-2 transition-transform ${
-                    toggle1 ? "rotate-180" : ""
-                  }`}
+                  className={`w-5 h-5 ml-2 transition-transform ${toggle1 ? "rotate-180" : ""
+                    }`}
                 />
               </h3>
               {toggle1 && (
@@ -184,9 +184,8 @@ const Footer: React.FC = () => {
               >
                 IN ẢNH TRỰC TUYẾN{" "}
                 <ChevronDown
-                  className={`w-5 h-5 ml-2 transition-transform ${
-                    toggle2 ? "rotate-180" : ""
-                  }`}
+                  className={`w-5 h-5 ml-2 transition-transform ${toggle2 ? "rotate-180" : ""
+                    }`}
                 />
               </h3>
               {toggle2 && (
@@ -252,9 +251,8 @@ const Footer: React.FC = () => {
               >
                 CÁC TỈNH THÀNH{" "}
                 <ChevronDown
-                  className={`w-5 h-5 ml-2 transition-transform ${
-                    toggle3 ? "rotate-180" : ""
-                  }`}
+                  className={`w-5 h-5 ml-2 transition-transform ${toggle3 ? "rotate-180" : ""
+                    }`}
                 />
               </h3>
               {toggle3 && (
@@ -391,14 +389,20 @@ const Footer: React.FC = () => {
                     height={0}
                   />
                 </Link>
-                <Link href={SOCIAL_LINKS.DOWNLOAD_ANDROID} target="_blank">
+                <div onClick={() => {
+                  toast({
+                    variant: "default",
+                    title: "Thông báo",
+                    description: "Chức năng đang được phát triển.",
+                  });
+                }}>
                   <Image
                     src={IMAGES.FOOTER_ANDROID || ""}
                     alt="chplay"
                     width={140}
                     height={0}
                   />
-                </Link>
+                </div>
               </div>
             </div>
           </div>
