@@ -5,14 +5,10 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Image from "next/image";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { Loader, User } from "lucide-react";
 import { IMAGES } from "@/utils/image";
 import { API } from "@/utils/api";
-import { AccountService } from "@/services/account";
-import { ROUTES } from "@/utils/route";
-
 interface LoginFormProps {
   onLogin: (username: string, password: string) => Promise<void>;
 }

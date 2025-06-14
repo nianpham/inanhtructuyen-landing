@@ -3,6 +3,7 @@
 import Contact from "@/components/ui/contact";
 import SectionHeader from "./components/section-header";
 import Section01 from "./components/section-01";
+import BannerSlider from "./components/slider";
 
 export default function AboutContent() {
   return (
@@ -16,6 +17,7 @@ export default function AboutContent() {
       <main className="w-full flex flex-col justify-center items-center overflow-hidden">
         <div className="w-full flex flex-col justify-center items-center">
           {/* <SectionHeader /> */}
+          <BannerSlider />
           <Section01 />
         </div>
       </main>

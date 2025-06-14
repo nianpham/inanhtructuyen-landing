@@ -1,16 +1,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import {
-  Facebook,
-  Twitter,
-  Youtube,
-  MessageCircle,
-  Phone,
-  MapPin,
-  ChevronDown,
-} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import FacebookPageEmbed from "./facebook";
+import { toast } from "@/hooks/use-toast";
 import { ROUTES, SOCIAL_LINKS } from "@/utils/route";
 import { IMAGES } from "@/utils/image";
 
@@ -114,29 +107,9 @@ const Footer: React.FC = () => {
               </h3>
               {toggle1 && (
                 <ul className="space-y-2">
-                  {/* <li>
-                  <Link href="/" className="text-gray-600 hover:text-gray-900">
-                    Hỏi đáp
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/" className="text-gray-600 hover:text-gray-900">
-                    Thông tin vận chuyển
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/" className="text-gray-600 hover:text-gray-900">
-                    Hướng dẫn trực tiếp mua hàng trực tuyến
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/" className="text-gray-600 hover:text-gray-900">
-                    Phương thức giao hàng COD
-                  </Link>
-                </li> */}
                   <li>
                     <Link
-                      href={`${ROUTES.POLICY}`}
+                      href={`${ROUTES.ABOUT}`}
                       className="text-gray-600 hover:text-gray-900"
                     >
                       Giới thiệu
@@ -144,7 +117,7 @@ const Footer: React.FC = () => {
                   </li>
                   <li>
                     <Link
-                      href={`${ROUTES.POLICY}`}
+                      href={`${ROUTES.POLICY}?scrollTo=dt`}
                       className="text-gray-600 hover:text-gray-900"
                     >
                       Chính sách đổi trả
@@ -152,7 +125,7 @@ const Footer: React.FC = () => {
                   </li>
                   <li>
                     <Link
-                      href={`${ROUTES.POLICY}`}
+                      href={`${ROUTES.POLICY}?scrollTo=gh`}
                       className="text-gray-600 hover:text-gray-900"
                     >
                       Điều khoản giao hàng
@@ -160,7 +133,7 @@ const Footer: React.FC = () => {
                   </li>
                   <li>
                     <Link
-                      href={`${ROUTES.POLICY}`}
+                      href={`${ROUTES.POLICY}?scrollTo=bm`}
                       className="text-gray-600 hover:text-gray-900"
                     >
                       Chính sách bảo mật
@@ -168,7 +141,7 @@ const Footer: React.FC = () => {
                   </li>
                   <li>
                     <Link
-                      href={`${ROUTES.POLICY}`}
+                      href={`${ROUTES.POLICY}?scrollTo=tt`}
                       className="text-gray-600 hover:text-gray-900"
                     >
                       Chính sách thanh toán
@@ -391,14 +364,23 @@ const Footer: React.FC = () => {
                     height={0}
                   />
                 </Link>
-                <Link href={SOCIAL_LINKS.DOWNLOAD_ANDROID} target="_blank">
+                <div
+                  onClick={() => {
+                    toast({
+                      variant: "default",
+                      title: "Thông báo",
+                      description: "Chức năng này đang được phát triển.",
+                    });
+                  }}
+                  className="cursor-pointer"
+                >
                   <Image
                     src={IMAGES.FOOTER_ANDROID || ""}
                     alt="chplay"
                     width={140}
                     height={0}
                   />
-                </Link>
+                </div>
               </div>
             </div>
           </div>
