@@ -58,7 +58,7 @@ const Section01 = () => {
       <div className="relative z-10 flex flex-col justify-center items-center h-full mx-auto text-black max-w-7xl px-5 lg:px-0">
         <div className="relative z-20 mb-7 mt-10">
           <div
-            className={`absolute bottom-[20%] left-[48%] lg:-right-[10%] h-3 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+            className={`absolute bottom-[20%] left-[48%] lg:-right-[10%] h-2 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
           ></div>
           <h1 className={`text-3xl font-bold text-gray-900 mb-2 z-20 relative`}>
             Bài viết mới nhất
@@ -137,7 +137,7 @@ const Section01 = () => {
             </div>
             <div className="relative z-20 mb-7 mt-10">
               <div
-                className={`absolute bottom-[20%] left-[47%] lg:-right-[20%] h-3 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                className={`absolute bottom-[20%] left-[47%] lg:-right-[20%] h-2 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
               ></div>
               <h1
                 className={`text-3xl font-bold text-gray-900 mb-2 z-20 relative`}

@@ -11,7 +11,7 @@ const Title = ({
     <div className="text-center mb-12">
       <div className="relative z-20">
         <div
-          className={`absolute bottom-[8%] right-[${percent}%] h-3 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+          className={`absolute bottom-[8%] right-[${percent}%] h-2 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
         ></div>
         <h1
           className={`text-3xl font-bold text-gray-900 ${

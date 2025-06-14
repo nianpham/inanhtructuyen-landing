@@ -76,7 +76,7 @@ const Section5: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Nhập địa chỉ email của bạn"
-                    className="!text-[14px] placeholder-gray-500 flex-1 px-6 py-2 text-lg border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent bg-transparent"
+                    className="!text-[14px] lg:!text-[16px] placeholder-gray-500 flex-1 px-6 py-2 text-lg border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent bg-transparent"
                   />
                   <button
                     onClick={() => {

@@ -276,7 +276,7 @@ const Section01 = () => {
     [key: string]: boolean;
   }>(
     policies.reduce((acc, policy) => {
-      acc[policy.title] = true; // Set all sections to true
+      acc[policy.title] = true;
       return acc;
     }, {} as { [key: string]: boolean })
   );
@@ -287,27 +287,30 @@ const Section01 = () => {
       [title]: !prev[title],
     }));
   };
+
   return (
-    <section className="w-[100%] h-full mx-auto pt-10 pb-20 relative overflow-hidden">
+    <section className="w-[100%] h-full mx-auto pt-10 pb-20 relative overflow-hidden px-5 lg:px-0">
       <div className="w-full relative z-10 flex flex-col justify-center items-center h-full mx-auto text-black max-w-7xl">
         {policies.map((policy) => (
           <div key={policy.title} className="w-full ">
             <button
               id={policy.scrollId}
-              onClick={() => toggleSection(policy.title)}
-              className="w-full pt-4 pb-2 flex justify-start items-center text-left border-b border-gray-300"
+              className="w-full pt-4 pb-2 flex justify-start items-center text-left"
             >
-              <span className="text-xl lg:text-2xl font-semibold text-black pr-2">
-                {policy.title}
-              </span>
-              <ChevronDown
-                className={`w-5 h-5 transition-transform ${
-                  expandedSections[policy.title] ? "rotate-180" : ""
-                }`}
-              />
+              {/* <span className="text-xl lg:text-2xl font-semibold text-black pr-2"></span> */}
+              <div className="relative z-20">
+                <div
+                  className={`absolute bottom-[28%] left-[50%] lg:left-[55%] h-2 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                ></div>
+                <h1
+                  className={`text-2xl font-bold text-gray-900 mb-2 z-20 relative`}
+                >
+                  {policy.title}
+                </h1>
+              </div>
             </button>
             {expandedSections[policy.title] && (
-              <div className="text-justify pt-4 lg:py-4 text-black">
+              <div className="text-justify pt-0 lg:pb-4 text-black">
                 {policy.content}
               </div>
             )}

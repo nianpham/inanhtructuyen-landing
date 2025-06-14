@@ -86,7 +86,7 @@ const Section01 = () => {
             <div className="flex flex-col justify-start items-start gap-4 lg:gap-6">
               <div className="relative z-20">
                 <div
-                  className={`absolute bottom-[30%] lg:bottom-[12%] -right-[10%] lg:left-[54%] h-3 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                  className={`absolute bottom-[33%] lg:bottom-[12%] -right-[10%] lg:left-[54%] h-2 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
                 ></div>
                 <h3
                   className={`text-2xl font-bold text-gray-900 pb-3 lg:pb-0 z-20 relative`}
@@ -244,7 +244,7 @@ const Section01 = () => {
           <div className="space-y-4 !mt-8">
             <div className="relative z-20">
               <div
-                className={`absolute bottom-[30%] lg:bottom-[12%] left-[27%] lg:left-[8%] h-3 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                className={`absolute bottom-[33%] lg:bottom-[12%] left-[27%] lg:left-[8%] h-2 w-28 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
               ></div>
               <h3
                 className={`text-2xl font-bold text-gray-900 pb-3 lg:pb-0 z-20 relative`}
