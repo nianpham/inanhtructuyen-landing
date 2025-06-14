@@ -82,7 +82,7 @@ const Section01 = () => {
     <section className="w-[100%] h-full mx-auto pt-10 lg:pt-20 pb-20 relative overflow-hidden">
       <div className="space-y-4 max-w-7xl mx-auto px-4 lg:px-0">
         <div className="space-y-10 mb-5 lg:mb-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full">
             <div className="flex flex-col justify-start items-start gap-4 lg:gap-6">
               <div className="relative z-20">
                 <div
@@ -233,9 +233,9 @@ const Section01 = () => {
             </div>
             <div>
               <Image
-                src="https://res.cloudinary.com/farmcode/image/upload/v1745333847/iatt/74793b7c552593d478f203548cca72b01b50b862_kk2a1b.png"
+                src={IMAGES.BANNER_10}
                 alt="price-banner"
-                className="hidden lg:flex mx-auto w-full h-full object-contain"
+                className="hidden lg:flex mx-auto w-full h-full object-contain rounded-md"
                 width={1000}
                 height={1000}
               />

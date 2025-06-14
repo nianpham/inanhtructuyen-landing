@@ -16,8 +16,8 @@ export default function AboutContent() {
       </div>
       <main className="w-full flex flex-col justify-center items-center overflow-hidden">
         <div className="w-full flex flex-col justify-center items-center">
-          {/* <SectionHeader /> */}
-          <BannerSlider />
+          <SectionHeader />
+          {/* <BannerSlider /> */}
           <Section01 />
         </div>
       </main>

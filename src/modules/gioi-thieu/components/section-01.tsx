@@ -85,7 +85,7 @@ const Section01 = () => {
   const introductionContent = (
     <div className="space-y-8">
       <div className="text-black">
-        <p className="mb-4 font-semibold text-left text-xl">
+        <p className="mb-4 font-semibold text-left text-2xl">
           Chào mừng bạn đến với In Ảnh Trực Tuyến (
           <strong>inanhtructuyen.com</strong>)
         </p>
@@ -114,13 +114,13 @@ const Section01 = () => {
           {services.map((service) => (
             <div
               key={service.title}
-              className="bg-white border border-gray-200 overflow-hidden p-4 cursor-pointer group hover:shadow-md transition-shadow duration-300 z-20"
+              className="rounded-md bg-white border border-gray-200 overflow-hidden p-4 cursor-pointer group hover:shadow-md transition-shadow duration-300 z-20"
             >
-              <div className="relative h-48 bg-white overflow-hidden ">
+              <div className="relative h-48 bg-white overflow-hidden rounded-md">
                 <Image
                   src={service.imageSrc}
                   alt={service.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="rounded-md w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   width={397}
                   height={465}
                 />
@@ -161,10 +161,10 @@ const Section01 = () => {
       <div className="relative z-10 flex flex-col justify-center items-center h-full mx-auto text-black max-w-7xl px-5 lg:px-0">
         {policies.map((policy) => (
           <div key={policy.title} className="w-full">
-            <button
+            {/* <button
               id={policy.scrollId}
               onClick={() => toggleSection(policy.title)}
-              className="w-full pt-4 pb-2 flex justify-start items-center text-left border-b border-gray-300"
+              className="w-full pt-4 pb-2 flex justify-start items-center text-left "
             >
               <span className="text-2xl font-semibold text-black pr-2">
                 {policy.title}
@@ -174,7 +174,7 @@ const Section01 = () => {
                   expandedSections[policy.title] ? "rotate-180" : ""
                 }`}
               />
-            </button>
+            </button> */}
             {expandedSections[policy.title] && (
               <div className="text-justify pt-4 lg:py-4 text-black">
                 {policy.content}

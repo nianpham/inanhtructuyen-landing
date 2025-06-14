@@ -33,16 +33,8 @@ export const IMAGES = {
     "https://res.cloudinary.com/farmcode/image/upload/v1749617471/iatt/qnjsnaleoz7gbue38au1.jpg",
   BANNER_9:
     "https://res.cloudinary.com/farmcode/image/upload/v1749618043/iatt/ga3bhhqxdtneicm6dnff.jpg",
-  MAIN_1:
-    "https://res.cloudinary.com/farmcode/image/upload/v1748171752/ielts-test/main1_ck4lr0.jpg",
-  MAIN_2:
-    "https://res.cloudinary.com/farmcode/image/upload/v1748171765/ielts-test/main2_hl0zxw.jpg",
-  MAIN_3:
-    "https://res.cloudinary.com/farmcode/image/upload/v1748171779/ielts-test/main3_ctra6j.jpg",
-  MAIN_4:
-    "https://res.cloudinary.com/farmcode/image/upload/v1748171791/ielts-test/main4_z9xqmw.jpg",
-  MAIN_5:
-    "https://res.cloudinary.com/farmcode/image/upload/v1748171804/ielts-test/main5_hc4r5x.jpg",
+  BANNER_10:
+    "https://res.cloudinary.com/farmcode/image/upload/v1749906476/iatt/IMG_7585-1-2_vhfdm2.jpg",
 
   slider_1: [
     "https://res.cloudinary.com/farmcode/image/upload/v1748450520/ielts-test/FATT6375_rszrxr.jpg",
