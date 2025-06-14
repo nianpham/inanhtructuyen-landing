@@ -3,8 +3,8 @@ import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import FacebookPageEmbed from "./facebook";
-import { toast } from "@/hooks/use-toast";
 import { ROUTES, SOCIAL_LINKS } from "@/utils/route";
+import { toast } from "@/hooks/use-toast";
 import { IMAGES } from "@/utils/image";
 
 const Footer: React.FC = () => {

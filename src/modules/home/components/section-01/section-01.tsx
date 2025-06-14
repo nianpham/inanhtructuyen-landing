@@ -183,7 +183,7 @@ const Section1: React.FC = () => {
               {/* Product Cards Sidebar - Takes 1/3 width */}
               <div className="grid h-full lg:col-span-1 lg:grid-row-2 gap-[16px]">
                 <div
-                  className={`flex relative p-8 h-[400px] flex-col justify-between`}
+                  className={`flex relative p-8 h-[390px] lg:h-[400px] flex-col justify-between`}
                 >
                   <div className="absolute top-0 left-0 right-0 bottom-0">
                     <Image
@@ -196,7 +196,7 @@ const Section1: React.FC = () => {
                   </div>
                 </div>
                 <div
-                  className={`hidden lg:flex relative p-8 h-[400px] flex-col justify-between`}
+                  className={`hidden lg:flex relative p-8 h-[390px] lg:h-[400px] flex-col justify-between`}
                 >
                   <div className="absolute top-0 left-0 right-0 bottom-0">
                     <Image

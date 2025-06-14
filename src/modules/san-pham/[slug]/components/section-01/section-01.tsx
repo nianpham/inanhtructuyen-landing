@@ -29,9 +29,9 @@ import { ProductService } from "@/services/product";
 import { useRouter, useSearchParams } from "next/navigation";
 import { HELPER } from "@/utils/helper";
 import SectionHeader from "../section-header";
-import { useProduct } from "@/modules/san-pham/components/product-context";
-import { useDispatch } from "react-redux";
-import { setSelectedProductId } from "@/store/productSlice";
+import { toast } from "@/hooks/use-toast";
+import Link from "next/link";
+import { SOCIAL_LINKS } from "@/utils/route";
 
 interface Product {
   _id: string;
@@ -170,7 +170,7 @@ const Section1: React.FC = () => {
     swiperInstance?.slideTo(firstVisibleIndex);
   };
 
-  const social = [IMAGES.FACEBOOK, IMAGES.ZALO];
+  const social = [{ image: IMAGES.FACEBOOK, link: SOCIAL_LINKS.FACEBOOK }, { image: IMAGES.ZALO, link: SOCIAL_LINKS.ZALO }];
 
   return (
     <>
@@ -195,11 +195,10 @@ const Section1: React.FC = () => {
                 {imageList?.map((proImg: any, index: any) => (
                   <SwiperSlide key={index}>
                     <div
-                      className={`w-full h-full overflow-hidden cursor-pointer relative transition-all duration-300 ${
-                        activeSlide === index
-                          ? "border-[rgb(var(--fifteenth-rgb))] border-2"
-                          : "border-transparent"
-                      }`}
+                      className={`w-full h-full overflow-hidden cursor-pointer relative transition-all duration-300 ${activeSlide === index
+                        ? "border-[rgb(var(--fifteenth-rgb))] border-2"
+                        : "border-transparent"
+                        }`}
                       onClick={() => handleThumbnailClick(index)}
                     >
                       <Image
@@ -254,11 +253,10 @@ const Section1: React.FC = () => {
                 {imageList?.map((proImg: any, index: any) => (
                   <SwiperSlide key={index}>
                     <div
-                      className={`w-full h-full overflow-hidden cursor-pointer relative transition-all duration-300 ${
-                        activeSlide === index
-                          ? "border-[rgb(var(--fifteenth-rgb))] border-2"
-                          : "border-transparent"
-                      }`}
+                      className={`w-full h-full overflow-hidden cursor-pointer relative transition-all duration-300 ${activeSlide === index
+                        ? "border-[rgb(var(--fifteenth-rgb))] border-2"
+                        : "border-transparent"
+                        }`}
                       onClick={() => handleThumbnailClick(index)}
                     >
                       <Image
@@ -297,11 +295,10 @@ const Section1: React.FC = () => {
                 {product?.product_option?.map((option: any, index: number) => (
                   <button
                     key={index}
-                    className={`h-10 text-sm lg:text-base font-base border rounded-md flex items-center justify-center py-2 cursor-pointer transition-all duration-300 ${
-                      selectedSize === option.size
-                        ? "border-[rgb(var(--fifteenth-rgb))] border-2 bg-orange-50"
-                        : "border-gray-300"
-                    }`}
+                    className={`h-10 text-sm lg:text-base font-base border rounded-md flex items-center justify-center py-2 cursor-pointer transition-all duration-300 ${selectedSize === option.size
+                      ? "border-[rgb(var(--fifteenth-rgb))] border-2 bg-orange-50"
+                      : "border-gray-300"
+                      }`}
                     onClick={() => handleSizeSelect(option.size)}
                   >
                     <div className="flex">{option.size}</div>
@@ -332,11 +329,10 @@ const Section1: React.FC = () => {
                         onClick={() => setSelectedColor(color)}
                         className={`w-8 h-8 ${HELPER.renderColor(
                           color
-                        )} rounded-full border border-gray-200 cursor-pointer ${
-                          selectedColor === color
-                            ? "ring-2 ring-[rgb(var(--fifteenth-rgb))]"
-                            : ""
-                        }`}
+                        )} rounded-full border border-gray-200 cursor-pointer ${selectedColor === color
+                          ? "ring-2 ring-[rgb(var(--fifteenth-rgb))]"
+                          : ""
+                          }`}
                       ></div>
                     ))}
                   </div>
@@ -398,10 +394,22 @@ const Section1: React.FC = () => {
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
-                <button className="p-3 border border-gray-300 rounded-md hover:bg-gray-50">
+                <button onClick={() => {
+                  toast({
+                    variant: "default",
+                    title: "Thông báo",
+                    description: "Chức năng đang được phát triển.",
+                  });
+                }} className="p-3 border border-gray-300 rounded-md hover:bg-gray-50">
                   <Heart className="w-5 h-5" />
                 </button>
-                <button className="p-3 border border-gray-300 rounded-md hover:bg-gray-50">
+                <button onClick={() => {
+                  toast({
+                    variant: "default",
+                    title: "Thông báo",
+                    description: "Chức năng đang được phát triển.",
+                  });
+                }} className="p-3 border border-gray-300 rounded-md hover:bg-gray-50">
                   <BarChart3 className="w-5 h-5" />
                 </button>
               </div>
@@ -431,15 +439,15 @@ const Section1: React.FC = () => {
                 <span className="font-medium">Chia sẻ:</span>
                 <div className="flex space-x-3">
                   {social.map((icon, index) => (
-                    <div key={index}>
+                    <Link href={icon.link} target="_blank" key={index}>
                       <Image
-                        src={icon}
+                        src={icon.image}
                         alt={`Share on ${icon}`}
                         width={24}
                         height={24}
                         className="w-7 h-7 rounded-full cursor-pointer hover:opacity-80"
                       />
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>

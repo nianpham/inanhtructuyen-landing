@@ -7,6 +7,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { slugifyURL } from "@/utils/slugify";
 import { ROUTES } from "@/utils/route";
+import { toast } from "@/hooks/use-toast";
+
 
 interface Product {
   _id: string;
@@ -119,17 +121,22 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           <span className="text-gray-600">Xem dạng:</span>
           <button
             onClick={() => onViewModeChange("grid")}
-            className={`p-1 ${
-              viewMode === "grid" ? "text-black" : "text-gray-400"
-            }`}
+            className={`p-1 ${viewMode === "grid" ? "text-black" : "text-gray-400"
+              }`}
           >
             <Grip size={20} />
           </button>
           <button
             // onClick={() => onViewModeChange("list")}
-            className={`p-1 ${
-              viewMode === "list" ? "text-black" : "text-gray-400"
-            }`}
+            onClick={() => {
+              toast({
+                variant: "default",
+                title: "Thông báo",
+                description: "Chức năng đang được phát triển.",
+              });
+            }}
+            className={`p-1 ${viewMode === "list" ? "text-black" : "text-gray-400"
+              }`}
           >
             <AlignJustify size={20} />
           </button>
@@ -146,9 +153,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       <div
         className={
           viewMode === "grid"
-            ? `grid grid-cols-2 lg:grid-cols-3 gap-6 ${
-                viewFilter ? "z-0" : "z-30"
-              }`
+            ? `grid grid-cols-2 lg:grid-cols-3 gap-6 ${viewFilter ? "z-0" : "z-30"
+            }`
             : "space-y-4"
         }
       >
@@ -213,11 +219,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                     }}
                   >
                     <div
-                      className={`${
-                        item === currenPage
-                          ? "bg-[rgb(var(--primary-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] text-gray-700"
-                          : "bg-white"
-                      } cursor-pointer flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700`}
+                      className={`${item === currenPage
+                        ? "bg-[rgb(var(--primary-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] text-gray-700"
+                        : "bg-white"
+                        } cursor-pointer flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700`}
                     >
                       {item}
                     </div>

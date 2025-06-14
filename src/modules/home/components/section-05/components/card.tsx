@@ -1,4 +1,5 @@
 import { ChevronRight } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 import React from "react";
 
 interface FeatureProps {
@@ -25,7 +26,13 @@ const FeatureCard: React.FC<FeatureProps> = ({
         <h3 className="text-xl font-semibold text-gray-900 mb-3">{title}</h3>
         <p className="text-gray-600 mb-6 leading-relaxed">{description}</p>
       </div>
-      <button className="text-sm flex items-center justify-center mx-auto text-gray-700 hover:text-gray-900 font-bold transition-colors group">
+      <button onClick={() => {
+        toast({
+          variant: "default",
+          title: "Thông báo",
+          description: "Chức năng đang được phát triển.",
+        });
+      }} className="text-sm flex items-center justify-center mx-auto text-gray-700 hover:text-gray-900 font-bold transition-colors group">
         {linkText}
         <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
       </button>
