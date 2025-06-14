@@ -86,7 +86,7 @@ const Section5: React.FC = () => {
                         description: "Chức năng đang được phát triển.",
                       });
                     }}
-                    className="text-sm px-8 py-3 bg-[rgb(var(--fifteenth-rgb))] text-white font-semibold rounded-md hover:opacity-80 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+                    className="text-sm lg:text-base px-8 py-3 bg-[rgb(var(--fifteenth-rgb))] text-white font-semibold rounded-md hover:opacity-80 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
                   >
                     {isSubscribed ? "Đã Đăng Ký!" : "Đăng Ký"}
                   </button>
