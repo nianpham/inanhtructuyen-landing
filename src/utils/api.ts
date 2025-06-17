@@ -37,6 +37,7 @@ const ORDER = {
   CREATE_ALBUM: `${BASE_URL}/inanhtructuyen/order-album/`,
   CREATE_ALBUM_NO_LOGIN: `${BASE_URL}/inanhtructuyen/order-album/no-login`,
   DISCOUNT_CHECK: `${BASE_URL}/inanhtructuyen/discount/`,
+  CREATE_PAYMENT: `https://payment.inanhtructuyen.com/order/create`,
 };
 
 export const API = {

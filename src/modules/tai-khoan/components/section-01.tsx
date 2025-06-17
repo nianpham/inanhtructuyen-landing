@@ -162,6 +162,45 @@ const Section01 = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openChangePassword, setOpenChangePassword] = useState(false);
 
+  const orderIDBank = pathParams.get("orderID");
+  const statusBank = pathParams.get("status");
+
+  const updateOrderStatus = async () => {
+    if (orderIDBank && statusBank) {
+      const body = {
+        status:
+          statusBank === "PAID"
+            ? "paid"
+            : statusBank === "CANCELLED"
+            ? "waiting"
+            : "waiting",
+      };
+      const order = await OrderService.updateOrder(orderIDBank, body);
+
+      if (order) {
+        // order.status = statusBank;
+        // setOrders((prevOrders) =>
+        //   prevOrders.map((o) =>
+        //     o._id === orderIDBank ? { ...o, status: statusBank } : o
+        //   )
+        // );
+        // toast({
+        //   title: "Cập nhật trạng thái đơn hàng",
+        //   description: `Trạng thái đơn hàng ${orderIDBank} đã được cập nhật thành ${statusBank}.`,
+        //   className: "bg-green-500 text-white border-green-600",
+        // });
+      } else {
+        console.error("Order not found:", orderIDBank);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (orderIDBank && statusBank) {
+      updateOrderStatus();
+    }
+  }, [orderIDBank, statusBank]);
+
   useEffect(() => {
     if (tab === "true") {
       setOpenDialog(true);
@@ -464,143 +503,154 @@ const Section01 = () => {
             <h2 className="text-xl font-semibold text-gray-900 mb-3.5">
               Lịch sử mua hàng
             </h2>
+            {orders.length === 0 ? (
+              <div className="flex flex-col items-center justify-start h-full p-6">
+                <p className="text-gray-500 text-lg mt-4">
+                  Bạn chưa có đơn hàng nào.
+                </p>
+              </div>
+            ) : (
+              <div className="relative">
+                {/* <div
+                  className={`absolute top-0 inset-x-0 bg-gradient-to-b from-white z-20 to-transparent pointer-events-none transition-opacity duration-300 ${
+                    showTopGradient ? "opacity-100" : "opacity-0"
+                  }`}
+                  style={{ height: "40px" }}
+                /> */}
+                <div
+                  className="relative space-y-2 h-full scroll-bar-style"
+                  ref={scrollContainerRef}
+                >
+                  {[...orders]
+                    .sort(
+                      (a, b) =>
+                        new Date(b.created_at).getTime() -
+                        new Date(a.created_at).getTime()
+                    )
+                    .map((order, index) => (
+                      <div
+                        key={index}
+                        className="border border-gray-200 rounded-lg p-4"
+                      >
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 items-center">
+                          <div>
+                            <p className="text-gray-500 mb-1">ID Đơn hàng:</p>
+                            <p className="font-medium text-gray-900">
+                              {order._id.slice(0, 10)}...
+                            </p>
+                          </div>
 
-            <div className="relative">
-              <div
-                className={`absolute top-0 inset-x-0 bg-gradient-to-b from-white z-20 to-transparent pointer-events-none transition-opacity duration-300 ${
-                  showTopGradient ? "opacity-100" : "opacity-0"
-                }`}
-                style={{ height: "40px" }}
-              />
-              <div
-                className="relative space-y-2 h-full scroll-bar-style"
-                ref={scrollContainerRef}
-              >
-                {[...orders]
-                  .sort(
-                    (a, b) =>
-                      new Date(b.created_at).getTime() -
-                      new Date(a.created_at).getTime()
-                  )
-                  .map((order, index) => (
-                    <div
-                      key={index}
-                      className="border border-gray-200 rounded-lg p-4"
-                    >
-                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 items-center">
-                        <div>
-                          <p className="text-gray-500 mb-1">ID Đơn hàng:</p>
-                          <p className="font-medium text-gray-900">
-                            {order._id.slice(0, 10)}...
-                          </p>
+                          <div>
+                            <p className="text-gray-500 mb-1">Ngày đặt:</p>
+                            <p className="text-gray-900 font-medium">
+                              {HELPER.formatDate(order.created_at)}
+                            </p>
+                          </div>
+
+                          <div>
+                            <p className="text-gray-500 mb-1">Giá:</p>
+                            <p className="font-medium text-gray-900">
+                              {HELPER.formatVND(order.total)}
+                            </p>
+                          </div>
+
+                          <div>
+                            <p className="text-gray-500 mb-1">Trạng thái:</p>
+                            <div
+                              className={`font-medium ${getStatusColor(
+                                order.status
+                              )}`}
+                            >
+                              {order?.status === "completed" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <CircleCheckBig size={18} /> Hoàn thành
+                                </div>
+                              )}
+                              {order?.status === "paid pending" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <HandCoins size={18} /> Chờ thanh toán
+                                </div>
+                              )}
+                              {order?.status === "paid" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <CircleDollarSign size={18} /> Đã thanh toán
+                                </div>
+                              )}
+                              {order?.status === "delivering" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <Truck size={18} /> Vận chuyển
+                                </div>
+                              )}
+                              {order?.status === "pending" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <Package2 size={18} /> Chuẩn bị đơn
+                                </div>
+                              )}
+                              {order?.status === "waiting" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <Clock8 size={18} /> Đợi phản hồi
+                                </div>
+                              )}
+                              {order?.status === "cancelled" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <ClipboardX size={18} /> Đã hủy đơn
+                                </div>
+                              )}
+                            </div>
+                          </div>
                         </div>
 
-                        <div>
-                          <p className="text-gray-500 mb-1">Ngày đặt:</p>
-                          <p className="text-gray-900 font-medium">
-                            {HELPER.formatDate(order.created_at)}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p className="text-gray-500 mb-1">Giá:</p>
-                          <p className="font-medium text-gray-900">
-                            {HELPER.formatVND(order.total)}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p className="text-gray-500 mb-1">Trạng thái:</p>
-                          <div
-                            className={`font-medium ${getStatusColor(
-                              order.status
-                            )}`}
-                          >
-                            {order?.status === "completed" && (
-                              <div className="flex flex-row items-center gap-1">
-                                <CircleCheckBig size={18} /> Hoàn thành
-                              </div>
-                            )}
-                            {order?.status === "paid pending" && (
-                              <div className="flex flex-row items-center gap-1">
-                                <HandCoins size={18} /> Chờ thanh toán
-                              </div>
-                            )}
-                            {order?.status === "paid" && (
-                              <div className="flex flex-row items-center gap-1">
-                                <CircleDollarSign size={18} /> Đã thanh toán
-                              </div>
-                            )}
-                            {order?.status === "delivering" && (
-                              <div className="flex flex-row items-center gap-1">
-                                <Truck size={18} /> Vận chuyển
-                              </div>
-                            )}
-                            {order?.status === "pending" && (
-                              <div className="flex flex-row items-center gap-1">
-                                <Package2 size={18} /> Chuẩn bị đơn
-                              </div>
-                            )}
+                        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mt-4 pt-4 border-t border-gray-100">
+                          <div className="lg:hidden flex text-base mb-3">
+                            <span className="text-gray-500">
+                              Loại đơn hàng:
+                            </span>{" "}
+                            <span className="font-medium text-gray-900">
+                              &nbsp;
+                              {order?.order_type === "album"
+                                ? "Album"
+                                : order?.order_type === "frame"
+                                ? "Khung Ảnh"
+                                : ""}
+                            </span>
+                          </div>
+                          <div className="flex gap-2">
                             {order?.status === "waiting" && (
-                              <div className="flex flex-row items-center gap-1">
-                                <Clock8 size={18} /> Đợi phản hồi
-                              </div>
+                              <CancelOrderModal
+                                order={order}
+                                onCancelled={handleCancelOrder}
+                              />
                             )}
-                            {order?.status === "cancelled" && (
-                              <div className="flex flex-row items-center gap-1">
-                                <ClipboardX size={18} /> Đã hủy đơn
-                              </div>
-                            )}
+                            <OrderDetailModal
+                              order={order}
+                              customerAccount={customerAccount}
+                            />
+                          </div>
+                          <div className="hidden lg:flex text-base">
+                            <span className="text-gray-500">
+                              Loại đơn hàng:
+                            </span>{" "}
+                            <span className="font-medium text-gray-900">
+                              &nbsp;
+                              {order?.order_type === "album"
+                                ? "Album"
+                                : order?.order_type === "frame"
+                                ? "Khung Ảnh"
+                                : ""}
+                            </span>
                           </div>
                         </div>
                       </div>
-
-                      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mt-4 pt-4 border-t border-gray-100">
-                        <div className="lg:hidden flex text-base mb-3">
-                          <span className="text-gray-500">Loại đơn hàng:</span>{" "}
-                          <span className="font-medium text-gray-900">
-                            &nbsp;
-                            {order?.order_type === "album"
-                              ? "Album"
-                              : order?.order_type === "frame"
-                              ? "Khung Ảnh"
-                              : ""}
-                          </span>
-                        </div>
-                        <div className="flex gap-2">
-                          {order?.status === "waiting" && (
-                            <CancelOrderModal
-                              order={order}
-                              onCancelled={handleCancelOrder}
-                            />
-                          )}
-                          <OrderDetailModal
-                            order={order}
-                            customerAccount={customerAccount}
-                          />
-                        </div>
-                        <div className="hidden lg:flex text-base">
-                          <span className="text-gray-500">Loại đơn hàng:</span>{" "}
-                          <span className="font-medium text-gray-900">
-                            &nbsp;
-                            {order?.order_type === "album"
-                              ? "Album"
-                              : order?.order_type === "frame"
-                              ? "Khung Ảnh"
-                              : ""}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                </div>
+                {/* <div
+                  className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300 ${
+                    showBottomGradient ? "opacity-100" : "opacity-0"
+                  }`}
+                  style={{ height: "40px" }}
+                /> */}
               </div>
-              <div
-                className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300 ${
-                  showBottomGradient ? "opacity-100" : "opacity-0"
-                }`}
-                style={{ height: "40px" }}
-              />
-            </div>
+            )}
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ export const ROUTES = {
   PRICING: "/bang-gia",
   BLOG: "/blog",
   ACCOUNT: "/tai-khoan",
+  FULL_ROUTE_ACCOUNT: "https://www.inanhtructuyen.com/tai-khoan",
   CREATE_ORDER: "/tao-don-hang",
 };
 

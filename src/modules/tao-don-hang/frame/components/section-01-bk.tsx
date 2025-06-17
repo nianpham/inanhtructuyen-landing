@@ -195,23 +195,8 @@ const Section01 = () => {
         }
       );
       setSizeOptions(dynamicSizeOptions);
-
-      if (dynamicSizeOptions.length > 0 && !selectedSize) {
-        setSelectedSize(dynamicSizeOptions[0].id);
-        setConfirmSize(dynamicSizeOptions[0].id);
-      }
     } else {
       setSizeOptions([]);
-    }
-
-    if (productsData?.color?.length > 0 && !selectedColor) {
-      const firstAvailableColor = colorOptions.find((color) =>
-        productsData.color.includes(color.id)
-      );
-      if (firstAvailableColor) {
-        setSelectedColor(firstAvailableColor.id);
-        setConfirmColor(firstAvailableColor.id);
-      }
     }
   }, [productsData]);
 
@@ -500,6 +485,7 @@ const Section01 = () => {
       const upload: any = await UploadService.uploadToCloudinary([
         uploadedFile,
       ]);
+
       const selectedProvince = provinces.find(
         (p) => p.code === formData.province
       );
@@ -541,6 +527,14 @@ const Section01 = () => {
       };
       let response;
       if (!isLogin) {
+        console.log(
+          "Creating order without login",
+          JSON.stringify({
+            account: commonAccountData,
+            order: orderData,
+          })
+        );
+
         response = await OrderService.createOrder_no_login({
           account: commonAccountData,
           order: orderData,
@@ -548,27 +542,25 @@ const Section01 = () => {
         accountOrderLogin = false;
         try {
           let data;
-          if (/^\d+$/.test(response?.data?.phone)) {
-            data = await AccountService.loginAccountPhone(
-              response?.data?.phone,
-              response?.data?.password
-            );
-          } else {
-            data = await AccountService.loginAccountEmail(
-              response?.data?.phone,
-              response?.data?.password
-            );
-          }
-          if (data?.message === "SUCCESS") {
-            Cookies.set("isLogin", data?.data, { expires: 7 });
-            Cookies.set("userLogin", data?.data, { expires: 7 });
-            setIsLogin(Cookies.set("isLogin", data?.data, { expires: 7 }));
-          } else {
-            throw new Error("Email hoặc mật khẩu chưa chính xác");
-          }
-          if (selectedPayment !== "bank") {
-            setIsLoading(false);
-          }
+          // if (/^\d+$/.test(response?.data?.phone)) {
+          //   data = await AccountService.loginAccountPhone(
+          //     response?.data?.phone,
+          //     response?.data?.password
+          //   );
+          // } else {
+          //   data = await AccountService.loginAccountEmail(
+          //     response?.data?.phone,
+          //     response?.data?.password
+          //   );
+          // }
+          // if (data?.message === "SUCCESS") {
+          //   Cookies.set("isLogin", data?.data, { expires: 7 });
+          //   Cookies.set("userLogin", data?.data, { expires: 7 });
+          //   setIsLogin(Cookies.set("isLogin", data?.data, { expires: 7 }));
+          // } else {
+          //   throw new Error("Email hoặc mật khẩu chưa chính xác");
+          // }
+          setIsLoading(false);
         } catch (error) {
           console.error("========= Error Login:", error);
           toast({
@@ -576,9 +568,7 @@ const Section01 = () => {
             title: "Email hoặc mật khẩu chưa chính xác",
           });
         } finally {
-          if (selectedPayment !== "bank") {
-            setIsLoading(false);
-          }
+          setIsLoading(false);
         }
       } else {
         response = await OrderService.createOrder({
@@ -596,12 +586,10 @@ const Section01 = () => {
           setIsLoading(false);
           return;
         }
-        if (selectedPayment !== "bank") {
-          setIsLoading(false);
-        }
+        setIsLoading(false);
       }
 
-      console.log("Response from order creation:", response);
+      console.log("Order response:", response);
 
       if (selectedPayment === "bank" && response?.data) {
         if (!isLogin) {
@@ -614,13 +602,15 @@ const Section01 = () => {
             description: response.data.user_id.slice(-5) || "unknown",
             returnUrl: `${
               response?.data?.isAccountExisted === true
-                ? `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.order_id}`
+                ? ROUTES.FULL_ROUTE_ACCOUNT
                 : `${ROUTES.FULL_ROUTE_ACCOUNT}?orderNoLogin=true`
             }`,
-            cancelUrl: `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.order_id}`,
+            cancelUrl: ROUTES.FULL_ROUTE_ACCOUNT,
           });
+
+          console.log("Payment URL 1:", paymentUrl);
+
           window.open(paymentUrl.data.checkoutUrl, "_blank");
-          window.location.href = ROUTES.ACCOUNT;
         } else {
           const paymentUrl = await OrderService.createPayment({
             amount: HELPER.calculateTotalNumber(
@@ -629,13 +619,13 @@ const Section01 = () => {
               discountPercent
             ),
             description: isLogin.slice(-5),
-            returnUrl: `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.insertedId}`,
-            cancelUrl: `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.insertedId}`,
+            returnUrl: ROUTES.FULL_ROUTE_ACCOUNT,
+            cancelUrl: ROUTES.FULL_ROUTE_ACCOUNT,
           });
-          window.open(paymentUrl.data.checkoutUrl, "_blank");
-          window.location.href = ROUTES.ACCOUNT;
-        }
+          console.log("Payment URL 2:", paymentUrl);
 
+          window.open(paymentUrl.data.checkoutUrl, "_blank");
+        }
         // window.open(response.data, "_blank");
         // window.location.href = accountOrderLogin
         //   ? `${ROUTES.ACCOUNT}`
@@ -882,16 +872,6 @@ const Section01 = () => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
-  const [initialAspectRatio, setInitialAspectRatio] = useState<number>(2 / 1);
-
-  useEffect(() => {
-    if (sizeOptions.length > 0) {
-      const defaultSize = sizeOptions[0];
-      const aspectRatio =
-        defaultSize.dimensions.width / defaultSize.dimensions.height;
-      setInitialAspectRatio(aspectRatio);
-    }
-  }, [sizeOptions]);
 
   const onCropComplete = useCallback(
     async (croppedArea: any, croppedAreaPixels: any) => {
@@ -983,7 +963,7 @@ const Section01 = () => {
     if (sizeOption) {
       return sizeOption.dimensions.width / sizeOption.dimensions.height;
     }
-    return initialAspectRatio;
+    return 2 / 1; // Default aspect ratio if size not found
   };
 
   const renderStars = (rating: number) => {
@@ -1387,6 +1367,11 @@ const Section01 = () => {
                         alt="Selected product image"
                         width={1000}
                         height={1000}
+                        // ${
+                        //   selectedSize === "40x20"
+                        //     ? "w-full h-full"
+                        //     : "w-1/2 lg:w-full h-full"
+                        // }
                         className={`object-contain w-full !h-64 ${
                           selectedProduct !== "Chon san pham" ? "border-8" : ""
                         } ${
