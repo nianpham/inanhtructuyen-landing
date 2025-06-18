@@ -54,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     plant: false,
   });
 
-  const [priceRange, setPriceRange] = useState([25000, 820000]);
+  const [priceRange, setPriceRange] = useState([0, 820000]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");

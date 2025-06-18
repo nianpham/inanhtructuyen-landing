@@ -198,6 +198,7 @@ const Section01 = () => {
   useEffect(() => {
     if (orderIDBank && statusBank) {
       updateOrderStatus();
+      init();
     }
   }, [orderIDBank, statusBank]);
 

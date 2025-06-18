@@ -63,30 +63,29 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
     (Number(productPrice) + shippingFee) * (order?.discount_price / 100)
   );
 
-  // const init = async () => {
-  //   const fetchProduct = async () => {
-  //     try {
-  //       const data = await ProductService.getProductById(order?.product_id);
-  //       setProduct(data.data);
+  const init = async () => {
+    const fetchProduct = async () => {
+      try {
+        const data = await ProductService.getProductById(order?.product_id);
+        setProduct(data.data);
 
-  //       // Find the price based on order.size in product_option
-  //       const matchedOption = data.data.product_option.find(
-  //         (option: { size: string; price: string }) =>
-  //           option.size === order?.size
-  //       );
-  //       const price = matchedOption ? parseInt(matchedOption.price) : 0;
-  //       setProductPrice(price);
-  //     } catch (error) {
-  //       console.error("Error fetching product:", error);
-  //     }
-  //   };
+        const matchedOption = data.data.product_option.find(
+          (option: { size: string; price: string }) =>
+            option.size === order?.size
+        );
+        const price = matchedOption ? parseInt(matchedOption.price) : 0;
+        setProductPrice(price);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
 
-  //   fetchProduct();
-  // };
+    fetchProduct();
+  };
 
-  // useEffect(() => {
-  //   init();
-  // }, []);
+  useEffect(() => {
+    init();
+  }, []);
 
   return (
     <Dialog>
@@ -190,7 +189,7 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
             </div>
             <div className="px-0 py-4 border-b border-gray-200">
               <div className="flex flex-row justify-start items-start gap-4">
-                <div className="w-24 h-24 border border-gray-200">
+                <div className="w-60 h-24 border border-gray-200">
                   <Image
                     src={
                       order?.order_type === "album"
@@ -349,7 +348,7 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                       }
                       ${
                         order?.payment_method === "bank"
-                          ? "text-orange-600 text-sm lg:text-base"
+                          ? "text-black text-sm lg:text-base"
                           : ""
                       }
                       ${
@@ -376,10 +375,10 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                     <div>Tiền mặt</div>
                   </div>
                 )}
-                {/* {order?.payment_method === "bank" && (
-                  <div className="flex flex-row items-center justify-center gap-3">
+                {order?.payment_method === "bank" && (
+                  <div className="flex flex-row items-center justify-end gap-3">
                     <Image
-                      src={IMAGES.BANK}
+                      src="https://cdn-icons-png.flaticon.com/128/15953/15953021.png"
                       alt="momo"
                       width={1000}
                       height={1000}
@@ -388,7 +387,7 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                     <div>Chuyển khoản</div>
                   </div>
                 )}
-                {order?.payment_method === "momo" && (
+                {/*  {order?.payment_method === "momo" && (
                   <div className="flex flex-row items-center justify-center gap-3">
                     <Image
                       src={IMAGES.MOMO}

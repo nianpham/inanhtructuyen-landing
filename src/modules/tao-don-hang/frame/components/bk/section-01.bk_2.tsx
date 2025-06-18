@@ -9,7 +9,7 @@ import React from "react";
 import { useSearchParams } from "next/navigation";
 import { AccountService } from "@/services/account";
 import { cn } from "@/lib/utils";
-import ImageUpload from "./image-upload";
+import ImageUpload from "../image-upload";
 import { HELPER } from "@/utils/helper";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -121,6 +121,12 @@ export interface CustomerAccount {
   districtName: string;
   provinceName: string;
   wardName: string;
+}
+
+interface SizeOption {
+  id: string;
+  label: string;
+  dimensions: { width: number; height: number };
 }
 
 const Section01 = () => {
@@ -578,10 +584,9 @@ const Section01 = () => {
       if (!finalFile) {
         throw new Error("No image file available");
       }
-
-      // Use finalFile instead of uploadedFile for the upload
-      const upload: any = await UploadService.uploadToCloudinary([finalFile]);
-
+      const upload: any = await UploadService.uploadToCloudinary([
+        uploadedFile,
+      ]);
       const selectedProvince = provinces.find(
         (p) => p.code === formData.province
       );
@@ -621,7 +626,6 @@ const Section01 = () => {
           discountPercent
         ),
       };
-
       let response;
       if (!isLogin) {
         response = await OrderService.createOrder_no_login({
@@ -718,6 +722,13 @@ const Section01 = () => {
           window.open(paymentUrl.data.checkoutUrl, "_blank");
           window.location.href = ROUTES.ACCOUNT;
         }
+
+        // window.open(response.data, "_blank");
+        // window.location.href = accountOrderLogin
+        //   ? `${ROUTES.ACCOUNT}`
+        //   : response?.data?.isAccountExisted === true
+        //   ? `${ROUTES.ACCOUNT}`
+        //   : `${ROUTES.ACCOUNT}?orderNoLogin=true`;
       } else {
         window.location.href = accountOrderLogin
           ? `${ROUTES.ACCOUNT}`
@@ -785,6 +796,7 @@ const Section01 = () => {
           const data = await AccountService.getAccountById(isLogin);
           setCustomerAccount(data);
 
+          // Update formData with account data
           setFormData({
             name: data.name,
             email: data.email,
@@ -796,6 +808,7 @@ const Section01 = () => {
             province: Number(data.province),
           });
 
+          // Find and set province, district, and ward names
           const selectedProvince = provinces.find(
             (p) => p.code === Number(data.province)
           );
@@ -1349,7 +1362,7 @@ const Section01 = () => {
                               </p>
                               <div className="flex text-xs font-light items-center mb-0 text-gray-600">
                                 {renderStars(Math.floor(Math.random() * 2) + 4)}{" "}
-                                  (
+                                &nbsp;&nbsp;(
                                 {Math.floor(Math.random() * 100) + 4} đã bán)
                               </div>
                             </div>
@@ -1409,7 +1422,7 @@ const Section01 = () => {
                                       {renderStars(
                                         Math.floor(Math.random() * 2) + 4
                                       )}{" "}
-                                        (
+                                      &nbsp;&nbsp;(
                                       {Math.floor(Math.random() * 100) + 4} đã
                                       bán)
                                     </div>
@@ -1429,6 +1442,7 @@ const Section01 = () => {
                 </DialogContent>
               </Dialog>
             </div>
+            {/* {selectedProduct !== "Chon san pham" && ( */}
             <div className="flex flex-col justify-evenly lg:justify-between h-full lg:h-full lg:mt-5">
               <div className="flex justify-center items-center mt-2 lg:mt-0">
                 {!currentImage && !uploadedFile && !frameImage ? (
@@ -1442,6 +1456,11 @@ const Section01 = () => {
                   </div>
                 ) : (
                   <>
+                    {/* ${
+                          selectedSize === "40x20"
+                            ? "w-full h-full lg:w-2/3 lg:h-2/3"
+                            : "w-full h-60"
+                        } */}
                     <div
                       className={`mt-1 lg:mt-0 relative w-full h-64 flex items-center justify-center overflow-hidden rounded-md bg-gray-50`}
                       style={getImageContainerStyle()}
@@ -1487,7 +1506,7 @@ const Section01 = () => {
                       className="flex justify-center items-center mt-5 lg:mt-5"
                       onClick={handleCheckChange}
                     >
-                      <div className="flex flex-row justify-center items-center gap-4 w-full py-2 px-7 lg:py-0 text-[rgb(var(--fifteenth-rgb))] hover:underline text-center rounded-md font-medium transition cursor-pointer">
+                      <div className="flex flex-row justify-center items-center gap-4 w-full py-2 px-7 lg:py-4 border-2 border-[rgb(var(--fifteenth-rgb))] text-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:text-white text-center rounded-md font-medium transition cursor-pointer">
                         Tùy chọn kích thước, màu sắc
                       </div>
                     </div>
@@ -1500,6 +1519,7 @@ const Section01 = () => {
                       <DialogTitle>
                         <span className="!text-[20px]">Tùy chọn hình ảnh</span>
                       </DialogTitle>
+                      {/* {currentImage.startsWith("http") && uploadedFile && ( */}
                       <DialogDescription>
                         <span className="!text-[16px]">
                           Chọn kích thước, màu sắc và nhấn{" "}
@@ -1509,6 +1529,7 @@ const Section01 = () => {
                           để tùy chọn hình ảnh.
                         </span>
                       </DialogDescription>
+                      {/* )} */}
                     </DialogHeader>
                     {!currentImage.startsWith("http") && !uploadedFile ? (
                       <div className="flex flex-col justify-center items-center gap-3">
@@ -1644,6 +1665,7 @@ const Section01 = () => {
                 </Dialog>
               )}
             </div>
+            {/* )} */}
           </div>
           <div className=" lg:hidden w-full md:w-1/2 space-y-6">
             <div>
@@ -1907,6 +1929,36 @@ const Section01 = () => {
                         </div>
                       )}
                     </div>
+                    {/* <div
+                    onClick={() => setSelectedPayment("momo")}
+                    className=" cursor-pointer p-4 flex items-center"
+                  >
+                    <input
+                      type="radio"
+                      id="momo"
+                      name="payment"
+                      className="mr-2 w-4 h-4 accent-yellow-500"
+                      checked={selectedPayment === "momo"}
+                    />
+                    <label htmlFor="momo" className="ml-2">
+                      Thanh toán qua MOMO
+                    </label>
+                  </div> */}
+                    {/* <div
+                    onClick={() => setSelectedPayment("vnpay")}
+                    className="p-4 flex items-center"
+                  >
+                    <input
+                      type="radio"
+                      id="vnpay"
+                      name="payment"
+                      className="mr-2 w-4 h-4 accent-yellow-500"
+                      checked={selectedPayment === "vnpay"}
+                    />
+                    <label htmlFor="vnpay" className="ml-2">
+                      Thanh toán qua VNPay
+                    </label>
+                  </div> */}
                   </div>
                 </div>
                 <div>
@@ -1924,6 +1976,7 @@ const Section01 = () => {
               </>
             )}
           </div>
+          {/* {selectedProduct !== "Chon san pham" && ( */}
           <div className="border-t pt-4 space-y-2">
             <div className="flex justify-between font-light">
               <span>Giá sản phẩm</span>
@@ -1937,6 +1990,13 @@ const Section01 = () => {
               <span>Phí vận chuyển</span>
               <span className="text-black">{HELPER.formatVND("30000")}</span>
             </div>
+            {/* <div className="flex justify-between font-base font-light">
+              <span>Tạm tính</span>
+              <span>
+                {selectedProduct &&
+                  HELPER.calculateTotal(productPrice, "30000", "0")}
+              </span>
+            </div> */}
             <div className="flex justify-between items-center pt-0 font-light">
               <span>Khuyến mãi</span>
               {selectedProduct === "Chon san pham" ? (
@@ -2023,6 +2083,7 @@ const Section01 = () => {
               </span>
             </div>
           </div>
+          {/* )} */}
           <div className="flex flex-row items-start">
             <input
               type="checkbox"
