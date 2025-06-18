@@ -174,6 +174,8 @@ const Section01 = () => {
             : statusBank === "CANCELLED"
             ? "waiting"
             : "waiting",
+
+        isPayed: statusBank === "PAID" ? true : false,
       };
       const order = await OrderService.updateOrder(orderIDBank, body);
 
