@@ -1349,7 +1349,7 @@ const Section01 = () => {
                           Tùy chọn thanh toán
                         </h2>
                       </div>
-                      <div className="border border-gray-200 rounded-md">
+                      <div className="">
                         <div
                           onClick={() => setSelectedPayment("cash")}
                           className={`cursor-pointer p-4 flex justify-between items-center rounded-md
