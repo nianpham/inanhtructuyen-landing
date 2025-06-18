@@ -704,8 +704,8 @@ const Section01 = () => {
                 : `${ROUTES.FULL_ROUTE_ACCOUNT}?orderNoLogin=true`
             }`,
           });
-          window.open(paymentUrl.data.checkoutUrl, "_blank");
-          window.location.href = ROUTES.ACCOUNT;
+          // window.open(paymentUrl.data.checkoutUrl, "_blank");
+          window.location.href = paymentUrl.data.checkoutUrl;
         } else {
           const paymentUrl = await OrderService.createPayment({
             amount: HELPER.calculateTotalNumber(
@@ -717,8 +717,8 @@ const Section01 = () => {
             returnUrl: `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.insertedId}`,
             cancelUrl: `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.insertedId}`,
           });
-          window.open(paymentUrl.data.checkoutUrl, "_blank");
-          window.location.href = ROUTES.ACCOUNT;
+          // window.open(paymentUrl.data.checkoutUrl, "_blank");
+          window.location.href = paymentUrl.data.checkoutUrl;
         }
       } else {
         window.location.href = accountOrderLogin
