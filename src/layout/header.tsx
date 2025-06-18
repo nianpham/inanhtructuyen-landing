@@ -235,6 +235,19 @@ const Header: React.FC<HeaderProps> = ({
 
   const [open, setOpen] = React.useState(false);
 
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    // Cleanup on component unmount
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   const detectDevice = () => {
     if (typeof navigator === "undefined") {
       return "unknown"; // Fallback for server-side rendering
