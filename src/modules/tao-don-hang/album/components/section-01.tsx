@@ -435,6 +435,8 @@ const Section01 = () => {
         }
       }
 
+      console.log("Response from createOrderAlbum:", response);
+
       if (selectedPayment === "bank" && response?.data) {
         if (!isLogin) {
           const paymentUrl = await OrderService.createPayment({
@@ -442,13 +444,13 @@ const Section01 = () => {
             description: response.data.user_id.slice(-5) || "unknown",
             returnUrl: `${
               response?.data?.isAccountExisted === true
-                ? `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.order_id}`
-                : `${ROUTES.FULL_ROUTE_ACCOUNT}?orderNoLogin=true&orderID=${response?.data?.order_id}`
+                ? `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${orderID}`
+                : `${ROUTES.FULL_ROUTE_ACCOUNT}?orderNoLogin=true&orderID=${orderID}`
             }`,
             cancelUrl: `${
               response?.data?.isAccountExisted === true
-                ? `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.order_id}`
-                : `${ROUTES.FULL_ROUTE_ACCOUNT}?orderNoLogin=true&orderID=${response?.data?.order_id}`
+                ? `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${orderID}`
+                : `${ROUTES.FULL_ROUTE_ACCOUNT}?orderNoLogin=true&orderID=${orderID}`
             }`,
           });
           // window.open(paymentUrl.data.checkoutUrl, "_blank");
@@ -457,8 +459,8 @@ const Section01 = () => {
           const paymentUrl = await OrderService.createPayment({
             amount: totalPrice - discountPrice,
             description: isLogin.slice(-5),
-            returnUrl: `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.insertedId}`,
-            cancelUrl: `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.insertedId}`,
+            returnUrl: `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${orderID}`,
+            cancelUrl: `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${orderID}`,
           });
           // window.open(paymentUrl.data.checkoutUrl, "_blank");
           window.location.href = paymentUrl.data.checkoutUrl;
