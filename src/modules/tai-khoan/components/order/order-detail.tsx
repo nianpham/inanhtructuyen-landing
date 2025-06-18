@@ -372,7 +372,7 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                       height={1000}
                       className="w-6 h-6 object-cover rounded-lg"
                     />
-                    <div>Tiền mặt</div>
+                    <div className="text-[16px]">Tiền mặt</div>
                   </div>
                 )}
                 {order?.payment_method === "bank" && (
@@ -384,7 +384,7 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
                       height={1000}
                       className="w-6 h-6 object-cover rounded-lg"
                     />
-                    <div>Chuyển khoản</div>
+                    <div className="text-[16px]">Chuyển khoản</div>
                   </div>
                 )}
                 {/*  {order?.payment_method === "momo" && (
