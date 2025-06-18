@@ -398,7 +398,9 @@ const Section01 = () => {
           } else {
             throw new Error("Email hoặc mật khẩu chưa chính xác");
           }
-          setIsLoading(false);
+          if (selectedPayment !== "bank") {
+            setIsLoading(false);
+          }
         } catch (error) {
           console.error("========= Error Login:", error);
           toast({
@@ -406,7 +408,9 @@ const Section01 = () => {
             title: "Email hoặc mật khẩu chưa chính xác",
           });
         } finally {
-          setIsLoading(false);
+          if (selectedPayment !== "bank") {
+            setIsLoading(false);
+          }
         }
       } else {
         response = await OrderService.createOrderAlbum({
@@ -421,25 +425,56 @@ const Section01 = () => {
             description: "Số điện thoại đã được sử dụng!",
             variant: "destructive",
           });
-          setIsLoading(false);
+          if (selectedPayment !== "bank") {
+            setIsLoading(false);
+          }
           return;
         }
-        setIsLoading(false);
+        if (selectedPayment !== "bank") {
+          setIsLoading(false);
+        }
       }
 
-      if (selectedPayment === "momo" && response?.data) {
-        window.open(response.data, "_blank");
-        window.location.href = accountOrderLogin
-          ? `${ROUTES.ACCOUNT}?tab=history`
-          : response?.data?.isAccountExisted === true
-          ? `${ROUTES.ACCOUNT}?tab=history`
-          : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
+      if (selectedPayment === "bank" && response?.data) {
+        if (!isLogin) {
+          const paymentUrl = await OrderService.createPayment({
+            amount: totalPrice - discountPrice,
+            description: response.data.user_id.slice(-5) || "unknown",
+            returnUrl: `${
+              response?.data?.isAccountExisted === true
+                ? `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.order_id}`
+                : `${ROUTES.FULL_ROUTE_ACCOUNT}?orderNoLogin=true&orderID=${response?.data?.order_id}`
+            }`,
+            cancelUrl: `${
+              response?.data?.isAccountExisted === true
+                ? `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.order_id}`
+                : `${ROUTES.FULL_ROUTE_ACCOUNT}?orderNoLogin=true&orderID=${response?.data?.order_id}`
+            }`,
+          });
+          // window.open(paymentUrl.data.checkoutUrl, "_blank");
+          window.location.href = paymentUrl.data.checkoutUrl;
+        } else {
+          const paymentUrl = await OrderService.createPayment({
+            amount: totalPrice - discountPrice,
+            description: isLogin.slice(-5),
+            returnUrl: `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.insertedId}`,
+            cancelUrl: `${ROUTES.FULL_ROUTE_ACCOUNT}?orderID=${response?.data?.insertedId}`,
+          });
+          // window.open(paymentUrl.data.checkoutUrl, "_blank");
+          window.location.href = paymentUrl.data.checkoutUrl;
+        }
+        // window.open(response.data, "_blank");
+        // window.location.href = accountOrderLogin
+        //   ? `${ROUTES.ACCOUNT}?tab=history`
+        //   : response?.data?.isAccountExisted === true
+        //   ? `${ROUTES.ACCOUNT}?tab=history`
+        //   : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
       } else {
         window.location.href = accountOrderLogin
-          ? `${ROUTES.ACCOUNT}?tab=history`
+          ? `${ROUTES.ACCOUNT}`
           : response?.data?.isAccountExisted === true
-          ? `${ROUTES.ACCOUNT}?tab=history`
-          : `${ROUTES.ACCOUNT}?tab=history&orderNoLogin=true`;
+          ? `${ROUTES.ACCOUNT}`
+          : `${ROUTES.ACCOUNT}?orderNoLogin=true`;
       }
     } catch (error) {
       console.error("Error submitting order:", error);
@@ -941,7 +976,7 @@ const Section01 = () => {
                         Tùy chọn thanh toán
                       </h2>
                     </div>
-                    <div className="rounded-md divide-y">
+                    <div className="rounded-md">
                       <div
                         onClick={() => setSelectedPayment("cash")}
                         className={`cursor-pointer p-4 flex justify-between items-center rounded-md
@@ -971,39 +1006,34 @@ const Section01 = () => {
                           }`}
                         ></div>
                       </div>
-                      {/* <div
+                      <div
                         onClick={() => setSelectedPayment("bank")}
-                        className="cursor-pointer p-4 items-center"
+                        className={`cursor-pointer p-4 flex justify-between items-center rounded-md mt-3
+                          ${
+                            selectedPayment === "bank"
+                              ? "border border-[rgb(var(--fifteenth-rgb))]"
+                              : "border border-gray-200"
+                          }`}
                       >
-                        <div className="cursor-pointer flex items-center">
-                          <div
-                            className={`cursor-pointer w-5 h-5 rounded-full mr-2 ${
-                              selectedPayment === "bank"
-                                ? "border border-gray-200 bg-yellow-500"
-                                : "border border-gray-200"
-                            }`}
-                          ></div>
-
+                        <div className="flex flex-row items-center">
+                          <Image
+                            src="https://cdn-icons-png.flaticon.com/128/15953/15953021.png"
+                            alt="Chuyen khoan"
+                            width={24}
+                            height={24}
+                          />
                           <label htmlFor="bank" className="cursor-pointer ml-2">
-                            Thanh toán qua chuyển khoản ngân hàng
+                            Chuyển khoản
                           </label>
                         </div>
-                        {selectedPayment === "bank" && (
-                          <div className="w-full flex flex-row justify-center items-center gap-4 mt-4">
-                            <Image
-                              src="https://docs.lightburnsoftware.com/legacy/img/QRCode/ExampleCode.png"
-                              alt="QR code"
-                              width={100}
-                              height={100}
-                            />
-                            <div className="flex flex-col gap-1">
-                              <strong>NGUYEN VAN A</strong>
-                              <span>ABC BANK</span>
-                              <span>11223344556677</span>
-                            </div>
-                          </div>
-                        )}
-                      </div> */}
+                        <div
+                          className={`cursor-pointer w-4 h-4 rounded-full mr-2 ${
+                            selectedPayment === "bank"
+                              ? "bg-[rgb(var(--fifteenth-rgb))]"
+                              : ""
+                          }`}
+                        ></div>
+                      </div>
                     </div>
                   </div>
                   <div className="mt-6">
@@ -1317,7 +1347,7 @@ const Section01 = () => {
                           Tùy chọn thanh toán
                         </h2>
                       </div>
-                      <div className="border border-gray-200 rounded-md divide-y">
+                      <div className="border border-gray-200 rounded-md">
                         <div
                           onClick={() => setSelectedPayment("cash")}
                           className={`cursor-pointer p-4 flex justify-between items-center rounded-md
@@ -1350,43 +1380,37 @@ const Section01 = () => {
                             }`}
                           ></div>
                         </div>
-                        {/* <div
+                        <div
                           onClick={() => setSelectedPayment("bank")}
-                          className="cursor-pointer p-4 items-center"
+                          className={`cursor-pointer p-4 flex justify-between items-center rounded-md mt-3
+                          ${
+                            selectedPayment === "bank"
+                              ? "border border-[rgb(var(--fifteenth-rgb))]"
+                              : "border border-gray-200"
+                          }`}
                         >
-                          <div className="cursor-pointer grid grid-cols-12 items-center">
-                            <div
-                              className={`col-span-1 cursor-pointer w-5 h-5 rounded-full mr-2 ${
-                                selectedPayment === "bank"
-                                  ? "border border-gray-200 bg-yellow-500"
-                                  : "border border-gray-200"
-                              }`}
-                            ></div>
-
+                          <div className="flex flex-row items-center">
+                            <Image
+                              src="https://cdn-icons-png.flaticon.com/128/15953/15953021.png"
+                              alt="Chuyen khoan"
+                              width={24}
+                              height={24}
+                            />
                             <label
                               htmlFor="bank"
-                              className="col-span-11 cursor-pointer ml-2"
+                              className="cursor-pointer ml-2"
                             >
-                              Thanh toán qua chuyển khoản ngân hàng
+                              Chuyển khoản
                             </label>
                           </div>
-
-                          {selectedPayment === "bank" && (
-                            <div className="w-full flex flex-row justify-center items-center gap-4 mt-4">
-                              <Image
-                                src="https://docs.lightburnsoftware.com/legacy/img/QRCode/ExampleCode.png"
-                                alt="QR code"
-                                width={100}
-                                height={100}
-                              />
-                              <div className="flex flex-col gap-1">
-                                <strong>NGUYEN VAN A</strong>
-                                <span>ABC BANK</span>
-                                <span>11223344556677</span>
-                              </div>
-                            </div>
-                          )}
-                        </div> */}
+                          <div
+                            className={`cursor-pointer w-4 h-4 rounded-full mr-2 ${
+                              selectedPayment === "bank"
+                                ? "bg-[rgb(var(--fifteenth-rgb))]"
+                                : ""
+                            }`}
+                          ></div>
+                        </div>
                       </div>
                     </div>
                     <div>
