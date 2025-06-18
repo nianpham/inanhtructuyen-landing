@@ -42,7 +42,6 @@ const ImageUpload = ({
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // Validate product selection
     if (selectedProduct === "Chon san pham") {
       toast({
         title: "",
@@ -79,7 +78,6 @@ const ImageUpload = ({
   };
 
   const handleClick = () => {
-    // Prevent file input click if no product is selected
     if (selectedProduct === "Chon san pham") {
       toast({
         title: "",
@@ -100,7 +98,6 @@ const ImageUpload = ({
     e.preventDefault();
     e.stopPropagation();
 
-    // Validate product selection
     if (selectedProduct === "Chon san pham") {
       toast({
         title: "",
@@ -181,17 +178,18 @@ const ImageUpload = ({
           <div
             className={cn(
               "relative w-full overflow-hidden rounded-md",
-              `border-8 ${selectedColor === "white"
-                ? "border-gray-200"
-                : selectedColor === "black"
+              `border-8 ${
+                selectedColor === "white"
+                  ? "border-gray-200"
+                  : selectedColor === "black"
                   ? "border-black"
                   : selectedColor === "gold"
-                    ? "border-yellow-400"
-                    : selectedColor === "silver"
-                      ? "border-gray-200"
-                      : selectedColor === "wood"
-                        ? "border-yellow-950"
-                        : "border-gray-200"
+                  ? "border-yellow-400"
+                  : selectedColor === "silver"
+                  ? "border-gray-200"
+                  : selectedColor === "wood"
+                  ? "border-yellow-950"
+                  : "border-gray-200"
               }`
             )}
           >
