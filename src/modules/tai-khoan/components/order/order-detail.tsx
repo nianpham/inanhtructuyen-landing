@@ -189,7 +189,7 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
             </div>
             <div className="px-0 py-4 border-b border-gray-200">
               <div className="flex flex-col lg:flex-row justify-start items-start gap-4">
-                <div className="w-full lg:w-60 h-24 border border-gray-200">
+                <div className="w-full lg:w-60 h-60 lg:h-32 border border-gray-200">
                   <Image
                     src={
                       order?.order_type === "album"
