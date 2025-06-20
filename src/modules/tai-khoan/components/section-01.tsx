@@ -165,9 +165,6 @@ const Section01 = () => {
   const orderIDBank = pathParams.get("orderID");
   const statusBank = pathParams.get("status");
 
-  console.log("check order ID: ", orderIDBank);
-  console.log("check status order: ", statusBank);
-
   const updateOrderStatus = async () => {
     if (orderIDBank && statusBank) {
       const body = {
@@ -200,7 +197,9 @@ const Section01 = () => {
   };
 
   useEffect(() => {
-    if (orderIDBank && statusBank) {
+    if (orderIDBank || statusBank) {
+      console.log("Updating order status for:", orderIDBank, "to", statusBank);
+
       updateOrderStatus();
       init();
     }
