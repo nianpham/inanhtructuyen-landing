@@ -198,8 +198,6 @@ const Section01 = () => {
 
   useEffect(() => {
     if (orderIDBank || statusBank) {
-      console.log("Updating order status for:", orderIDBank, "to", statusBank);
-
       updateOrderStatus();
       init();
     }
