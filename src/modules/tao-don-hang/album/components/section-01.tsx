@@ -435,8 +435,6 @@ const Section01 = () => {
         }
       }
 
-      console.log("Response from createOrderAlbum:", response);
-
       if (selectedPayment === "bank" && response?.data) {
         if (!isLogin) {
           const paymentUrl = await OrderService.createPayment({

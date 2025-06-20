@@ -165,6 +165,9 @@ const Section01 = () => {
   const orderIDBank = pathParams.get("orderID");
   const statusBank = pathParams.get("status");
 
+  console.log("check order ID: ", orderIDBank);
+  console.log("check status order: ", statusBank);
+
   const updateOrderStatus = async () => {
     if (orderIDBank && statusBank) {
       const body = {
@@ -174,7 +177,6 @@ const Section01 = () => {
             : statusBank === "CANCELLED"
             ? "waiting"
             : "waiting",
-
         isPayed: statusBank === "PAID" ? true : false,
       };
       const order = await OrderService.updateOrder(orderIDBank, body);
