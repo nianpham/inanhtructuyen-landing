@@ -200,6 +200,31 @@ const Section01 = () => {
     if (orderIDBank || statusBank) {
       updateOrderStatus();
       init();
+      if (statusBank === "PAID") {
+        toast({
+          title: "Thanh toán thành công",
+          description: `Đơn hàng #${orderIDBank?.slice(
+            0,
+            6
+          )} đã được thanh toán thành công.`,
+          className: "bg-green-500 text-white border-green-600",
+        });
+      } else if (statusBank === "CANCELLED") {
+        toast({
+          title: "Đơn hàng đã bị hủy",
+          description: `Đơn hàng #${orderIDBank?.slice(0, 6)} đã bị hủy.`,
+          className: "bg-red-500 text-white border-red-600",
+        });
+      } else {
+        toast({
+          title: "Đơn hàng thanh toán thất bại",
+          description: `Đơn hàng #${orderIDBank?.slice(
+            0,
+            6
+          )} thanh toán thất bại.`,
+          className: "bg-yellow-500 text-white border-yellow-600",
+        });
+      }
     }
   }, [orderIDBank, statusBank]);
 
