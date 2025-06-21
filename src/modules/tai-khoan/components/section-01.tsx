@@ -211,13 +211,16 @@ const Section01 = () => {
         });
       } else if (statusBank === "CANCELLED") {
         toast({
-          title: "Đơn hàng đã bị hủy",
-          description: `Đơn hàng #${orderIDBank?.slice(0, 6)} đã bị hủy.`,
+          title: "Thanh toán bị hủy",
+          description: `Đơn hàng #${orderIDBank?.slice(
+            0,
+            6
+          )} đã bị hủy thanh toán.`,
           className: "bg-red-500 text-white border-red-600",
         });
       } else {
         toast({
-          title: "Đơn hàng thanh toán thất bại",
+          title: "Thanh toán thất bại",
           description: `Đơn hàng #${orderIDBank?.slice(
             0,
             6
