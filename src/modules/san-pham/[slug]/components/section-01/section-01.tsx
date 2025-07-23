@@ -95,11 +95,11 @@ const Section1: React.FC = () => {
       const res = await ProductService.getAll();
 
       if (res && res.data && res.data.length > 0) {
-        const filteredProducts = res.data.filter(
-          (item: Product) => item?.category === productCate
-        );
+        // const filteredProducts = res.data.filter(
+        //   (item: Product) => item?.category === productCate
+        // );
 
-        setRelatedProduct(filteredProducts);
+        setRelatedProduct(res.data);
       } else {
         console.log("No products found in response");
         setRelatedProduct([]);
