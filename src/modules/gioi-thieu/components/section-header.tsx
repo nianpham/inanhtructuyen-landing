@@ -8,14 +8,14 @@ import { ROUTES } from "@/utils/route";
 
 const SectionHeader = () => {
   return (
-    <section className="w-[100%] h-[180px] lg:h-[300px] mx-auto lg:py-20 relative overflow-hidden mb-5">
+    <section className="w-[100%] h-[180px] lg:h-[320px] mx-auto lg:py-20 relative overflow-hidden mb-5">
       <div className="absolute inset-0">
         <div className="relative w-full h-full">
           <Image
-            src={IMAGES.BANNER_2}
+            src={IMAGES.BANNER_11}
             alt="Wooden furniture and kitchenware"
             fill
-            className="object-cover object-center"
+            className="object-cover object-[10%_30%]"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/60 to-transparent" />

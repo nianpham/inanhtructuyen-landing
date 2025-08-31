@@ -255,7 +255,7 @@ const Section01 = () => {
   const [isChecking, setIsChecking] = useState(false);
   const [discountPercent, setDiscountPercent] = useState(0);
   const discountPrice =
-    (Number(HELPER.calculateTotalNumber(productPrice, "30000", 0)) *
+    (Number(HELPER.calculateTotalNumber(productPrice, "0", 0)) *
       discountPercent) /
     100;
 
@@ -617,7 +617,7 @@ const Section01 = () => {
         discount_price: discountPercent || 0,
         total: HELPER.calculateTotalNumber(
           selectedOption?.price || "0",
-          "30000",
+          "0",
           discountPercent
         ),
       };
@@ -689,7 +689,7 @@ const Section01 = () => {
           const paymentUrl = await OrderService.createPayment({
             amount: HELPER.calculateTotalNumber(
               selectedOption?.price || "0",
-              "30000",
+              "0",
               discountPercent
             ),
             description: response.data.user_id.slice(-5) || "unknown",
@@ -710,7 +710,7 @@ const Section01 = () => {
           const paymentUrl = await OrderService.createPayment({
             amount: HELPER.calculateTotalNumber(
               selectedOption?.price || "0",
-              "30000",
+              "0",
               discountPercent
             ),
             description: isLogin.slice(-5),
@@ -1929,7 +1929,7 @@ const Section01 = () => {
             </div>
             <div className="flex justify-between font-light">
               <span>Phí vận chuyển</span>
-              <span className="text-black">{HELPER.formatVND("30000")}</span>
+              <span className="text-black">{HELPER.formatVND("0")}</span>
             </div>
             <div className="flex justify-between items-center pt-0 font-light">
               <span>Khuyến mãi</span>
@@ -2013,7 +2013,7 @@ const Section01 = () => {
               <span>Tổng tiền</span>
               <span>
                 {selectedProduct &&
-                  HELPER.calculateTotal(productPrice, "30000", discountPercent)}
+                  HELPER.calculateTotal(productPrice, "0", discountPercent)}
               </span>
             </div>
           </div>

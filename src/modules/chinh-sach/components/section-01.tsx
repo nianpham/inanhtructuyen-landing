@@ -8,6 +8,7 @@ import { ROUTES } from "@/utils/route";
 import { useSearchParams } from "next/navigation";
 import { ChevronDown } from "lucide-react";
 interface PolicySection {
+  id: number;
   title: string;
   content: React.ReactNode;
   scrollId: string;
@@ -56,7 +57,7 @@ const Section01 = () => {
     <div className="space-y-4 text-black">
       <p className="mb-4 text-left">
         Khách hàng có thể đặt hàng qua website hoặc liên hệ{" "}
-        <span className="font-semibold">đường dây nóng: 0123456789</span>.
+        <span className="font-semibold">đường dây nóng: 0939.752.966</span>.
       </p>
       <div className="space-y-2">
         <h3 className="text-lg font-medium text-black">
@@ -84,17 +85,17 @@ const Section01 = () => {
   const privacyContent = (
     <div className="space-y-4 text-black">
       <p className="mb-4 text-justify">
-        Khi truy cập website INANHTHUCTUYEN.COM, quý khách đồng ý và chấp nhận
-        thực hiện những mô tả trong Chính sách bảo mật thông tin. Nếu quý khách
-        không đồng ý với các điều khoản của Chính sách này, vui lòng không sử
-        dụng website của chúng tôi. Chính sách này được đưa ra nhằm bảo vệ quyền
-        lợi của quý khách khi sử dụng dịch vụ và mua hàng.
+        Khi truy cập website INANHHATHU.COM, quý khách đồng ý và chấp nhận thực
+        hiện những mô tả trong Chính sách bảo mật thông tin. Nếu quý khách không
+        đồng ý với các điều khoản của Chính sách này, vui lòng không sử dụng
+        website của chúng tôi. Chính sách này được đưa ra nhằm bảo vệ quyền lợi
+        của quý khách khi sử dụng dịch vụ và mua hàng.
       </p>
       <div className="space-y-2">
         <h3 className="text-lg font-bold text-black">
           1. Mục đích và phạm vi thu thập thông tin
         </h3>
-        <p>Việc thu thập dữ liệu trên website INANHTHUCTUYEN.COM bao gồm:</p>
+        <p>Việc thu thập dữ liệu trên website INANHHATHU.COM bao gồm:</p>
         <ul className="list-disc pl-6">
           <li>Email</li>
           <li>Số điện thoại</li>
@@ -155,10 +156,10 @@ const Section01 = () => {
         <h3 className="text-lg font-bold text-black">
           5. Địa chỉ đơn vị thu thập và quản lý thông tin cá nhân
         </h3>
-        <p>Cở sở kinh doanh INANH THUC TUYEN</p>
+        <p>Cở sở kinh doanh IN ẢNH HẠ THU</p>
         <ul className="list-disc pl-6">
           <li>Địa chỉ: QL91 Tân Thành, Cà Mau</li>
-          <li>Điện thoại: 0939.468.252</li>
+          <li>Điện thoại: 0939.752.966</li>
         </ul>
       </div>
       <div className="space-y-2">
@@ -171,7 +172,7 @@ const Section01 = () => {
           hủy bỏ thông tin cá nhân bằng cách:
         </p>
         <ul className="list-disc pl-6">
-          <li>Truy cập website INANHTHUCTUYEN.COM</li>
+          <li>Truy cập website INANHHATHU.COM</li>
           <li>Liên hệ qua email hoặc địa chỉ liên lạc công bố trên website.</li>
         </ul>
       </div>
@@ -181,10 +182,10 @@ const Section01 = () => {
   const shippingContent = (
     <div className="space-y-4 text-black">
       <p className="mb-4">
-        Sau khi khách hàng đặt hàng trên trang web INANHTRUCTUYEN.COM, hệ thống
-        sẽ tự động gửi thông báo xác nhận đã đặt hàng. Đội ngũ hỗ trợ của chúng
-        tôi sẽ liên hệ với Quý khách qua số điện thoại mà Quý khách đã cung cấp
-        để xác minh thông tin đơn hàng, thông báo chi phí vận chuyển, thời gian
+        Sau khi khách hàng đặt hàng trên trang web INANHHATHU.COM, hệ thống sẽ
+        tự động gửi thông báo xác nhận đã đặt hàng. Đội ngũ hỗ trợ của chúng tôi
+        sẽ liên hệ với Quý khách qua số điện thoại mà Quý khách đã cung cấp để
+        xác minh thông tin đơn hàng, thông báo chi phí vận chuyển, thời gian
         giao hàng dự kiến và các thông tin cần thiết khác. Chúng tôi hỗ trợ giao
         hàng tận nơi trên toàn quốc
       </p>
@@ -251,21 +252,25 @@ const Section01 = () => {
 
   const policies: PolicySection[] = [
     {
+      id: 1,
       title: "Chính sách bảo mật",
       content: privacyContent,
       scrollId: "bm",
     },
     {
+      id: 2,
       title: "Chính sách giao hàng",
       content: shippingContent,
       scrollId: "gh",
     },
     {
+      id: 3,
       title: "Chính sách thanh toán",
       content: paymentContent,
       scrollId: "tt",
     },
     {
+      id: 4,
       title: "Chính sách đổi trả",
       content: returnContent,
       scrollId: "dt",
@@ -300,7 +305,29 @@ const Section01 = () => {
               {/* <span className="text-xl lg:text-2xl font-semibold text-black pr-2"></span> */}
               <div className="relative z-20">
                 <div
-                  className={`absolute bottom-[28%] left-[50%] lg:left-[55%] h-2 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                  className={`absolute bottom-[28%] h-2 
+                    ${
+                      policy.id === 1
+                        ? "w-36 lg:w-28 left-[50%] lg:left-[58%]"
+                        : ""
+                    }
+                    ${
+                      policy.id === 2
+                        ? "w-36 lg:w-32 left-[50%] lg:left-[55%]"
+                        : ""
+                    }
+                    ${
+                      policy.id === 3
+                        ? "w-36 lg:w-[140px] left-[50%] lg:left-[52%]"
+                        : ""
+                    }
+                    ${
+                      policy.id === 4
+                        ? "w-36 lg:w-[93px] left-[50%] lg:left-[64%]"
+                        : ""
+                    }
+                    ${policy.id === 5 ? "w-36 left-[50%] lg:left-[55%]" : ""}
+                       bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
                 ></div>
                 <h1
                   className={`text-2xl font-bold text-gray-900 mb-2 z-20 relative`}

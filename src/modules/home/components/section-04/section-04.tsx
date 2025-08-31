@@ -58,7 +58,7 @@ const Section4: React.FC = () => {
                 <div className="text-center lg:text-left mb-5">
                   <div className="relative z-20">
                     <div
-                      className={`absolute bottom-[8%] right-[12%] lg:right-[38%] h-2 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                      className={`absolute bottom-[8%] right-[17%] lg:right-[46%] h-2 w-24 lg:w-24 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
                     ></div>
                     <h1
                       className={`text-2xl font-bold text-gray-900 z-20 relative`}
@@ -77,7 +77,7 @@ const Section4: React.FC = () => {
                 <div className="text-center lg:text-left mb-5">
                   <div className="relative z-20">
                     <div
-                      className={`absolute bottom-[8%] right-[5%] lg:right-[22%] h-2 w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                      className={`absolute bottom-[8%] right-[8%] lg:right-[29%] h-2 w-24 lg:w-24 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
                     ></div>
                     <h1
                       className={`text-2xl font-bold text-gray-900 z-20 relative`}
@@ -100,7 +100,7 @@ const Section4: React.FC = () => {
                 <div className="text-center lg:text-left mb-5">
                   <div className="relative z-20">
                     <div
-                      className={`absolute bottom-[8%] right-[13%] lg:right-[29%] h-2 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+                      className={`absolute bottom-[8%] right-[13%] lg:right-[39%] h-2 w-32 lg:w-32 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
                     ></div>
                     <h1
                       className={`text-2xl font-bold text-gray-900 z-20 relative`}

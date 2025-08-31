@@ -43,13 +43,13 @@ const Section2: React.FC = () => {
         <div className="max-w-7xl mx-auto px-0 py-0">
           <div className="text-center mb-12">
             <div className="relative z-20">
-              <div
-                className={`absolute bottom-[8%] right-[10%] lg:right-[38%] h-2 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
-              ></div>
               <h1
                 className={`text-3xl font-bold text-gray-900 mb-2 z-20 relative`}
               >
-                Sản Phẩm Bán Chạy
+                <div
+                  className={`absolute bottom-[8%] right-[7%] lg:right-[38%] h-2 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 !z-0`}
+                ></div>
+                <span className="!z-20 relative">Sản Phẩm Bán Chạy</span>
               </h1>
             </div>
             <p className="hidden lg:flex justify-center text-gray-600">

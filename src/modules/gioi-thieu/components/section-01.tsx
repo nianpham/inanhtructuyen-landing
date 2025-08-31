@@ -86,12 +86,11 @@ const Section01 = () => {
     <div className="space-y-8">
       <div className="text-black">
         <p className="mb-4 font-semibold text-left text-2xl">
-          Chào mừng bạn đến với In Ảnh Trực Tuyến (
-          <strong>inanhtructuyen.com</strong>)
+          Chào mừng bạn đến với In Ảnh Hạ Thu (<strong>inanhhathu.com</strong>)
         </p>
         <p className="mb-4">
-          Tại INANHTHUCTUYEN.COM, chúng tôi thấu hiểu rằng những khoảnh khắc
-          quan trọng trong cuộc đời không chỉ là dấu ấn của thời gian, mà còn là
+          Tại INANHHATHU.COM, chúng tôi thấu hiểu rằng những khoảnh khắc quan
+          trọng trong cuộc đời không chỉ là dấu ấn của thời gian, mà còn là
           những cột mốc ý nghĩa trong hành trình sống của mỗi người. Được đồng
           hành cùng những giây phút đặc biệt, từ niềm hạnh phúc tròn vẹn trong
           ngày cưới, niềm vui tuổi già gặp ngày tân xuân, sự ấm áp của bữa tiệc

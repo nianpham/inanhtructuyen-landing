@@ -1,7 +1,5 @@
-import { slider } from "@heroui/react";
-
 export const IMAGES = {
-  LOGO: "/logo.png",
+  LOGO: "/iaht-logo.png",
   FACEBOOK:
     "https://res.cloudinary.com/farmcode/image/upload/v1748364865/ielts-test/facebook_ekthgh.png",
   ZALO: "https://res.cloudinary.com/farmcode/image/upload/v1748364890/ielts-test/zalo_q3w1pc.png",
@@ -35,7 +33,8 @@ export const IMAGES = {
     "https://res.cloudinary.com/farmcode/image/upload/v1749618043/iatt/ga3bhhqxdtneicm6dnff.jpg",
   BANNER_10:
     "https://res.cloudinary.com/farmcode/image/upload/v1749906476/iatt/IMG_7585-1-2_vhfdm2.jpg",
-
+  BANNER_11:
+    "https://res.cloudinary.com/farmcode/image/upload/v1756642973/iatt/background_trrftx.png",
   slider_1: [
     "https://res.cloudinary.com/farmcode/image/upload/v1748450520/ielts-test/FATT6375_rszrxr.jpg",
     "https://res.cloudinary.com/farmcode/image/upload/v1748451439/ielts-test/IMG_1110_big0rh.jpg",

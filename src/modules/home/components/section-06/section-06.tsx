@@ -72,7 +72,7 @@ const Section6: React.FC<BlogCarouselProps> = (props) => {
         <div className="text-center mb-12">
           <div className="relative z-20">
             <div
-              className={`absolute bottom-[8%] right-[14%] lg:right-[39%] h-2 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
+              className={`absolute bottom-[8%] right-[11%] lg:right-[39%] h-2 w-36 bg-[rgb(var(--fifteenth-rgb))] opacity-45 z-10`}
             ></div>
             <h1
               className={`text-3xl font-bold text-gray-900 mb-2 z-20 relative`}

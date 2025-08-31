@@ -369,13 +369,13 @@ const Header: React.FC<HeaderProps> = ({
           <Link href={ROUTES.HOME} className="flex items-center space-x-2">
             <Image
               src={IMAGES.LOGO}
-              alt="In Ảnh Trực Tuyến"
+              alt="In Ảnh Hạ Thu"
               width={40}
               height={40}
             />
             <div className="flex flex-col justify-center items-start">
               <span className="text-sm lg:text-lg font-bold">
-                IN ẢNH TRỰC TUYẾN
+                IN ẢNH HẠ THU
               </span>
               <span className="text-xs font-medium text-[rgb(var(--fifteenth-rgb))]">
                 In ảnh đẹp giá rẻ
@@ -524,13 +524,13 @@ const Header: React.FC<HeaderProps> = ({
               <Link href={ROUTES.HOME} className="flex items-center space-x-2">
                 <Image
                   src={IMAGES.LOGO}
-                  alt="In Ảnh Trực Tuyến"
+                  alt="In Ảnh Hạ Thu"
                   width={40}
                   height={40}
                 />
                 <div className="flex flex-col justify-center items-start">
                   <span className="text-base lg:text-lg font-bold">
-                    IN ẢNH TRỰC TUYẾN
+                    IN ẢNH HẠ THU
                   </span>
                   <span className="text-sm font-medium text-[rgb(var(--fifteenth-rgb))]">
                     In ảnh đẹp giá rẻ

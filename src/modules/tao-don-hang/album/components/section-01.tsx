@@ -265,7 +265,7 @@ const Section01 = () => {
   };
 
   useEffect(() => {
-    const shippingFee = 30000;
+    const shippingFee = 0;
     setTotalPrice(albumPriceCover + albumPriceCore + shippingFee);
   }, [albumPriceCover, albumPriceCore, promoCode]);
 
@@ -1457,13 +1457,13 @@ const Section01 = () => {
                 </div> */}
                 <div className="flex justify-between font-light">
                   <span className="">Phí vận chuyển</span>
-                  <span className="">{HELPER.formatVND("30000")}</span>
+                  <span className="">{HELPER.formatVND("0")}</span>
                 </div>
                 {/* <div className="flex justify-between">
                   <span className="font-light">Tạm tính</span>
                   <span className="font-light">
                     {HELPER.formatVND(
-                      String(albumPriceCover + albumPriceCore + 30000)
+                      String(albumPriceCover + albumPriceCore + 0)
                     )}
                   </span>
                 </div> */}

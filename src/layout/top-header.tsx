@@ -27,7 +27,7 @@ const TopBanner: React.FC = () => {
               href={SOCIAL_LINKS.PHONE}
               className="group-hover:text-[rgb(var(--fifteenth-rgb))]"
             >
-              0939.468.252
+              0939.752.966
             </Link>
           </div>
 
@@ -42,7 +42,7 @@ const TopBanner: React.FC = () => {
               href={SOCIAL_LINKS.EMAIL}
               className="group-hover:text-[rgb(var(--fifteenth-rgb))]"
             >
-              inanhtructuyen.2025@gmail.com
+              inanhhathu@gmail.com
             </Link>
           </div>
         </div>

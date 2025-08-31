@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
                     Hãy đăng ký nhận bản tin & LIKE trên Facebook để xem tại sao
                     mọi người lại yêu thích & lựa chọn{" "}
                     <strong className="text-[rgb(var(--fifteenth-rgb))]">
-                      In Ảnh Trực Tuyến
+                      In Ảnh Hạ Thu
                     </strong>{" "}
                     là nhà in tin cậy của Photographer.
                   </Link>
@@ -89,9 +89,9 @@ const Footer: React.FC = () => {
                   </Link>
                 </div>
               </div>
-              <div className="w-full">
+              {/* <div className="w-full">
                 <FacebookPageEmbed />
-              </div>
+              </div> */}
             </div>
             <div className="space-y-4">
               <h3
@@ -155,7 +155,7 @@ const Footer: React.FC = () => {
                 onClick={() => setToggle2(!toggle2)}
                 className="cursor-pointer text-md font-semibold text-gray-900 flex"
               >
-                IN ẢNH TRỰC TUYẾN{" "}
+                IN ẢNH HẠ THU{" "}
                 <ChevronDown
                   className={`w-5 h-5 ml-2 transition-transform ${
                     toggle2 ? "rotate-180" : ""
@@ -388,7 +388,7 @@ const Footer: React.FC = () => {
       </footer>
       <div className="w-full text-center py-5 bg-[rgb(var(--primary-rgb))]">
         <div className="text-gray-600 text-sm">
-          <p>Copyright © 2025 IN ẢNH TRỰC TUYẾN.</p>
+          <p>Copyright © 2025 IN ẢNH HẠ THU.</p>
         </div>
       </div>
     </>
