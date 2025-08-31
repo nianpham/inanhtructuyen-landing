@@ -13,7 +13,7 @@ export const ROUTES = {
 };
 
 export const SOCIAL_LINKS = {
-  FACEBOOK: "#",
+  FACEBOOK: "https://www.facebook.com/inanhhathu",
   TIKTOK: "https://www.tiktok.com/@inanhhathu",
   ZALO: "https://zalo.me/3400019649192582536",
   PHONE: "tel:0939752966",
