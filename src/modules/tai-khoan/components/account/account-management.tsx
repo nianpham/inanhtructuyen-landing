@@ -542,7 +542,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className="focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                className="focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]"
                 style={{ fontSize: "16px" }}
               />
             </div>
@@ -557,6 +557,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 value={formData.email || "Không có email"}
                 disabled={true}
                 style={{ fontSize: "16px" }}
+                className=" h-[40px]"
               />
             </div>
             <div className="grid gap-2">
@@ -568,7 +569,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className="focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                className="focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]"
                 style={{ fontSize: "16px" }}
               />
             </div>
@@ -581,7 +582,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 onValueChange={handleProvinceChange}
                 disabled={loading}
               >
-                <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
+                <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]">
                   <SelectValue placeholder="Chọn Tỉnh/Thành phố" />
                 </SelectTrigger>
                 <SelectContent className="z-[80]">
@@ -605,7 +606,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 onValueChange={handleDistrictChange}
                 disabled={!formData.province || loading}
               >
-                <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
+                <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]">
                   <SelectValue placeholder="Chọn Quận/Huyện" />
                 </SelectTrigger>
                 <SelectContent className="z-[80]">
@@ -629,7 +630,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 onValueChange={handleWardChange}
                 disabled={!formData.district || loading}
               >
-                <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
+                <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]">
                   <SelectValue placeholder="Chọn Phường/Xã" />
                 </SelectTrigger>
                 <SelectContent className="z-[80]">
@@ -651,7 +652,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                 placeholder="Ví dụ: 123 Đường ABC"
                 value={formData.address}
                 onChange={handleInputChange}
-                className="focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                className="focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]"
                 style={{ fontSize: "16px" }}
               />
             </div>

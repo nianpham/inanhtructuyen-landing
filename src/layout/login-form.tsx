@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Loader, User } from "lucide-react";
+import { Loader, User, Eye, EyeOff } from "lucide-react";
 import { IMAGES } from "@/utils/image";
 import { API } from "@/utils/api";
 interface LoginFormProps {
@@ -17,6 +17,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleSubmitWithGoogle = async (e: React.MouseEvent) => {
@@ -52,6 +53,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -81,7 +86,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                     id="email"
                     type="text"
                     placeholder="Nhập email hoặc số điện thoại"
-                    className="w-full p-3 rounded-md border focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent"
+                    className="w-full p-3 rounded-md border focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent h-[40px]"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   />
@@ -96,12 +101,23 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                   <div className="relative">
                     <input
                       id="password"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       placeholder="Nhập mật khẩu"
-                      className="w-full p-3 rounded-md border pr-10 focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent"
+                      className="w-full p-3 rounded-md border pr-10 focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent h-[40px]"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="w-5 h-5" />
+                      ) : (
+                        <Eye className="w-5 h-5" />
+                      )}
+                    </button>
                   </div>
                 </div>
                 <div className="w-full flex justify-center items-center gap-2">

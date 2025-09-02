@@ -97,21 +97,34 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
       <DialogContent className="sm:max-w-[600px] z-[70]">
         <DialogHeader>
           <DialogTitle className="!text-[20px]">
-            Chi tiết đơn hàng #<span className="uppercase">{order?._id}</span>
+            Chi tiết đơn hàng #
+            <span className="uppercase">{order?._id.slice(-5)}</span>
           </DialogTitle>
         </DialogHeader>
         <div className="flex items-center justify-center">
           <div className="bg-white rounded-lg w-full max-h-[70vh] overflow-y-auto scroll-bar-style">
             <div className="border-b border-gray-200 flex flex-col lg:flex-row justify-between py-2">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col justify-between items-start">
                 <div className="text-black mb-2">
                   Ngày đặt đơn:{" "}
                   <strong className="font-semibold">
-                    {HELPER.formatDate(order?.created_at)}
+                    {HELPER.formatDateTime(order?.created_at)}
                   </strong>
                 </div>
+                <div className="text-black mb-2">
+                  Ngày hoàn thành:{" "}
+                  {order?.date_completed ? (
+                    <strong className="font-semibold">
+                      {HELPER.formatDateTime(order?.date_completed)}
+                    </strong>
+                  ) : (
+                    <strong className="font-semibold">
+                      Đơn hàng đang xử lí
+                    </strong>
+                  )}
+                </div>
               </div>
-              <div className="flex justify-end">
+              <div className="flex justify-center">
                 <div
                   className={`${
                     order?.status === "completed"
@@ -306,10 +319,7 @@ const OrderDetailModal = ({ order, customerAccount }: any) => {
               </div>
               <div className="flex justify-between py-2 border-b border-gray-200">
                 <div className="text-black px-0">Phí vận chuyển</div>
-                <div className="text-green-500">
-                  {" "}
-                  + {HELPER.formatVND("30000")}
-                </div>
+                <div className="text-green-500"> + {HELPER.formatVND("0")}</div>
               </div>
               {/* <div className="flex justify-between py-2 border-b border-gray-200">
                 <div className="text-black px-0">Tạm tính</div>

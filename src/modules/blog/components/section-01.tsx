@@ -10,6 +10,7 @@ import { Calendar, Loader, PencilLine } from "lucide-react";
 import { HELPER } from "@/utils/helper";
 import { GlobalComponent } from "@/components/global";
 import { Card } from "@/components/ui/card";
+import SkeletonBlog from "@/components/ui/skeleton/blog/skeleton-blog";
 
 interface Blog {
   _id: string;
@@ -64,9 +65,10 @@ const Section01 = () => {
             Bài viết mới nhất
           </h1>
         </div>
+
         {isLoading ? (
-          <div className="w-full flex justify-center items-center py-40">
-            <Loader className="animate-spin" size={32} />
+          <div>
+            <SkeletonBlog />
           </div>
         ) : (
           <>

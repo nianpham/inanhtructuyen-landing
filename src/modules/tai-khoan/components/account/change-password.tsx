@@ -236,7 +236,7 @@ const ChangePasswordForm = ({ open, setOpen }: ChangePasswordFormProps) => {
                     placeholder="Nhập mật khẩu cũ"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 pr-16 rounded-md focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                    className="w-full px-3 py-2 pr-16 rounded-md focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]"
                     style={{ fontSize: "16px" }}
                   />
                 </div>
@@ -255,7 +255,7 @@ const ChangePasswordForm = ({ open, setOpen }: ChangePasswordFormProps) => {
                     placeholder="Nhập mật khẩu mới"
                     value={formData.newPassword}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 pr-16 rounded-md focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                    className="w-full px-3 py-2 pr-16 rounded-md focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]"
                     style={{ fontSize: "16px" }}
                   />
                 </div>
@@ -272,7 +272,7 @@ const ChangePasswordForm = ({ open, setOpen }: ChangePasswordFormProps) => {
                     placeholder="Nhập lại mật khẩu mới"
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                    className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]"
                     style={{ fontSize: "16px" }}
                   />
                 </div>

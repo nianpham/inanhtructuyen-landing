@@ -22,6 +22,16 @@ const formatDate = (isoDate: string) => {
   return `${day}/${month}/${year}`;
 };
 
+const formatDateTime = (isoDate: string) => {
+  const date = new Date(isoDate);
+  const hours = String(date.getUTCHours()).padStart(2, "0");
+  const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const year = date.getUTCFullYear();
+  return `${hours}:${minutes} - ${day}/${month}/${year}`;
+};
+
 const getLastFourChars = (input: any) => {
   return input ? input.slice(-4) : "";
 };
@@ -160,6 +170,7 @@ const renderCategory2 = (category: string) => {
 export const HELPER = {
   formatVND,
   formatDate,
+  formatDateTime,
   getLastFourChars,
   convertSpacesToDash,
   upPrice,

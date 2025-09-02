@@ -1101,7 +1101,7 @@ const Section01 = () => {
                 value={formData.name}
                 placeholder="Nhập họ và tên"
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none text-[16px]"
+                className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none text-[16px] h-[40px]"
               />
             </div>
             <div className="mb-0">
@@ -1117,7 +1117,7 @@ const Section01 = () => {
                 placeholder="Nhập số điện thoại"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none text-[16px]"
+                className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none text-[16px] h-[40px]"
               />
             </div>
             <div className="mt-6">
@@ -1140,7 +1140,7 @@ const Section01 = () => {
                     onValueChange={handleProvinceChange}
                     disabled={loading}
                   >
-                    <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
+                    <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]">
                       <SelectValue placeholder="Chọn Tỉnh/Thành phố" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1167,7 +1167,7 @@ const Section01 = () => {
                     onValueChange={handleDistrictChange}
                     disabled={!formData.province || loading}
                   >
-                    <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
+                    <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]">
                       <SelectValue placeholder="Chọn Quận/Huyện" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1195,7 +1195,7 @@ const Section01 = () => {
                   onValueChange={handleWardChange}
                   disabled={!formData.district || loading}
                 >
-                  <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none">
+                  <SelectTrigger className="text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]">
                     <SelectValue placeholder="Chọn Phường/Xã" />
                   </SelectTrigger>
                   <SelectContent>
@@ -1220,7 +1220,7 @@ const Section01 = () => {
                   placeholder="Ví dụ: 123 Đường ABC"
                   value={formData.address}
                   onChange={handleInputChange}
-                  className="mt-2 text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                  className="mt-2 text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]"
                 />
               </div>
             </div>
@@ -1393,7 +1393,7 @@ const Section01 = () => {
                           products.map((item: any) => (
                             <DialogClose asChild key={item._id}>
                               <div
-                                className="mb-0 cursor-pointer hover:bg-gray-100 p-2 rounded-md"
+                                className="mb-0 cursor-pointer p-2 rounded-md"
                                 onClick={() => setSelectedProduct(item._id)}
                               >
                                 {/* <div className="flex flex-row items-start gap-4">
@@ -1672,7 +1672,7 @@ const Section01 = () => {
                   placeholder="Nhập họ và tên"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]"
                   style={{ fontSize: "16px" }}
                 />
               </div>
@@ -1689,7 +1689,7 @@ const Section01 = () => {
                   placeholder="Nhập số điện thoại"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                  className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]"
                   style={{ fontSize: "16px" }}
                 />
               </div>
@@ -1714,7 +1714,7 @@ const Section01 = () => {
                       <Input
                         readOnly
                         value={province || "Vui lòng chọn Tỉnh/Thành phố"}
-                        className="text-left w-full px-3 py-2 pr-16 border border-gray-200 rounded-md cursor-pointer mt-1 text-[16px] "
+                        className="text-left w-full px-3 py-2 pr-16 border border-gray-200 rounded-md cursor-pointer mt-1 text-[16px] h-[40px]"
                         onClick={() => setOpenProvinces(true)}
                       />
                     </DialogTrigger>
@@ -1752,7 +1752,7 @@ const Section01 = () => {
                       <Input
                         readOnly
                         value={district || "Vui lòng chọn Quận/Huyện"}
-                        className="text-left w-full px-3 py-2 pr-16 border border-gray-200 rounded-md cursor-pointer mt-1 text-[16px]"
+                        className="text-left w-full px-3 py-2 pr-16 border border-gray-200 rounded-md cursor-pointer mt-1 text-[16px] h-[40px]"
                         onClick={() => setOpenDistrict(true)}
                         disabled={!formData.province}
                       />
@@ -1792,7 +1792,7 @@ const Section01 = () => {
                     <Input
                       readOnly
                       value={ward || "Vui lòng chọn Phường/Xã"}
-                      className="text-left w-full px-3 py-2 pr-16 border border-gray-200 rounded-md cursor-pointer mt-1 text-[16px]"
+                      className="text-left w-full px-3 py-2 pr-16 border border-gray-200 rounded-md cursor-pointer mt-1 text-[16px] h-[40px]"
                       onClick={() => setOpenWard(true)}
                       disabled={!formData.district}
                     />
@@ -1832,7 +1832,7 @@ const Section01 = () => {
                   placeholder="Ví dụ: 123 Đường ABC"
                   value={formData.address}
                   onChange={handleInputChange}
-                  className="w-full mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                  className="w-full mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none h-[40px]"
                   style={{ fontSize: "16px" }}
                 />
               </div>
@@ -1970,7 +1970,7 @@ const Section01 = () => {
                           <input
                             type="text"
                             placeholder="Nhập mã khuyến mãi"
-                            className={`w-full h-10 border border-gray-300 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none ${
+                            className={`w-full border border-gray-300 rounded p-2 text-sm focus:border-2 focus:border-[rgb(var(--fifteenth-rgb))] focus:outline-none h-[40px] ${
                               isValid === false
                                 ? ""
                                 : isValid === true

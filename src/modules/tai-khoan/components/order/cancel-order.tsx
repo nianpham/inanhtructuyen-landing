@@ -64,13 +64,9 @@ const CancelOrderModal = ({ order, onCancelled }: CancelOrderModalProps) => {
           </DialogTitle>
         </DialogHeader>
         <DialogDescription className="text-center lg:!text-center">
-          <span className="!text-[16px] mb-3">Để hủy đơn hàng</span>
-          <br />
-          <span className="font-semibold text-black mb-3 text-[16px]">
-            {order?.product_name
-              ? order?.product_name
-              : "Album" + " " + order?.size + " (" + order?.pages + " trang)"}
-          </span>{" "}
+          <span className="!text-[16px] mb-3">
+            Bạn có chắc chắn muốn hủy đơn hàng?
+          </span>
           <br />
           <span className="!text-[16px]">
             Vui lòng bấm{" "}
@@ -78,12 +74,12 @@ const CancelOrderModal = ({ order, onCancelled }: CancelOrderModalProps) => {
             hủy.
           </span>
         </DialogDescription>
-        <DialogFooter className="flex flex-row justify-between">
+        <DialogFooter className="flex !flex-row !items-center !justify-center gap-3 w-full">
           <DialogClose>
             <Button
               type="button"
               variant="secondary"
-              className="!px-10 !text-[16px] w-32 !rounded"
+              className="!px-10 !text-[16px] w-40 lg:w-44 !rounded"
             >
               Hủy
             </Button>
@@ -91,7 +87,7 @@ const CancelOrderModal = ({ order, onCancelled }: CancelOrderModalProps) => {
           <Button
             type="button"
             variant="destructive"
-            className="!px-10 !text-[16px] !bg-red-600 hover:opacity-80 w-32 !rounded"
+            className="!px-10 !text-[16px] !bg-red-600 hover:opacity-80 w-40 lg:w-44 !rounded"
             onClick={() => handleUpdateStatus(order?._id, "cancelled")}
             disabled={isLoading}
           >

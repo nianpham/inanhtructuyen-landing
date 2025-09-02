@@ -28,7 +28,6 @@ import { OrderService } from "@/services/order";
 import { HELPER } from "@/utils/helper";
 import { useRouter, useSearchParams } from "next/navigation";
 import SkeletonAccountInfo from "@/components/ui/skeleton/account/account-info";
-import SkeletonOrder from "@/components/ui/skeleton/account/order";
 
 export type OrderStatus =
   | "pending"
@@ -167,12 +166,7 @@ const Section01 = () => {
   const orderIDBank = pathParams.get("orderID");
   const statusBank = pathParams.get("status");
 
-  // Separate loading states for account and orders
-  const [isAccountLoading, setIsAccountLoading] = useState(true);
-  const [isOrdersLoading, setIsOrdersLoading] = useState(true);
-
-  // Combined loading state - show skeleton until both are loaded
-  const isLoading = isAccountLoading || isOrdersLoading;
+  const [isLoading, setIsLoading] = useState(true);
 
   const updateOrderStatus = async () => {
     if (orderIDBank && statusBank) {
@@ -248,12 +242,13 @@ const Section01 = () => {
 
   const init = async () => {
     try {
-      setIsOrdersLoading(true);
+      setIsLoading(true);
       const res = await OrderService.getAllOrderById(
         Cookies.get("userLogin") || ""
       );
       if (res && res.length > 0) {
         setOrders(res);
+        setIsLoading(false);
       } else {
         console.log("No products found in response");
         setOrders([]);
@@ -261,8 +256,6 @@ const Section01 = () => {
     } catch (error) {
       console.error("Error initializing products:", error);
       setOrders([]);
-    } finally {
-      setIsOrdersLoading(false);
     }
   };
 
@@ -298,7 +291,7 @@ const Section01 = () => {
       const userId = Cookies.get("isLogin");
       if (userId) {
         try {
-          setIsAccountLoading(true);
+          setIsLoading(true);
           setLoading(true);
           const data = await AccountService.getAccountById(userId);
           setCustomerAccount(data);
@@ -311,10 +304,8 @@ const Section01 = () => {
           });
         } finally {
           setLoading(false);
-          setIsAccountLoading(false);
+          setIsLoading(false);
         }
-      } else {
-        setIsAccountLoading(false);
       }
     };
 
@@ -446,255 +437,259 @@ const Section01 = () => {
         )}
         <div className="grid lg:grid-cols-2 gap-6">
           {isLoading ? (
-            <>
+            <div>
               <SkeletonAccountInfo />
-              <SkeletonOrder />
-            </>
+            </div>
           ) : (
-            <>
-              <div className="bg-white">
-                <h2 className="text-xl font-semibold text-gray-900 mb-3.5">
-                  Thông tin tài khoản
-                </h2>
-                <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-                  <div className="flex flex-col lg:flex-row items-start gap-6">
-                    <div className="w-full lg:w-1/6 flex justify-center">
-                      <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
-                        <Image
-                          src={customerAccount?.avatar || IMAGES.LOGO}
-                          alt="Avatar"
-                          className="w-full h-full rounded-full"
-                          width={1000}
-                          height={1000}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-4 w-full">
-                      <div className="space-y-2 mb-2.5">
-                        <p className="text-gray-900">
-                          <span className="font-medium">Họ và tên:</span>{" "}
-                          {customerAccount?.name || ""}
-                        </p>
-                        <p className="text-gray-900">
-                          <span className="font-medium">Email:</span>{" "}
-                          {customerAccount?.email || "Không có email"}
-                        </p>
-                        <p className="text-gray-900">
-                          <span className="font-medium">Số điện thoại:</span>{" "}
-                          {customerAccount?.phone === ""
-                            ? "Chưa cập nhật số điện thoại"
-                            : customerAccount?.phone}
-                        </p>
-                      </div>
-                      <div className="w-full flex flex-col lg:flex-row gap-3">
-                        <ProfileModal
-                          customerAccount={customerAccount}
-                          onUpdate={handleProfileUpdate}
-                        />
-                        <ChangePasswordForm
-                          open={openChangePassword}
-                          setOpen={setOpenChangePassword}
-                        />
-                      </div>
+            <div className="bg-white">
+              <h2 className="text-xl font-semibold text-gray-900 mb-3.5">
+                Thông tin tài khoản
+              </h2>
+              <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
+                <div className="flex flex-col lg:flex-row items-start gap-6">
+                  <div className="w-full lg:w-1/6 flex justify-center">
+                    <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
+                      <Image
+                        src={customerAccount?.avatar || IMAGES.LOGO}
+                        alt="Avatar"
+                        className="w-full h-full rounded-full"
+                        width={1000}
+                        height={1000}
+                      />
                     </div>
                   </div>
-                </div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-3.5">
-                  Địa chỉ giao hàng
-                </h2>
-                <div className="relative">
-                  <div className="relative space-y-2 h-full">
-                    <div className="flex items-start gap-3 p-4 border border-gray-200 rounded-lg">
-                      <div className="w-6 h-6 mt-0">
-                        <svg
-                          className="w-6 h-6 text-gray-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
-                      </div>
-
-                      <div className="flex-1">
-                        {customerAccount?.address === "" ? (
-                          <p className="text-gray-600 text-base">
-                            Khách hàng chưa cập nhật địa chỉ giao hàng
-                          </p>
-                        ) : (
-                          <p className="text-gray-600 text-base">
-                            {customerAccount?.address || ""},{" "}
-                            {customerAccount?.wardName || ""},{" "}
-                            {customerAccount?.districtName || ""},{" "}
-                            {customerAccount?.provinceName || ""}
-                          </p>
-                        )}
-                      </div>
+                  <div className="flex flex-col gap-4 w-full">
+                    <div className="space-y-2 mb-2.5">
+                      <p className="text-gray-900">
+                        <span className="font-medium">Họ và tên:</span>{" "}
+                        {customerAccount?.name || ""}
+                      </p>
+                      <p className="text-gray-900">
+                        <span className="font-medium">Email:</span>{" "}
+                        {customerAccount?.email || "Không có email"}
+                      </p>
+                      <p className="text-gray-900">
+                        <span className="font-medium">Số điện thoại:</span>{" "}
+                        {customerAccount?.phone === ""
+                          ? "Chưa cập nhật số điện thoại"
+                          : customerAccount?.phone}
+                      </p>
+                    </div>
+                    <div className="w-full flex flex-col lg:flex-row gap-3">
+                      <ProfileModal
+                        customerAccount={customerAccount}
+                        onUpdate={handleProfileUpdate}
+                      />
+                      <ChangePasswordForm
+                        open={openChangePassword}
+                        setOpen={setOpenChangePassword}
+                      />
                     </div>
                   </div>
                 </div>
               </div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3.5">
+                Địa chỉ giao hàng
+              </h2>
+              <div className="relative">
+                <div className="relative space-y-2 h-full">
+                  <div className="flex items-start gap-3 p-4 border border-gray-200 rounded-lg">
+                    <div className="w-6 h-6 mt-0">
+                      <svg
+                        className="w-6 h-6 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
+                    </div>
 
-              {/* Order History Section */}
-              <div className="bg-white">
-                <h2 className="text-xl font-semibold text-gray-900 mb-3.5">
-                  Lịch sử mua hàng
-                </h2>
-                {orders.length === 0 ? (
-                  <div className="flex flex-col items-center justify-start h-full p-6">
-                    <p className="text-gray-500 text-lg mt-4">
-                      Bạn chưa có đơn hàng nào.
-                    </p>
+                    <div className="flex-1">
+                      {customerAccount?.address === "" ? (
+                        <p className="text-gray-600 text-base">
+                          Khách hàng chưa cập nhật địa chỉ giao hàng
+                        </p>
+                      ) : (
+                        <p className="text-gray-600 text-base">
+                          {customerAccount?.address || ""},{" "}
+                          {customerAccount?.wardName || ""},{" "}
+                          {customerAccount?.districtName || ""},{" "}
+                          {customerAccount?.provinceName || ""}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                ) : (
-                  <div className="relative">
-                    <div
-                      className="relative space-y-2 h-full scroll-bar-style"
-                      ref={scrollContainerRef}
-                    >
-                      {[...orders]
-                        .sort(
-                          (a, b) =>
-                            new Date(b.created_at).getTime() -
-                            new Date(a.created_at).getTime()
-                        )
-                        .map((order, index) => (
-                          <div
-                            key={index}
-                            className="border border-gray-200 rounded-lg p-4"
-                          >
-                            <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 items-center">
-                              {/* <div>
-                                <p className="text-gray-500 mb-1">
-                                  ID Đơn hàng:
-                                </p>
-                                <p className="font-medium text-gray-900">
-                                  {order._id.slice(0, 10)}...
-                                </p>
-                              </div> */}
+                </div>
+              </div>
+            </div>
+          )}
 
-                              <div>
-                                <p className="text-gray-500 mb-1">Ngày đặt:</p>
-                                <p className="text-gray-900 font-medium">
-                                  {HELPER.formatDateTime(order.created_at)}
-                                </p>
-                              </div>
+          {/* Order History Section */}
+          <div className="bg-white">
+            <h2 className="text-xl font-semibold text-gray-900 mb-3.5">
+              Lịch sử mua hàng
+            </h2>
+            {orders.length === 0 ? (
+              <div className="flex flex-col items-center justify-start h-full p-6">
+                <p className="text-gray-500 text-lg mt-4">
+                  Bạn chưa có đơn hàng nào.
+                </p>
+              </div>
+            ) : (
+              <div className="relative">
+                {/* <div
+                  className={`absolute top-0 inset-x-0 bg-gradient-to-b from-white z-20 to-transparent pointer-events-none transition-opacity duration-300 ${
+                    showTopGradient ? "opacity-100" : "opacity-0"
+                  }`}
+                  style={{ height: "40px" }}
+                /> */}
+                <div
+                  className="relative space-y-2 h-full scroll-bar-style"
+                  ref={scrollContainerRef}
+                >
+                  {[...orders]
+                    .sort(
+                      (a, b) =>
+                        new Date(b.created_at).getTime() -
+                        new Date(a.created_at).getTime()
+                    )
+                    .map((order, index) => (
+                      <div
+                        key={index}
+                        className="border border-gray-200 rounded-lg p-4"
+                      >
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 items-center">
+                          <div>
+                            <p className="text-gray-500 mb-1">ID Đơn hàng:</p>
+                            <p className="font-medium text-gray-900">
+                              {order._id.slice(0, 10)}...
+                            </p>
+                          </div>
 
-                              <div>
-                                <p className="text-gray-500 mb-1">Giá:</p>
-                                <p className="font-medium text-gray-900">
-                                  {HELPER.formatVND(order.total)}
-                                </p>
-                              </div>
+                          <div>
+                            <p className="text-gray-500 mb-1">Ngày đặt:</p>
+                            <p className="text-gray-900 font-medium">
+                              {HELPER.formatDate(order.created_at)}
+                            </p>
+                          </div>
 
-                              <div>
-                                <p className="text-gray-500 mb-1">
-                                  Trạng thái:
-                                </p>
-                                <div
-                                  className={`font-medium ${getStatusColor(
-                                    order.status
-                                  )}`}
-                                >
-                                  {order?.status === "completed" && (
-                                    <div className="flex flex-row items-center gap-1">
-                                      <CircleCheckBig size={18} /> Hoàn thành
-                                    </div>
-                                  )}
-                                  {order?.status === "paid pending" && (
-                                    <div className="flex flex-row items-center gap-1">
-                                      <HandCoins size={18} /> Chờ thanh toán
-                                    </div>
-                                  )}
-                                  {order?.status === "paid" && (
-                                    <div className="flex flex-row items-center gap-1">
-                                      <CircleDollarSign size={18} /> Đã thanh
-                                      toán
-                                    </div>
-                                  )}
-                                  {order?.status === "delivering" && (
-                                    <div className="flex flex-row items-center gap-1">
-                                      <Truck size={18} /> Vận chuyển
-                                    </div>
-                                  )}
-                                  {order?.status === "pending" && (
-                                    <div className="flex flex-row items-center gap-1">
-                                      <Package2 size={18} /> Chuẩn bị đơn
-                                    </div>
-                                  )}
-                                  {order?.status === "waiting" && (
-                                    <div className="flex flex-row items-center gap-1">
-                                      <Clock8 size={18} /> Đợi phản hồi
-                                    </div>
-                                  )}
-                                  {order?.status === "cancelled" && (
-                                    <div className="flex flex-row items-center gap-1">
-                                      <ClipboardX size={18} /> Đã hủy đơn
-                                    </div>
-                                  )}
+                          <div>
+                            <p className="text-gray-500 mb-1">Giá:</p>
+                            <p className="font-medium text-gray-900">
+                              {HELPER.formatVND(order.total)}
+                            </p>
+                          </div>
+
+                          <div>
+                            <p className="text-gray-500 mb-1">Trạng thái:</p>
+                            <div
+                              className={`font-medium ${getStatusColor(
+                                order.status
+                              )}`}
+                            >
+                              {order?.status === "completed" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <CircleCheckBig size={18} /> Hoàn thành
                                 </div>
-                              </div>
-                            </div>
-
-                            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mt-4 pt-4 border-t border-gray-100">
-                              <div className="lg:hidden flex text-base mb-3">
-                                <span className="text-gray-500">
-                                  Loại đơn hàng:
-                                </span>{" "}
-                                <span className="font-medium text-gray-900">
-                                  &nbsp;
-                                  {order?.order_type === "album"
-                                    ? "Album"
-                                    : order?.order_type === "frame"
-                                    ? "Khung Ảnh"
-                                    : ""}
-                                </span>
-                              </div>
-                              <div className="flex gap-2">
-                                {order?.status === "waiting" && (
-                                  <CancelOrderModal
-                                    order={order}
-                                    onCancelled={handleCancelOrder}
-                                  />
-                                )}
-                                <OrderDetailModal
-                                  order={order}
-                                  customerAccount={customerAccount}
-                                />
-                              </div>
-                              <div className="hidden lg:flex text-base">
-                                <span className="text-gray-500">
-                                  Loại đơn hàng:
-                                </span>{" "}
-                                <span className="font-medium text-gray-900">
-                                  &nbsp;
-                                  {order?.order_type === "album"
-                                    ? "Album"
-                                    : order?.order_type === "frame"
-                                    ? "Khung Ảnh"
-                                    : ""}
-                                </span>
-                              </div>
+                              )}
+                              {order?.status === "paid pending" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <HandCoins size={18} /> Chờ thanh toán
+                                </div>
+                              )}
+                              {order?.status === "paid" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <CircleDollarSign size={18} /> Đã thanh toán
+                                </div>
+                              )}
+                              {order?.status === "delivering" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <Truck size={18} /> Vận chuyển
+                                </div>
+                              )}
+                              {order?.status === "pending" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <Package2 size={18} /> Chuẩn bị đơn
+                                </div>
+                              )}
+                              {order?.status === "waiting" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <Clock8 size={18} /> Đợi phản hồi
+                                </div>
+                              )}
+                              {order?.status === "cancelled" && (
+                                <div className="flex flex-row items-center gap-1">
+                                  <ClipboardX size={18} /> Đã hủy đơn
+                                </div>
+                              )}
                             </div>
                           </div>
-                        ))}
-                    </div>
-                  </div>
-                )}
+                        </div>
+
+                        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mt-4 pt-4 border-t border-gray-100">
+                          <div className="lg:hidden flex text-base mb-3">
+                            <span className="text-gray-500">
+                              Loại đơn hàng:
+                            </span>{" "}
+                            <span className="font-medium text-gray-900">
+                              &nbsp;
+                              {order?.order_type === "album"
+                                ? "Album"
+                                : order?.order_type === "frame"
+                                ? "Khung Ảnh"
+                                : ""}
+                            </span>
+                          </div>
+                          <div className="flex gap-2">
+                            {order?.status === "waiting" && (
+                              <CancelOrderModal
+                                order={order}
+                                onCancelled={handleCancelOrder}
+                              />
+                            )}
+                            <OrderDetailModal
+                              order={order}
+                              customerAccount={customerAccount}
+                            />
+                          </div>
+                          <div className="hidden lg:flex text-base">
+                            <span className="text-gray-500">
+                              Loại đơn hàng:
+                            </span>{" "}
+                            <span className="font-medium text-gray-900">
+                              &nbsp;
+                              {order?.order_type === "album"
+                                ? "Album"
+                                : order?.order_type === "frame"
+                                ? "Khung Ảnh"
+                                : ""}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+                {/* <div
+                  className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300 ${
+                    showBottomGradient ? "opacity-100" : "opacity-0"
+                  }`}
+                  style={{ height: "40px" }}
+                /> */}
               </div>
-            </>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </section>
