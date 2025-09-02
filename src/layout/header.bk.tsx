@@ -1,5 +1,3 @@
-"use client";
-
 import React, { use, useEffect, useState } from "react";
 import Link from "next/link";
 import {
@@ -34,9 +32,6 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@heroui/dropdown";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "@/store/store";
-import { setAvatar, clearAvatar } from "@/store/userSlice";
 
 interface HeaderProps {
   cartCount?: number;
@@ -72,8 +67,6 @@ const Header: React.FC<HeaderProps> = ({
   const pathnameUrl = useRouter();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const dispatch = useDispatch();
-  const storedAvatar = useSelector((state: RootState) => state.user.avatar);
   const [logined, setLogined] = useState<boolean>(!!Cookies.get("isLogin"));
   const [customerAccount, setCustomerAccount] =
     useState<CustomerAccount | null>(null);
@@ -92,28 +85,24 @@ const Header: React.FC<HeaderProps> = ({
           if (data) {
             setCustomerAccount(data);
             setLogined(true);
-            dispatch(setAvatar(data?.avatar || null));
           } else {
             setLogined(false);
             Cookies.remove("isLogin");
             Cookies.remove("userLogin");
-            dispatch(clearAvatar());
           }
         } catch (error) {
           console.error("Error fetching account:", error);
           setLogined(false);
           Cookies.remove("isLogin");
           Cookies.remove("userLogin");
-          dispatch(clearAvatar());
         }
       } else {
         setLogined(false);
-        dispatch(clearAvatar());
       }
     };
 
     fetchAccount();
-  }, [dispatch]);
+  }, []);
 
   const handleLogin = async (username: string, password: string) => {
     if (!username || !password) {
@@ -138,7 +127,6 @@ const Header: React.FC<HeaderProps> = ({
         setLogined(true);
         const accountData = await AccountService.getAccountById(data?.data);
         setCustomerAccount(accountData);
-        dispatch(setAvatar(accountData?.avatar || null));
 
         let pullPathname = pathname;
         if (getFullPathname() !== "") {
@@ -165,7 +153,6 @@ const Header: React.FC<HeaderProps> = ({
     Cookies.remove("userLogin");
     setLogined(false);
     setCustomerAccount(null);
-    dispatch(clearAvatar());
     router.push(ROUTES.HOME);
   };
 
@@ -428,9 +415,7 @@ const Header: React.FC<HeaderProps> = ({
                 <Dropdown>
                   <DropdownTrigger>
                     <Image
-                      src={
-                        storedAvatar || customerAccount?.avatar || IMAGES.LOGO
-                      }
+                      src={customerAccount?.avatar || IMAGES.LOGO}
                       alt="avatar"
                       width={1000}
                       height={1000}
