@@ -23,7 +23,10 @@ const SkeletonProductDetail = () => {
           <div className="mb-2 mt-5 font-medium">Màu sắc:</div>
           <div className="flex flex-row gap-3">
             {Array.from({ length: 3 }).map((item, index) => (
-              <div className="h-8 w-8 bg-gray-300 rounded-full mb-4 animate-pulse"></div>
+              <div
+                key={index}
+                className="h-8 w-8 bg-gray-300 rounded-full mb-4 animate-pulse"
+              ></div>
             ))}
           </div>
           <div className="mb-2 mt-5 font-medium">Giới thiệu:</div>
@@ -39,7 +42,10 @@ const SkeletonProductDetail = () => {
             <div className="col-span-2 font-medium">Chia sẻ:</div>
             <div className="col-span-10 flex flex-row w-full gap-2">
               {Array.from({ length: 2 }).map((item, index) => (
-                <div className="h-8 w-8 bg-gray-300 rounded-full animate-pulse"></div>
+                <div
+                  key={index}
+                  className="h-8 w-8 bg-gray-300 rounded-full animate-pulse"
+                ></div>
               ))}
             </div>
           </div>
