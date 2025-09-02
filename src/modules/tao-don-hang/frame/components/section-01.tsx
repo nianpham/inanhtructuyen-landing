@@ -47,6 +47,7 @@ import {
   UserRound,
 } from "lucide-react";
 import Link from "next/link";
+import ProductCard from "./card";
 
 interface ColorOption {
   id: string;
@@ -1303,7 +1304,7 @@ const Section01 = () => {
                 </div>
                 <textarea
                   placeholder="Ghi chú về đơn hàng (Nếu có)"
-                  className="w-full p-3 border border-gray-200 rounded-md h-24 ml-0 mx-10 text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                  className="w-full p-3 border border-gray-200 placeholder:text-[#64758B] rounded-md h-24 ml-0 mx-10 text-[16px] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                 ></textarea>
               </div>
             </>
@@ -1326,7 +1327,7 @@ const Section01 = () => {
                         (item: any) => String(item?._id) === selectedProduct
                       ) ? (
                         <div className="w-full flex flex-row justify-between items-center">
-                          <div className="cursor-pointer flex flex-row items-start gap-3">
+                          <div className="cursor-pointer flex flex-row items-center gap-3">
                             <Image
                               src={
                                 products?.find(
@@ -1349,11 +1350,11 @@ const Section01 = () => {
                                   )?.name
                                 }
                               </p>
-                              <div className="flex text-xs font-light items-center mb-0 text-gray-600">
+                              {/* <div className="flex text-xs font-light items-center mb-0 text-gray-600">
                                 {renderStars(Math.floor(Math.random() * 2) + 4)}{" "}
                                   (
                                 {Math.floor(Math.random() * 100) + 4} đã bán)
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                           <div>
@@ -1387,7 +1388,7 @@ const Section01 = () => {
                       Vui lòng chọn sản phẩm
                     </DialogTitle>
                     <DialogDescription className="max-h-96 overflow-y-auto scroll-bar-style">
-                      <div className="">
+                      <div className="grid grid-cols-2 gap-3">
                         {products?.length > 0 ? (
                           products.map((item: any) => (
                             <DialogClose asChild key={item._id}>
@@ -1395,7 +1396,7 @@ const Section01 = () => {
                                 className="mb-0 cursor-pointer hover:bg-gray-100 p-2 rounded-md"
                                 onClick={() => setSelectedProduct(item._id)}
                               >
-                                <div className="flex flex-row items-start gap-4">
+                                {/* <div className="flex flex-row items-start gap-4">
                                   <Image
                                     src={item.thumbnail}
                                     alt={item.name}
@@ -1416,7 +1417,9 @@ const Section01 = () => {
                                       bán)
                                     </div>
                                   </div>
-                                </div>
+                                </div> */}
+
+                                <ProductCard key={item._id} product={item} />
                               </div>
                             </DialogClose>
                           ))
@@ -1912,7 +1915,7 @@ const Section01 = () => {
                   </div>
                   <textarea
                     placeholder="Ghi chú về đơn hàng (Nếu có)"
-                    className="w-full p-3 border border-gray-200 rounded-md h-24 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                    className="w-full p-3 border border-gray-200 placeholder:text-[#64758B] rounded-md h-24 focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                   ></textarea>
                 </div>
               </>

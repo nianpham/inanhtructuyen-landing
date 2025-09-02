@@ -149,9 +149,11 @@ const Section01 = () => {
               {blogs?.map((blog: any, index: any) => (
                 <Link
                   key={index}
-                  href={`${ROUTES.BLOG}/${HELPER.getLastFourChars(
-                    blog?._id
-                  )}?b=${HELPER.convertSpacesToDash(blog?.title)}`}
+                  // /${HELPER.getLastFourChars(
+                  //   blog?._id)?b=${HELPER.convertSpacesToDash(
+                  //   blog?.title
+                  // )}
+                  href={`${ROUTES.BLOG}`}
                 >
                   <div className="mb-6">
                     <GlobalComponent.BlogCard

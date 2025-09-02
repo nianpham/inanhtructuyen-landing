@@ -54,7 +54,7 @@ const TopBanner: React.FC = () => {
           </span>
           <Link
             href={`${ROUTES.PRODUCT}`}
-            className="bg-[rgb(var(--fifteenth-rgb))] hover:bg-yellow-700 text-white px-4 py-1 rounded font-medium transition-colors"
+            className="bg-[rgb(var(--fifteenth-rgb))] hover:opacity-80 text-white px-4 py-1 rounded font-medium transition-colors"
           >
             Đặt ngay!
           </Link>

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "./components/card";
 import { ProductService } from "@/services/product";
 import Title from "@/components/ui/title";
+import SkeletonHomeSection2 from "@/components/ui/skeleton/home/skeleton-2";
 
 interface Product {
   _id: string;
@@ -27,16 +28,21 @@ interface Product {
 
 const Section2: React.FC = () => {
   const [products, setProducts] = useState([] as Product[]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const init = async () => {
+    setIsLoading(true);
     const res = await ProductService.getAll();
     if (res && res.data.length > 0) {
       setProducts(res.data);
+      setIsLoading(false);
     }
   };
+
   useEffect(() => {
     init();
   }, []);
+
   return (
     <div className="max-w-7xl mx-auto px-5 lg:px-0">
       <section className="py-20">
@@ -60,11 +66,17 @@ const Section2: React.FC = () => {
               Khám phá những sản phẩm được ưa chuộng và tin dùng nhất hiện nay.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.slice(0, 8).map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-          </div>
+          {isLoading ? (
+            <div>
+              <SkeletonHomeSection2 />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {products.slice(0, 8).map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>

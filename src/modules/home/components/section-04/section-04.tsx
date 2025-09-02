@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "./components/card";
 import { ProductService } from "@/services/product";
 import Title from "@/components/ui/title";
+import SkeletonHomeSection4 from "@/components/ui/skeleton/home/skeleton-4";
 
 interface Product {
   _id: string;
@@ -30,8 +31,10 @@ const Section4: React.FC = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [topRatedProducts, setTopRatedProducts] = useState<Product[]>([]);
   const [trendingProducts, setTrendingProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const init = async () => {
+    setIsLoading(true);
     const res = await ProductService.getAll();
 
     if (res && res.data.length > 0) {
@@ -39,6 +42,7 @@ const Section4: React.FC = () => {
       setFeaturedProducts(res.data.slice(0, 3));
       setTopRatedProducts(res.data.slice(3, 6));
       setTrendingProducts(res.data.slice(6, 9));
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -67,11 +71,21 @@ const Section4: React.FC = () => {
                     </h1>
                   </div>
                 </div>
-                <div className="space-y-1">
-                  {featuredProducts.map((product) => (
-                    <ProductCard key={product._id} product={product} />
-                  ))}
-                </div>
+                {isLoading ? (
+                  <div>
+                    <SkeletonHomeSection4 />
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    {featuredProducts.map((product) => (
+                      <ProductCard
+                        key={product._id}
+                        product={product}
+                        showRating={true}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
               <div className="">
                 <div className="text-center lg:text-left mb-5">
@@ -86,15 +100,21 @@ const Section4: React.FC = () => {
                     </h1>
                   </div>
                 </div>
-                <div className="space-y-1">
-                  {topRatedProducts.map((product) => (
-                    <ProductCard
-                      key={product._id}
-                      product={product}
-                      showRating={true}
-                    />
-                  ))}
-                </div>
+                {isLoading ? (
+                  <div>
+                    <SkeletonHomeSection4 />
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    {topRatedProducts.map((product) => (
+                      <ProductCard
+                        key={product._id}
+                        product={product}
+                        showRating={true}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
               <div className="">
                 <div className="text-center lg:text-left mb-5">
@@ -109,11 +129,21 @@ const Section4: React.FC = () => {
                     </h1>
                   </div>
                 </div>
-                <div className="space-y-1">
-                  {trendingProducts.map((product) => (
-                    <ProductCard key={product._id} product={product} />
-                  ))}
-                </div>
+                {isLoading ? (
+                  <div>
+                    <SkeletonHomeSection4 />
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    {trendingProducts.map((product) => (
+                      <ProductCard
+                        key={product._id}
+                        product={product}
+                        showRating={true}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>

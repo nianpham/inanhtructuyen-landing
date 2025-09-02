@@ -71,6 +71,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {product.name}
         </h3>
         <div className="flex items-center space-x-2">
+          <span className="text-lg font-base text-orange-600">
+            {HELPER.formatVND(product.product_option[0].price)}
+          </span>
           {Number(product._id.charAt(7)) % 2 !== 0 && (
             <span className="text-sm text-gray-500 line-through">
               {HELPER.formatVND(
@@ -78,9 +81,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
               )}
             </span>
           )}
-          <span className="text-lg font-base text-orange-600">
-            {HELPER.formatVND(product.product_option[0].price)}
-          </span>
         </div>
         {showRating && (
           <div className="flex items-center mt-1">

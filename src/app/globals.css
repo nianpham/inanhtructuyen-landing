@@ -78,15 +78,15 @@
     opacity: 0;
   }
   50% {
-    transform: scale(1.5);
+    transform: scale(1.3);
     opacity: 1;
   }
   70% {
-    transform: scale(1.5);
+    transform: scale(1.3);
     opacity: 1;
   }
   100% {
-    transform: scale(1.7);
+    transform: scale(1.5);
     opacity: 0;
   }
 }
@@ -134,6 +134,34 @@
 
 .animate-bellRing {
   animation: bellRing 1.1s ease-in-out infinite;
+}
+
+@keyframes zoomInOut {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+.animate-zoomInOut {
+  animation: zoomInOut 1.5s ease-in-out infinite;
+}
+
+@keyframes zoomInOutReverse {
+  0%,
+  100% {
+    transform: scale(0.99);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+}
+
+.animate-zoomInOutReverse {
+  animation: zoomInOutReverse 1.5s ease-in-out infinite;
 }
 
 @font-face {

@@ -10,7 +10,7 @@ export default function Contact() {
   };
   return (
     <div className="flex flex-row lg:flex-col gap-6 lg:gap-3.5">
-      <div className="relative flex items-center justify-center">
+      {/* <div className="relative flex items-center justify-center">
         <div className="absolute inset-0 border border-gray-100 rounded-full animate-zoomFade z-10"></div>
         <div className="absolute inset-0 p-2 opacity-90 rounded-full animate-zoomIO z-0"></div>
         <Link
@@ -23,6 +23,26 @@ export default function Contact() {
             fill="black"
             strokeWidth={0}
             className="animate-bellRing"
+          />
+        </Link>
+      </div> */}
+      <div className="relative flex items-center justify-center">
+        <div className="absolute inset-0 border border-[#FC0B52] rounded-full animate-zoomInOut z-10"></div>
+        {/* <div className="absolute inset-0 p-2 opacity-90 rounded-full animate-zoomIO z-0"></div> */}
+        <Link
+          href={SOCIAL_LINKS.TIKTOK}
+          target="_blank"
+          className="relative bg-white rounded-full p-0 z-10 animate-zoomInOutReverse overflow-hidden"
+        >
+          <div className="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-[45%] text-[6px] bg-[linear-gradient(183.16deg,rgb(253,26,105)_8.16%,rgb(238,51,146)_104.17%)] w-[25px] h-[18px] text-white rounded-[8px] leading-[27px] text-center">
+            LIVE
+          </div>
+          <Image
+            src={IMAGES.LOGO}
+            alt="Phone icon"
+            width={1000}
+            height={1000}
+            className="w-[45px] h-[45px] object-cover"
           />
         </Link>
       </div>

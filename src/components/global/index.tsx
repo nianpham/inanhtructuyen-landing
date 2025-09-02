@@ -22,7 +22,7 @@ const BlogCard = ({
   <Card
     onClick={() => (window.location.href = `${ROUTES.BLOG}`)}
     className={`cursor-pointer overflow-hidden group ${
-      isMain ? "mb-0" : "flex items-center gap-4 mb-4"
+      isMain ? "mb-0" : "flex items-center justify-between gap-4 mb-4"
     }`}
   >
     <div
@@ -43,7 +43,7 @@ const BlogCard = ({
     </div>
     <div className={`${isMain ? "p-0" : "py-2 pr-4"} mt-2`}>
       <h3
-        className={`font-medium line-clamp-2 text-navy-900 ${
+        className={`font-medium line-clamp-2 text-navy-900 h-14 ${
           isMain ? "text-lg mb-2" : "text-sm mb-2"
         }`}
       >

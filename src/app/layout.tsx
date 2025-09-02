@@ -4,7 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ProductProvider } from "@/modules/san-pham/components/product-context";
 import { ReduxProvider } from "@/providers/ReduxProvider";
-import { GoogleAnalytics } from '@next/third-parties/google';
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 // const font = Manrope({ subsets: ["latin"] });
 // const font = Plus_Jakarta_Sans({ subsets: ["latin"] });

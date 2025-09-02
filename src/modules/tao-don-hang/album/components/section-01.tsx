@@ -841,7 +841,7 @@ const Section01 = () => {
                   placeholder="Nhập họ và tên"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="text-[16px] w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                  className="text-[16px] w-full px-3 py-2 pr-16 border placeholder:text-[#81838B] border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                 />
               </div>
               <div className="mb-6">
@@ -857,7 +857,7 @@ const Section01 = () => {
                   placeholder="Nhập số điện thoại"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="text-[16px] w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                  className="text-[16px] w-full px-3 py-2 pr-16 border placeholder:text-[#81838B] border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                 />
               </div>
             </div>
@@ -956,7 +956,7 @@ const Section01 = () => {
                   Số nhà, tên đường:
                 </Label>
                 <Input
-                  className="text-[16px] mt-2 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                  className="text-[16px] mt-2 placeholder:text-[#81838B] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                   id="address"
                   name="address"
                   placeholder="Ví dụ: 123 Đường ABC"
@@ -1045,7 +1045,7 @@ const Section01 = () => {
                     </div>
                     <textarea
                       placeholder="Ghi chú về đơn hàng (Nếu có)"
-                      className="w-full p-3 border border-gray-200 rounded-md h-24 ml-0 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                      className="w-full p-3 border border-gray-200 placeholder:text-[#81838B] rounded-md h-24 ml-0 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     ></textarea>
                   </div>
                 </>
@@ -1165,7 +1165,7 @@ const Section01 = () => {
                     placeholder="Nhập họ và tên"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                    className="w-full px-3 py-2 pr-16 border border-gray-200 placeholder:text-[#81838B] rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     style={{ fontSize: "16px" }}
                   />
                 </div>
@@ -1182,7 +1182,7 @@ const Section01 = () => {
                     placeholder="Nhập số điện thoại"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 pr-16 border border-gray-200 rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                    className="w-full px-3 py-2 pr-16 border border-gray-200 placeholder:text-[#81838B] rounded-md mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     style={{ fontSize: "16px" }}
                   />
                 </div>
@@ -1330,7 +1330,7 @@ const Section01 = () => {
                     placeholder="Ví dụ: 123 Đường ABC"
                     value={formData.address}
                     onChange={handleInputChange}
-                    className="w-full mt-1 focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                    className="w-full mt-1 placeholder:text-[#81838B] focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     style={{ fontSize: "16px" }}
                   />
                 </div>
@@ -1422,7 +1422,7 @@ const Section01 = () => {
                       </div>
                       <textarea
                         placeholder="Ghi chú về đơn hàng (Nếu có)"
-                        className="w-full p-3 border border-gray-200 rounded-md h-24 ml-0"
+                        className="w-full p-3 border border-gray-200 placeholder:text-[#81838B] rounded-md h-24 ml-0"
                       ></textarea>
                     </div>
                   </>

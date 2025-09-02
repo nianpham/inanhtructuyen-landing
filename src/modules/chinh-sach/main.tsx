@@ -15,7 +15,7 @@ export default function PolicyContent() {
       </div>
       <main className="w-full flex flex-col justify-center items-center overflow-hidden">
         <div className="w-full flex flex-col justify-center items-center">
-          {/* <SectionHeader /> */}
+          <SectionHeader />
           <Section01 />
         </div>
       </main>

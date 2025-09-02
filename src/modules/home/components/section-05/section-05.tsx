@@ -7,6 +7,8 @@ import FeatureCard from "./components/card";
 import Image from "next/image";
 import { toast } from "@/hooks/use-toast";
 import { IMAGES } from "@/utils/image";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/utils/route";
 
 const features = [
   {
@@ -30,6 +32,7 @@ const features = [
 ];
 
 const Section5: React.FC = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -47,6 +50,7 @@ const Section5: React.FC = () => {
         <div className="bg-gray-50">
           {/* Newsletter Section */}
           <div className="relative bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+            <div className="w-full h-full bg-black/20 absolute inset-0 z-20"></div>
             <div className="absolute inset-0">
               <Image
                 src={IMAGES.BANNER_2}
@@ -56,7 +60,7 @@ const Section5: React.FC = () => {
                 className="object-cover object-[20%_70%] lg:object-right"
               />
             </div>
-            <div className="relative w-5/6 lg:max-w-4xl mx-auto px-6 py-10 my-20 text-center backdrop-blur-xs bg-white/90 rounded-lg">
+            <div className="relative w-5/6 lg:max-w-4xl mx-auto px-6 py-10 my-20 text-center backdrop-blur-none bg-white/90 rounded-lg z-30">
               <div className="text-xl md:text-3xl font-semibold text-gray-900 mb-3">
                 Liên hệ với chúng tôi
               </div>
@@ -80,11 +84,7 @@ const Section5: React.FC = () => {
                   />
                   <button
                     onClick={() => {
-                      toast({
-                        variant: "default",
-                        title: "Thông báo",
-                        description: "Chức năng đang được phát triển.",
-                      });
+                      router.push(`${ROUTES.PRODUCT}`);
                     }}
                     className="text-sm lg:text-base px-8 py-3 bg-[rgb(var(--fifteenth-rgb))] text-white font-semibold rounded-md hover:opacity-80 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
                   >

@@ -27,26 +27,8 @@ interface Product {
 }
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`w-4 h-4 ${
-          i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
-        }`}
-      />
-    ));
-  };
-  const router = useRouter();
-
-  const handleProductClick = (productId: string, title: string) => {
-    router.push(`${ROUTES.PRODUCT}/${slugifyURL(title)}?spid=${productId}`);
-  };
   return (
-    <div
-      onClick={() => handleProductClick(product._id, product.name)}
-      className="cursor-pointer group relative bg-white overflow-hidden transition-all duration-300"
-    >
+    <div className="cursor-pointer group relative bg-white overflow-hidden transition-all duration-300">
       {Number(product._id.charAt(7)) % 2 !== 0 && (
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded">
@@ -63,13 +45,13 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             alt={product.name}
             layout="fill"
             objectFit="cover"
-            className={`transition-opacity duration-300 border border-gray-200  ${
-              product?.images[1]
+            className={`transition-opacity duration-300 ${
+              product.images[1]
                 ? "group-hover:opacity-0"
                 : "group-hover:opacity-100"
             }`}
           />
-          {product?.images[1] && (
+          {product.images[1] && (
             <Image
               src={product.images[1]}
               alt={`${product.name} hover`}
@@ -79,43 +61,20 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             />
           )}
         </div>
-        <>
-          {/* <div className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <button className="p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow">
-              <Heart className="w-4 h-4 text-gray-600" />
-            </button>
-            <button className="p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow">
-              <BarChart3 className="w-4 h-4 text-gray-600" />
-            </button>
-            <button className="p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow">
-              <Eye className="w-4 h-4 text-gray-600" />
-            </button>
-          </div> */}
-          <div className="absolute -bottom-16 group-hover:bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-500 ease-in-out">
-            <button className="w-full bg-[rgb(var(--primary-rgb))] text-gray-800 py-3 px-4 rounded font-medium hover:bg-[rgb(var(--fifteenth-rgb))] hover:text-[rgb(var(--primary-rgb))] transition-colors flex items-center justify-center space-x-2">
-              <ShoppingCart className="w-4 h-4" />
-              <span>Thêm vào giỏ</span>
-            </button>
-          </div>
-        </>
       </div>
 
       {/* Product Info */}
-      <div className="p-4 flex flex-row justify-between items-end">
-        <div>
-          <h3 className="font-medium text-gray-900 mb-1 text-sm h-full line-clamp-1">
+      <div className="py-4 flex flex-row justify-between items-end h-full">
+        <div className="flex flex-col justify-between h-20">
+          <h3 className="font-light text-gray-900 mb-1 text-[16px] lg:text-[16px] h-full line-clamp-2">
             {product.name}
           </h3>
-          <div className="flex text-[14px] font-light items-center mb-2">
-            {renderStars(Math.floor(Math.random() * 2) + 4)} &nbsp;&nbsp;(
-            {product.sold} đã bán)
-          </div>
           <div className="flex items-center space-x-2">
-            <span className="text-[16px] lg:text-[18px] font-semibold text-gray-900">
+            <span className="text-[16px] lg:text-[16px] font-semibold text-gray-900 leading-7">
               {HELPER.formatVND(product.product_option[0].price)}
             </span>
             {Number(product._id.charAt(7)) % 2 !== 0 && (
-              <span className="text-[14px] lg:text-[16px] text-gray-500 line-through">
+              <span className="text-[12px] lg:text-[12px] text-gray-500 line-through">
                 {HELPER.formatVND(
                   HELPER.upPrice(product.product_option[0].price)
                 )}

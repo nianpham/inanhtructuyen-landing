@@ -186,7 +186,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                         : "border border-gray-300"
                     }`}
                   />
-                  <span className="text-gray-700">{category.name}</span>
+                  <span className="text-gray-700 hover:text-[rgb(var(--fifteenth-rgb))]">
+                    {category.name}
+                  </span>
                 </div>
                 {category.hasSubcategories &&
                   (expandedSections[category.id] ? (

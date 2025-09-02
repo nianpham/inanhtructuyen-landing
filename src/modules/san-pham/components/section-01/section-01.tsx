@@ -43,9 +43,11 @@ const Section01: React.FC<Section01Props> = ({
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [isDesktop, setIsDesktop] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const init = async () => {
     try {
+      setIsLoading(true);
       const res = await ProductService.getAll();
       if (res && res.data && res.data.length > 0) {
         setProducts(res.data);
@@ -62,6 +64,7 @@ const Section01: React.FC<Section01Props> = ({
           )
         ) as string[];
         setSize(uniqueSizes);
+        setIsLoading(false);
       } else {
         console.log("No products found in response");
         setProducts([]);
@@ -152,6 +155,7 @@ const Section01: React.FC<Section01Props> = ({
           products={isDesktop ? filteredProducts : filteredProductMobile || []}
           viewMode={viewMode}
           onViewModeChange={setViewMode}
+          loadingData={isLoading}
         />
       </div>
     </div>

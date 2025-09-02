@@ -8,7 +8,8 @@ import { useDispatch } from "react-redux";
 import { slugifyURL } from "@/utils/slugify";
 import { ROUTES } from "@/utils/route";
 import { toast } from "@/hooks/use-toast";
-
+import { log } from "console";
+import SkeletonProductList from "@/components/ui/skeleton/product/skeleton-product-list";
 
 interface Product {
   _id: string;
@@ -33,6 +34,7 @@ interface ProductGridProps {
   products: Product[];
   viewMode: "grid" | "list";
   onViewModeChange: (mode: "grid" | "list") => void;
+  loadingData: boolean;
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({
@@ -40,6 +42,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   products: initialProducts,
   viewMode,
   onViewModeChange,
+  loadingData,
 }) => {
   const COUNT = 9;
   const [currenPage, setCurrenPage] = useState<number>(1);
@@ -109,20 +112,21 @@ const ProductGrid: React.FC<ProductGridProps> = ({
         <div className="hidden lg:flex text-gray-600">
           {sortedProducts.length > 0 ? (
             <>
-              Hiển thị {(currenPage - 1) * COUNT + 1}-
-              {Math.min(currenPage * COUNT, sortedProducts.length)} trên{" "}
-              {sortedProducts.length}
+              {/* Hiển thị {(currenPage - 1) * COUNT + 1}-
+              {Math.min(currenPage * COUNT, sortedProducts.length)} trên{" "} */}
+              Sản phẩm: {sortedProducts.length}
             </>
           ) : (
-            " Hiển thị 0 trên 0"
+            "Sản phẩm: Đang tải"
           )}
         </div>
         <div className="hidden lg:flex items-center gap-2">
-          <span className="text-gray-600">Xem dạng:</span>
+          {/* <span className="text-gray-600">Xem dạng:</span>
           <button
             onClick={() => onViewModeChange("grid")}
-            className={`p-1 ${viewMode === "grid" ? "text-black" : "text-gray-400"
-              }`}
+            className={`p-1 ${
+              viewMode === "grid" ? "text-black" : "text-gray-400"
+            }`}
           >
             <Grip size={20} />
           </button>
@@ -135,11 +139,12 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                 description: "Chức năng đang được phát triển.",
               });
             }}
-            className={`p-1 ${viewMode === "list" ? "text-black" : "text-gray-400"
-              }`}
+            className={`p-1 ${
+              viewMode === "list" ? "text-black" : "text-gray-400"
+            }`}
           >
             <AlignJustify size={20} />
-          </button>
+          </button> */}
         </div>
         <div className={`flex items-center gap-4 ${viewFilter ? "" : "z-30"}`}>
           <Selection
@@ -148,36 +153,41 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           />
         </div>
       </div>
-
-      {/* Product Grid */}
-      <div
-        className={
-          viewMode === "grid"
-            ? `grid grid-cols-2 lg:grid-cols-3 gap-6 ${viewFilter ? "z-0" : "z-30"
-            }`
-            : "space-y-4"
-        }
-      >
-        {currenData.length > 0 ? (
-          currenData
-            .slice()
-            .reverse()
-            .map((product) => (
-              <div
-                key={product._id}
-                onClick={() => handleProductClick(product._id, product.name)}
-              >
-                <ProductProvider>
-                  <ProductCard product={product} />
-                </ProductProvider>
-              </div>
-            ))
-        ) : (
-          <div className="col-span-full text-center py-10 text-gray-500">
-            Không tìm thấy sản phẩm.
-          </div>
-        )}
-      </div>
+      {loadingData ? (
+        <div>
+          <SkeletonProductList />
+        </div>
+      ) : (
+        <div
+          className={
+            viewMode === "grid"
+              ? `grid grid-cols-2 lg:grid-cols-3 gap-6 ${
+                  viewFilter ? "z-0" : "z-30"
+                }`
+              : "space-y-4"
+          }
+        >
+          {currenData.length > 0 ? (
+            currenData
+              .slice()
+              .reverse()
+              .map((product) => (
+                <div
+                  key={product._id}
+                  onClick={() => handleProductClick(product._id, product.name)}
+                >
+                  <ProductProvider>
+                    <ProductCard product={product} />
+                  </ProductProvider>
+                </div>
+              ))
+          ) : (
+            <div className="col-span-full text-center py-10 text-gray-500">
+              Không tìm thấy sản phẩm.
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Pagination */}
       {sortedProducts.length > 0 && (
@@ -190,7 +200,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
               <button
                 onClick={prevPage}
                 disabled={currenPage === 1}
-                className="cursor-pointer flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                className="cursor-pointer flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-[rgb(var(--primary-rgb))] hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 <span className="sr-only">Previous</span>
                 <svg
@@ -219,10 +229,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                     }}
                   >
                     <div
-                      className={`${item === currenPage
-                        ? "bg-[rgb(var(--primary-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] text-gray-700"
-                        : "bg-white"
-                        } cursor-pointer flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700`}
+                      className={`${
+                        item === currenPage
+                          ? "bg-[rgb(var(--fifteenth-rgb))] text-gray-700"
+                          : "bg-white hover:bg-[rgb(var(--primary-rgb))]"
+                      } cursor-pointer flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 border border-gray-300 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700`}
                     >
                       {item}
                     </div>
@@ -234,7 +245,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
               <button
                 onClick={nextPage}
                 disabled={currenPage === totalPage}
-                className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-[rgb(var(--primary-rgb))] hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 <span className="sr-only">Next</span>
                 <svg

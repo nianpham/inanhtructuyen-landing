@@ -82,7 +82,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           )}
         </div>
         <>
-          <div className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {/* <div className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button className="p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow">
               <Heart className="w-4 h-4 text-gray-600" />
             </button>
@@ -92,7 +92,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             <button className="p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow">
               <Eye className="w-4 h-4 text-gray-600" />
             </button>
-          </div>
+          </div> */}
           <div className="absolute -bottom-16 group-hover:bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-500 ease-in-out">
             <button className="w-full bg-[rgb(var(--primary-rgb))] text-gray-800 py-3 px-4 rounded font-medium hover:bg-[rgb(var(--fifteenth-rgb))] hover:text-[rgb(var(--primary-rgb))] transition-colors flex items-center justify-center space-x-2">
               <ShoppingCart className="w-4 h-4" />
@@ -113,16 +113,16 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             {product.sold} đã bán)
           </div>
           <div className="flex items-center space-x-2">
+            <span className="text-[16px] lg:text-[18px] font-semibold text-gray-900">
+              {HELPER.formatVND(product.product_option[0].price)}
+            </span>
             {Number(product._id.charAt(7)) % 2 !== 0 && (
-              <span className="text-[16px] lg:text-[16px] text-gray-500 line-through">
+              <span className="text-[14px] lg:text-[14px] text-gray-500 line-through">
                 {HELPER.formatVND(
                   HELPER.upPrice(product.product_option[0].price)
                 )}
               </span>
             )}
-            <span className="text-[16px] lg:text-[16px] font-semibold text-gray-900">
-              {HELPER.formatVND(product.product_option[0].price)}
-            </span>
           </div>
         </div>
 

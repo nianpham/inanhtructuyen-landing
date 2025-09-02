@@ -36,6 +36,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { HELPER } from "@/utils/helper";
 import "../../../styles/helper.css";
+import ProductCard from "./card";
 
 interface SizeOption {
   id: string;
@@ -105,7 +106,7 @@ const Section01 = () => {
                   <div className="bg-gray-50 border border-gray-100 text-gray-900 rounded-lg block w-full my-2">
                     <Dialog>
                       <DialogTrigger asChild>
-                        <div className="text-[16px] cursor-pointer flex flex-row justify-between items-center gap-4 p-2 bg-white rounded-md border border-gray-200">
+                        <div className="h-12 text-[16px] cursor-pointer flex flex-row justify-between items-center gap-4 p-2 bg-white rounded-md border border-gray-200">
                           {selectedProduct &&
                           selectedProduct !== "Chon san pham" ? (
                             products?.find(
@@ -148,28 +149,32 @@ const Section01 = () => {
                             Vui lòng chọn sản phẩm
                           </DialogTitle>
                           <DialogDescription className="max-h-96 overflow-y-auto scroll-bar-style text-[16px]">
-                            <div className="">
+                            <div className="grid grid-cols-2 gap-3">
                               {products?.length > 0 ? (
                                 products.map((item: any) => (
                                   <DialogClose asChild key={item._id}>
                                     <div
-                                      className="mb-0 cursor-pointer hover:bg-gray-100 py-2 rounded-md"
+                                      className="mb-0 cursor-pointer rounded-md"
                                       onClick={() =>
                                         setSelectedProduct(item._id)
                                       }
                                     >
-                                      <div className="flex flex-row items-start gap-4">
+                                      {/* <div className="flex flex-col items-start gap-4 mb-2">
                                         <Image
                                           src={item.thumbnail}
                                           alt={item.name}
                                           width={1000}
                                           height={1000}
-                                          className="object-cover border border-gray-200 w-14 h-14 shrink-0"
+                                          className="object-cover border border-gray-200 w-full h-52 shrink-0"
                                         />
-                                        <p className="text-left w-full !text-[16px] line-clamp-2 leading-6 text-black">
+                                        <p className="text-center w-full !text-[16px] line-clamp-2 leading-6 text-black">
                                           {item.name}
                                         </p>
-                                      </div>
+                                      </div> */}
+                                      <ProductCard
+                                        key={item._id}
+                                        product={item}
+                                      />
                                     </div>
                                   </DialogClose>
                                 ))
@@ -192,23 +197,25 @@ const Section01 = () => {
                   >
                     Kích thước sản phẩm
                   </Label>
-                  <div className="bg-gray-50 border border-gray-100 text-gray-900 rounded-lg block w-full my-2 text-[16px]">
+                  <div className="bg-gray-50 border border-gray-100 text-gray-900 rounded-lg block w-full my-2 text-[16px] ">
                     <Select
                       value={selectedSize}
                       onValueChange={setSelectedSize}
                     >
-                      <SelectTrigger className="text-[16px]">
-                        {selectedSize === "Chon kich thuoc"
-                          ? "Chọn kích thước"
-                          : ""}
+                      <SelectTrigger className="focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent">
+                        <div className="text-[16px]">
+                          {selectedSize === "Chon kich thuoc"
+                            ? "Chọn kích thước"
+                            : ""}
+                        </div>
                         <SelectValue placeholder="Chọn kích thước" />
                       </SelectTrigger>
                       <SelectContent className="">
                         {size?.map((item: any, index: any) => (
                           <SelectItem
-                            className="text-xs"
+                            className="text-xs text-left"
                             key={index}
-                            value={String(item?.id)}
+                            value={item}
                           >
                             {item}
                           </SelectItem>

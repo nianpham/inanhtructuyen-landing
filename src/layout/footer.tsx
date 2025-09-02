@@ -89,9 +89,9 @@ const Footer: React.FC = () => {
                   </Link>
                 </div>
               </div>
-              {/* <div className="w-full">
+              <div className="w-full">
                 <FacebookPageEmbed />
-              </div> */}
+              </div>
             </div>
             <div className="space-y-4">
               <h3
@@ -110,7 +110,7 @@ const Footer: React.FC = () => {
                   <li>
                     <Link
                       href={`${ROUTES.ABOUT}`}
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-gray-600 hover:text-[rgb(var(--fifteenth-rgb))]"
                     >
                       Giới thiệu
                     </Link>
@@ -118,7 +118,7 @@ const Footer: React.FC = () => {
                   <li>
                     <Link
                       href={`${ROUTES.POLICY}?scrollTo=dt`}
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-gray-600 hover:text-[rgb(var(--fifteenth-rgb))]"
                     >
                       Chính sách đổi trả
                     </Link>
@@ -126,7 +126,7 @@ const Footer: React.FC = () => {
                   <li>
                     <Link
                       href={`${ROUTES.POLICY}?scrollTo=gh`}
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-gray-600 hover:text-[rgb(var(--fifteenth-rgb))]"
                     >
                       Điều khoản giao hàng
                     </Link>
@@ -134,7 +134,7 @@ const Footer: React.FC = () => {
                   <li>
                     <Link
                       href={`${ROUTES.POLICY}?scrollTo=bm`}
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-gray-600 hover:text-[rgb(var(--fifteenth-rgb))]"
                     >
                       Chính sách bảo mật
                     </Link>
@@ -142,7 +142,7 @@ const Footer: React.FC = () => {
                   <li>
                     <Link
                       href={`${ROUTES.POLICY}?scrollTo=tt`}
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-gray-600 hover:text-[rgb(var(--fifteenth-rgb))]"
                     >
                       Chính sách thanh toán
                     </Link>
@@ -167,7 +167,7 @@ const Footer: React.FC = () => {
                   <li>
                     <Link
                       href={`${ROUTES.HOME}`}
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-gray-600 hover:text-[rgb(var(--fifteenth-rgb))]"
                     >
                       Trang chủ
                     </Link>
@@ -175,7 +175,7 @@ const Footer: React.FC = () => {
                   <li>
                     <Link
                       href={`${ROUTES.ABOUT}`}
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-gray-600 hover:text-[rgb(var(--fifteenth-rgb))]"
                     >
                       Giới thiệu
                     </Link>
@@ -183,7 +183,7 @@ const Footer: React.FC = () => {
                   <li>
                     <Link
                       href={`${ROUTES.PRODUCT}`}
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-gray-600 hover:text-[rgb(var(--fifteenth-rgb))]"
                     >
                       Sản phẩm
                     </Link>
@@ -191,7 +191,7 @@ const Footer: React.FC = () => {
                   <li>
                     <Link
                       href={`${ROUTES.PRICING}`}
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-gray-600 hover:text-[rgb(var(--fifteenth-rgb))]"
                     >
                       Bảng giá
                     </Link>
@@ -199,7 +199,7 @@ const Footer: React.FC = () => {
                   <li>
                     <Link
                       href={`${ROUTES.BLOG}`}
-                      className="text-gray-600 hover:text-gray-900"
+                      className="text-gray-600 hover:text-[rgb(var(--fifteenth-rgb))]"
                     >
                       Blog
                     </Link>
@@ -364,7 +364,7 @@ const Footer: React.FC = () => {
                     height={0}
                   />
                 </Link>
-                <div
+                {/* <div
                   onClick={() => {
                     toast({
                       variant: "default",
@@ -380,7 +380,7 @@ const Footer: React.FC = () => {
                     width={140}
                     height={0}
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

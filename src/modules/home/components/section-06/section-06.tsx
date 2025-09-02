@@ -15,6 +15,7 @@ import "swiper/css/effect-coverflow";
 import "@/styles/contact.css";
 import { BlogService } from "@/services/blog";
 import Title from "@/components/ui/title";
+import SkeletonHomeSection6 from "@/components/ui/skeleton/home/skeleton-6";
 
 interface BlogPost {
   _id: string;
@@ -35,11 +36,14 @@ interface BlogCarouselProps {
 
 const Section6: React.FC<BlogCarouselProps> = (props) => {
   const [blogs, setBlogs] = useState([] as BlogPost[]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const renderBlog = async () => {
+    setIsLoading(true);
     const res = await BlogService.getAll();
     if (res && res.data.length > 0) {
       setBlogs(res.data);
+      setIsLoading(false);
     }
   };
 
@@ -85,82 +89,87 @@ const Section6: React.FC<BlogCarouselProps> = (props) => {
             thông tin quan trọng nào!
           </p>
         </div>
-        {/* Carousel Container */}
-        <div className="relative">
-          <Swiper
-            onSwiper={(swiper) => (swiperRef.current = swiper)}
-            effect={"coverflow"}
-            grabCursor={true}
-            centeredSlides={true}
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
-            breakpoints={{
-              300: {
-                slidesPerView: 1,
-              },
-              1024: {
-                slidesPerView: 3,
-              },
-            }}
-            loop={true}
-            spaceBetween={10}
-            pagination={{
-              clickable: true,
-              bulletClass: "swiper-pagination-bullet",
-              bulletActiveClass: "swiper-pagination-bullet-active bg-white",
-            }}
-            modules={[Pagination, Navigation, Autoplay]}
-            className="w-full sm:w-96 lg:w-full h-[530px] lg:h-[570px]"
-          >
-            {blogs?.map((post, index: number) => (
-              <SwiperSlide key={index} className="">
-                <BlogCard key={post._id} post={post} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <button
-            onClick={handlePrev}
-            className="hidden lg:flex absolute left-0 top-1/3 -translate-y-1/2 -translate-x-1/2 bg-white shadow-lg rounded-full w-12 h-12 items-center justify-center z-10 disabled:opacity-50"
-            aria-label="Previous"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        {isLoading ? (
+          <div>
+            <SkeletonHomeSection6 />
+          </div>
+        ) : (
+          <div className="relative">
+            <Swiper
+              onSwiper={(swiper) => (swiperRef.current = swiper)}
+              effect={"coverflow"}
+              grabCursor={true}
+              centeredSlides={true}
+              autoplay={{
+                delay: 2000,
+                disableOnInteraction: false,
+              }}
+              breakpoints={{
+                300: {
+                  slidesPerView: 1,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
+              loop={true}
+              spaceBetween={10}
+              pagination={{
+                clickable: true,
+                bulletClass: "swiper-pagination-bullet",
+                bulletActiveClass: "swiper-pagination-bullet-active bg-white",
+              }}
+              modules={[Pagination, Navigation, Autoplay]}
+              className="w-full sm:w-96 lg:w-full h-[530px] lg:h-[570px]"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <button
-            onClick={handleNext}
-            className="hidden lg:flex absolute right-0 top-1/3 -translate-y-1/2 translate-x-1/2 bg-white shadow-lg rounded-full w-12 h-12 items-center justify-center z-10 disabled:opacity-50"
-            aria-label="Next"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              {blogs?.map((post, index: number) => (
+                <SwiperSlide key={index} className="">
+                  <BlogCard key={post._id} post={post} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <button
+              onClick={handlePrev}
+              className="hidden lg:flex absolute left-0 top-[28%] -translate-y-1/2 -translate-x-1/2 bg-white shadow-lg rounded-full w-12 h-12 items-center justify-center z-10 disabled:opacity-50"
+              aria-label="Previous"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
-        </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={handleNext}
+              className="hidden lg:flex absolute right-0 top-[28%] -translate-y-1/2 translate-x-1/2 bg-white shadow-lg rounded-full w-12 h-12 items-center justify-center z-10 disabled:opacity-50"
+              aria-label="Next"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+        )}
       </section>
     </div>
   );
