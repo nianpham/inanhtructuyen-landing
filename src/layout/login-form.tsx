@@ -123,6 +123,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 <div className="w-full flex justify-center items-center gap-2">
                   <Button
                     onClick={handleSubmit}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleSubmit();
+                      }
+                    }}
                     disabled={isLoading}
                     className="w-full text-[16px] py-6 bg-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:opacity-85 text-white rounded-md"
                   >

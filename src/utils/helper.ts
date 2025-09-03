@@ -24,12 +24,20 @@ const formatDate = (isoDate: string) => {
 
 const formatDateTime = (isoDate: string) => {
   const date = new Date(isoDate);
-  const hours = String(date.getUTCHours()).padStart(2, "0");
-  const minutes = String(date.getUTCMinutes()).padStart(2, "0");
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const year = date.getUTCFullYear();
-  return `${hours}:${minutes} - ${day}/${month}/${year}`;
+
+  const options: Intl.DateTimeFormatOptions = {
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour12: false,
+    timeZone: "Asia/Ho_Chi_Minh",
+  };
+
+  return new Intl.DateTimeFormat("vi-VN", options)
+    .format(date)
+    .replace(",", " -");
 };
 
 const getLastFourChars = (input: any) => {
