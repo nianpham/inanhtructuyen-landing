@@ -23,21 +23,45 @@ const formatDate = (isoDate: string) => {
 };
 
 const formatDateTime = (isoDate: string) => {
-  const date = new Date(isoDate);
+  if (!isoDate) return "";
 
-  const options: Intl.DateTimeFormatOptions = {
+  let date = new Date(isoDate);
+
+  if (Number.isNaN(date.getTime())) {
+    const numeric = Number(isoDate);
+    if (!Number.isNaN(numeric)) {
+      const byNumber = new Date(numeric);
+      if (!Number.isNaN(byNumber.getTime())) {
+        date = byNumber;
+      }
+    }
+  }
+
+  if (Number.isNaN(date.getTime())) {
+    const normalized = isoDate.replace(" ", "T");
+    const byNormalized = new Date(normalized);
+    if (!Number.isNaN(byNormalized.getTime())) {
+      date = byNormalized;
+    }
+  }
+
+  if (Number.isNaN(date.getTime())) return "";
+
+  const timeStr = new Intl.DateTimeFormat("vi-VN", {
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
+    timeZone: "Asia/Ho_Chi_Minh",
+  }).format(date);
+
+  const dateStr = new Intl.DateTimeFormat("vi-VN", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
-    hour12: false,
     timeZone: "Asia/Ho_Chi_Minh",
-  };
+  }).format(date);
 
-  return new Intl.DateTimeFormat("vi-VN", options)
-    .format(date)
-    .replace(",", " -");
+  return `${timeStr} - ${dateStr}`;
 };
 
 const getLastFourChars = (input: any) => {
