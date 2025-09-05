@@ -8,6 +8,7 @@ const PRODUCT = {
 
 const BLOG = {
   GET_ALL: `${BASE_URL}/inanhtructuyen/blog/`,
+  GET_BLOG_BY_ID: `${BASE_URL}/inanhtructuyen/blog`,
 };
 
 const SLIDER = {

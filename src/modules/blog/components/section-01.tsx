@@ -72,9 +72,12 @@ const Section01 = () => {
           </div>
         ) : (
           <>
-            <Link href={`${ROUTES.BLOG}`}>
+            <Link
+              href={`${ROUTES.BLOG}/${HELPER.convertSpacesToDash(
+                featuredPost?.title
+              )}?id=${featuredPost?._id}`}
+            >
               <Card className="cursor-pointer overflow-hidden mb-8">
-                {" "}
                 <div className="grid lg:hidden">
                   <GlobalComponent.BlogCard
                     key={1}
@@ -124,7 +127,12 @@ const Section01 = () => {
             </Link>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {regularPosts.map((blog: any, index: any) => (
-                <Link key={index} href={`${ROUTES.BLOG}`}>
+                <Link
+                  key={index}
+                  href={`${ROUTES.BLOG}/${HELPER.convertSpacesToDash(
+                    blog?.title
+                  )}?id=${blog?._id}`}
+                >
                   <GlobalComponent.BlogCard
                     id={blog?._id}
                     image={blog?.thumbnail}
@@ -155,7 +163,9 @@ const Section01 = () => {
                   //   blog?._id)?b=${HELPER.convertSpacesToDash(
                   //   blog?.title
                   // )}
-                  href={`${ROUTES.BLOG}`}
+                  href={`${ROUTES.BLOG}/${HELPER.convertSpacesToDash(
+                    blog?.title
+                  )}?id=${blog?._id}`}
                 >
                   <div className="mb-6">
                     <GlobalComponent.BlogCard
