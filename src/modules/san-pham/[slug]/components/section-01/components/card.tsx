@@ -52,7 +52,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       {product.discount !== "0" && (
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded">
-            Khuyến mãi
+            Khuyến mãi {product.rating}%
           </span>
         </div>
       )}
