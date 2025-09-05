@@ -21,6 +21,8 @@ interface Product {
   category: string;
   color: string[];
   thumbnail: string;
+  discount: string;
+  rating: string;
   images: string[];
   sold: number;
   created_at: string;
@@ -33,6 +35,7 @@ const Section2: React.FC = () => {
   const init = async () => {
     setIsLoading(true);
     const res = await ProductService.getAll();
+
     if (res && res.data.length > 0) {
       setProducts(res.data);
       setIsLoading(false);

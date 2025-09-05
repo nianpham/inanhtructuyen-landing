@@ -12,6 +12,8 @@ export interface Product {
   category: string;
   color: string[];
   thumbnail: string;
+  discount: string;
+  rating: string;
   images: string[];
   sold: number;
   created_at: string;

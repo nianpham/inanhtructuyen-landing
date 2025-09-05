@@ -21,6 +21,8 @@ interface Product {
   category: string;
   color: string[];
   thumbnail: string;
+  discount: string;
+  rating: string;
   images: string[];
   sold: number;
   created_at: string;
@@ -70,21 +72,25 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <h3 className="font-base text-gray-900 mb-1 line-clamp-1">
           {product.name}
         </h3>
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-row items-center space-x-2">
           <span className="text-lg font-base text-orange-600">
-            {HELPER.formatVND(product.product_option[0].price)}
+            {HELPER.formatVND(
+              String(
+                Number(product.product_option[0].price) -
+                  Number(product.discount) *
+                    Number(Number(product.product_option[0].price) * 0.01)
+              )
+            )}
           </span>
-          {Number(product._id.charAt(7)) % 2 !== 0 && (
+          {product.discount !== "0" && (
             <span className="text-sm text-gray-500 line-through">
-              {HELPER.formatVND(
-                HELPER.upPrice(product.product_option[0].price)
-              )}
+              {HELPER.formatVND(product.product_option[0].price)}
             </span>
           )}
         </div>
         {showRating && (
           <div className="flex items-center mt-1">
-            {renderStars(Math.floor(Math.random() * 2) + 4)}
+            {renderStars(Number(product.rating))}
           </div>
         )}
       </div>

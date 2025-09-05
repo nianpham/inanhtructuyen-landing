@@ -21,6 +21,8 @@ interface Product {
   category: string;
   color: string[];
   thumbnail: string;
+  discount: string;
+  rating: string;
   images: string[];
   sold: number;
   created_at: string;
@@ -49,7 +51,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       onClick={() => handleProductClick(product._id, product.name)}
       className="cursor-pointer group relative bg-white overflow-hidden transition-all duration-300"
     >
-      {Number(product._id.charAt(7)) % 2 !== 0 && (
+      {product?.discount !== "0" && (
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded">
             Khuyến mãi
@@ -109,18 +111,22 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             {product.name}
           </h3>
           <div className="flex text-[14px] font-light items-center mb-2">
-            {renderStars(Math.floor(Math.random() * 2) + 4)} &nbsp;&nbsp;(
+            {renderStars(Number(product.rating))} &nbsp;&nbsp;(
             {product.sold} đã bán)
           </div>
           <div className="flex items-center space-x-2">
             <span className="text-[16px] lg:text-[18px] font-semibold text-gray-900">
-              {HELPER.formatVND(product.product_option[0].price)}
+              {HELPER.formatVND(
+                String(
+                  Number(product.product_option[0].price) -
+                    Number(product.discount) *
+                      Number(Number(product.product_option[0].price) * 0.01)
+                )
+              )}
             </span>
-            {Number(product._id.charAt(7)) % 2 !== 0 && (
+            {product.discount !== "0" && (
               <span className="text-[14px] lg:text-[14px] text-gray-500 line-through">
-                {HELPER.formatVND(
-                  HELPER.upPrice(product.product_option[0].price)
-                )}
+                {HELPER.formatVND(product.product_option[0].price)}
               </span>
             )}
           </div>

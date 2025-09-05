@@ -48,6 +48,8 @@ interface Product {
   category: string;
   color: string[];
   thumbnail: string;
+  discount: string;
+  rating: string;
   images: string[];
   sold: number;
   created_at: string;
@@ -129,13 +131,29 @@ const Section1: React.FC = () => {
     setSelectedSize(size);
   };
 
-  const getCurrentPrice = () => {
-    const selectedOption = product?.product_option?.find(
+  const getCurrentPrice = (): string => {
+    const options = product?.product_option || [];
+    const selectedOption = options.find(
       (option: any) => option.size === selectedSize
     );
-    return selectedOption
-      ? selectedOption.price
-      : product?.product_option?.[0]?.price || "0";
+    const basePrice = selectedOption?.price ?? options[0]?.price ?? "0";
+
+    if (product?.discount && product.discount !== "0") {
+      const priceNum = Number(basePrice);
+      const discountNum = Number(product.discount);
+      const discounted = priceNum - discountNum * Number(priceNum * 0.01);
+      return String(discounted);
+    }
+
+    return basePrice;
+  };
+
+  const getOriginPrice = (): string => {
+    const options = product?.product_option || [];
+    const selectedOption = options.find(
+      (option: any) => option.size === selectedSize
+    );
+    return selectedOption?.price ?? options[0]?.price ?? "0";
   };
 
   const swiperRef = useRef<SwiperCore | null>(null);
@@ -298,14 +316,16 @@ const Section1: React.FC = () => {
                 </h1>
                 <div className="flex items-center space-x-2 mb-4">
                   <div className="flex items-center">
-                    {[...Array(5)].map((_, i) => (
+                    {[...Array(Number(product?.rating || 5))].map((_, i) => (
                       <Star
                         key={i}
                         className="w-4 h-4 fill-yellow-400 text-yellow-400"
                       />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-600">(125 đánh giá)</span>
+                  <span className="text-sm text-gray-600">
+                    ({Number(product?.sold)} đánh giá)
+                  </span>
                 </div>
 
                 <div className="grid grid-cols-4 gap-4 w-full lg:w-3/4">
@@ -331,9 +351,11 @@ const Section1: React.FC = () => {
                   <div className="text-2xl lg:text-3xl font-medium text-brown-700">
                     {HELPER.formatVND(getCurrentPrice())}
                   </div>
-                  <div className="text-md lg:text-xl font-normal line-through text-brown-700">
-                    {HELPER.formatVND(HELPER.upPrice(getCurrentPrice()))}
-                  </div>
+                  {product?.discount !== "0" && (
+                    <div className="text-md lg:text-xl font-normal line-through text-brown-700">
+                      {HELPER.formatVND(getOriginPrice())}
+                    </div>
+                  )}
                 </div>
 
                 {/* Color Selection */}

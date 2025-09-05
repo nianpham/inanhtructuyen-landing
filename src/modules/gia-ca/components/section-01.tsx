@@ -59,16 +59,6 @@ const Section01 = () => {
     const res = await ProductService.getAll();
     if (res && res.data.length > 0) {
       setProducts(res.data);
-      const uniqueSizes = Array.from(
-        new Set(
-          res.data.flatMap((product: any) =>
-            product.product_option.map((option: any) => option.size)
-          )
-        )
-      ) as string[];
-      console.log("Unique Sizes:", uniqueSizes);
-
-      setSize(uniqueSizes);
     }
   };
 
@@ -77,6 +67,39 @@ const Section01 = () => {
   useEffect(() => {
     renderProduct();
   }, []);
+
+  // Update available sizes based on the selected product
+  useEffect(() => {
+    if (!selectedProduct || selectedProduct === "Chon san pham") {
+      setSize([]);
+      setSelectedSize("Chon kich thuoc");
+      return;
+    }
+    const product = products.find(
+      (p: any) => String(p?._id) === String(selectedProduct)
+    );
+
+    console.log("show selectedPro: ", product);
+
+    if (product && Array.isArray(product.product_option)) {
+      const uniqueSizes = Array.from(
+        new Set(
+          product.product_option
+            .map((opt: any) => opt?.size)
+            .filter((s: any) => Boolean(s))
+        )
+      ) as string[];
+      setSize(uniqueSizes);
+      // If current selectedSize is not in the new list, reset it
+      if (!uniqueSizes.includes(selectedSize)) {
+        setSelectedSize("Chon kich thuoc");
+      }
+    } else {
+      setSize([]);
+      setSelectedSize("Chon kich thuoc");
+    }
+  }, [selectedProduct, products]);
+
   const priceData = DATA.priceData;
 
   return (
@@ -201,10 +224,16 @@ const Section01 = () => {
                     <Select
                       value={selectedSize}
                       onValueChange={setSelectedSize}
+                      disabled={selectedProduct === "Chon san pham"}
                     >
-                      <SelectTrigger className="focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent">
+                      <SelectTrigger
+                        className="focus:outline-none focus:ring-2 focus:ring-[rgb(var(--fifteenth-rgb))] focus:border-transparent"
+                        disabled={selectedProduct === "Chon san pham"}
+                      >
                         <div className="text-[16px]">
-                          {selectedSize === "Chon kich thuoc"
+                          {selectedProduct === "Chon san pham"
+                            ? "Vui lòng chọn sản phẩm trước"
+                            : selectedSize === "Chon kich thuoc"
                             ? "Chọn kích thước"
                             : ""}
                         </div>
@@ -228,13 +257,43 @@ const Section01 = () => {
               <div className="w-full flex justify-end items-end gap-2">
                 <span className="text-base">Giá sản phẩm:</span>
                 <span className="font-semibold">
-                  {selectedProduct === "Chon san pham"
-                    ? HELPER.formatVND("0")
-                    : HELPER.formatVND(
-                        products.find(
-                          (pro: any) => pro._id.toString() === selectedProduct
-                        )?.product_option[0]?.price
-                      )}
+                  {(() => {
+                    const isProductNotChosen =
+                      selectedProduct === "Chon san pham";
+                    const isSizeNotChosen = selectedSize === "Chon kich thuoc";
+                    if (isProductNotChosen || isSizeNotChosen) {
+                      return HELPER.formatVND("0");
+                    }
+                    const product = products.find(
+                      (pro: any) =>
+                        pro._id.toString() === String(selectedProduct)
+                    );
+                    const option = product?.product_option?.find(
+                      (opt: any) => String(opt?.size) === String(selectedSize)
+                    );
+                    const rawPrice = option?.price ?? "0";
+                    const basePrice = Number(rawPrice);
+                    const discountPercent = Number(product?.discount ?? 0);
+
+                    if (!isNaN(discountPercent) && discountPercent > 0) {
+                      const discounted = Math.max(
+                        0,
+                        Math.round(basePrice * (1 - discountPercent / 100))
+                      );
+                      return (
+                        <span className="flex items-center gap-3">
+                          <span className="text-gray-500 line-through font-normal">
+                            {HELPER.formatVND(String(basePrice))}
+                          </span>
+                          <span className="font-semibold">
+                            {HELPER.formatVND(String(discounted))}
+                          </span>
+                        </span>
+                      );
+                    }
+
+                    return HELPER.formatVND(String(basePrice));
+                  })()}
                 </span>
               </div>
             </div>
