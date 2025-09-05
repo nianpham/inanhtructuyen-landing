@@ -63,6 +63,8 @@ const Section01 = () => {
   };
 
   const [size, setSize] = useState<string[]>([]);
+  const [baseProductPrice, setBaseProductPrice] = useState<number>(0);
+  const [discountProductPrice, setDiscountProductPrice] = useState<number>(0);
 
   useEffect(() => {
     renderProduct();
@@ -90,15 +92,41 @@ const Section01 = () => {
         )
       ) as string[];
       setSize(uniqueSizes);
-      // If current selectedSize is not in the new list, reset it
+      // If current selectedSize is not in the new list, set to first available size
       if (!uniqueSizes.includes(selectedSize)) {
-        setSelectedSize("Chon kich thuoc");
+        setSelectedSize(uniqueSizes[0] || "Chon kich thuoc");
       }
     } else {
       setSize([]);
       setSelectedSize("Chon kich thuoc");
     }
   }, [selectedProduct, products]);
+
+  // Recalculate prices whenever product or size changes
+  useEffect(() => {
+    const isProductNotChosen = selectedProduct === "Chon san pham";
+    const isSizeNotChosen = selectedSize === "Chon kich thuoc";
+    if (isProductNotChosen || isSizeNotChosen) {
+      setBaseProductPrice(0);
+      setDiscountProductPrice(0);
+      return;
+    }
+    const product = products.find(
+      (pro: any) => pro._id.toString() === String(selectedProduct)
+    );
+    const option = product?.product_option?.find(
+      (opt: any) => String(opt?.size) === String(selectedSize)
+    );
+    const rawPrice = option?.price ?? "0";
+    const basePrice = Number(rawPrice) || 0;
+    const discountPercent = Number(product?.discount ?? 0) || 0;
+    const discounted =
+      discountPercent > 0
+        ? Math.max(0, Math.round(basePrice * (1 - discountPercent / 100)))
+        : basePrice;
+    setBaseProductPrice(basePrice);
+    setDiscountProductPrice(discounted);
+  }, [selectedProduct, selectedSize, products]);
 
   const priceData = DATA.priceData;
 
@@ -264,35 +292,24 @@ const Section01 = () => {
                     if (isProductNotChosen || isSizeNotChosen) {
                       return HELPER.formatVND("0");
                     }
-                    const product = products.find(
-                      (pro: any) =>
-                        pro._id.toString() === String(selectedProduct)
-                    );
-                    const option = product?.product_option?.find(
-                      (opt: any) => String(opt?.size) === String(selectedSize)
-                    );
-                    const rawPrice = option?.price ?? "0";
-                    const basePrice = Number(rawPrice);
-                    const discountPercent = Number(product?.discount ?? 0);
 
-                    if (!isNaN(discountPercent) && discountPercent > 0) {
-                      const discounted = Math.max(
-                        0,
-                        Math.round(basePrice * (1 - discountPercent / 100))
-                      );
+                    if (
+                      discountProductPrice > 0 &&
+                      discountProductPrice < baseProductPrice
+                    ) {
                       return (
                         <span className="flex items-center gap-3">
                           <span className="text-gray-500 line-through font-normal">
-                            {HELPER.formatVND(String(basePrice))}
+                            {HELPER.formatVND(String(baseProductPrice))}
                           </span>
                           <span className="font-semibold">
-                            {HELPER.formatVND(String(discounted))}
+                            {HELPER.formatVND(String(discountProductPrice))}
                           </span>
                         </span>
                       );
                     }
 
-                    return HELPER.formatVND(String(basePrice));
+                    return HELPER.formatVND(String(baseProductPrice));
                   })()}
                 </span>
               </div>

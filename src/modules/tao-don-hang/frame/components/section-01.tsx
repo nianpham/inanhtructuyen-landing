@@ -211,6 +211,21 @@ const Section01 = () => {
     }
   }, [productsData]);
 
+  // Reset size to the first size when product changes
+  useEffect(() => {
+    if (
+      selectedProduct &&
+      selectedProduct !== "Chon san pham" &&
+      productsData?.product_option?.length > 0
+    ) {
+      const firstOption = productsData.product_option[0];
+      if (firstOption?.size) {
+        setSelectedSize(firstOption.size);
+        setConfirmSize(firstOption.size);
+      }
+    }
+  }, [selectedProduct, productsData]);
+
   const colorOptions: ColorOption[] = [
     {
       id: "white",
@@ -252,11 +267,13 @@ const Section01 = () => {
   );
   const productPrice = selectedOption?.price || "0";
   const discountProductPrice =
-    selectedProductData?.discount !== "0"
-      ? selectedProductData?.product_option[0].price -
-        selectedProductData?.discount *
-          selectedProductData?.product_option[0].price *
-          0.01
+    selectedProductData?.discount !== "0" && selectedOption?.price
+      ? String(
+          Number(selectedOption.price) -
+            Number(selectedProductData.discount) *
+              Number(selectedOption.price) *
+              0.01
+        )
       : "none";
 
   const [isValid, setIsValid] = useState<boolean | null>(null);
