@@ -4,13 +4,18 @@ const SkeletonProductDetail = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 ">
       <div className="flex flex-col lg:flex-row gap-5 items-start justify-start animate-pulse">
-        <div className="flex flex-col h-full gap-2">
+        <div className="hidden lg:flex flex-col h-full gap-2">
           <div className="w-[95px] h-[95px] bg-gray-300"></div>
           <div className="w-[95px] h-[95px] bg-gray-300"></div>
           <div className="w-[95px] h-[95px] bg-gray-300"></div>
         </div>
         <div className="mt-8 lg:mt-0 flex justify-start items-start">
-          <div className="w-[500px] h-[500px] bg-gray-300"></div>
+          <div className="w-[350px] h-[350px] lg:w-[500px] lg:h-[500px] bg-gray-300"></div>
+        </div>
+        <div className="lg:hidden flex flex-row h-full gap-2">
+          <div className="w-[95px] h-[95px] bg-gray-300"></div>
+          <div className="w-[95px] h-[95px] bg-gray-300"></div>
+          <div className="w-[95px] h-[95px] bg-gray-300"></div>
         </div>
       </div>
       <div className="flex flex-col lg:flex-row items-start justify-start">
