@@ -33,6 +33,7 @@ import Link from "next/link";
 import { SOCIAL_LINKS } from "@/utils/route";
 import SkeletonProductRelevant from "@/components/ui/skeleton/product/skeleton-product-relevant";
 import SkeletonProductDetail from "@/components/ui/skeleton/product/skeleton-product-detail";
+import HtmlContent from "@/components/ui/html-content";
 
 interface Product {
   _id: string;
@@ -84,6 +85,8 @@ const Section1: React.FC = () => {
             const res = await ProductService.getProductById(productID);
             if (res && res.data) {
               setProduct(res.data);
+              console.log("check data: ", res.data);
+
               productCate = res.data.category;
               if (res.data?.product_option?.length > 0) {
                 setSelectedSize(res.data.product_option[0].size);
@@ -387,13 +390,13 @@ const Section1: React.FC = () => {
                 <div className="mb-2 font-medium">Giới thiệu:</div>
                 <div className="space-y-5">
                   <div className="text-gray-500 leading-relaxed overflow-hidden">
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: expanded
-                          ? product?.introduction || ""
-                          : getPartialContent(product?.introduction || ""),
-                      }}
-                    />
+                    {expanded ? (
+                      <HtmlContent html={product?.introduction || ""} />
+                    ) : (
+                      <HtmlContent
+                        html={getPartialContent(product?.introduction || "")}
+                      />
+                    )}
                   </div>
                   <div className="flex justify-center relative">
                     {!expanded && (
@@ -519,13 +522,10 @@ const Section1: React.FC = () => {
             <div className="h-[1px] w-full bg-gray-200"></div>
           </div>
           <div className="pt-8">
-            <div className="prose max-w-none text-gray-700 whitespace-pre-line">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: product?.description || "",
-                }}
-              />
-            </div>
+            <HtmlContent
+              className="prose max-w-none text-gray-700 whitespace-pre-line"
+              html={product?.description || ""}
+            />
           </div>
         </div>
 

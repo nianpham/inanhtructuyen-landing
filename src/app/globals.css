@@ -220,6 +220,12 @@
     @apply bg-background text-foreground;
     font-family: var(--font-font-1);
   }
+  /* Ensure semantic bold elements use the actual bold font family */
+  b,
+  strong {
+    font-family: "PlusJakartaSans-SemiBold", sans-serif;
+    font-weight: 600;
+  }
 }
 
 .swiper-pagination-bullet-active {
