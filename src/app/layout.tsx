@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ProductProvider } from "@/modules/san-pham/components/product-context";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Head from "next/head";
 
 // const font = Manrope({ subsets: ["latin"] });
 // const font = Plus_Jakarta_Sans({ subsets: ["latin"] });
@@ -45,6 +46,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <title>In Ảnh Hạ Thu</title>
+        <meta
+          name="description"
+          content="Chỉnh sửa ảnh miễn phí và in ảnh hạ thu dễ dàng. Tải lên những tấm ảnh yêu thích và bắt đầu chỉnh sửa ngay!"
+        />
+      </Head>
       <body
         // className={font.className}
         suppressHydrationWarning={true}
