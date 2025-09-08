@@ -126,9 +126,14 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const categories = [
     { id: "All", name: "Tất cả", hasSubcategories: false },
-    { id: "Plastic", name: "Plastic", hasSubcategories: false },
-    { id: "Frame", name: "Khung Ảnh", hasSubcategories: false },
-    { id: "Album", name: "Album", hasSubcategories: false },
+    { id: "Plastic", name: "In ảnh rời", hasSubcategories: false },
+    {
+      id: "Plastic-Frame",
+      name: "In ảnh có khung viền",
+      hasSubcategories: false,
+    },
+    { id: "Frame", name: "Khung lẻ", hasSubcategories: false },
+    { id: "Album", name: "Album/Photobook", hasSubcategories: false },
   ];
 
   const colors = ["black", "white", "gold", "silver", "wood"];
