@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     url: "https://www.inanhhathu.com/",
     images: [
       {
-        url: "https://res.cloudinary.com/farmcode/image/upload/v1738686742/iatt/IMG_1117_tg6fkb.jpg",
+        url: "https://res.cloudinary.com/farmcode/image/upload/v1757376935/iatt/bg-full_hahqqi.png",
         width: 1200,
         height: 630,
         alt: "In Ảnh Hạ Thu",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     description:
       "Chỉnh sửa ảnh miễn phí và in ảnh hạ thu dễ dàng. Tải lên ảnh yêu thích và chỉnh sửa ngay!",
     images: [
-      "https://res.cloudinary.com/farmcode/image/upload/v1738686742/iatt/IMG_1117_tg6fkb.jpg",
+      "https://res.cloudinary.com/farmcode/image/upload/v1757376935/iatt/bg-full_hahqqi.png",
     ],
   },
 };

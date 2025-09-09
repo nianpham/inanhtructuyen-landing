@@ -8,7 +8,7 @@ import { ROUTES } from "@/utils/route";
 
 const SectionHeader = () => {
   return (
-    <section className="w-[100%] h-[180px] lg:h-[320px] mx-auto lg:py-20 relative overflow-hidden mb-5">
+    <section className="w-[100%] h-[180px] lg:h-[280px] mx-auto lg:py-20 relative overflow-hidden mb-5">
       <div className="absolute inset-0">
         <div className="relative w-full h-full">
           <Image

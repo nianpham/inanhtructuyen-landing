@@ -1,5 +1,5 @@
 export const IMAGES = {
-  LOGO: "/iaht-logo.png",
+  LOGO: "/logo-transparent.png",
   FACEBOOK:
     "https://res.cloudinary.com/farmcode/image/upload/v1748364865/ielts-test/facebook_ekthgh.png",
   ZALO: "https://res.cloudinary.com/farmcode/image/upload/v1748364890/ielts-test/zalo_q3w1pc.png",
@@ -34,7 +34,7 @@ export const IMAGES = {
   BANNER_10:
     "https://res.cloudinary.com/farmcode/image/upload/v1749906476/iatt/IMG_7585-1-2_vhfdm2.jpg",
   BANNER_11:
-    "https://res.cloudinary.com/farmcode/image/upload/v1756642973/iatt/background_trrftx.png",
+    "https://res.cloudinary.com/farmcode/image/upload/v1757376907/iatt/bg-empty_c7p6bk.png",
   slider_1: [
     "https://res.cloudinary.com/farmcode/image/upload/v1748450520/ielts-test/FATT6375_rszrxr.jpg",
     "https://res.cloudinary.com/farmcode/image/upload/v1748451439/ielts-test/IMG_1110_big0rh.jpg",
@@ -71,4 +71,9 @@ export const IMAGES = {
     "https://res.cloudinary.com/farmcode/image/upload/v1740924245/iatt/tioltw838yiyu1zkhyuh.png",
   FOOTER_IOS:
     "https://res.cloudinary.com/farmcode/image/upload/v1740924247/iatt/karylba4x40rayg8rndh.png",
+
+  BG_EMPTY:
+    "https://res.cloudinary.com/farmcode/image/upload/v1757376907/iatt/bg-empty_c7p6bk.png",
+  BG_FULL:
+    "https://res.cloudinary.com/farmcode/image/upload/v1757376935/iatt/bg-full_hahqqi.png",
 };
