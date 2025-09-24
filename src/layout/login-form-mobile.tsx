@@ -1,13 +1,13 @@
 "use client";
 
 import { toast } from "@/hooks/use-toast";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Image from "next/image";
 import Cookies from "js-cookie";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Loader, User, Eye, EyeOff } from "lucide-react";
 import { IMAGES } from "@/utils/image";
 import { API } from "@/utils/api";
@@ -22,7 +22,17 @@ const LoginFormMobile = ({ onLogin }: LoginFormProps) => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Kiểm tra query parameter để mở login form tự động
+  useEffect(() => {
+    const openLogin = searchParams.get('openLogin');
+    if (openLogin === 'true') {
+      setIsOpen(true);
+    }
+  }, [searchParams]);
 
   const handleSubmitWithGoogle = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -46,6 +56,22 @@ const LoginFormMobile = ({ onLogin }: LoginFormProps) => {
     setIsLoading(true);
     try {
       await onLogin(username, password);
+      setIsOpen(false); // Đóng dialog sau khi đăng nhập thành công
+      
+      // Redirect về route gốc nếu có
+      const redirectPath = searchParams.get('redirect');
+      if (redirectPath) {
+        // Xóa query parameters và redirect
+        const url = new URL(window.location.href);
+        url.searchParams.delete('openLogin');
+        url.searchParams.delete('redirect');
+        router.replace(redirectPath);
+      } else {
+        // Xóa query parameters
+        const url = new URL(window.location.href);
+        url.searchParams.delete('openLogin');
+        router.replace(url.pathname + url.search, { scroll: false });
+      }
     } catch (error) {
       console.error("========= Error Login:", error);
       toast({
@@ -62,7 +88,7 @@ const LoginFormMobile = ({ onLogin }: LoginFormProps) => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <div className="w-full flex items-center justify-center space-x-1 text-black hover:text-gray-900 transition-colors">
           <span className="text-[16px] font-medium">Đăng nhập</span>

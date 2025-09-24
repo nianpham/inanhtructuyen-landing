@@ -465,16 +465,26 @@ const Section1: React.FC = () => {
                 <BarChart3 className="w-5 h-5" />
               </button> */}
                 </div>
-                <button
-                  onClick={() => {
-                    router.push(
-                      `/tao-don-hang?type=frame&product=${product?._id}`
-                    );
-                  }}
-                  className="mt-3 w-full lg:w-1/3 flex-1 bg-[rgb(var(--fifteenth-rgb))] text-[rgb(var(--primary-rgb))] hover:opacity-90 py-3 px-6 rounded-md transition-colors"
-                >
-                  Mua hàng
-                </button>
+                <div className="flex flex-col lg:flex-row gap-0 lg:gap-3 w-full lg:w-[70%]">
+                  <button
+                    onClick={() => {
+                      router.push(
+                        `/tao-don-hang?type=frame&product=${product?._id}`
+                      );
+                    }}
+                    className="mt-3 w-full lg:w-1/3 flex-1 bg-[rgb(var(--fifteenth-rgb))] text-[rgb(var(--primary-rgb))] hover:opacity-90 py-3 px-6 rounded-md transition-colors"
+                  >
+                    Mua hàng
+                  </button>
+                  <button
+                    onClick={() => {
+                      router.push(`${SOCIAL_LINKS.ZALO}`);
+                    }}
+                    className="mt-3 w-full lg:w-1/3 flex-1 border border-[rgb(var(--fifteenth-rgb))] text-[rgb(var(--fifteenth-rgb))] hover:bg-[rgb(var(--fifteenth-rgb))] hover:text-[rgb(var(--primary-rgb))] py-3 px-6 rounded-md transition-colors"
+                  >
+                    Liên hệ ngay
+                  </button>
+                </div>
               </div>
 
               {/* Product Meta */}
