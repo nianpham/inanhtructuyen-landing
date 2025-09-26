@@ -123,6 +123,10 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
     setWardSearchTerm(e.target.value);
   };
 
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+  };
+
   React.useEffect(() => {
     if (formData.province) {
       const selectedProvince = provinces.find(
@@ -610,6 +614,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                       placeholder="Tìm kiếm tỉnh/thành phố..."
                       value={provinceSearchTerm}
                       onChange={handleProvinceSearchChange}
+                      onKeyDown={handleSearchKeyDown}
                       className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     />
                   </div>
@@ -648,6 +653,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                       placeholder="Tìm kiếm quận/huyện..."
                       value={districtSearchTerm}
                       onChange={handleDistrictSearchChange}
+                      onKeyDown={handleSearchKeyDown}
                       className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     />
                   </div>
@@ -686,6 +692,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                       placeholder="Tìm kiếm phường/xã..."
                       value={wardSearchTerm}
                       onChange={handleWardSearchChange}
+                      onKeyDown={handleSearchKeyDown}
                       className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     />
                   </div>

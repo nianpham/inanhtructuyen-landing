@@ -996,6 +996,10 @@ const Section01 = () => {
     setWardSearchTerm(e.target.value);
   };
 
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -1198,6 +1202,7 @@ const Section01 = () => {
                           placeholder="Tìm kiếm tỉnh/thành phố..."
                           value={provinceSearchTerm}
                           onChange={handleProvinceSearchChange}
+                          onKeyDown={handleSearchKeyDown}
                           className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                         />
                       </div>
@@ -1239,6 +1244,7 @@ const Section01 = () => {
                           placeholder="Tìm kiếm quận/huyện..."
                           value={districtSearchTerm}
                           onChange={handleDistrictSearchChange}
+                          onKeyDown={handleSearchKeyDown}
                           className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                         />
                       </div>
@@ -1281,6 +1287,7 @@ const Section01 = () => {
                         placeholder="Tìm kiếm phường/xã..."
                         value={wardSearchTerm}
                         onChange={handleWardSearchChange}
+                        onKeyDown={handleSearchKeyDown}
                         className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                       />
                     </div>
@@ -1819,6 +1826,7 @@ const Section01 = () => {
                                 placeholder="Tìm kiếm tỉnh/thành phố..."
                                 value={provinceSearchTerm}
                                 onChange={handleProvinceSearchChange}
+                                onKeyDown={handleSearchKeyDown}
                                 className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                               />
                             </div>
@@ -1872,6 +1880,7 @@ const Section01 = () => {
                                 placeholder="Tìm kiếm quận/huyện..."
                                 value={districtSearchTerm}
                                 onChange={handleDistrictSearchChange}
+                                onKeyDown={handleSearchKeyDown}
                                 className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                               />
                             </div>
@@ -1926,6 +1935,7 @@ const Section01 = () => {
                               placeholder="Tìm kiếm phường/xã..."
                               value={wardSearchTerm}
                               onChange={handleWardSearchChange}
+                              onKeyDown={handleSearchKeyDown}
                               className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                             />
                           </div>
