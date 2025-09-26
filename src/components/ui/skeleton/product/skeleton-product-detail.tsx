@@ -3,19 +3,19 @@ import React from "react";
 const SkeletonProductDetail = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 ">
-      <div className="flex flex-col lg:flex-row gap-5 items-start justify-start animate-pulse">
-        <div className="hidden lg:flex flex-col h-full gap-2">
+      <div className="flex flex-col gap-7 items-start justify-start animate-pulse">
+        {/* <div className="hidden lg:flex flex-col h-full gap-2">
           <div className="w-[95px] h-[95px] bg-gray-300"></div>
           <div className="w-[95px] h-[95px] bg-gray-300"></div>
           <div className="w-[95px] h-[95px] bg-gray-300"></div>
-        </div>
+        </div> */}
         <div className="mt-8 lg:mt-0 flex justify-start items-start">
-          <div className="w-[350px] h-[350px] lg:w-[500px] lg:h-[500px] bg-gray-300"></div>
+          <div className="w-[350px] h-[350px] lg:w-[600px] lg:h-[560px] bg-gray-300"></div>
         </div>
-        <div className="lg:hidden flex flex-row h-full gap-2">
-          <div className="w-[95px] h-[95px] bg-gray-300"></div>
-          <div className="w-[95px] h-[95px] bg-gray-300"></div>
-          <div className="w-[95px] h-[95px] bg-gray-300"></div>
+        <div className="flex flex-row h-full lg:gap-7 gap-2">
+          <div className="lg:w-[180px] lg:h-[170px] w-[95px] h-[95px] bg-gray-300"></div>
+          <div className="lg:w-[180px] lg:h-[170px] w-[95px] h-[95px] bg-gray-300"></div>
+          <div className="lg:w-[180px] lg:h-[170px] w-[95px] h-[95px] bg-gray-300"></div>
         </div>
       </div>
       <div className="flex flex-col lg:flex-row items-start justify-start">

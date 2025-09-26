@@ -10,6 +10,7 @@ import {
   ChevronUp,
   Heart,
   Minus,
+  Play,
   Plus,
   Search,
   Star,
@@ -68,10 +69,59 @@ const Section1: React.FC = () => {
   const router = useRouter();
   const [isLoadingDetail, setIsLoadingDetail] = useState(true);
   const [isLoadingRelevant, setIsLoadingRelevant] = useState(true);
+  const [video, setVideo] = useState<string>("");
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [videoThumbnail, setVideoThumbnail] = useState<string>("");
 
   const getPartialContent = (content: string) => {
     const words = content.split(" ");
     return words.slice(0, Math.ceil(words.length / 6)).join(" ") + "...";
+  };
+
+  // Generate video thumbnail
+  const generateVideoThumbnail = (videoUrl: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const video = document.createElement("video");
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      video.crossOrigin = "anonymous";
+      video.preload = "metadata";
+
+      video.onloadedmetadata = () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        // Seek to 1 second or 10% of video duration
+        video.currentTime = Math.min(1, video.duration * 0.1);
+      };
+
+      video.onseeked = () => {
+        if (ctx) {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const thumbnailUrl = canvas.toDataURL("image/jpeg", 0.8);
+          resolve(thumbnailUrl);
+        } else {
+          reject(new Error("Canvas context not available"));
+        }
+      };
+
+      video.onerror = () => {
+        reject(new Error("Failed to load video"));
+      };
+
+      video.src = videoUrl;
+    });
+  };
+
+  const getVideoThumbnail = async (videoUrl: string) => {
+    try {
+      const thumbnail = await generateVideoThumbnail(videoUrl);
+      setVideoThumbnail(thumbnail);
+    } catch (error) {
+      console.error("Error generating video thumbnail:", error);
+      setVideoThumbnail(product?.thumbnail || "");
+    }
   };
 
   const init = async () => {
@@ -85,7 +135,12 @@ const Section1: React.FC = () => {
             const res = await ProductService.getProductById(productID);
             if (res && res.data) {
               setProduct(res.data);
-              console.log("check data: ", res.data);
+              setVideo(res.data.video);
+
+              // Generate video thumbnail if video exists
+              if (res.data.video) {
+                await getVideoThumbnail(res.data.video);
+              }
 
               productCate = res.data.category;
               if (res.data?.product_option?.length > 0) {
@@ -106,10 +161,6 @@ const Section1: React.FC = () => {
       const res = await ProductService.getAll();
 
       if (res && res.data && res.data.length > 0) {
-        // const filteredProducts = res.data.filter(
-        //   (item: Product) => item?.category === productCate
-        // );
-
         setRelatedProduct(res.data);
         setIsLoadingRelevant(false);
       } else {
@@ -127,7 +178,9 @@ const Section1: React.FC = () => {
   }, []);
 
   const imageList = product
-    ? [product.thumbnail, ...product.images].filter(Boolean)
+    ? [videoThumbnail || video, product.thumbnail, ...product.images].filter(
+        Boolean
+      )
     : [];
 
   const handleSizeSelect = (size: string) => {
@@ -185,17 +238,33 @@ const Section1: React.FC = () => {
   const handleSlideChange = (swiper: any) => {
     setActiveSlide(swiper.activeIndex);
     thumbnailSwiperInstance?.slideTo(swiper.activeIndex);
+    // Dừng video khi chuyển slide
+    if (isVideoPlaying) {
+      setIsVideoPlaying(false);
+    }
   };
 
   const handleThumbnailClick = (index: number) => {
     setActiveSlide(index);
     swiperInstance?.slideTo(index);
+    // Dừng video khi chuyển slide
+    if (isVideoPlaying) {
+      setIsVideoPlaying(false);
+    }
   };
 
   const handleThumbnailSlideChange = (swiper: any) => {
     const firstVisibleIndex = swiper.realIndex;
     setActiveSlide(firstVisibleIndex);
     swiperInstance?.slideTo(firstVisibleIndex);
+  };
+
+  const handleVideoPlay = () => {
+    setIsVideoPlaying(true);
+  };
+
+  const handleVideoPause = () => {
+    setIsVideoPlaying(false);
   };
 
   const social = [
@@ -215,8 +284,8 @@ const Section1: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
             {/* Product Images */}
-            <div className="relative flex flex-col lg:flex-row">
-              <div className="hidden lg:flex w-full lg:w-96 h-[270px] lg:h-[300px] mb-5 lg:mb-0 lg:mr-5">
+            <div className="relative flex flex-col">
+              {/* <div className="hidden w-full lg:w-96 h-[270px] lg:h-[300px] mb-5 lg:mb-0 lg:mr-5">
                 <Swiper
                   onSwiper={setThumbnailSwiperInstance}
                   slidesPerView={3}
@@ -245,13 +314,23 @@ const Section1: React.FC = () => {
                           width={1000}
                           height={1000}
                         />
+                        {index === 0 && video && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+                            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                              <Play
+                                className="w-4 h-4 text-gray-800 ml-0.5"
+                                fill="currentColor"
+                              />
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
-              </div>
+              </div> */}
 
-              <div className="lg:w-[500px] h-full">
+              <div className="lg:w-full h-[570px]">
                 <Swiper
                   onSwiper={handleSwiper}
                   onSlideChange={handleSlideChange}
@@ -261,21 +340,65 @@ const Section1: React.FC = () => {
                 >
                   {imageList?.map((proImg: any, index: any) => (
                     <SwiperSlide key={index}>
-                      <div className="aspect-square w-full h-full relative bg-gray-50 flex items-center justify-center">
-                        <Image
-                          src={proImg}
-                          alt="Product Image"
-                          className="max-w-full max-h-full object-contain object-center"
-                          width={1000}
-                          height={1000}
-                        />
+                      <div className="aspect-square w-full h-[568px] relative bg-gray-50 flex items-center justify-center">
+                        {/* Hiển thị video nếu là item đầu tiên và có video */}
+                        {index === 0 && video ? (
+                          <div className="w-full h-full relative">
+                            {isVideoPlaying ? (
+                              <video
+                                className="w-full h-full object-cover"
+                                controls
+                                autoPlay
+                                onPlay={handleVideoPlay}
+                                onPause={handleVideoPause}
+                                onEnded={handleVideoPause}
+                              >
+                                <source src={video} type="video/mp4" />
+                                Trình duyệt của bạn không hỗ trợ video.
+                              </video>
+                            ) : (
+                              <div className="relative w-full h-full">
+                                <Image
+                                  src={
+                                    videoThumbnail ||
+                                    product?.thumbnail ||
+                                    proImg
+                                  }
+                                  alt="Video thumbnail"
+                                  className="w-full h-full object-cover"
+                                  width={1000}
+                                  height={1000}
+                                />
+                                <button
+                                  onClick={handleVideoPlay}
+                                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 hover:bg-opacity-40 transition-all duration-300"
+                                >
+                                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+                                    <Play
+                                      className="w-8 h-8 text-gray-800 ml-1"
+                                      fill="currentColor"
+                                    />
+                                  </div>
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <Image
+                            src={proImg}
+                            alt="Product Image"
+                            className="max-w-full max-h-full object-cover object-center"
+                            width={1000}
+                            height={1000}
+                          />
+                        )}
                       </div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
               </div>
 
-              <div className="lg:hidden w-full h-[100px] mt-5">
+              <div className=" w-full lg:h-[170px] h-[100px] mt-5">
                 <Swiper
                   onSwiper={setThumbnailSwiperInstance}
                   slidesPerView={3}
@@ -290,7 +413,7 @@ const Section1: React.FC = () => {
                   {imageList?.map((proImg: any, index: any) => (
                     <SwiperSlide key={index}>
                       <div
-                        className={`w-full h-full overflow-hidden cursor-pointer relative transition-all duration-300 ${
+                        className={`w-full lg:h-[170px] h-[100px] overflow-hidden cursor-pointer relative transition-all duration-300 ${
                           activeSlide === index
                             ? "border-[rgb(var(--fifteenth-rgb))] border-2"
                             : "border-transparent"
@@ -304,6 +427,17 @@ const Section1: React.FC = () => {
                           width={1000}
                           height={1000}
                         />
+                        {/* Hiển thị play icon cho video thumbnail trên mobile */}
+                        {index === 0 && video && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+                            <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                              <Play
+                                className="w-3 h-3 text-gray-800 ml-0.5"
+                                fill="currentColor"
+                              />
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </SwiperSlide>
                   ))}
