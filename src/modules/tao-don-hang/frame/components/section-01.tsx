@@ -1211,7 +1211,6 @@ const Section01 = () => {
                           <SelectItem
                             key={province.code}
                             value={String(province.code)}
-                            className="!pl-3"
                           >
                             {province.name}
                           </SelectItem>
@@ -1253,7 +1252,6 @@ const Section01 = () => {
                           <SelectItem
                             key={district.code}
                             value={String(district.code)}
-                            className="!pl-3"
                           >
                             {district.name}
                           </SelectItem>
@@ -1293,11 +1291,7 @@ const Section01 = () => {
                           .includes(wardSearchTerm.toLowerCase())
                       )
                       .map((ward) => (
-                        <SelectItem
-                          key={ward.code}
-                          value={String(ward.code)}
-                          className="!pl-3"
-                        >
+                        <SelectItem key={ward.code} value={String(ward.code)}>
                           {ward.name}
                         </SelectItem>
                       ))}
