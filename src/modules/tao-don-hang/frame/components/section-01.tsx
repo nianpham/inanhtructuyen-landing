@@ -158,6 +158,9 @@ const Section01 = () => {
   const [confirmSize, setConfirmSize] = React.useState<string>("");
   const [originalImage, setOriginalImage] = React.useState<string | null>(null);
   const [uploadedFile, setUploadedFile] = React.useState<File | null>(null);
+  const [provinceSearchTerm, setProvinceSearchTerm] = useState("");
+  const [districtSearchTerm, setDistrictSearchTerm] = useState("");
+  const [wardSearchTerm, setWardSearchTerm] = useState("");
   const [formData, setFormData] = React.useState<FormData>({
     name: "",
     email: "",
@@ -977,6 +980,22 @@ const Section01 = () => {
     }
   };
 
+  const handleProvinceSearchChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setProvinceSearchTerm(e.target.value);
+  };
+
+  const handleDistrictSearchChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDistrictSearchTerm(e.target.value);
+  };
+
+  const handleWardSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setWardSearchTerm(e.target.value);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -1174,14 +1193,29 @@ const Section01 = () => {
                       <SelectValue placeholder="Chọn Tỉnh/Thành phố" />
                     </SelectTrigger>
                     <SelectContent>
-                      {provinces.map((province) => (
-                        <SelectItem
-                          key={province.code}
-                          value={String(province.code)}
-                        >
-                          {province.name}
-                        </SelectItem>
-                      ))}
+                      <div className="p-2">
+                        <Input
+                          placeholder="Tìm kiếm tỉnh/thành phố..."
+                          value={provinceSearchTerm}
+                          onChange={handleProvinceSearchChange}
+                          className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                        />
+                      </div>
+                      {provinces
+                        .filter((province) =>
+                          province.name
+                            .toLowerCase()
+                            .includes(provinceSearchTerm.toLowerCase())
+                        )
+                        .map((province) => (
+                          <SelectItem
+                            key={province.code}
+                            value={String(province.code)}
+                            className="!pl-3"
+                          >
+                            {province.name}
+                          </SelectItem>
+                        ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -1201,14 +1235,29 @@ const Section01 = () => {
                       <SelectValue placeholder="Chọn Quận/Huyện" />
                     </SelectTrigger>
                     <SelectContent>
-                      {districts.map((district) => (
-                        <SelectItem
-                          key={district.code}
-                          value={String(district.code)}
-                        >
-                          {district.name}
-                        </SelectItem>
-                      ))}
+                      <div className="p-2">
+                        <Input
+                          placeholder="Tìm kiếm quận/huyện..."
+                          value={districtSearchTerm}
+                          onChange={handleDistrictSearchChange}
+                          className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                        />
+                      </div>
+                      {districts
+                        .filter((district) =>
+                          district.name
+                            .toLowerCase()
+                            .includes(districtSearchTerm.toLowerCase())
+                        )
+                        .map((district) => (
+                          <SelectItem
+                            key={district.code}
+                            value={String(district.code)}
+                            className="!pl-3"
+                          >
+                            {district.name}
+                          </SelectItem>
+                        ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -1229,11 +1278,29 @@ const Section01 = () => {
                     <SelectValue placeholder="Chọn Phường/Xã" />
                   </SelectTrigger>
                   <SelectContent>
-                    {wards.map((ward) => (
-                      <SelectItem key={ward.code} value={String(ward.code)}>
-                        {ward.name}
-                      </SelectItem>
-                    ))}
+                    <div className="p-2">
+                      <Input
+                        placeholder="Tìm kiếm phường/xã..."
+                        value={wardSearchTerm}
+                        onChange={handleWardSearchChange}
+                        className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                      />
+                    </div>
+                    {wards
+                      .filter((ward) =>
+                        ward.name
+                          .toLowerCase()
+                          .includes(wardSearchTerm.toLowerCase())
+                      )
+                      .map((ward) => (
+                        <SelectItem
+                          key={ward.code}
+                          value={String(ward.code)}
+                          className="!pl-3"
+                        >
+                          {ward.name}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -1753,17 +1820,31 @@ const Section01 = () => {
                         <DialogTitle>Vui lòng chọn Tỉnh/Thành phố</DialogTitle>
                         <DialogDescription className="max-h-96 overflow-y-auto">
                           <div className="my-3">
-                            {provinces.map((province) => (
-                              <div
-                                key={province.code}
-                                className="p-2"
-                                onClick={() => {
-                                  handleProvinceChange(String(province.code));
-                                }}
-                              >
-                                {province.name}
-                              </div>
-                            ))}
+                            <div className="p-2">
+                              <Input
+                                placeholder="Tìm kiếm tỉnh/thành phố..."
+                                value={provinceSearchTerm}
+                                onChange={handleProvinceSearchChange}
+                                className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                              />
+                            </div>
+                            {provinces
+                              .filter((province) =>
+                                province.name
+                                  .toLowerCase()
+                                  .includes(provinceSearchTerm.toLowerCase())
+                              )
+                              .map((province) => (
+                                <div
+                                  key={province.code}
+                                  className="p-2"
+                                  onClick={() => {
+                                    handleProvinceChange(String(province.code));
+                                  }}
+                                >
+                                  {province.name}
+                                </div>
+                              ))}
                           </div>
                         </DialogDescription>
                       </DialogHeader>
@@ -1792,17 +1873,31 @@ const Section01 = () => {
                         <DialogTitle>Vui lòng chọn Quận/Huyện</DialogTitle>
                         <DialogDescription className="max-h-96 overflow-y-auto">
                           <div className="my-3">
-                            {districts.map((district) => (
-                              <div
-                                key={district.code}
-                                className="p-2"
-                                onClick={() => {
-                                  handleDistrictChange(String(district.code));
-                                }}
-                              >
-                                {district.name}
-                              </div>
-                            ))}
+                            <div className="p-2">
+                              <Input
+                                placeholder="Tìm kiếm quận/huyện..."
+                                value={districtSearchTerm}
+                                onChange={handleDistrictSearchChange}
+                                className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                              />
+                            </div>
+                            {districts
+                              .filter((district) =>
+                                district.name
+                                  .toLowerCase()
+                                  .includes(districtSearchTerm.toLowerCase())
+                              )
+                              .map((district) => (
+                                <div
+                                  key={district.code}
+                                  className="p-2"
+                                  onClick={() => {
+                                    handleDistrictChange(String(district.code));
+                                  }}
+                                >
+                                  {district.name}
+                                </div>
+                              ))}
                           </div>
                         </DialogDescription>
                       </DialogHeader>
@@ -1832,17 +1927,31 @@ const Section01 = () => {
                       <DialogTitle>Vui lòng chọn Phường/Xã</DialogTitle>
                       <DialogDescription className="max-h-96 overflow-y-auto">
                         <div className="my-3">
-                          {wards.map((ward) => (
-                            <div
-                              key={ward.code}
-                              className="p-2"
-                              onClick={() => {
-                                handleWardChange(String(ward.code));
-                              }}
-                            >
-                              {ward.name}
-                            </div>
-                          ))}
+                          <div className="p-2">
+                            <Input
+                              placeholder="Tìm kiếm phường/xã..."
+                              value={wardSearchTerm}
+                              onChange={handleWardSearchChange}
+                              className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
+                            />
+                          </div>
+                          {wards
+                            .filter((ward) =>
+                              ward.name
+                                .toLowerCase()
+                                .includes(wardSearchTerm.toLowerCase())
+                            )
+                            .map((ward) => (
+                              <div
+                                key={ward.code}
+                                className="p-2"
+                                onClick={() => {
+                                  handleWardChange(String(ward.code));
+                                }}
+                              >
+                                {ward.name}
+                              </div>
+                            ))}
                         </div>
                       </DialogDescription>
                     </DialogHeader>

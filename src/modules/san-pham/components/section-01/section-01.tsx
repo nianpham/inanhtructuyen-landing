@@ -28,6 +28,7 @@ interface Product {
   images: string[];
   sold: number;
   created_at: string;
+  active: boolean;
 }
 
 interface Section01Props {
@@ -52,8 +53,11 @@ const Section01: React.FC<Section01Props> = ({
       setIsLoading(true);
       const res = await ProductService.getAll();
       if (res && res.data && res.data.length > 0) {
-        setProducts(res.data);
-        setFilteredProducts(res.data);
+        const filteredProducts = res.data.filter(
+          (product: Product) => product?.active === true
+        );
+        setProducts(filteredProducts);
+        setFilteredProducts(filteredProducts);
         const shuffled = [...res.data].sort(() => 0.5 - Math.random());
         const selected = shuffled.slice(0, 3);
         setRandomProducts(selected);
