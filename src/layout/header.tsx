@@ -148,14 +148,19 @@ const Header: React.FC<HeaderProps> = ({
         if (pullPathname.includes("tao-don-hang")) {
           window.location.reload();
         }
+      } else if (data?.message === "Account is inactive") {
+        toast({
+          variant: "destructive",
+          title: "Tài khoản đã bị vô hiệu hóa",
+        });
       } else {
-        throw new Error("Email hoặc mật khẩu chưa chính xác");
+        throw new Error("Email/Số điện thoại hoặc mật khẩu chưa chính xác");
       }
     } catch (error) {
       console.error("========= Error Login:", error);
       toast({
         variant: "destructive",
-        title: "Email hoặc mật khẩu chưa chính xác",
+        title: "Email/Số điện thoại hoặc mật khẩu chưa chính xác",
       });
     }
   };

@@ -68,15 +68,34 @@ const loginAccountEmail = async (email: string, password: string) => {
       body: JSON.stringify({ email, password }),
     });
 
+    //   if (!response.ok) {
+    //     console.error(
+    //       `Login failed - Status: ${response.status}`,
+    //       JSON.stringify({ email, password })
+    //     );
+    //     throw new Error(`Đăng nhập thất bại - Status: ${response.status}`);
+    //   }
+
+    //   const data = await response.json();
+    //   return data;
+    // } catch (error) {
+    //   console.error("========= Error Login:", error);
+    //   throw error;
+    // }
+
+    // Parse response body trước, kể cả khi không ok
+    const data = await response.json();
+
+    // Nếu có message từ server, trả về data để xử lý ở component
     if (!response.ok) {
       console.error(
         `Login failed - Status: ${response.status}`,
         JSON.stringify({ email, password })
       );
-      throw new Error(`Đăng nhập thất bại - Status: ${response.status}`);
+      // Trả về data thay vì throw error để có thể check message
+      return data;
     }
 
-    const data = await response.json();
     return data;
   } catch (error) {
     console.error("========= Error Login:", error);
@@ -94,15 +113,33 @@ const loginAccountPhone = async (phone: string, password: string) => {
       body: JSON.stringify({ phone, password }),
     });
 
+    //   if (!response.ok) {
+    //     console.error(
+    //       `Login failed - Status: ${response.status}`,
+    //       JSON.stringify({ phone, password })
+    //     );
+    //     throw new Error(`Đăng nhập thất bại - Status: ${response.status}`);
+    //   }
+
+    //   const data = await response.json();
+    //   return data;
+    // } catch (error) {
+    //   console.error("========= Error Login:", error);
+    //   throw error;
+    // }
+    // Parse response body trước, kể cả khi không ok
+    const data = await response.json();
+
+    // Nếu có message từ server, trả về data để xử lý ở component
     if (!response.ok) {
       console.error(
         `Login failed - Status: ${response.status}`,
         JSON.stringify({ phone, password })
       );
-      throw new Error(`Đăng nhập thất bại - Status: ${response.status}`);
+      // Trả về data thay vì throw error để có thể check message
+      return data;
     }
 
-    const data = await response.json();
     return data;
   } catch (error) {
     console.error("========= Error Login:", error);
