@@ -28,8 +28,10 @@ interface Product {
   discount: string;
   rating: string;
   images: string[];
+  video: string;
   sold: number;
   created_at: string;
+  active: boolean;
 }
 
 export default function ProductClient() {
