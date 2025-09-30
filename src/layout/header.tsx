@@ -151,7 +151,8 @@ const Header: React.FC<HeaderProps> = ({
       } else if (data?.message === "Account is inactive") {
         toast({
           variant: "destructive",
-          title: "Tài khoản đã bị vô hiệu hóa",
+          title: "Cảnh báo tài khoản",
+          description: "Tài khoản đã bị vô hiệu hóa",
         });
       } else {
         throw new Error("Email/Số điện thoại hoặc mật khẩu chưa chính xác");

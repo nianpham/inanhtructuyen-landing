@@ -19,7 +19,8 @@ export default function HomeContent() {
     if (loginGG === "inactive") {
       toast({
         variant: "destructive",
-        title: "Tài khoản đăng nhập Google đã bị vô hiệu hóa.",
+        title: "Cảnh báo tài khoản",
+        description: "Tài khoản đăng nhập Google đã bị vô hiệu hóa.",
       });
     }
   }, [searchParams]);
