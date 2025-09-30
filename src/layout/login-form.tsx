@@ -24,8 +24,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
   // Kiểm tra query parameter để mở login form tự động
   useEffect(() => {
-    const openLogin = searchParams.get('openLogin');
-    if (openLogin === 'true') {
+    const openLogin = searchParams.get("openLogin");
+    if (openLogin === "true") {
       setIsOpen(true);
     }
   }, [searchParams]);
@@ -53,19 +53,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     try {
       await onLogin(username, password);
       setIsOpen(false); // Đóng dialog sau khi đăng nhập thành công
-      
+
       // Redirect về route gốc nếu có
-      const redirectPath = searchParams.get('redirect');
+      const redirectPath = searchParams.get("redirect");
       if (redirectPath) {
         // Xóa query parameters và redirect
         const url = new URL(window.location.href);
-        url.searchParams.delete('openLogin');
-        url.searchParams.delete('redirect');
+        url.searchParams.delete("openLogin");
+        url.searchParams.delete("redirect");
         router.replace(redirectPath);
       } else {
         // Xóa query parameters
         const url = new URL(window.location.href);
-        url.searchParams.delete('openLogin');
+        url.searchParams.delete("openLogin");
         router.replace(url.pathname + url.search, { scroll: false });
       }
     } catch (error) {

@@ -25,6 +25,7 @@ import "@/styles/hide-scroll.css";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/route";
 import Image from "next/image";
+import { HELPER } from "@/utils/helper";
 
 export interface Province {
   code: number;
@@ -609,7 +610,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                   <SelectValue placeholder="Chọn Tỉnh/Thành phố" />
                 </SelectTrigger>
                 <SelectContent className="z-[80]">
-                  <div className="p-2">
+                  {/* <div className="p-2">
                     <Input
                       placeholder="Tìm kiếm tỉnh/thành phố..."
                       value={provinceSearchTerm}
@@ -617,19 +618,15 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                       onKeyDown={handleSearchKeyDown}
                       className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     />
-                  </div>
+                  </div> */}
                   {provinces
-                    .filter((province) =>
-                      province.name
-                        .toLowerCase()
-                        .includes(provinceSearchTerm.toLowerCase())
-                    )
+                    .sort((a, b) => a.name.localeCompare(b.name, "vi-VN"))
                     .map((province) => (
                       <SelectItem
                         key={province.code}
                         value={String(province.code)}
                       >
-                        {province.name}
+                        {HELPER.formatProvinceName(province.name)}
                       </SelectItem>
                     ))}
                 </SelectContent>
@@ -648,7 +645,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                   <SelectValue placeholder="Chọn Quận/Huyện" />
                 </SelectTrigger>
                 <SelectContent className="z-[80]">
-                  <div className="p-2">
+                  {/* <div className="p-2">
                     <Input
                       placeholder="Tìm kiếm quận/huyện..."
                       value={districtSearchTerm}
@@ -656,12 +653,13 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                       onKeyDown={handleSearchKeyDown}
                       className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     />
-                  </div>
+                  </div> */}
                   {districts
-                    .filter((district) =>
-                      district.name
-                        .toLowerCase()
-                        .includes(districtSearchTerm.toLowerCase())
+                    .sort((a, b) =>
+                      HELPER.getNameForSorting(a.name).localeCompare(
+                        HELPER.getNameForSorting(b.name),
+                        "vi-VN"
+                      )
                     )
                     .map((district) => (
                       <SelectItem
@@ -687,7 +685,7 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                   <SelectValue placeholder="Chọn Phường/Xã" />
                 </SelectTrigger>
                 <SelectContent className="z-[80]">
-                  <div className="p-2">
+                  {/* <div className="p-2">
                     <Input
                       placeholder="Tìm kiếm phường/xã..."
                       value={wardSearchTerm}
@@ -695,12 +693,13 @@ const ProfileModal = ({ customerAccount, onUpdate }: ProfileModalProps) => {
                       onKeyDown={handleSearchKeyDown}
                       className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                     />
-                  </div>
+                  </div> */}
                   {wards
-                    .filter((ward) =>
-                      ward.name
-                        .toLowerCase()
-                        .includes(wardSearchTerm.toLowerCase())
+                    .sort((a, b) =>
+                      HELPER.getNameForSorting(a.name).localeCompare(
+                        HELPER.getNameForSorting(b.name),
+                        "vi-VN"
+                      )
                     )
                     .map((ward) => (
                       <SelectItem key={ward.code} value={String(ward.code)}>

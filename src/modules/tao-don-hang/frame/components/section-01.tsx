@@ -1197,27 +1197,14 @@ const Section01 = () => {
                       <SelectValue placeholder="Chọn Tỉnh/Thành phố" />
                     </SelectTrigger>
                     <SelectContent>
-                      <div className="p-2">
-                        <Input
-                          placeholder="Tìm kiếm tỉnh/thành phố..."
-                          value={provinceSearchTerm}
-                          onChange={handleProvinceSearchChange}
-                          onKeyDown={handleSearchKeyDown}
-                          className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
-                        />
-                      </div>
                       {provinces
-                        .filter((province) =>
-                          province.name
-                            .toLowerCase()
-                            .includes(provinceSearchTerm.toLowerCase())
-                        )
+                        .sort((a, b) => a.name.localeCompare(b.name, "vi-VN"))
                         .map((province) => (
                           <SelectItem
                             key={province.code}
                             value={String(province.code)}
                           >
-                            {province.name}
+                            {HELPER.formatProvinceName(province.name)}
                           </SelectItem>
                         ))}
                     </SelectContent>
@@ -1239,20 +1226,12 @@ const Section01 = () => {
                       <SelectValue placeholder="Chọn Quận/Huyện" />
                     </SelectTrigger>
                     <SelectContent>
-                      <div className="p-2">
-                        <Input
-                          placeholder="Tìm kiếm quận/huyện..."
-                          value={districtSearchTerm}
-                          onChange={handleDistrictSearchChange}
-                          onKeyDown={handleSearchKeyDown}
-                          className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
-                        />
-                      </div>
                       {districts
-                        .filter((district) =>
-                          district.name
-                            .toLowerCase()
-                            .includes(districtSearchTerm.toLowerCase())
+                        .sort((a, b) =>
+                          HELPER.getNameForSorting(a.name).localeCompare(
+                            HELPER.getNameForSorting(b.name),
+                            "vi-VN"
+                          )
                         )
                         .map((district) => (
                           <SelectItem
@@ -1282,20 +1261,12 @@ const Section01 = () => {
                     <SelectValue placeholder="Chọn Phường/Xã" />
                   </SelectTrigger>
                   <SelectContent>
-                    <div className="p-2">
-                      <Input
-                        placeholder="Tìm kiếm phường/xã..."
-                        value={wardSearchTerm}
-                        onChange={handleWardSearchChange}
-                        onKeyDown={handleSearchKeyDown}
-                        className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
-                      />
-                    </div>
                     {wards
-                      .filter((ward) =>
-                        ward.name
-                          .toLowerCase()
-                          .includes(wardSearchTerm.toLowerCase())
+                      .sort((a, b) =>
+                        HELPER.getNameForSorting(a.name).localeCompare(
+                          HELPER.getNameForSorting(b.name),
+                          "vi-VN"
+                        )
                       )
                       .map((ward) => (
                         <SelectItem key={ward.code} value={String(ward.code)}>
@@ -1821,20 +1792,9 @@ const Section01 = () => {
                         <DialogTitle>Vui lòng chọn Tỉnh/Thành phố</DialogTitle>
                         <DialogDescription className="max-h-96 overflow-y-auto">
                           <div className="my-3">
-                            <div className="p-2">
-                              <Input
-                                placeholder="Tìm kiếm tỉnh/thành phố..."
-                                value={provinceSearchTerm}
-                                onChange={handleProvinceSearchChange}
-                                onKeyDown={handleSearchKeyDown}
-                                className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
-                              />
-                            </div>
                             {provinces
-                              .filter((province) =>
-                                province.name
-                                  .toLowerCase()
-                                  .includes(provinceSearchTerm.toLowerCase())
+                              .sort((a, b) =>
+                                a.name.localeCompare(b.name, "vi-VN")
                               )
                               .map((province) => (
                                 <div
@@ -1844,7 +1804,7 @@ const Section01 = () => {
                                     handleProvinceChange(String(province.code));
                                   }}
                                 >
-                                  {province.name}
+                                  {HELPER.formatProvinceName(province.name)}
                                 </div>
                               ))}
                           </div>
@@ -1875,7 +1835,7 @@ const Section01 = () => {
                         <DialogTitle>Vui lòng chọn Quận/Huyện</DialogTitle>
                         <DialogDescription className="max-h-96 overflow-y-auto">
                           <div className="my-3">
-                            <div className="p-2">
+                            {/* <div className="p-2">
                               <Input
                                 placeholder="Tìm kiếm quận/huyện..."
                                 value={districtSearchTerm}
@@ -1883,12 +1843,13 @@ const Section01 = () => {
                                 onKeyDown={handleSearchKeyDown}
                                 className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                               />
-                            </div>
+                            </div> */}
                             {districts
-                              .filter((district) =>
-                                district.name
-                                  .toLowerCase()
-                                  .includes(districtSearchTerm.toLowerCase())
+                              .sort((a, b) =>
+                                HELPER.getNameForSorting(a.name).localeCompare(
+                                  HELPER.getNameForSorting(b.name),
+                                  "vi-VN"
+                                )
                               )
                               .map((district) => (
                                 <div
@@ -1930,7 +1891,7 @@ const Section01 = () => {
                       <DialogTitle>Vui lòng chọn Phường/Xã</DialogTitle>
                       <DialogDescription className="max-h-96 overflow-y-auto">
                         <div className="my-3">
-                          <div className="p-2">
+                          {/* <div className="p-2">
                             <Input
                               placeholder="Tìm kiếm phường/xã..."
                               value={wardSearchTerm}
@@ -1938,12 +1899,13 @@ const Section01 = () => {
                               onKeyDown={handleSearchKeyDown}
                               className="h-8 text-base focus:border-none focus:!ring-2 focus:!ring-[rgb(var(--fifteenth-rgb))] outline-none"
                             />
-                          </div>
+                          </div> */}
                           {wards
-                            .filter((ward) =>
-                              ward.name
-                                .toLowerCase()
-                                .includes(wardSearchTerm.toLowerCase())
+                            .sort((a, b) =>
+                              HELPER.getNameForSorting(a.name).localeCompare(
+                                HELPER.getNameForSorting(b.name),
+                                "vi-VN"
+                              )
                             )
                             .map((ward) => (
                               <div

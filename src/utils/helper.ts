@@ -201,6 +201,37 @@ const renderCategory2 = (category: string) => {
   return result;
 };
 
+const formatProvinceName = (name: string) => {
+  if (name.startsWith("Tỉnh ")) {
+    return name.substring(5);
+  }
+  return name;
+};
+
+const getNameForSorting = (name: string) => {
+  const prefixes = [
+    "Thành phố ",
+    "Tỉnh ",
+    "Quận ",
+    "Huyện ",
+    "Thị xã ",
+    "Phường ",
+    "Xã ",
+    "Thị trấn ",
+  ];
+
+  for (const prefix of prefixes) {
+    if (name.startsWith(prefix)) {
+      return name.substring(prefix.length);
+    }
+  }
+  return name;
+};
+
+const formatLocationName = (name: string) => {
+  return getNameForSorting(name);
+};
+
 export const HELPER = {
   formatVND,
   formatDate,
@@ -215,4 +246,7 @@ export const HELPER = {
   renderAlbumCore,
   renderCategory,
   renderCategory2,
+  formatProvinceName,
+  formatLocationName,
+  getNameForSorting,
 };
