@@ -334,17 +334,17 @@ const Footer: React.FC = () => {
                 </li>
               </ul>
             </div>
-            {/* <div className="space-y-4">
+            <div className="space-y-4">
             <h3 className="text-md font-semibold text-gray-900">
               CHỨNG CHỈ UY TÍN
             </h3>
             <div className="flex flex-row lg:flex-col justify-start items-center lg:items-start gap-7 !m-0">
-              <Image
+              {/* <Image
                 src="https://res.cloudinary.com/farmcode/image/upload/v1741450139/iatt/Untitled_design_1_qj4hfg.png"
                 alt="DMCA Protected"
                 width={128}
                 height={0}
-              />
+              /> */}
               <Image
                 src="https://webmedia.com.vn/images/2021/09/logo-da-thong-bao-bo-cong-thuong-mau-xanh.png"
                 alt="Đã thông báo Bộ Công Thương"
@@ -352,7 +352,7 @@ const Footer: React.FC = () => {
                 height={0}
               />
             </div>
-          </div> */}
+          </div>
             <div className="space-y-4">
               <h3 className="text-md font-semibold text-gray-900">TẢI APP</h3>
               <div className="flex flex-row lg:flex-col justify-start items-start gap-4">
