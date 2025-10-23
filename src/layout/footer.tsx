@@ -338,7 +338,7 @@ const Footer: React.FC = () => {
             <h3 className="text-md font-semibold text-gray-900">
               CHỨNG CHỈ UY TÍN
             </h3>
-            <div className="flex flex-row lg:flex-col justify-start items-center lg:items-start gap-7 !m-0">
+            <div className="flex flex-row lg:flex-col justify-start items-center lg:items-start gap-4 mt-3">
               {/* <Image
                 src="https://res.cloudinary.com/farmcode/image/upload/v1741450139/iatt/Untitled_design_1_qj4hfg.png"
                 alt="DMCA Protected"
