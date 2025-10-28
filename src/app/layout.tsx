@@ -1,24 +1,22 @@
 import type { Metadata } from "next";
-// import { Manrope } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ProductProvider } from "@/modules/san-pham/components/product-context";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import Head from "next/head";
-
-// const font = Manrope({ subsets: ["latin"] });
-// const font = Plus_Jakarta_Sans({ subsets: ["latin"] });
+import Script from "next/script";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.inanhhathu.com"),
   title: "In Ảnh Hạ Thu",
   description:
-    "Chỉnh sửa ảnh miễn phí và in ảnh hạ thu dễ dàng. Tải lên những tấm ảnh yêu thích và bắt đầu chỉnh sửa ngay!",
+    "Chỉnh sửa ảnh miễn phí và in ảnh Hạ Thu dễ dàng. Tải lên những tấm ảnh yêu thích và bắt đầu chỉnh sửa ngay!",
   openGraph: {
     title: "In Ảnh Hạ Thu",
     description:
-      "Chỉnh sửa ảnh hoàn toàn miễn phí và in ảnh hạ thu dễ dàng. Chọn ảnh yêu thích và tải lên để chỉnh sửa!",
+      "Chỉnh sửa ảnh hoàn toàn miễn phí và in ảnh Hạ Thu dễ dàng. Chọn ảnh yêu thích và tải lên để chỉnh sửa!",
     url: "https://www.inanhhathu.com/",
+    siteName: "In Ảnh Hạ Thu",
     images: [
       {
         url: "https://res.cloudinary.com/farmcode/image/upload/v1757376935/iatt/bg-full_hahqqi.png",
@@ -27,15 +25,11 @@ export const metadata: Metadata = {
         alt: "In Ảnh Hạ Thu",
       },
     ],
+    locale: "vi_VN",
+    type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "In Ảnh Hạ Thu",
-    description:
-      "Chỉnh sửa ảnh miễn phí và in ảnh hạ thu dễ dàng. Tải lên ảnh yêu thích và chỉnh sửa ngay!",
-    images: [
-      "https://res.cloudinary.com/farmcode/image/upload/v1757376935/iatt/bg-full_hahqqi.png",
-    ],
+  icons: {
+    icon: "/favicon.ico",
   },
 };
 
@@ -44,19 +38,47 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Schema.org JSON-LD giúp Google hiểu tên thương hiệu & domain
+  const siteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    url: "https://www.inanhhathu.com/",
+    name: "In Ảnh Hạ Thu",
+    alternateName: ["In Anh Ha Thu", "In Ảnh Hạ Thu - In ảnh & khung ảnh"],
+    publisher: {
+      "@type": "Organization",
+      name: "In Ảnh Hạ Thu",
+      url: "https://www.inanhhathu.com/",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://res.cloudinary.com/farmcode/image/upload/v1757376935/iatt/bg-full_hahqqi.png",
+      },
+    },
+  };
+
   return (
-    <html lang="en">
-      <Head>
+    <html lang="vi">
+      <head>
         <title>In Ảnh Hạ Thu</title>
         <meta
           name="description"
-          content="Chỉnh sửa ảnh miễn phí và in ảnh hạ thu dễ dàng. Tải lên những tấm ảnh yêu thích và bắt đầu chỉnh sửa ngay!"
+          content="Chỉnh sửa ảnh miễn phí và in ảnh Hạ Thu dễ dàng. Tải lên những tấm ảnh yêu thích và bắt đầu chỉnh sửa ngay!"
         />
-      </Head>
-      <body
-        // className={font.className}
-        suppressHydrationWarning={true}
-      >
+        <meta property="og:site_name" content="In Ảnh Hạ Thu" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="vi_VN" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content="In Ảnh Hạ Thu" />
+        <meta
+          property="twitter:description"
+          content="In Ảnh Hạ Thu - In ảnh, chỉnh sửa ảnh và lưu giữ kỷ niệm dễ dàng!"
+        />
+        <meta
+          property="twitter:image"
+          content="https://res.cloudinary.com/farmcode/image/upload/v1757376935/iatt/bg-full_hahqqi.png"
+        />
+      </head>
+      <body suppressHydrationWarning={true}>
         <GoogleAnalytics gaId="G-ZS4CC8H5VQ" />
         <ReduxProvider>
           <ProductProvider>
@@ -64,6 +86,11 @@ export default function RootLayout({
             <Toaster />
           </ProductProvider>
         </ReduxProvider>
+        <Script
+          id="website-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
+        />
       </body>
     </html>
   );
