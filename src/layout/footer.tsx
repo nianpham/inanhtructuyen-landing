@@ -339,12 +339,6 @@ const Footer: React.FC = () => {
                 CHỨNG CHỈ UY TÍN
               </h3>
               <div className="flex flex-row lg:flex-col justify-start items-center lg:items-start gap-4 mt-3">
-                {/* <Image
-                src="https://res.cloudinary.com/farmcode/image/upload/v1741450139/iatt/Untitled_design_1_qj4hfg.png"
-                alt="DMCA Protected"
-                width={128}
-                height={0}
-              /> */}
                 <Link
                   href="http://online.gov.vn/Home/WebDetails/137014"
                   target="_blank"
@@ -355,6 +349,19 @@ const Footer: React.FC = () => {
                     width={128}
                     height={0}
                   />
+                </Link>{" "}
+                <Link
+                  href="https://www.dmca.com/site-report/www.inanhhathu.com"
+                  target="_blank"
+                >
+                  {" "}
+                  <Image
+                    src="https://images.dmca.com/Badges/dmca_protected_sml_120m.png"
+                    alt="DMCA Protected"
+                    width={1000}
+                    height={1000}
+                    className="w-32 h-14 object-contain"
+                  />{" "}
                 </Link>
               </div>
             </div>
