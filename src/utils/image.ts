@@ -14,25 +14,25 @@ export const IMAGES = {
   BANNER_1:
     "https://res.cloudinary.com/farmcode/image/upload/v1748167081/ielts-test/IMG_7515-Edit-2-1_cpdbxp.jpg",
   BANNER_2:
-    "https://res.cloudinary.com/farmcode/image/upload/v1749618349/iatt/jvbovqagdcabxodjmo18.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1761639233/iatt/image_k9alhs.jpg",
   BANNER_02:
-    "https://res.cloudinary.com/farmcode/image/upload/v1749618076/iatt/xfj7opsrgi4qtfvjydim.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1761639208/iatt/image_mmtusd.jpg",
   BANNER_3:
-    "https://res.cloudinary.com/farmcode/image/upload/v1749618110/iatt/zkhanfk0prccquufaxqj.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1761639209/iatt/image_sex3sk.jpg",
   BANNER_4:
-    "https://res.cloudinary.com/farmcode/image/upload/v1749618035/iatt/j3tbwzvldkegxoqaj4l7.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1761639235/iatt/image_mukhrg.jpg",
   BANNER_5:
-    "https://res.cloudinary.com/farmcode/image/upload/v1749618095/iatt/bqglcjqo0ipzvexdkoib.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1761639363/iatt/image_tecpgy.jpg",
   BANNER_6:
     "https://res.cloudinary.com/farmcode/image/upload/v1728996038/iatt/IMG_7555_p4bqwc.jpg",
   BANNER_7:
-    "https://res.cloudinary.com/farmcode/image/upload/v1749617436/iatt/i6glmcaesvom7c4eqbmp.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1761639310/iatt/image_ncdjgt.jpg",
   BANNER_8:
-    "https://res.cloudinary.com/farmcode/image/upload/v1749617471/iatt/qnjsnaleoz7gbue38au1.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1761639178/iatt/image_meyyhl.jpg",
   BANNER_9:
-    "https://res.cloudinary.com/farmcode/image/upload/v1749618043/iatt/ga3bhhqxdtneicm6dnff.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1761639365/iatt/image_ujkjzw.jpg",
   BANNER_10:
-    "https://res.cloudinary.com/farmcode/image/upload/v1749906476/iatt/IMG_7585-1-2_vhfdm2.jpg",
+    "https://res.cloudinary.com/farmcode/image/upload/v1761640202/iatt/olhc4uln3c7kahwosvqj.png",
   BANNER_11:
     "https://res.cloudinary.com/farmcode/image/upload/v1757376907/iatt/bg-empty_c7p6bk.png",
   slider_1: [

@@ -91,7 +91,7 @@ const Banner1WithImages: React.FC = () => {
             <div className="bg-black opacity-30 absolute top-0 left-0 right-0 bottom-0"></div>
             <div className="absolute top-[45%] left-0 right-0">
               <h3 className="text-2xl font-bold mb-2 text-white text-center uppercase">
-                Album cưới, tiệc
+                Album baby đáng yếu
               </h3>
             </div>
           </div>
@@ -110,7 +110,7 @@ const Banner1WithImages: React.FC = () => {
             <div className="bg-black opacity-30 absolute top-0 left-0 right-0 bottom-0"></div>
             <div className="absolute top-[45%] left-0 right-0 ">
               <h3 className="text-2xl font-bold mb-2 text-white text-center uppercase">
-                ẢNH ÉP GỖ KHUNG VIỀN
+                Gia đình là tất cả
               </h3>
             </div>
           </div>

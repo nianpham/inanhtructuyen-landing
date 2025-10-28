@@ -60,25 +60,25 @@ const Section01 = () => {
 
   const services: ServiceCard[] = [
     {
-      title: "ALBUM CƯỚI, TIỆC",
+      title: "ALBUM GIA ĐÌNH",
       description:
         "Biến từng tấm ảnh cưới thành một câu chuyện đầy riêng tư và ý nghĩa. Với đa dạng mẫu mã được tối ưu theo phong cách riêng của bạn – từ hiện đại, vintage, phong cách Hàn Quốc đến sự hòa quyện với thiên nhiên, chúng tôi mang đến những thiết kế album độc đáo, tinh tế. Đặc biệt, chất lượng hình ảnh luôn sắc nét, chống trầy xước, giúp bạn lưu giữ kỷ niệm một cách hoàn hảo.",
       imageSrc:
-        "https://res.cloudinary.com/farmcode/image/upload/v1745334263/iatt/d4eb9c49c1f92fba641ceff562e7014c157e33e4_nkvglk.jpg",
+        "https://res.cloudinary.com/farmcode/image/upload/v1761639337/iatt/image_ef4qpd.jpg",
     },
     {
       title: "ẢNH ÉP GỖ KHUNG VIỀN",
       description:
         "Mang đến sự lựa chọn hoàn hảo cho ảnh cưới và tiệc với thiết kế hiện đại, phù hợp mọi không gian trang trí. Bộ sưu tập đa dạng, mẫu mã mới bắt khung viền Titan sang trọng, Khung gỗ cổ điển, khung viền Hàn Quốc... hiện đại tinh tế. Từng sản phẩm đều được thiết kế để tôn lên vẻ đẹp của khoảnh khắc và hòa quyện với mọi bối cảnh trang trí.",
       imageSrc:
-        "https://res.cloudinary.com/farmcode/image/upload/v1745334309/iatt/01736e470d602ea6302b6216b03cb46206a4e87e_uho8e6.jpg",
+        "https://res.cloudinary.com/farmcode/image/upload/v1761639311/iatt/image_oos7mo.jpg",
     },
     {
       title: "ẢNH ÉP PLASTIC, LỤA",
       description:
         "Lưu giữ trọn vẹn vẻ đẹp thời gian với dịch vụ in ảnh ép Plastic và Lụa. Ảnh được in bằng máy in chất lượng, đảm bảo độ sắc nét tuyệt đối và màu sắc bền đẹp trên 10 năm. Từng sản phẩm đều được in ấn tỉ mỉ, mang đến sự hài lòng tối đa và trở thành món quà ý nghĩa để lưu giữ những kỷ niệm của bạn.",
       imageSrc:
-        "https://res.cloudinary.com/farmcode/image/upload/v1745334351/iatt/5ecd4f30190e30f2678eadaebfb8b81adc635251_qgyzy5.jpg",
+        "https://res.cloudinary.com/farmcode/image/upload/v1761639179/iatt/image_kymemd.jpg",
     },
   ];
 
